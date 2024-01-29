@@ -14,6 +14,7 @@
       <!--  Header End -->
       <div class="container-fluid">
 		<div class="container">
+		<h2>회원관리</h2><div style="float:right"><a>일반회원 </a>|<a> 시설회원</a></div>
 			<table class="table">
 				<thead>
 					<tr>
@@ -31,7 +32,7 @@
 							 <td th:text="${user.memNick}" >닉네임</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
 							 <td th:text="${user.memAddr}" >주소</td>
-							 <td th:text="${#dates.format(user.memBdate, 'yyyy-MM')}">2024-01-01</td>
+							 <td th:text="${#dates.format(user.memBdate, 'yyyy-MM-dd')}">2024-01-01</td>
 						</tr>
 					</th:block>
 				</tbody>
