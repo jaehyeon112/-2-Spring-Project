@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ 
+<!-- selectbox --> 
+<mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
+
+
+<!-- 시설리스트 -->
+<select id="getFacilityList" resultType="FacilityVO">
+	SELECT fac_Name,
+	instr(fac_addr, ' ') as resion,
+	fac_Type
+	FROM FACILITY
+</select>
+
+</mapper>
+
+
+
