@@ -23,7 +23,6 @@
 			</a>
 		</div>
 		<div>
-<!-- 			<form> -->
 				<label>닉네임</label>
 				<input type="text">
 				<br>
@@ -39,8 +38,16 @@
 			    <label id="changeTel" class="hidden">010-8898-8034</label>
 			    </div>
 				<br>
-				<label>이메일</label>
-				<button>이메일 입력</button>
+				<div id="emailVerification">
+				  <input type="email" id="recipientEmail" placeholder="이메일 주소를 입력하세요">
+				  <button id="sendButton">인증번호 전송</button>
+				  <br>
+				  <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
+				  <button id="verifyButton">인증번호 확인</button>
+				  <br>
+				  <div id="message"></div>
+				</div>
+
 				<br>
 				<label>나이</label>
 				<select class="box" id="year">
@@ -103,6 +110,7 @@
 	  selectGenderValue = document.querySelector('input[type=radio][name=group]:checked');
 	  alert(selectGenderValue.value);
 	});
+	  
 	
 	$('#send').click(function() {
 		const to = $('#to').val();
@@ -151,6 +159,61 @@
 			alert('전화번호를 입력해주세요');	
 		}
 	});
+// 인증번호 전송
+$('#sendButton').click(function() {
+  var recipientEmail = document.getElementById("recipientEmail").value;
+  
+  if (recipientEmail == "") {
+    alert("이메일 주소를 입력하세요.");
+    return;
+  }
+
+  $.ajax({
+    type: "GET",
+    url: "/email/send",
+    data: { recipientEmail: recipientEmail },
+    success: function (response) {
+      // 이메일 전송 성공 시 처리
+      document.getElementById("message").innerText = "이메일이 성공적으로 전송되었습니다.";
+      document.getElementById("message").style.color = "green"; // 성공 메시지를 초록색으로 표시
+    },
+    error: function (xhr, status, error) {
+      // 이메일 전송 실패 시 처리
+      document.getElementById("message").innerText = "이메일 전송 중 오류가 발생했습니다.";
+      document.getElementById("message").style.color = "red"; // 실패 메시지를 빨간색으로 표시
+    },
+  });
+});
+
+// 인증번호 확인
+$('#verifyButton').click(function() {
+  var recipientEmail = document.getElementById("recipientEmail").value;
+  var verificationCode = document.getElementById("verificationCode").value;
+
+  if (recipientEmail == "" || verificationCode == "") {
+    alert("이메일 주소와 인증번호를 입력하세요.");
+    return;
+  }
+
+  $.ajax({
+    type: "GET",
+    url: "/email/verify",
+    data: {
+      recipientEmail: recipientEmail,
+      verificationCode: verificationCode,
+    },
+    success: function (response) {
+	  // 인증 성공 시 처리
+	  if (response == "success") {
+	    document.getElementById("message").innerText = "인증번호가 확인되었습니다.";
+	    document.getElementById("message").style.color = "green"; // 성공 메시지를 초록색으로 표시
+	  } else {
+	    document.getElementById("message").innerText = "인증번호가 일치하지 않습니다. 다시 한번 정확히 입력해 주세요.";
+	    document.getElementById("message").style.color = "red"; // 실패 메시지를 빨간색으로 표시
+	  }
+	},
+  });
+});
 	</script>
 	</section>
 	
