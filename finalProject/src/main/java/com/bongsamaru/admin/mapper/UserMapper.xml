@@ -19,9 +19,9 @@
 				SMS_AGREE,
 				ACCT_NUM,
 				BANK_NAME,
-				MEM_STAT,
+				upper(MEM_STAT) as MEM_STAT,
 				MEM_NAME
-		from member
+		from member where MEM_ID = #{memId}
 	</select>
 
 </mapper>

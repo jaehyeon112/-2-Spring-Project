@@ -1,4 +1,5 @@
-package com.bongsamaru.member;
+package com.bongsamaru.admin.service;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailVO implements UserDetails {
 	
-	final MemberVO memberVO;
+	final UserVO userVO;
 	
 	/*
 	 * public void setMemberVO(MemberVO memberVO) { this.memberVO = memberVO; }
@@ -24,20 +25,21 @@ public class UserDetailVO implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority(memberVO.getResponsbility()));
+		list.add(new SimpleGrantedAuthority("ROLE_" + userVO.getMemStat()));
+		System.out.println(list);
 		return list;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return memberVO.getPass();
+		return userVO.getMemPwd();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return memberVO.getMid();
+		return userVO.getMemId();
 	}
 
 	@Override

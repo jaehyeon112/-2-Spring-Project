@@ -29,15 +29,19 @@
                   <span class="loginMethod" id="user"  > 일반회원</span>
                 <span class="loginMethod"  id="facility"> 시설회원</span>
             </div>
+            <div th:if="${param.error}">
+                삑
+                </div>
+                
             <div th:if="${param.logout}">
                 You have been logged out.
             </div>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login/FacilityLogin}" method="post">
                 <div><label> <input class="form-control" type="text" name="username" placeholder="아이디를 입력해주세요" />
                     </label></div>
                 <div><label> <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" />
                     </label></div>
-                <div><label><input type="submit" class="form-control" value="로그인하기" /></label></div>
+                <div><label><input id="button-test" type="submit" class="form-control" value="로그인하기" /></label></div>
             </form>
 
             <script type="text/javascript">
@@ -52,16 +56,28 @@
                 };
                 
                 $('#user').on('click', function(e) {
+                	user = true;
+                	facility = false;
                     $('#userContent').removeClass('hidden');
                     $('#facilityContent').addClass('hidden');
                 });
 
                 $('#facility').on('click', function(e) {
+                	user = false;
+                	facility = true;
                     $('#facilityContent').removeClass('hidden');
                     $('#userContent').addClass('hidden');
                 });
                 
-                
+               // $('#button-test').on('click',function(e){
+               // 	if(user){
+               // 		alert('유저로 했지 너')
+               // 	}else{
+               // 		alert('시설로했지너')
+               // 	}
+               // 	alert('되나?')
+               // })
+				                
             </script>
 
         </div>

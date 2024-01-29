@@ -1,5 +1,6 @@
 package com.bongsamaru.admin.service;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,8 +10,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserVO {
-	private String memId;
+public class UserVO implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String memId;
 	private String memPwd;
 	private String memNick;
 	private String memPhone;
