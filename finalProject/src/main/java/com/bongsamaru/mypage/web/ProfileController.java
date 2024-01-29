@@ -1,15 +1,13 @@
 package com.bongsamaru.mypage.web;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.bongsamaru.mypage.service.sendSmsService;
+
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 /**
  * Handles requests for the application home page.
@@ -17,23 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ProfileController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+	@GetMapping("/profile")
+	public String profile() {
 		return "profile";
 	}
+	
+    // coolSMS 구현 로직 연결  
+    @GetMapping("/sendSMS")
+    public @ResponseBody String sendSMS(@RequestParam(value="to") String to) throws CoolsmsException {  
+        sendSmsService smsService = new sendSmsService();
+        return smsService.PhoneNumberCheck(to);
+    }
 	
 }

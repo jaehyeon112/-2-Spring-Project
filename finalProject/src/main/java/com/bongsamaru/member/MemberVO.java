@@ -6,7 +6,7 @@ import lombok.Data;
 public class MemberVO {
 	String mid;
 	String pass;
-	String responsbility;
+	String responsibility;
 	String phone;
 	String name;
 }

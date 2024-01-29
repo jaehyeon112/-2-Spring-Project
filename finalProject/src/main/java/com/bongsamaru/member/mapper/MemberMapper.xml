@@ -5,7 +5,7 @@
 <select id="getMemberList" resultType="MemberVO">
 SELECT  MID,
 		PASS,
-		'ROLE_' || upper(RESPONSBILITY) as responsbility,
+		'ROLE_' || upper(RESPONSiBILITY) as responsibility,
 		PHONE,
 		NAME
 FROM member
@@ -14,7 +14,7 @@ FROM member
 <select id="getMember" resultType="MemberVO">
 SELECT  MID,
 		PASS,
-		'ROLE_' || upper(RESPONSBILITY) as responsbility,
+		'ROLE_' || upper(RESPONSiBILITY) as responsibility,
 		PHONE,
 		NAME
 FROM member

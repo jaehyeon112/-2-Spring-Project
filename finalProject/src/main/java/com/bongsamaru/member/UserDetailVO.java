@@ -24,7 +24,7 @@ public class UserDetailVO implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority(memberVO.getResponsbility()));
+		list.add(new SimpleGrantedAuthority(memberVO.getResponsibility()));
 		return list;
 	}
 
