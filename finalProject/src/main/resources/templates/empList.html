@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+>
+<head>
+<meta charset="UTF-8">
+<title>empList.html</title>
+<style>
+.odd{
+	background-color: gray;
+}
+.trbold{
+	font-weight: bold;
+}
+</style>
+
+</head>
+<body>
+	<section layout:fragment="content">
+	<div> [[ ${#lists.size(empList)} ]] </div>
+	
+<table>
+ <tr>
+ <th>No.</th>
+ <th>employee_id</th>
+ <th>name</th>
+ <th>입사일자</th>
+ <th>salary</th>
+ <th>급여등급</th>
+ </tr>
+ <th:block th:each="emp,st : ${empList}" >
+<tr  th:class="${st.odd }? 'odd'" th:classappend="${st.first} ? 'trbold' ">
+ <td th:text="${st.count}"></td>
+ <td><a th:href="@{info.do(employeeId=${emp.employeeId}, name=${emp.firstName})}" th:text="${emp.employeeId}">100</a></td>
+ <td th:text="|${emp.firstName} ${emp.lastName}|"></td>
+ <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM')}">2024-01-01</td>
+ <td th:text="${emp.salary}" ></td>
+ <td th:if="${emp.salary>10000}" th:text="A"></td>
+ <td th:unless="${emp.salary>10000}" th:text="B"></td>
+ </tr>
+ </th:block>
+</table>
+ 
+  <!-- /*/
+ <th:block th:each="emp,st : ${empList}" >
+ 	<span th:text="${emp.firstName}"></span>
+ 	<br>
+ </th:block>
+  /*/  -->
+
+
+
+	<div th:text="'<b>text</b>'"></div>
+	<div th:utext="'<b>utext</b>'"></div>
+	<div>[[ ${ empList[0].firstName } ]]</div>
+	<div>[( ${ empList[0].firstName } )]</div>
+	
+
+	<script th:inline="javascript">
+		let emps = [[ ${empList} ]]
+	</script>
+</section>
+</body>
+</html>
