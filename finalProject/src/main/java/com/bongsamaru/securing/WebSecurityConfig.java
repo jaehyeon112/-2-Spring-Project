@@ -1,3 +1,4 @@
+
 package com.bongsamaru.securing;
 
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,5 @@ public class WebSecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 	return (web) -> web.ignoring().antMatchers("/userresources/**");
 	}
-	
 	
 }
