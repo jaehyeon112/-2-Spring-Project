@@ -18,6 +18,12 @@ public class FacilityServiceImpl implements FacilityService {
 	public List<FacilityVO> getFacilityList() {
 		return mapper.getFacilityList();
 	}
+
+	@Override
+	public FacilityVO getFacilityInfo(FacilityVO facilityVO) {
+		
+		return mapper.getFacilityInfo();
+	}
 }
 
 

@@ -15,7 +15,14 @@
 	fac_Type
 	FROM FACILITY
 </select>
-
+<select id="getFacilityInfo" resultType="FacilityVO">
+ SELECT FAC_NAME, 
+ 		FAC_INTO,
+ 		FAC_
+</select>
+<select id="get">
+select rec_period, end_period, goal_amt, proj_target, intro,exp_effect from donation where fac_id=#{facId}
+</select>
 </mapper>
 
 
