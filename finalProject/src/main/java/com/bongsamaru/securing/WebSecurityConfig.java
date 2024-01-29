@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,7 +32,7 @@ public class WebSecurityConfig {
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
-				.usernameParameter("userid")
+				.usernameParameter("username")
 				.permitAll()
 			)
 			.logout((logout) -> logout.permitAll())
@@ -41,21 +42,10 @@ public class WebSecurityConfig {
 		return http.build();
 	}
 
-	//@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("1234")
-				.roles("USER")
-				.build();
-		
-		UserDetails admin =
-				 User.withDefaultPasswordEncoder()
-					.username("admin")
-					.password("1234")
-					.roles("ADMIN")
-					.build();		
-		return new InMemoryUserDetailsManager(user,admin);
+	
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+	return (web) -> web.ignoring().antMatchers("/userresources/**");
 	}
+	
 }
