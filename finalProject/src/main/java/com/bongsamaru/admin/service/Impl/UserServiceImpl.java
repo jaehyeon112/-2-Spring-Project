@@ -1,7 +1,5 @@
 package com.bongsamaru.admin.service.Impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +13,10 @@ public class UserServiceImpl implements UserService{
 	UserMapper userMapper;
 
 	@Override
-	public List<UserVO> userList() {
-		return userMapper.userList();
+	public UserVO getUserList(String memStat) {
+		return userMapper.getUserList(memStat);
 	}
+
 	
 	
 }
