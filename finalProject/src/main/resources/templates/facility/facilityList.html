@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>시설리스트</title>
+</head>
+<body>
+<section>
+<h2>시설소개 이미지 들어가기</h2>>
+</section>
+<h1>봉사마루와 함께하는 시설들</h1>
+<div>
+<!-- <select th:field="*{ResionVO}" class="form-select">
+<option value="">==지역==</option>
+<option th:each="ResionVO : ${resions}" th:value="${ResionVO.code}" th:text="${ResionVO.displayName}"/>
+</select>
+</div>
+<div>
+<select th:field="*{ServiceType}" class="form-select">
+<option value="">==봉사유형==</option>
+<option th:each="ServiceType : ${ServiceTypes}" th:value="${ServiceType.code}" th:text="${ServiceType.displayName}"/>
+</select> -->
+
+
+
+<select th:field="*{facilityVO}" class="form-select">
+<option value="">==지역==</option>
+<option th:each="facilityVO : ${selectList}" th:value="${facilityVO.addSel}" th:text="${ResionVO.addSel}"/>
+</select>
+</div>
+<div>
+<select th:field="*{facilityVO}" class="form-select">
+<option value="">==봉사유형==</option>
+<option th:each="facilityVO : ${selectList}" th:value="${facilityVO.시설유형}" th:text="${facilityVO.시설유형}"/>
+</select>
+</div>
+
+
+
+<div>
+ 
+</div>
+
+</body>
+</html>

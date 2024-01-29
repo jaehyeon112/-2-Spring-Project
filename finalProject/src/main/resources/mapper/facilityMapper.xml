@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mappers>
+<!-- selectbox --> 
+<mapper namespace="com.bongsamary.facility.mapper.FacilityMapper">
+<select id="getSelectBox" resultType="FacilityVO">
+	SELECT instr(address, ' ') as addSel, volType from facility
+</select>
+</mapper>
+<!-- 시설리스트 -->
+<mapper namespace="com.bongsamary.facility.mapper.FacilityMapper">
+<select id="getFacilityList" resultType="FacilityVO">
+	SELECT 시설이름, 지역, 시설유형 FROM FACILITY WHERE addSel = ${} AND 시설유형 = ${}
+</select>
+</mapper>
+</mappers> 
