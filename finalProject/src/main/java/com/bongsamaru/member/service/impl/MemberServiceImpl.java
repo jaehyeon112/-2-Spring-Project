@@ -12,7 +12,7 @@ import com.bongsamaru.member.mapper.MemberMapper;
 import com.bongsamaru.member.service.MemberService;
 
 @Service
-public class MemberServiceImpl implements MemberService,UserDetailsService {
+public class MemberServiceImpl implements MemberService,UserDetailsService{
 
 @Autowired
 MemberMapper memberMapper;

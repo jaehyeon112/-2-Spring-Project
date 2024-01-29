@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <title>로그인 </title>
+    <style>
+        .form-control {
+            width: 300px;
+        }
+
+        .loginMethod {
+            font-size: 22px;
+            font-weight: 700;
+            padding-bottom: 100px;
+        }
+        .hidden {
+   		 display: none;
+		}
+    </style>
+</head>
+
+<body>
+    <section layout:fragment="content">
+        <div class="justify-content-center" style="text-align:center">
+            <div style="margin-bottom:20px; align-content:center;">
+            <p class="content" id="userContent">일반회원 내용입니다.</p>
+			<p class="content hidden" id="facilityContent">시설회원 내용입니다.</p>
+                  <span class="loginMethod" id="user"  > 일반회원</span>
+                <span class="loginMethod"  id="facility"> 시설회원</span>
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <form th:action="@{/login}" method="post">
+                <div><label> <input class="form-control" type="text" name="username" placeholder="아이디를 입력해주세요" />
+                    </label></div>
+                <div><label> <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" />
+                    </label></div>
+                <div><label><input type="submit" class="form-control" value="로그인하기" /></label></div>
+            </form>
+
+            <script type="text/javascript">
+            	let user = true;
+            	let facility = false;
+            
+            	window.onload = function () {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.size == 1) {
+                        alert('로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.');
+                    }
+                };
+                
+                $('#user').on('click', function(e) {
+                    $('#userContent').removeClass('hidden');
+                    $('#facilityContent').addClass('hidden');
+                });
+
+                $('#facility').on('click', function(e) {
+                    $('#facilityContent').removeClass('hidden');
+                    $('#userContent').addClass('hidden');
+                });
+                
+                
+            </script>
+
+        </div>
+    </section>
+</body>
+
+</html>
