@@ -1,4 +1,3 @@
-
 package com.bongsamaru.securing;
 
 import org.springframework.context.annotation.Bean;

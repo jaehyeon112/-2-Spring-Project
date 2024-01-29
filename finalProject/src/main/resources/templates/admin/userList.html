@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>고객정보</title>
+</head>
+<body>
+	<section layout:fragment="content">
+	<div class="body-wrapper">
+      <!--  Header Start -->
+		<div class="divFooter" th:insert="~{admin/adminHeader :: head}"></div>
+      <!--  Header End -->
+      <div class="container-fluid">
+		<div class="container">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>아이디</th>
+						<th>닉네임</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th>생일</th>
+					</tr>
+				</thead>
+				<tbody>
+				 	<th:block th:each="user : ${userList}" >
+						<tr>
+							 <td th:text="${user.memId}" >아이디</td>
+							 <td th:text="${user.memNick}" >닉네임</td>
+							 <td th:text="${user.memPhone}" >전화번호</td>
+							 <td th:text="${user.memAddr}" >주소</td>
+							 <td th:text="${#dates.format(user.memBdate, 'yyyy-MM')}">2024-01-01</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+      </div>
+    </div>
+	</section>
+</body>
+</html>

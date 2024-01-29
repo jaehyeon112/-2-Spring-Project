@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header>
+		<ul>
+			<li>사원관리</li>
+			<li>부서관리</li>
+		</ul>
+	</header>
+	<section layout:fragment="content"></section>
+	<div class="divfooter" th:insert="~{footer::copy}">
+		
+	</div>
+	
+</body>
+
+</html>
