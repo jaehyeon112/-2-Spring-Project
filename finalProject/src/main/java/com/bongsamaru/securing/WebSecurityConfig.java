@@ -30,7 +30,7 @@ public class WebSecurityConfig {
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
-				//.loginPage("/login")
+				.loginPage("/login")
 				.usernameParameter("userid")
 				.permitAll()
 			)
@@ -41,7 +41,7 @@ public class WebSecurityConfig {
 		return http.build();
 	}
 
-	@Bean
+	//@Bean
 	public UserDetailsService userDetailsService() {
 		UserDetails user =
 			 User.withDefaultPasswordEncoder()
