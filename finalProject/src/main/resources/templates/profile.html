@@ -36,6 +36,7 @@
 					<button type="button" id="enterBtn" class="hidden">확인</button>  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
 				<input type="text" id="changeNum" class="hidden" placeholder="변경하실 전화번호를 입력하세요">   <!-- 인증번호 입력창 -->
 					<button type="button" id="changeBtn" class="hidden">변경</button>  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->	
+			    <label id="changeTel" class="hidden">010-8898-8034</label>
 			    </div>
 				<br>
 				<label>이메일</label>
@@ -132,8 +133,12 @@
 					     	$("#changeBtn").removeClass('hidden');
 					     	
 					     	$("#changeBtn").on('click', function(){
-					        	alert('변경 완료');
+					        	alert('변경이 완료되었습니다.');
+					        	$("input").remove("#changeNum");
+							 	$("button").remove("#changeBtn");
+							 	$("button").removeClass("#changeTel");
 					        })
+					        
 						}
 						else {
 							alert('인증 실패하였습니다. 다시 입력해주세요.');
