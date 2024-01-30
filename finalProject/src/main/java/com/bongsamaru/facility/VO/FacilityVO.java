@@ -11,7 +11,7 @@ public class FacilityVO {
 	private String facPwd;
 	private String facName;
 	private String facType;
-	private Number facZip;
+	private Integer facZip;
 	private String facAddr;
 	private String facAddrDetail;
 	private String resion;
@@ -25,4 +25,8 @@ public class FacilityVO {
 	private String donAcct;
 	private String donApp;
 	private String memApp;
+	
+	//join문으로 생긴 별칭
+	private Integer DonaitonAmt;
+	private Integer Donors;
 }

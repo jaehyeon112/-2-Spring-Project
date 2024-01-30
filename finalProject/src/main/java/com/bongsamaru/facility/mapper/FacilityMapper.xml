@@ -13,9 +13,12 @@
 	FROM FACILITY
 </select>
 <select id="getFacilityInfo" resultType="FacilityVO">
- SELECT FAC_NAME, 
- 		FAC_INTO,
- 		FAC_
+ Select Fac_Name,
+ 		Fac_Type, 
+ 		Fac_Addr,Fac_Web,
+		(Select Sum(T1.Don_Amt) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As DonaitonAmt,
+		(Select Count(Distinct(T1.Mem_Id)) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As Donors
+		From Facility Where Fac_Id=#{facId};
 </select>
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">

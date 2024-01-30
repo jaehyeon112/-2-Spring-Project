@@ -46,8 +46,8 @@ float:left;
                                 <img src="image/sdfsdf.jpg" alt="">
                                 <h2 class="btn theme_btn button_hover">시설이름</h2>
                             </div>
-                            <h4 class="sec_h4">총기부자수</h4>
-                            <h5 class="sec_h5">총기부금액</h5>
+                            <h4 class="sec_h4" th:text="${facility.donors}">총기부자수</h4>
+                            <h5 class="sec_h5" th:text="${funding.donors}">총기부금액</h5>
                         </div>
                     </div>
 </section>                    
