@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.bongsamaru.dona.mapper.DonaMapper">
+ 	<select id="getDonaList" resultType="DonaVO">
+ 		SELECT 
+ 			d.title,
+ 			d.goal_amt,
+ 			COUNT(f.don_id) AS donationCount,
+ 			(SUM(f.don_amt) / d.goal_amt) * 100 AS donationRatio,
+ 			c.fac_name AS facilityName,
+ 			d.rec_stat
+ 		FROM donation d
+ 			LEFT JOIN don_ledger f ON d.don_id = f.don_id
+ 			LEFT JOIN facility c ON d.fac_id = c.fac_id
+ 		
+ 		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat
+ 	
+ 	</select>
+ 
+ </mapper>
