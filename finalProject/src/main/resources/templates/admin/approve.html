@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>승인페이지</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -16,7 +21,7 @@
       <div class="container-fluid">
 		<div class="container">
 		<h2>승인관리</h2>
-		<div style="float:right;color:black">
+		<div style="float:right;color:black" class="cur">
 			<a style="color:black;font-size:18px" onclick="show()">시설가입 |</a>
 			<a style="color:black;font-size:18px" onclick="show1()">시설 기부신청 |</a>
 			<a style="color:black;font-size:18px" onclick="show2()">시설 기부금 등록 |</a>
@@ -32,7 +37,6 @@
 						<th>시설 주소</th>
 						<th>설립일</th>
 						<th>이메일</th>
-						<th>홈페이지 주소</th>
 						<th>대표자명</th>
 						<th>대표번호</th>
 						<th>승인처리</th>
@@ -45,12 +49,12 @@
 							 <td th:text="${fac.facType}" >시설유형</td>
 							 <td th:text="${fac.bizNum}" >사업자등록번호</td>
 							 <td th:text="${fac.facAddr}" >시설 주소</td>
-							 <td th:text="${fac.facEstDate}" >설립일</td>
+							 <td th:text="${#dates.format(fac.facEstDate, 'yyyy년 MMM dd일')}" >설립일</td>
 							 <td th:text="${fac.facEmail}" >이메일</td>
-							 <td th:text="${fac.facWeb}" >홈페이지</td>
 							 <td th:text="${fac.repName}" >대표자명</td>
 							 <td th:text="${fac.repPhone}">대표번호</td>
-							 <td th:if="{fac.memApp}==0"><button>승인</button></td>
+							 <td th:if="${fac.memApp}==0"><button>승인</button></td>
+							 <td th:if="${fac.memApp}==1">처리완료</td>
 						</tr>
 					</th:block>
 				</tbody>

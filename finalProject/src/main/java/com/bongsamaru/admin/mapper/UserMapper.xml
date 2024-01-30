@@ -24,6 +24,31 @@
 		from member
 		where MEM_STAT = #{memStat}
 	</select>
+	<select id="volCount" resultType="VolunteerVO">
+		(select nvl(sum(count(mem_id)),0) from vol_act_mem where mem_id=#{memId} group by mem_id) as  vol,
+		(select nvl(sum(count(mem_id)),0) from vol_mem where mem_id=#{memId} and mem_code='1' group by mem_id) as fac from dual
+	</select>
+	<select id="getUserOne" resultType="UserVO">
+		select MEM_ID,
+				MEM_PWD,
+				MEM_NICK,
+				MEM_PHONE,
+				MEM_ZIP,
+				MEM_ADDR,
+				MEM_BDATE,
+				MEM_DEPT,
+				MEM_EMAIL,
+				DON_RECEIPT,
+				MEM_SSN,
+				EMAIL_AGREE,
+				SMS_AGREE,
+				ACCT_NUM,
+				BANK_NAME,
+				MEM_STAT,
+				MEM_NAME
+		from member
+		where MEM_ID = #{memId}
+	</select>
 	<select id="getFacilityList" resultType="FacilityVO">
 		select FAC_ID,
 				BIZ_NUM,
@@ -59,5 +84,36 @@
 				DON_REG_APP,
 				EXP_EFFECT
 		from donation
+	</select>
+	<select id="getBoardList" resultType="BoardVO">
+		select BOARD_ID,
+			TITLE,
+			CONTENT,
+			WRITE_DATE,
+			VIEWS,
+			PRIORITY,
+			MEM_ID,
+			MOD_DATE,
+			DETAIL_CATE
+		from board
+		where CATEGORY = #{category}
+	</select>
+	<insert id="insertNotice" parameterType="BoardVO">
+		insert into board(
+			board_id,
+			CATEGORY,
+			TITLE,
+			CONTENT,
+			PRIORITY,
+			MEM_ID,
+			DETAIL_CATE)
+		values(board_id.NEXTVAL,#{category},#{title},#{content},#{priority},'ADMIN',notice_id.NEXTVAL);
+	</insert>
+	<select id="getFaqList" resultType="FaqVO">
+		select FAQ_ID,
+			CATEGORY,
+			TITLE,
+			CONTENT
+		from FAQ
 	</select>
 </mapper>

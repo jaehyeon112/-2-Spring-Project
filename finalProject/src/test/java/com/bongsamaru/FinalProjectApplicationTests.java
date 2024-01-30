@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bongsamaru.admin.mapper.UserMapper;
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 
 @SpringBootTest
 @MapperScan(basePackages = "com.bongsamaru.**.mapper")

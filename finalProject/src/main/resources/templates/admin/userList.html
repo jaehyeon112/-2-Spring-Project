@@ -5,6 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>고객정보</title>
+<style>
+#content{
+	height:600px;
+	width:600px
+}
+.modal-title{
+	margin : auto;
+	padding-top : 20px;
+	text-align : center;
+}
+.modal-body{
+	margin : auto;
+	background-color:#e6e6fa;
+	width : 500px;
+	height : 500px;
+}
+.btn-deleteAsk{
+	cursor:pointer;
+}
+.cur{
+	cursor:pointer;
+}
+</style>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -15,11 +38,12 @@
       <div class="container-fluid">
 		<div class="container">
 		<h2>회원관리</h2>
-		<div style="float:right;color:black">
-			<a style="color:black;font-size:18px" th:href="@{/userList?memStat=m01}">일반회원 |</a>
-			<a style="color:black;font-size:18px" th:href="@{/userList?memStat=m02}"> 시설회원</a>
+		<div style="float:right;color:black" class="cur">
+			<a style="color:black;font-size:18px" onclick="show1()">일반회원 |</a>
+			<a style="color:black;font-size:18px" onclick="show2()"> 시설회원</a>
 		</div>
-			<table class="table">
+		<div id="tableData">
+			<table class="table" id="classic">
 				<thead>
 					<tr>
 						<th>이름</th>
@@ -33,7 +57,7 @@
 				<tbody>
 				 	<th:block th:each="user : ${userList}" >
 						<tr>
-							 <td th:text="${user.memName}" >아이디</td>
+							 <td th:text="${user.memName}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
 							 <td th:text="${user.memId}" >아이디</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
 							 <td th:text="${user.memDept}">학과</td>
@@ -44,7 +68,85 @@
 					</th:block>
 				</tbody>
 			</table>
+			<div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content" id="content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="deleteConfirmationModalLabel"></h5>
+			            </div>
+			            <div class="modal-body">
+			                <div>
+			                <h5>이번달</h5>
+			                	<table class="table">
+			                		<thead>
+				                		<tr>
+				                			<th>봉사횟수</th>
+				                			<td id="volCnt"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>기부횟수</th>
+				                			<td>333</td>
+				                		</tr>
+				                		<tr><td>총 : 100000</td></tr>
+			                		</thead>
+			                	</table>
+			                <h5>이번년도</h5>
+			                	<table class="table">
+			                		<thead>
+				                		<tr>
+				                			<th>봉사횟수</th>
+				                			<td>333</td>
+				                		</tr>
+				                		<tr>
+				                			<th>기부횟수</th>
+				                			<td>333</td>
+				                		</tr>
+				                		<tr><td>총 : 100000</td></tr>
+			                		</thead>
+			                	</table>
+			                </div>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="false">확인</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+
 		</div>
+		</div>
+		<script th:inline="javascript">
+			function show1(){
+				$('#tableData').load("../userList?memStat=m01 #classic");
+			};
+			function show2(){
+				$('#tableData').load("../userListDetail #facility");
+			};
+			    
+			
+		    function who(id) {
+		    	$('.modal-title').empty();
+		    	$.ajax('../userInfo?memId='+id)
+		       .done(result => {
+		           $(".modal-title").append(result.memName+'의 활동 내역')
+		          })
+		       .fail(err => console.log(err));
+		    	
+		    	$.ajax('../volCount?memId='+id)
+		       .done(result => {
+		    	   console.log(result)
+		           $(".volCnt").append((result.fac+result.vol)+'회')
+		          })
+		       .fail(err => console.log(err));
+		    	
+		    	$("#myModal").modal("show");
+		    	
+		    }
+		    
+		    $(".btn-secondary").click(function () {
+		      $("#myModal").modal("hide");
+		    });
+		</script>
       </div>
     </div>
 	</section>

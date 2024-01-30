@@ -1,4 +1,4 @@
-package com.bongsamaru.admin.service;
+package com.bongsamaru.common;
 
 import java.util.Date;
 
