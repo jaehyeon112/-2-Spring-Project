@@ -14,25 +14,32 @@
       <!--  Header End -->
       <div class="container-fluid">
 		<div class="container">
-		<h2>회원관리</h2><div style="float:right"><a>일반회원 </a>|<a> 시설회원</a></div>
+		<h2>회원관리</h2>
+		<div style="float:right;color:black">
+			<a style="color:black;font-size:18px" th:href="@{/userList?memStat=m01}">일반회원 |</a>
+			<a style="color:black;font-size:18px" th:href="@{/userList?memStat=m02}"> 시설회원</a>
+		</div>
 			<table class="table">
 				<thead>
 					<tr>
+						<th>이름</th>
 						<th>아이디</th>
-						<th>닉네임</th>
 						<th>전화번호</th>
-						<th>주소</th>
-						<th>생일</th>
+						<th>학과</th>
+						<th>이메일</th>
+						<th>기부영수증 처리 여부</th>
 					</tr>
 				</thead>
 				<tbody>
 				 	<th:block th:each="user : ${userList}" >
 						<tr>
+							 <td th:text="${user.memName}" >아이디</td>
 							 <td th:text="${user.memId}" >아이디</td>
-							 <td th:text="${user.memNick}" >닉네임</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
-							 <td th:text="${user.memAddr}" >주소</td>
-							 <td th:text="${#dates.format(user.memBdate, 'yyyy-MM-dd')}">2024-01-01</td>
+							 <td th:text="${user.memDept}">학과</td>
+							 <td th:text="${user.memEmail}">이메일</td>
+							 <td th:if="${user.donReceipt}=='0'">처리</td>
+							 <td th:if="${user.donReceipt}=='1'">비처리</td>
 						</tr>
 					</th:block>
 				</tbody>

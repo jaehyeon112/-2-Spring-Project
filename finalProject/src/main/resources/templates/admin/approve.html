@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>승인페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+	<div class="body-wrapper">
+      <!--  Header Start -->
+		<div class="divFooter" th:insert="~{admin/adminHeader :: head}"></div>
+      <!--  Header End -->
+      <div class="container-fluid">
+		<div class="container">
+		<h2>승인관리</h2>
+		<div style="float:right;color:black">
+			<a style="color:black;font-size:18px" onclick="show()">시설가입 |</a>
+			<a style="color:black;font-size:18px" onclick="show1()">시설 기부신청 |</a>
+			<a style="color:black;font-size:18px" onclick="show2()">시설 기부금 등록 |</a>
+			<a style="color:black;font-size:18px" onclick="show3()"> 시설 기부금 리뷰</a>
+		</div>
+		<div id="tableData">
+			<table class="table" id="bas">
+				<thead>
+					<tr>
+						<th>시설명</th>
+						<th>시설유형</th>
+						<th>사업자등록번호</th>
+						<th>시설 주소</th>
+						<th>설립일</th>
+						<th>이메일</th>
+						<th>홈페이지 주소</th>
+						<th>대표자명</th>
+						<th>대표번호</th>
+						<th>승인처리</th>
+					</tr>
+				</thead>
+				<tbody>
+				 	<th:block th:each="fac : ${facilityList}" >
+						<tr>
+							 <td th:text="${fac.facName}" >시설명</td>
+							 <td th:text="${fac.facType}" >시설유형</td>
+							 <td th:text="${fac.bizNum}" >사업자등록번호</td>
+							 <td th:text="${fac.facAddr}" >시설 주소</td>
+							 <td th:text="${fac.facEstDate}" >설립일</td>
+							 <td th:text="${fac.facEmail}" >이메일</td>
+							 <td th:text="${fac.facWeb}" >홈페이지</td>
+							 <td th:text="${fac.repName}" >대표자명</td>
+							 <td th:text="${fac.repPhone}">대표번호</td>
+							 <td th:if="{fac.memApp}==0"><button>승인</button></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+		</div>
+			<script th:inline="javascript">
+				function show(){
+					$('#tableData').load("../approve #bas");
+				}
+				function show1(){
+					$('#tableData').load("../facilityApprove #fac");
+				}
+				function show2(){
+					$('#tableData').load("../facilityApprove #don");
+				}
+				function show3(){
+					alert('아직 고민중ㅇ');
+				}
+			</script>
+      </div>
+    </div>
+	</section>
+</body>
+</html>

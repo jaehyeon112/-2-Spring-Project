@@ -24,4 +24,40 @@
 		from member
 		where MEM_STAT = #{memStat}
 	</select>
+	<select id="getFacilityList" resultType="FacilityVO">
+		select FAC_ID,
+				BIZ_NUM,
+				FAC_PWD,
+				FAC_NAME,
+				FAC_TYPE,
+				FAC_ZIP,
+				FAC_ADDR,
+				FAC_ADDR_DETAIL,
+				FAC_EST_DATE,
+				FAC_EMAIL,
+				FAC_WEB,
+				FAC_INTRO,
+				REP_NAME,
+				REP_PHONE,
+				FAC_BANK,
+				DON_ACCT,
+				DON_APP,
+				MEM_APP
+		from facility
+	</select>
+	<select id="getDonationList" resultType="DonationVO">
+		select DON_ID,
+				FAC_ID,
+				TITLE,
+				REC_PERIOD,
+				END_PERIOD,
+				EXT_PERIOD,
+				GOAL_AMT,
+				PROJ_TARGET,
+				INTRO,
+				REC_STAT,
+				DON_REG_APP,
+				EXP_EFFECT
+		from donation
+	</select>
 </mapper>
