@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{facilitylayout}">
+ layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설상세</title>
-<style>
+<!-- <style>
 .facilityIntro{
 float:left;
 }
-</style>
+</style> -->
 </head>
 <body>
-<section layout:fragment="fixcontent">
+<section layout:fragment="content">
 <!-- <div>
 <ul class="HappylogLnb_wrap__2JV5L" role="menubar">
 <li class="HappylogLnb_item__1rk3W" role="presentation">
@@ -47,8 +47,8 @@ float:left;
                                 <img src="image/sdfsdf.jpg" alt="">
                                 <h2 class="btn theme_btn button_hover">시설이름</h2>
                             </div>
-                            <h4 class="sec_h4" th:text="${facility.donors}">총기부자수</h4>
-                            <h5 class="sec_h5" th:text="${funding.donors}">총기부금액</h5>
+                            <h4 class="sec_h4" th:text="${facilityInfo.donors}">총기부자수</h4>
+                            <h5 class="sec_h5" th:text="${facilityInfo.donaitonAmt}">총기부금액</h5>
                         </div>
                     </div>
 </section>                    
@@ -59,5 +59,6 @@ float:left;
 
 
 </section>
+
 </body>
 </html>

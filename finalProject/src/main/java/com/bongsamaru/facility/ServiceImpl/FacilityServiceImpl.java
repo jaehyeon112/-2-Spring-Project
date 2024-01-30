@@ -22,7 +22,7 @@ public class FacilityServiceImpl implements FacilityService {
 
 	@Override
 	public FacilityVO getFacilityInfo(FacilityVO facilityVO) {
-		return mapper.getFacilityInfo();
+		return mapper.getFacilityInfo(facilityVO);
 	}
 
 	@Override

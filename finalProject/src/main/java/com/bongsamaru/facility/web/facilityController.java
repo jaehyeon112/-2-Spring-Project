@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bongsamaru.common.VO.RegionVO;
 import com.bongsamaru.facility.Service.FacilityService;
@@ -47,6 +48,18 @@ public class facilityController {
 	public String getFacilityInfo(FacilityVO facilityVO, Model model) {
 		FacilityVO findVO = facilityService.getFacilityInfo(facilityVO);
 		model.addAttribute("facilityInfo",findVO);		
+		return "facility/facilityInfo";
+	}
+	
+	@GetMapping("/facilityInfo/{facId}")
+	//@ResponseBody
+	public String getFacilityInfo(@PathVariable("facId") String facId, FacilityVO facilityVO, Model model){
+		/*
+		 * FacilityVO facilityVO = new FacilityVO(); facilityVO.setFacId(facId);
+		 */
+		FacilityVO findVO = facilityService.getFacilityInfo(facilityVO);
+		model.addAttribute("facilityInfo",findVO);	
+		System.out.println(findVO);
 		return "facility/facilityInfo";
 	}
 	

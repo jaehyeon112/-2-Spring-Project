@@ -7,10 +7,11 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
-	SELECT FAC_NAME,
-	SUBSTR(FAC_ADDR,1,INSTR(FAC_ADDR, ' ')-1) AS region,
-	FAC_TYPE
-	FROM FACILITY
+	SELECT FAC_ID,
+			FAC_NAME,
+			SUBSTR(FAC_ADDR,1,INSTR(FAC_ADDR, ' ')-1) AS region,
+			FAC_TYPE
+			FROM FACILITY
 </select>
 <select id="getFacilityInfo" resultType="FacilityVO">
  Select Fac_Name,
