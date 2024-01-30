@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.bongsamaru.common.VO.RegionVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.VO.FacilityVO;
+import com.bongsamaru.facility.VO.FundingVO;
 @Controller
 public class facilityController {
 	@Autowired
@@ -47,6 +48,13 @@ public class facilityController {
 		FacilityVO findVO = facilityService.getFacilityInfo(facilityVO);
 		model.addAttribute("facilityInfo",findVO);		
 		return "facility/facilityInfo";
+	}
+	
+	@GetMapping("fundingList")
+	public String getFundingList(Model model) {
+		List<FundingVO> list = facilityService.getFundingList();
+		model.addAttribute("fundingList", list);
+		return "facility/facilityDonation";
 	}
 	
 	

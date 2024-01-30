@@ -4,10 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  
-<!-- selectbox --> 
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
-
-
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
 	SELECT fac_Name,
@@ -20,8 +17,16 @@
  		FAC_INTO,
  		FAC_
 </select>
-<select id="get">
-select rec_period, end_period, goal_amt, proj_target, intro,exp_effect from donation where fac_id=#{facId}
+<!-- 시설에서 진행중인 모금정보 List-->
+<select id="getfundingList" resultType="FundingVO">
+	select d1.title as title,
+		   d1.goal_amt as goalAmt,
+		   d1.rec_stat as state,
+	       sum(d2.don_amt) as donaitonAmt,
+	       count(distinct (d2.mem_id)) as donors,
+	       d1.don_id as donId
+		   from donation d1 left join don_ledger d2 on d1.don_id=d2.don_id
+		   group by d1.don_id,d1.title, d1.goal_amt, d1.rec_stat
 </select>
 </mapper>
 

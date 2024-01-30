@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.VO.FacilityVO;
+import com.bongsamaru.facility.VO.FundingVO;
 import com.bongsamaru.facility.mapper.FacilityMapper;
 @Service
 public class FacilityServiceImpl implements FacilityService {
@@ -23,6 +24,11 @@ public class FacilityServiceImpl implements FacilityService {
 	public FacilityVO getFacilityInfo(FacilityVO facilityVO) {
 		
 		return mapper.getFacilityInfo();
+	}
+
+	@Override
+	public List<FundingVO> getFundingList() {
+		return mapper.getfundingList();
 	}
 }
 
