@@ -15,11 +15,12 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/home").setViewName("home");
 		registry.addViewController("/").setViewName("layout");
 		registry.addViewController("/hello").setViewName("hello");
-		registry.addViewController("/login/FacilityLogin").setViewName("login/FacilityLogin");
+		registry.addViewController("/login").setViewName("login/FacilityLogin");
 		registry.addViewController("/admin/index").setViewName("/admin/index");
 		registry.addViewController("/admin/adminMain").setViewName("admin/adminMain");
 		registry.addViewController("/admin/ui-buttons").setViewName("admin/ui-buttons");
 		registry.addViewController("/meeting").setViewName("meeting");
+		registry.addViewController("/signup").setViewName("login/signup");
 	}
 
 }

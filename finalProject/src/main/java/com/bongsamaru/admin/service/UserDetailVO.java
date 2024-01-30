@@ -1,18 +1,25 @@
 package com.bongsamaru.admin.service;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class UserDetailVO implements UserDetails {
+public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	
 	final UserVO userVO;
 	
@@ -41,6 +48,10 @@ public class UserDetailVO implements UserDetails {
 		// TODO Auto-generated method stub
 		return userVO.getMemId();
 	}
+	
+	public String getUserNickname() {
+		return userVO.getMemNick();
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -65,5 +76,10 @@ public class UserDetailVO implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+		
+	}
 }
