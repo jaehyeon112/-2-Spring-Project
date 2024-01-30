@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+>
+    <head>
+        <title>로그인 </title>
+    </head>
+    <body>
+    	<section layout:fragment="content">
+        <div th:if="${param.error}">
+            아이디/비밀번호를 다시 확인해주세요.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div><label> <input class="form-control" type="text" name="username" placeholder="아이디를 입력해주세요"/> </label></div>
+            <div><label> <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요"/> </label></div>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
+        </section>
+    </body>
+    <script>
+   alert('asdf');
+    </script>
+</html>
