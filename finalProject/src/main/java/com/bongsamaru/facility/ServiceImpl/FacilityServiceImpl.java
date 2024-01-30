@@ -22,13 +22,17 @@ public class FacilityServiceImpl implements FacilityService {
 
 	@Override
 	public FacilityVO getFacilityInfo(FacilityVO facilityVO) {
-		
 		return mapper.getFacilityInfo();
 	}
 
 	@Override
 	public List<FundingVO> getFundingList() {
 		return mapper.getfundingList();
+	}
+
+	@Override
+	public List<FundingVO> getFundedList() {
+		return mapper.getfundedList();
 	}
 }
 

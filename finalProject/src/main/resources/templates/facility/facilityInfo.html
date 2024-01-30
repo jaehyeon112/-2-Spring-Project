@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!--  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{layout}">  -->
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{facilitylayout}">
 <head>
 <meta charset="UTF-8">
 <title>시설상세</title>
@@ -12,6 +12,7 @@ float:left;
 </style>
 </head>
 <body>
+<section layout:fragment="fixcontent">
 <!-- <div>
 <ul class="HappylogLnb_wrap__2JV5L" role="menubar">
 <li class="HappylogLnb_item__1rk3W" role="presentation">
@@ -57,6 +58,6 @@ float:left;
 
 
 
-
+</section>
 </body>
 </html>

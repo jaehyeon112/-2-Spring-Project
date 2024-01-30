@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{layout}">
+ layout:decorate="~{facilitylayout}">
 <head>
 <meta charset="UTF-8">
 <title>기부 후기</title>
 </head>
 <body>
+<section layout:fragment="content">
+<div class="facilities_item">
+<h3 class="title_color section_title text-center">기부 중</h3>
 <div class="row mb_30">
-<th:block th:each="funding:${list}">
+<th:block th:each="funding:${fundingList}">
                     <div class="col-lg-4 col-md-6">
                         <div class="single-recent-blog-post">
                             <div class="thumb">
-                                <img class="img-fluid" src="image/blog/blog-1.jpg" alt="post">
+                                <img class="img-fluid" src="../image/sdfsdf.jpg" alt="post">
+                                <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a>
                             </div>
                             <div class="details">
                                 <div class="tags">
                                     <!-- <a href="#" class="button_hover tag_btn">Travel</a>
                                     <a href="#" class="button_hover tag_btn">Life Style</a> -->
                                 </div>
-                                <h4 class="sec_h4" th:text="${funding.title}"></h4>
-                                <p th:text="${funding.donors}">명 참여</p>
+                                <h4 class="sec_h3" th:text="${funding.title}" style="color:black;"></h4>
+                                <p th:text="${funding.donors}+'명 참여'" style="color:black;"></p>
                                 <h6 class="date title_color" th:text="${funding.goalAmt}"></h6>
                             </div>	
                         </div>
                     </div>
-                </div> <!-- 여기까지 이미지 세개 -->
+                </div> 
 </th:block>
-
-
+</div>
+<div class="facilities_item">
+<h3 class="title_color section_title text-center">기부 마감</h3>
+<div class="row mb_30">
+<th:block th:each="funded:${fundedList}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-recent-blog-post">
+                            <div class="thumb">
+                                <img class="img-fluid" src="../image/sdfsdf.jpg" alt="post">
+                                <a th:href="@{info.do(donId=${funded.donId}, name=${funded.donId})}" th:text="${funded.title}"></a>
+                            </div>
+                            <div class="details">
+                                <div class="tags">
+                                    <!-- <a href="#" class="button_hover tag_btn">Travel</a>
+                                    <a href="#" class="button_hover tag_btn">Life Style</a> -->
+                                </div>
+                                <h4 class="sec_h3" th:text="${funded.title}" style="color:black;"></h4>
+                                <p th:text="${funded.donors}+'명 참여'" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${funded.goalAmt}"></h6>
+                            </div>	
+                        </div>
+                    </div>
+                </div> 
+</th:block>
+</div>
+</section>
 </body>
 </html>

@@ -54,6 +54,8 @@ public class facilityController {
 	public String getFundingList(Model model) {
 		List<FundingVO> list = facilityService.getFundingList();
 		model.addAttribute("fundingList", list);
+		List<FundingVO> listed = facilityService.getFundedList();
+		model.addAttribute("fundedList", listed);
 		return "facility/facilityDonation";
 	}
 	

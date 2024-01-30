@@ -7,29 +7,44 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
-	SELECT fac_Name,
-	instr(fac_addr, ' ') as resion,
-	fac_Type
+	SELECT FAC_NAME,
+	SUBSTR(FAC_ADDR,1,INSTR(FAC_ADDR, ' ')-1) AS region,
+	FAC_TYPE
 	FROM FACILITY
 </select>
 <select id="getFacilityInfo" resultType="FacilityVO">
  Select Fac_Name,
  		Fac_Type, 
- 		Fac_Addr,Fac_Web,
-		(Select Sum(T1.Don_Amt) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As DonaitonAmt,
-		(Select Count(Distinct(T1.Mem_Id)) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As Donors
-		From Facility Where Fac_Id=#{facId};
+ 		Fac_Addr,
+ 		Fac_Web,
+		(Select Sum(T1.Don_Amt) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donaitonAmt,
+		(Select Count(Distinct(T1.Mem_Id)) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donors
+		From Facility Where Fac_Id=#{facId}
 </select>
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">
-	select d1.title as title,
-		   d1.goal_amt as goalAmt,
-		   d1.rec_stat as state,
-	       sum(d2.don_amt) as donaitonAmt,
-	       count(distinct (d2.mem_id)) as donors,
-	       d1.don_id as donId
-		   from donation d1 left join don_ledger d2 on d1.don_id=d2.don_id
-		   group by d1.don_id,d1.title, d1.goal_amt, d1.rec_stat
+	SELECT D1.DON_ID,D1.TITLE AS title, 
+	D1.GOAL_AMT AS goalAmt, 
+	D1.REC_STAT AS state,
+	SUM(NVL(0,D2.DON_AMT)) AS donationAmt, 
+	COUNT(DISTINCT (D2.MEM_ID)) AS donors, 
+	D1.DON_ID AS donId
+	FROM DONATION D1 LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+	WHERE D1.REC_STAT ='0' AND D1.DON_REG_APP='1'
+	GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
+</select>
+
+<!-- 시설에서 진행마감인 모금정보 List-->
+<select id="getfundedList" resultType="FundingVO">
+	SELECT D1.DON_ID,D1.TITLE AS title, 
+	D1.GOAL_AMT AS goalAmt, 
+	D1.REC_STAT AS state,
+	SUM(NVL(0,D2.DON_AMT)) AS donationAmt, 
+	COUNT(DISTINCT (D2.MEM_ID)) AS donors, 
+	D1.DON_ID AS donId
+	FROM DONATION D1 LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+	WHERE D1.REC_STAT ='1' AND D1.DON_REG_APP='1'
+	GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
 </select>
 </mapper>
 

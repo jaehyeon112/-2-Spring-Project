@@ -10,5 +10,6 @@ public interface FacilityMapper {
 	public List<FacilityVO> getFacilityList();
 	public FacilityVO getFacilityInfo();
 	public List<FundingVO> getfundingList();
+	public List<FundingVO> getfundedList();
 	
 }

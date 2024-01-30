@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!--  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{layout}">  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설리스트</title>
 </head>
 <body>
-<section>
-<h2>시설소개 이미지 들어가기</h2>
-</section>
-<h1>봉사마루와 함께하는 시설들</h1>
-<div>
-<!-- <select th:field="*{ResionVO}" class="form-select">
+	<section layout:fragment="content">
+		<section class="breadcrumb_area blog_banner_two">
+			<div class="overlay bg-parallax" data-stellar-ratio="0.8"
+				data-stellar-vertical-offset="0" data-background=""
+				style="transform: translateY(0px);"></div>
+			<div class="container">
+				<div class="page-cover text-center">
+					<h2 class="page-cover-tittle f_48">봉사마루와 함께하는 시설들</h2>
+
+				</div>
+			</div>
+		</section>
+		<div>
+			<!-- <select th:field="*{ResionVO}" class="form-select">
 <option value="">==지역==</option>
 <option th:each="ResionVO : ${resions}" th:value="${ResionVO.code}" th:text="${ResionVO.displayName}"/>
 </select>
@@ -24,55 +32,73 @@
 </select> -->
 
 
-<!-- <div>
+			<!-- <div>
 <select th:field="*{RegionVO}" class="form-select">
 <option value="">==지역==</option>
 <option th:each="reson: ${regions}" th:value="${resion.code}" th:text="${resion.displayName}"/>
 </select>
 </div> -->
-<!-- <div>
+			<!-- <div>
 <select th:field="*{selectBox}" class="form-select">
 <option value="">==봉사유형==</option>
 <option th:each="facility : ${facType}" th:value="${facilityVO.facType}" th:text="${facilityVO.facType}"/>
 </select>
 </div> -->
 
+			<div class="row mb_30">
+				<th:block th:each="facility:${facilityList}">
+					<div class="col-lg-4 col-md-6">
+						<div class="single-recent-blog-post">
+							<div class="thumb">
+								<img class="img-fluid" src="../image/초록개구리.png" alt="post">
+								<a class="btn theme_btn button_hover" th:href="@{/facilityInfo(facId=${facility.facId}}"
+										th:text="${facility.facName}"></a>
+							</div>
+							<div class="details">
+								<div class="tags">
+									<!-- 								<a href="#" class="button_hover tag_btn">Travel</a> <a href="#"
+									class="button_hover tag_btn">Life Style</a> -->
+									
+								</div>
+								<h4 class="sec_h4" th:text="${facility.facName}"></h4>
+								<p th:text="${facility.region}"></p>
+								<h6 class="date title_color" th:text="${facility.facType}"></h6>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
 
 
-<th:block th:each="facility:${list}">
-<div>
- <h3>이미지 넣고</h3>
- <h3 th:text="${facility.facName}"></h3>
- <h3 th:text="${facility.region}"></h3>
- <h3 th:text="${facility.facType}"></h3>  
-</div>
-</th:block>
 
 
-<nav class="blog-pagination justify-content-center d-flex">
-		                        <ul class="pagination">
-		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Previous">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-left"></span>
-		                                    </span>
-		                                </a>
-		                            </li>
-		                            <li class="page-item"><a href="#" class="page-link">01</a></li>
-		                            <li class="page-item active"><a href="#" class="page-link">02</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">03</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">04</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">05</a></li>
-		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Next">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-right"></span>
-		                                    </span>
-		                                </a>
-		                            </li>
-		                        </ul>
-		                    </nav>
-</div>
 
+
+
+
+
+
+			<nav class="blog-pagination justify-content-center d-flex">
+				<ul class="pagination">
+					<li class="page-item"><a href="#" class="page-link"
+						aria-label="Previous"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-left"></span>
+						</span>
+					</a></li>
+					<li class="page-item"><a href="#" class="page-link">01</a></li>
+					<li class="page-item active"><a href="#" class="page-link">02</a></li>
+					<li class="page-item"><a href="#" class="page-link">03</a></li>
+					<li class="page-item"><a href="#" class="page-link">04</a></li>
+					<li class="page-item"><a href="#" class="page-link">05</a></li>
+					<li class="page-item"><a href="#" class="page-link"
+						aria-label="Next"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-right"></span>
+						</span>
+					</a></li>
+				</ul>
+			</nav>
+		</div>
+
+	</section>
 </body>
 </html>
