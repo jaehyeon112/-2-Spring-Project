@@ -4,6 +4,7 @@ package com.bongsamaru.admin.mapper;
 import java.util.List;
 
 import com.bongsamaru.common.BoardVO;
+import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
@@ -18,5 +19,7 @@ public interface UserMapper {
 	public List<DonationVO> getDonationList();
 	public UserVO getUserOne(String memId);
 	public int insertNotice(BoardVO boardVO);
-	public VolunteerVO volCount(String memId);
+	public VolunteerVO volCount(String memId,String mId);
+	public DonationLedgerVO donCount(String memId);
+	public FacilityVO getFacilityInfo(String facId);
 }

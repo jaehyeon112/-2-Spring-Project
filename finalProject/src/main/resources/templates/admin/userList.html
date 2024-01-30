@@ -76,7 +76,6 @@
 			            </div>
 			            <div class="modal-body">
 			                <div>
-			                <h5>이번달</h5>
 			                	<table class="table">
 			                		<thead>
 				                		<tr>
@@ -85,23 +84,9 @@
 				                		</tr>
 				                		<tr>
 				                			<th>기부횟수</th>
-				                			<td>333</td>
+				                			<td id="donCnt"></td>
 				                		</tr>
-				                		<tr><td>총 : 100000</td></tr>
-			                		</thead>
-			                	</table>
-			                <h5>이번년도</h5>
-			                	<table class="table">
-			                		<thead>
-				                		<tr>
-				                			<th>봉사횟수</th>
-				                			<td>333</td>
-				                		</tr>
-				                		<tr>
-				                			<th>기부횟수</th>
-				                			<td>333</td>
-				                		</tr>
-				                		<tr><td>총 : 100000</td></tr>
+				                		<tr><td id="totals"></td></tr>
 			                		</thead>
 			                	</table>
 			                </div>
@@ -128,19 +113,27 @@
 		    	$('.modal-title').empty();
 		    	$.ajax('../userInfo?memId='+id)
 		       .done(result => {
-		           $(".modal-title").append(result.memName+'의 활동 내역')
+		           $(".modal-title").append(result.memName+'님의 활동 내역')
 		          })
 		       .fail(err => console.log(err));
 		    	
-		    	$.ajax('../volCount?memId='+id)
+		    	$('#volCnt').empty();
+		    	$.ajax('../volCount?memId='+id+'&mId='+id)
 		       .done(result => {
-		    	   console.log(result)
-		           $(".volCnt").append((result.fac+result.vol)+'회')
+		           $("#volCnt").append((result.fac+result.vol)+'회')
+		          })
+		       .fail(err => console.log(err));
+		    	
+		    	$('#donCnt').empty();
+		    	$('#totals').empty();
+		    	$.ajax('../donCount?memId='+id)
+		       .done(result => {
+		           $("#donCnt").append((result.cnt)+'회')
+		           $("#totals").append('총 기부금액 : '+(result.totals)+'원')
 		          })
 		       .fail(err => console.log(err));
 		    	
 		    	$("#myModal").modal("show");
-		    	
 		    }
 		    
 		    $(".btn-secondary").click(function () {

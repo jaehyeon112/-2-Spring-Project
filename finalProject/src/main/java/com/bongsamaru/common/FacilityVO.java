@@ -11,7 +11,7 @@ public class FacilityVO {
 	private String facPwd;
 	private String facName;
 	private String facType;
-	private Number facZip;
+	private Integer facZip;
 	private String facAddr;
 	private String facAddrDetail;
 	private String resion;

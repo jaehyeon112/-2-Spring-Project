@@ -25,8 +25,12 @@
 		where MEM_STAT = #{memStat}
 	</select>
 	<select id="volCount" resultType="VolunteerVO">
-		(select nvl(sum(count(mem_id)),0) from vol_act_mem where mem_id=#{memId} group by mem_id) as  vol,
+		select (select nvl(sum(count(mem_id)),0) from vol_act_mem where mem_id=#{memId} group by mem_id) as  vol,
 		(select nvl(sum(count(mem_id)),0) from vol_mem where mem_id=#{memId} and mem_code='1' group by mem_id) as fac from dual
+	</select>
+	
+	<select id="donCount" resultType="DonationLedgerVO">
+		select count(mem_id) cnt,sum(don_amt) totals from don_ledger where mem_id=#{memId} group by mem_id
 	</select>
 	<select id="getUserOne" resultType="UserVO">
 		select MEM_ID,
@@ -69,6 +73,28 @@
 				DON_APP,
 				MEM_APP
 		from facility
+	</select>
+	<select id="getFacilityInfo" resultType="FacilityVO">
+		select FAC_ID,
+				BIZ_NUM,
+				FAC_PWD,
+				FAC_NAME,
+				FAC_TYPE,
+				FAC_ZIP,
+				FAC_ADDR,
+				FAC_ADDR_DETAIL,
+				FAC_EST_DATE,
+				FAC_EMAIL,
+				FAC_WEB,
+				FAC_INTRO,
+				REP_NAME,
+				REP_PHONE,
+				FAC_BANK,
+				DON_ACCT,
+				DON_APP,
+				MEM_APP
+		from facility
+		where fac_id = #{facId}
 	</select>
 	<select id="getDonationList" resultType="DonationVO">
 		select DON_ID,

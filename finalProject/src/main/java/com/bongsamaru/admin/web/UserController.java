@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.UserService;
 import com.bongsamaru.common.BoardVO;
+import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
@@ -27,8 +28,6 @@ public class UserController {
 	@GetMapping("userList")
 	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
 		List<UserVO> list = userService.getUserList(memStat);
-		System.out.println(list);
-		System.out.println(memStat);
 		model.addAttribute("userList",list);
 		return "admin/userList";
 	}
@@ -40,10 +39,26 @@ public class UserController {
 		return vo;
 	}
 	
+	@GetMapping("facInfo")
+	@ResponseBody
+	public FacilityVO getFacilityInfo(@RequestParam(name="facId") String facId,Model model) {
+		FacilityVO vo = userService.getFacilityInfo(facId);
+		return vo;
+	}
+	
 	@GetMapping("volCount")
 	@ResponseBody
-	public VolunteerVO getFacVol(@RequestParam(name="memId") String memId,Model model) {
-		VolunteerVO vo = userService.volCount(memId);
+	public VolunteerVO getFacVol(@RequestParam(name="memId") String memId,@RequestParam(name="mId") String mId,Model model) {
+		VolunteerVO vo = userService.volCount(memId,mId);
+		System.out.println("현재 받아온 것"+vo);
+		System.out.println(memId);
+		return vo;
+	}
+	
+	@GetMapping("donCount")
+	@ResponseBody
+	public DonationLedgerVO getDonCount(@RequestParam(name="memId") String memId,Model model) {
+		DonationLedgerVO vo = userService.donCount(memId);
 		return vo;
 	}
 	

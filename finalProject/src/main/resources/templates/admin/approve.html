@@ -9,6 +9,12 @@
 .cur{
 	cursor:pointer;
 }
+.facility{
+	cursor:pointer;
+}
+#tableData{
+	margin-top : 50px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -22,44 +28,94 @@
 		<div class="container">
 		<h2>승인관리</h2>
 		<div style="float:right;color:black" class="cur">
-			<a style="color:black;font-size:18px" onclick="show()">시설가입 |</a>
-			<a style="color:black;font-size:18px" onclick="show1()">시설 기부신청 |</a>
-			<a style="color:black;font-size:18px" onclick="show2()">시설 기부금 등록 |</a>
-			<a style="color:black;font-size:18px" onclick="show3()"> 시설 기부금 리뷰</a>
+			<a style="color:black;font-size:16px" onclick="show()">시설가입 |</a>
+			<a style="color:black;font-size:16px" onclick="show1()">시설 기부신청 |</a>
+			<a style="color:black;font-size:16px" onclick="show2()">시설 기부금 등록 |</a>
+			<a style="color:black;font-size:16px" onclick="show3()"> 시설 기부금 리뷰</a>
 		</div>
 		<div id="tableData">
 			<table class="table" id="bas">
-				<thead>
+				<thead class="cent">
 					<tr>
 						<th>시설명</th>
 						<th>시설유형</th>
 						<th>사업자등록번호</th>
 						<th>시설 주소</th>
-						<th>설립일</th>
 						<th>이메일</th>
 						<th>대표자명</th>
 						<th>대표번호</th>
-						<th>승인처리</th>
 					</tr>
 				</thead>
-				<tbody>
-				 	<th:block th:each="fac : ${facilityList}" >
+				<tbody class="body">
+				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp}==0">
 						<tr>
-							 <td th:text="${fac.facName}" >시설명</td>
+							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])">시설명</td>
 							 <td th:text="${fac.facType}" >시설유형</td>
 							 <td th:text="${fac.bizNum}" >사업자등록번호</td>
 							 <td th:text="${fac.facAddr}" >시설 주소</td>
-							 <td th:text="${#dates.format(fac.facEstDate, 'yyyy년 MMM dd일')}" >설립일</td>
+							 <!--<td th:text="${#dates.format(fac.facEstDate, 'yyyy년 MMM dd일')}" >설립일</td>  -->
 							 <td th:text="${fac.facEmail}" >이메일</td>
 							 <td th:text="${fac.repName}" >대표자명</td>
 							 <td th:text="${fac.repPhone}">대표번호</td>
-							 <td th:if="${fac.memApp}==0"><button>승인</button></td>
-							 <td th:if="${fac.memApp}==1">처리완료</td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
-		</div>
+			</div>
+			<div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content" id="content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="deleteConfirmationModalLabel"></h5>
+			            </div>
+			            <div class="modal-body">
+			                <div>
+			                	<table class="table">
+			                		<thead>
+				                		<tr>
+				                			<th>시설명</th>
+				                			<td id="name"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>시설유형</th>
+				                			<td id="type"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>사업자번호</th>
+				                			<td id="bizNum"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>우편번호</th>
+				                			<td id="facZip"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>시설 주소</th>
+				                			<td id="addr"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>설립일</th>
+				                			<td id="esta"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>대표자명</th>
+				                			<td id="repName"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>대표 번호</th>
+				                			<td id="repPhone"></td>
+				                		</tr>
+			                		</thead>
+			                	</table>
+			                </div>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="false">닫기</button>
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="false">승인</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		
 		</div>
 			<script th:inline="javascript">
 				function show(){
@@ -74,6 +130,38 @@
 				function show3(){
 					alert('아직 고민중ㅇ');
 				}
+				
+				function info(id) {
+			    	$('#name').empty();
+			        $("#type").empty();
+			        $("#bizNum").empty();
+			        $("#facZip").empty();
+			        $("#addr").empty();
+			        $("#esta").empty();
+			        $("#repName").empty();
+			        $("#repPhone").empty();
+			        
+			    	$.ajax('../facInfo?facId='+id)
+			       .done(result => {
+			           $("#name").append(result.facName)
+			           $("#type").append(result.facType)
+			           $("#bizNum").append(result.bizNum)
+			           $("#facZip").append(result.facZip)
+			           $("#addr").append(result.facAddr+' '+result.facAddrDetail)
+			           $("#esta").append(result.facEstDate)
+			           $("#repName").append(result.repName)
+			           $("#repPhone").append(result.repPhone)
+			          })
+			       .fail(err => console.log(err));
+			    	
+			    	$("#myModal").modal("show");
+			    };
+			    
+
+			    $(document).on("click",".btn-secondary",function () {
+				   $("#myModal").modal("hide");
+				});
+				
 			</script>
       </div>
     </div>

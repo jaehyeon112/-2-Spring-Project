@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.admin.mapper.UserMapper;
 import com.bongsamaru.admin.service.UserService;
 import com.bongsamaru.common.BoardVO;
+import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
@@ -55,8 +56,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public VolunteerVO volCount(String memId) {
-		return userMapper.volCount(memId);
+	public VolunteerVO volCount(String memId,String mId) {
+		return userMapper.volCount(memId,mId);
+	}
+
+	@Override
+	public DonationLedgerVO donCount(String memId) {
+		return userMapper.donCount(memId);
+	}
+	
+	@Override
+	public FacilityVO getFacilityInfo(String facId) {
+		return userMapper.getFacilityInfo(facId);
 	}
 	
 	
