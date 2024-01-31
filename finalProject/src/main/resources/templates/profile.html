@@ -168,8 +168,9 @@ $('#sendButton').click(function() {
     return;
   }
 
+  alert("인증번호가 발송되었습니다.");
   $.ajax({
-    type: "GET",
+    type: "POST",
     url: "/email/send",
     data: { recipientEmail: recipientEmail },
     success: function (response) {
@@ -190,8 +191,8 @@ $('#verifyButton').click(function() {
   var recipientEmail = document.getElementById("recipientEmail").value;
   var verificationCode = document.getElementById("verificationCode").value;
 
-  if (recipientEmail == "" || verificationCode == "") {
-    alert("이메일 주소와 인증번호를 입력하세요.");
+  if (verificationCode == "") {
+    alert("인증번호를 입력하세요.");
     return;
   }
 

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,6 +50,10 @@ public class GoogleMailController {
 
     @Value("${spring.mail.properties.mail.smtp.socketFactory.fallback}")
     private String mailSmtpSocketFactoryFallback;
+    
+    
+    @Value("${spring.mail.properties.mail.smtp.timeout}")
+    private String mailSmtpTimeout;
 
     // 랜덤한 인증번호4자리 숫자 생성
     private Random random = new Random();
@@ -73,7 +78,7 @@ public class GoogleMailController {
     }
 
     // 이메일 전송
-    @GetMapping("/send")
+    @PostMapping("/send")
     public String sendEmail(Model model, @RequestParam("recipientEmail") String recipientEmail) {
         try {
             // 이메일 설정 및 인증
@@ -82,6 +87,7 @@ public class GoogleMailController {
             props.put("mail.smtp.starttls.enable", mailSmtpStarttlsEnable);
             props.put("mail.smtp.host", mailHost);
             props.put("mail.smtp.port", mailPort);
+            props.put("mail.smtp.timeout", mailSmtpTimeout);
             props.put("mail.smtp.socketFactory.class", mailSmtpSocketFactoryClass);
             props.put("mail.smtp.socketFactory.fallback", mailSmtpSocketFactoryFallback);
 
@@ -95,18 +101,22 @@ public class GoogleMailController {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(senderEmail));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-            message.setSubject("행복마루 이메일 인증입니다.");
+            message.setSubject("행복마루에서 보내드리는 이메일 인증번호입니다.");
             
             // 이메일 내용
-            String emailContent = "인증번호: " + randomNumber;
-            message.setText(emailContent);
+            String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
+            	    + "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일 인증번호입니다.</h1>"
+            	    + "<p style=\"padding: 50px;\">안녕하세요. [사용자 이름]님^^ 이메일 인증번호를 보내드려요.<br>"
+            	    + "아래 4자리 인증번호를 복사하셔서 입력하시면, 이메일 인증이 완료됩니다.</p>"
+            	    + "<p style=\"padding: 100px; font-weight: bold; font-size: 40px; color: black;\">인증번호: <span style=\"color: white;\">" + randomNumber + "</span></p>"
+            	    + "</div>";
+            message.setContent(emailContent, "text/html; charset=utf-8");
 
             // 이메일 전송
             Transport.send(message);
 
-            model.addAttribute("message", "이메일이 성공적으로 전송되었습니다.");
         } catch (Exception e) {
-            model.addAttribute("message", "이메일 전송 중 오류가 발생했습니다.");
+        	
         }
         return "profile";
     }
