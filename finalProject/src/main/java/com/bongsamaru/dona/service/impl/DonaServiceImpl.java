@@ -22,8 +22,9 @@ public class DonaServiceImpl implements DonaService {
 	}
 	
 	@Override
-	public DonaVO getDonaDetail(Integer donId) {
-		return donaMapper.getDonaDetail(donId);
+	public DonaVO getDonaDetail(Integer donId, String facId) {
+		return donaMapper.getDonaDetail(donId, facId);
 	}
+	
 
 }

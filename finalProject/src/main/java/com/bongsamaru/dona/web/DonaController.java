@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
@@ -31,20 +31,22 @@ public class DonaController {
 	   
 	//상세페이지조회	   
 	   
-	   @GetMapping("/donaDetail")
-	   @ResponseBody
-	    public String donaDetailPage1(@RequestParam(name="donId") Integer donId, Model model) {
-		   DonaVO dona = donaService.getDonaDetail(donId);
-		   System.out.println(dona);
-	        return "donation/donaDetail";
-	    } 
+//	   @GetMapping("/donaDetail2")
+//	    public String donaDetailPage1(@RequestParam("id") Integer donId, Model model) {
+//		   System.out.println(donId+"asdfasdfsadfasfdasfd");
+//		   //DonaVO dona = donaService.getDonaDetail(donId);
+//		   //model.addAttribute("dona", dona);
+//	        return "donation/donaDetail";
+//	    } 
 	   
-//	   @GetMapping("userInfo")
-//	   @ResponseBody
-//	   public UserVO getUserlOne(@RequestParam(name="memId") String memId,Model model) {
-//	      UserVO vo = userService.getUserOne(memId);
-//	      return vo;
-//	   }
+	   @GetMapping("/donaDetail")
+	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam("facId") String facId, Model model) { 
+		   DonaVO dona = donaService.getDonaDetail(donId, facId);
+		    model.addAttribute("dona", dona);
+	       return "donation/donaDetail";
+	    }    
+	   
+
 	   
 	//결제창
 	   @GetMapping("/payment")

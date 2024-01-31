@@ -11,9 +11,9 @@ public interface DonaMapper {
 		List<DonaVO> getDonaList();
 		
 	// 상세페이지1 (don_id)
-		public DonaVO getDonaDetail(DonaVO donaVO);
+		public DonaVO getDonaDetail(Integer donId, String facId);
 		
-	// 상세페이지 2
+
 		
 		
 		

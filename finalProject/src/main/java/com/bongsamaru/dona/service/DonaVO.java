@@ -2,6 +2,8 @@ package com.bongsamaru.dona.service;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -11,8 +13,9 @@ public class DonaVO {
 		private Integer donId; // 기부번호  - notnull 
 		private String facId; // 시설아이디 - 이하 모두 null
 		private String title; // 제목 (v500)
-	    private Date recPriod; // 모집기간
-	    private Date endDate; // 종료기간
+		@DateTimeFormat(pattern="yyyy-MM-dd") 
+	    private Date recPeriod; // 모집기간
+	    private Date endPeriod; // 종료기간
 	    private Date extDate; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
@@ -24,6 +27,8 @@ public class DonaVO {
 	    private Integer donationCount; //기부인원수
 	    private Integer donationRatio; //목표금액대비 기부금비율
 	    private String facilityName; //시설명
+	    //상세페이지
+	    private String dday; //디데이
 	    
     
     //Don_Detail(기부상세) 테이블
@@ -50,7 +55,7 @@ public class DonaVO {
 	    //private Integer donId; 
 	    private Integer execAmt; //집행금액  (not null)
 	    private Date startPeriod; //사업시작기간
-	    private Date endPeriod; //사업종료기간
+	    //private Date endPeriod; //사업종료기간
 	    private String revApp; //후기승인여부 
 	    
     
@@ -71,5 +76,7 @@ public class DonaVO {
 	//시설테이블
 	   // private String facId;
 	    private String facName;
+	    private String facIntro;
+	    private Date facEstDate;
 	    
 }

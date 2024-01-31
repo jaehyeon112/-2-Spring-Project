@@ -158,7 +158,7 @@
 
 
 								        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-								            <h4><a th:href="@{/donaDetail(id=${dona.donId})}" th:text="${dona.title}"> 제목</a></h4>
+								            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}"> 제목</a></h4>
 		
 								           
 								            <div class="info-item">
@@ -169,7 +169,6 @@
 								                <strong>n명 참여:</strong><span th:text="${dona.donationCount}"></span>명
 								            </div>
 
-								            
 											<div class="progress">
 											  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>

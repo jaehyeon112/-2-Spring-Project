@@ -9,6 +9,8 @@ public interface DonaService {
 	
 	
 	//상세페이지 조회 1
-	public DonaVO getDonaDetail(Integer donId);
+	public DonaVO getDonaDetail(Integer donId, String facId);
+	
+
 	
 }
