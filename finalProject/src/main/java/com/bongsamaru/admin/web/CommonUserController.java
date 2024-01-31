@@ -13,6 +13,7 @@ public class CommonUserController {
 
 	@GetMapping("/")
     public String someMethod(Model model) {
+		
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userNickname = null;
         

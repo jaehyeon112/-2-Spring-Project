@@ -12,8 +12,8 @@ public class sendSmsService {
 
 public String PhoneNumberCheck(String to) throws CoolsmsException {
 		
-		String api_key = "NCSTHHVMEHHLX0KC";
-		String api_secret = "6W3ULM84T85WKGEEW7BQBARTVGBKDLR7";
+		String api_key = "NCS7I1RYHHLN8OBA";
+		String api_secret = "DKJ9ZAEMVCJSNOXDAPPN93KAIKQA20FL";
 		Message coolsms = new Message(api_key, api_secret);
 		
 		Random rand  = new Random();
@@ -24,10 +24,12 @@ public String PhoneNumberCheck(String to) throws CoolsmsException {
 	    }          
 
     HashMap<String, String> params = new HashMap<String, String>();
-    params.put("to", to);    // 수신전화번호 (ajax로 view 화면에서 받아온 값으로 넘김)
-    params.put("from", "01088988034");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
-    params.put("type", "sms"); 
-    params.put("text", "인증번호는 [" + numStr + "] 입니다.");
+    System.out.println(numStr + "인증번호확인");
+	
+	params.put("to", to); // 수신전화번호 (ajax로 view 화면에서 받아온 값으로 넘김)
+	params.put("from", "01082633005"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+	params.put("type", "sms"); params.put("text", "인증번호는 [" + numStr + "] 입니다.");
+
 
     coolsms.send(params); // 메시지 전송
         
