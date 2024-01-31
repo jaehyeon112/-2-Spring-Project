@@ -5,6 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>기부 후기</title>
+<style>
+.facilities_item{
+display:inline-block;
+}
+
+</style>
+
 </head>
 <body>
 <section layout:fragment="content">
@@ -15,7 +22,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single-recent-blog-post">
                             <div class="thumb">
-                                <img class="img-fluid" src="../image/sdfsdf.jpg" alt="post">
+                                <img class="hotel_img" src="../image/sdfsdf.jpg" alt="">
                                 <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a>
                             </div>
                             <div class="details">
@@ -25,6 +32,12 @@
                                 </div>
                                 <h4 class="sec_h3" th:text="${funding.title}" style="color:black;"></h4>
                                 <p th:text="${funding.donors}+'명 참여'" style="color:black;"></p>
+                                <div class="progress">
+											  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${funding.donationRatio} + '%'" aria-valuenow="${funding.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<div class="info-item">
+								                <strong></strong><span th:text="${funding.donationRatio}"></span> %
+								            </div>
                                 <h6 class="date title_color" th:text="${funding.goalAmt}"></h6>
                             </div>	
                         </div>
@@ -39,7 +52,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single-recent-blog-post">
                             <div class="thumb">
-                                <img class="img-fluid" src="../image/sdfsdf.jpg" alt="post">
+                                <img class="hotel_img" src="../image/sdfsdf.jpg" alt="">
                                 <a th:href="@{info.do(donId=${funded.donId}, name=${funded.donId})}" th:text="${funded.title}"></a>
                             </div>
                             <div class="details">

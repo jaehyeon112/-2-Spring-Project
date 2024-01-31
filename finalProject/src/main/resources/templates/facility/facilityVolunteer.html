@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{facility/facilitylayout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>시설봉사</title>
 </head>
 <body>
+<section layout:fragment="content">
+<div class="facilities_item">
+<h3 class="title_color section_title text-center">봉사내역</h3>
+<div class="row mb_30">
+<th:block th:each="volunteer:${volList}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-recent-blog-post">
+                            <div class="thumb">
+                                <img class="img-fluid" src="../image/초록개구리.png" alt="post">
+                                <!-- <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a> -->
+                            </div>
+                            <div class="details">
+                                <div class="tags">
+                                    <!-- <a href="#" class="button_hover tag_btn">Travel</a>
+                                    <a href="#" class="button_hover tag_btn">Life Style</a> -->
+                                </div>
+                                <h4 class="sec_h3" th:text="${volunteer.title}" style="color:black;"></h4>
+                                <p th:text="${volunteer.volDate}+''" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${volunteer.location}"></h6>
+                            </div>	
+                        </div>
+                    </div>
+                </div> 
+</th:block>
+</div>
 
+<div class="facilities_item">
+<h3 class="title_color section_title text-center">봉사후기</h3>
+<div class="row mb_30">
+<th:block th:each="volunteer:${volList}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-recent-blog-post">
+                            <div class="thumb">
+                                <img class="img-fluid" src="../image/초록개구리.png" alt="post">
+                                <!-- <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a> -->
+                            </div>
+                            <div class="details">
+                                <div class="tags">
+                                    <!-- <a href="#" class="button_hover tag_btn">Travel</a>
+                                    <a href="#" class="button_hover tag_btn">Life Style</a> -->
+                                </div>
+                                <h4 class="sec_h3" th:text="${volunteer.revTitle}" style="color:black;"></h4>
+                                <p th:text="${volunteer.content}+''" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${volunteer.writeDate}"></h6>
+                            </div>	
+                        </div>
+                    </div>
+                </div> 
+</th:block>
+</div>
+</section>
 </body>
 </html>
