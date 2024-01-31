@@ -5,6 +5,15 @@
 <head>
 	<title>회원가입</title>
 	<style>
+	
+	html, body {
+    overflow: auto;
+}
+	.error-message {
+    color: red;
+    display: none;
+    font-size: 0.875rem; /* 예시, 필요에 따라 조정하세요 */
+}
 		.check_wrap li {
 			display: flex;
 			padding: 20px 15px 20px 23px;
@@ -269,6 +278,7 @@
 					</div>
 					<input id="userId" style="display: inline;" type="text" class="form-control" placeholder="아이디를 입력해주세요">
 					<input id="idCheck" type="button" class="btn btncolor" value="중복확인">
+					<div class="error-message" id="userIdError"></div>
 				</div>
 
 
@@ -278,6 +288,7 @@
 					</div>
 					<input id="nickCheck" style="display: inline;" type="text" class="form-control" placeholder="닉네임을 입력해주세요">
 					<input type="button" class="btn btncolor" value="중복확인">
+					<div class="error-message" id="nickCheckError"></div>
 
 
 				</div>
@@ -303,6 +314,7 @@
 					</div>
 					<input id="passCheck" style="display: inline;" type="password" class="form-control  plus-bnt"
 						placeholder="비밀번호를 입력해주세요">
+						<div class="error-message" id="passCheckError"></div>
 				</div>
 				<div class="write_item">
 					<div class="subheading">
@@ -310,6 +322,7 @@
 					</div>
 					<input id="passCheck2" style="display: inline;" type="password" class="form-control  plus-bnt"
 						placeholder="비밀번호를 한번 더 입력해주세요">
+						<div class="error-message" id="passCheck2Error"></div>
 				</div>
 			</div>
 
@@ -320,6 +333,7 @@
 					</div>
 					<input id="phoneCheck" style="display: inline;" type="text" class="form-control" placeholder="연락처를 입력해주세요">
 					<input type="button" class="btn btncolor" value="인증번호받기">
+					<div class="error-message" id="phoneCheckError"></div>
 				</div>
 
 				<div class="write_item">
@@ -328,6 +342,7 @@
 					</div>
 					<input id="authCheck" style="display: inline;" type="text" class="form-control" placeholder="인증번호를 입력해주세요">
 					<input type="button" class="btn btncolor" value="인증하기">
+					<div class="error-message" id="authCheckError"></div>
 				</div>
 			</div>
 			<div class="write_item_row">
@@ -353,9 +368,10 @@
 					</div>
 					<input id="zipCheck" style="display: inline;" type="text" class="form-control" placeholder="우편번호">
 					<input type="button" class="btn btncolor" value="검색">
+					<div class="error-message" id="zipCheckError"></div>
 					<input id="adrrCheck" style="display: inline; margin-top:10px" type="text" class="form-control plus-bnt"
 						placeholder="주소">
-
+					<div class="error-message" id="addrCheckError"></div>
 
 				</div>
 
@@ -404,6 +420,7 @@
 					<input id="emailCheck" style="display: inline;" type="text" class="form-control "
 						placeholder="example@gmail.com">
 					<input id="emailCheckBtn" type="button" class="btn btncolor" value="인증하기">
+					<div class="error-message" id="emailError"></div>
 				</div>
 				<div class="write_item user">
 					<div class="subheading ">기부금영수증 발급여부</div>
@@ -459,6 +476,7 @@
 						</div>
 						<input id="nameCheck" style="display: inline;" type="text" class="form-control plus-bnt"
 							placeholder="이름을 입력해주세요">
+							<div class="error-message" id="nameCheckError"></div>
 					</div>
 					<div class="write_item">
 						<div class="subheading" style="margin-top : 0">
@@ -466,10 +484,12 @@
 						</div>
 						<input id="frontIdenCheck" style="display: inline;" type="text" class="form-control small-bnt"
 							placeholder="주민번호 앞자리">
+							<div class="error-message" id="frontIdenCheckError"></div>
 						<span style=" text-align: center!important;">-</span>
 						<input id="backIdenCheck" style="display: inline;" type="password" class="form-control small-bnt"
 							placeholder="주민번호 뒷자리">
 						<input type="button" class="btn btncolor" value="인증하기">
+						<div class="error-message" id="backIdenCheckError"></div>
 					</div>
 				</div>
 
@@ -623,95 +643,195 @@
 				$('input[type="radio"]').not('#facility').prop('checked', false);
 				userCheck = false;
 				facilityCheck = true;
+				$('.error-message').hide();
 			})
 			$('#member').on('click', function () {
 				$('.user').removeClass('hidden');
 				$('.facility').addClass('hidden');
 				userCheck = true;
 				facilityCheck = false;
+				$('.error-message').hide();
 			})
 
-			// 유저 빈칸 유효성 검사
-			$('#signUpUser').on('click', function () {
-						if ($('#userId').val().trim() === '') {
-							alert('아이디를 입력해주세요.');
-							$('#userId').focus();
-							return;
-						}
-						if ($('#nickCheck').val().trim() === '') {
-							alert('닉네임을 입력해주세요.');
-							$('#nickCheck').focus();
-							return;
-						}
-						if ($('#passCheck').val().trim() === '') {
-							alert('비밀번호를 입력해주세요.');
-							$('#passCheck').focus();
-							return;
-						}
-						if($('#passCheck2').val()!=$('#passCheck1').val()){
-							alert('비밀번호가 서로 일치하지 않습니다.');
-							$('#passCheck').focus();
-							return;
-						}
-						
-						if ($('#passCheck2').val().trim() === '') {
-							alert('비밀번호 확인을 입력해주세요.');
-							$('#passCheck2').focus();
-							return;
-						}
-						if ($('#phoneCheck').val().trim() === '') {
-							alert('연락처를 입력해주세요.');
-							$('#phoneCheck').focus();
-							return;
-						}
-						if ($('#authCheck').val().trim() === '') {
-							alert('인증번호를 입력해주세요.');
-							$('#authCheck').focus();
-							return;
-						}
-						if ($('#zipCheck').val().trim() === '') {
-							alert('우편번호를 입력해주세요.');
-							$('#zipCheck').focus();
-							return;
-						}
-						if ($('#adrrCheck').val().trim() === '') {
-							alert('주소를 입력해주세요.');
-							$('#adrrCheck').focus();
-							return;
-						}
-						if ($('#emailCheck').val().trim() === '') {
-							alert('이메일을 입력해주세요.');
-							$('#emailCheck').focus();
-							return;
-						}
-						if (receiptYes) {
-							if ($('#nameCheck').val().trim() === '') {
-								alert('실명을 입력해주세요.');
-								$('#nameCheck').focus();
-								return;
-							}
-							if ($('#frontIdenCheck').val().trim() === '') {
-								alert('주민등록번호 앞자리를 입력해주세요.');
-								$('#frontIdenCheck').focus();
-								return;
-							}
-							if ($('#backIdenCheck').val().trim() === '') {
-								alert('주민등록번호 뒷자리를 입력해주세요.');
-								$('#backIdenCheck').focus();
-								return;
-							}
-						}
-					})
-					
-					var email = $('#emailCheck').val().trim();
-					var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-					$('#emailCheckBtn').on('click',function(){
-						if (!emailRegex.test(email)) {
-						    alert('유효한 이메일 주소를 입력해주세요.');
-						    $('emailCheck').focus();
-						    return;
-						}
-					})
+	$(document).ready(function () {
+    $('#signUpUser').on('click', function () {
+        let isValid = true; // 모든 필드의 유효성을 추적하는 변수
+
+        // 초기화: 이전에 표시된 모든 오류 메시지를 숨깁니다.
+        $('.error-message').hide();
+
+        // 아이디 유효성 검사
+        let userIdValue = $('#userId').val();
+        if (!userIdValue) {
+            $('#userIdError').text('아이디를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            userIdValue = userIdValue.replace(/\s+/g, ''); // 공백 제거
+            if (userIdValue === '') {
+                $('#userIdError').text('아이디에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 닉네임 유효성 검사
+        let nickCheckValue = $('#nickCheck').val();
+        if (!nickCheckValue) {
+            $('#nickCheckError').text('닉네임을 입력해주세요.').show();
+            isValid = false;
+        } else {
+            nickCheckValue = nickCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (nickCheckValue === '') {
+                $('#nickCheckError').text('닉네임에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 비밀번호 유효성 검사
+        let passCheckValue = $('#passCheck').val();
+        if (!passCheckValue) {
+            $('#passCheckError').text('비밀번호를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            passCheckValue = passCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (passCheckValue === '') {
+                $('#passCheckError').text('비밀번호에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 비밀번호 확인 유효성 검사
+        let passCheck2Value = $('#passCheck2').val();
+        if (!passCheck2Value) {
+            $('#passCheck2Error').text('비밀번호 확인을 입력해주세요.').show();
+            isValid = false;
+        } else {
+            passCheck2Value = passCheck2Value.replace(/\s+/g, ''); // 공백 제거
+            if (passCheck2Value === '') {
+                $('#passCheck2Error').text('비밀번호 확인에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            } else if (passCheck2Value !== passCheckValue) {
+                $('#passCheck2Error').text('비밀번호가 서로 일치하지 않습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 휴대폰 본인인증 유효성 검사
+        let phoneCheckValue = $('#phoneCheck').val();
+        if (!phoneCheckValue) {
+            $('#phoneCheckError').text('휴대폰 번호를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            phoneCheckValue = phoneCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (phoneCheckValue === '') {
+                $('#phoneCheckError').text('휴대폰 번호에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 인증번호 유효성 검사
+        let authCheckValue = $('#authCheck').val();
+        if (!authCheckValue) {
+            $('#authCheckError').text('인증번호를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            authCheckValue = authCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (authCheckValue === '') {
+                $('#authCheckError').text('인증번호에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 우편번호 유효성 검사
+        let zipCheckValue = $('#zipCheck').val();
+        if (!zipCheckValue) {
+            $('#zipCheckError').text('우편번호를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            zipCheckValue = zipCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (zipCheckValue === '') {
+                $('#zipCheckError').text('우편번호에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 주소 유효성 검사
+        let addrCheckValue = $('#addrCheck').val();
+        if (!addrCheckValue) {
+            $('#addrCheckError').text('주소를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            addrCheckValue = addrCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (addrCheckValue === '') {
+                $('#addrCheckError').text('주소에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 이메일 유효성 검사
+        let emailCheckValue = $('#emailCheck').val();
+        if (!emailCheckValue) {
+            $('#emailError').text('이메일을 입력해주세요.').show();
+            isValid = false;
+        } else {
+            emailCheckValue = emailCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (emailCheckValue === '') {
+                $('#emailError').text('이메일에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 실명 유효성 검사
+        let nameCheckValue = $('#nameCheck').val();
+        if (!nameCheckValue) {
+            $('#nameCheckError').text('실명을 입력해주세요.').show();
+            isValid = false;
+        } else {
+            nameCheckValue = nameCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (nameCheckValue === '') {
+                $('#nameCheckError').text('실명에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 주민등록번호 앞자리 유효성 검사
+        let frontIdenCheckValue = $('#frontIdenCheck').val();
+        if (!frontIdenCheckValue) {
+            $('#frontIdenCheckError').text('주민등록번호 앞자리를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            frontIdenCheckValue = frontIdenCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (frontIdenCheckValue === '') {
+                $('#frontIdenCheckError').text('주민등록번호 앞자리에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        // 주민등록번호 뒷자리 유효성 검사
+        let backIdenCheckValue = $('#backIdenCheck').val();
+        if (!backIdenCheckValue) {
+            $('#backIdenCheckError').text('주민등록번호 뒷자리를 입력해주세요.').show();
+            isValid = false;
+        } else {
+            backIdenCheckValue = backIdenCheckValue.replace(/\s+/g, ''); // 공백 제거
+            if (backIdenCheckValue === '') {
+                $('#backIdenCheckError').text('주민등록번호 뒷자리에 공백을 포함할 수 없습니다.').show();
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            $('html, body').animate({
+                scrollTop: $('.error-message:visible:first').offset().top
+            }, 'slow');
+            return;
+        }
+
+        // 여기에서 폼 제출 또는 AJAX 호출을 수행할 수 있습니다.
+        // 예: 폼 데이터를 서버로 전송하는 AJAX 호출
+    });
+});
+
+
 					
 				
 		</script>
