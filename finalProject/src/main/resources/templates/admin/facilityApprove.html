@@ -13,7 +13,7 @@
 				<tbody>
 				 	<th:block th:each="fac : ${facilityList}" th:if="${fac.donApp}==0">
 						<tr>
-							<td th:text="${fac.facName}" class="facility" th:onclick="info([[${fac.facId}]])">시설명</td>
+							<td th:text="${fac.facName}" class="facility" th:onclick="info2([[${fac.facId}]])">시설명</td>
 							<td th:text="${fac.facType}" >시설유형</td>
 							<td th:text="${fac.facEmail}" >이메일</td>
 							<td th:text="${fac.facWeb}" >홈페이지</td>
@@ -38,9 +38,9 @@
 				<tbody>
 				 	<th:block th:each="don : ${donationList}" th:if="${don.donRegApp}==0">
 						<tr>
-							 <td th:text="${don.facId}" >아이디</td>
+							 <td th:text="${don.facId}" class="cur" th:onclick="dona([[${don.donId}]])">아이디</td>
 							 <td th:text="${don.title}" >제목</td>
-							 <td th:text="${don.goalAmt}">목표금액</td>
+							 <td data-th-text="${#numbers.formatInteger(don.goalAmt, 3, 'COMMA') + '원'}">목표금액</td>
 							 <td th:text="${don.projTarget}">사업대상</td>
 							 <td th:text="${#dates.format(don.recPeriod, 'yyyy년 MMM dd일')}" >모금 시작일</td>
 							 <td th:text="${#dates.format(don.endPeriod, 'yyyy년 MMM dd일')}">모금 마감일</td>

@@ -12,6 +12,7 @@ import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
+import com.bongsamaru.common.ReportVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
 
@@ -68,6 +69,61 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public FacilityVO getFacilityInfo(String facId) {
 		return userMapper.getFacilityInfo(facId);
+	}
+
+	@Override
+	public DonationVO getDonOne(String donId) {
+		return userMapper.getDonOne(donId);
+	}
+
+	@Override
+	public int updateFacApp(String facName) {
+		return userMapper.updateFacApp(facName);
+	}
+
+	@Override
+	public int updateDonApp(String facId) {
+		return userMapper.updateDonApp(facId);
+	}
+	
+	@Override
+	public int updateDonRegApp(String donId) {
+		return userMapper.updateDonRegApp(donId);
+	}
+
+	@Override
+	public BoardVO getNoticeOne(String category, String detailCate) {
+		return userMapper.getNoticeOne(category, detailCate);
+	}
+
+	@Override
+	public int delNotice(String category, String detailCate) {
+		return userMapper.delNotice(category, detailCate);
+	}
+
+	@Override
+	public int faqInsert(FaqVO faqVO) {
+		return userMapper.faqInsert(faqVO);
+	}
+
+	@Override
+	public FaqVO getFaqOne(Integer faqId) {
+		return userMapper.getFaqOne(faqId);
+	}
+
+	@Override
+	public int delFaq(Integer faqId) {
+		return userMapper.delFaq(faqId);
+	}
+
+	@Override
+	public int updateNotice(BoardVO boardVO) {
+		return userMapper.updateNotice(boardVO);
+	}
+
+	@Override
+	public List<ReportVO> getReportList(String category) {
+		return userMapper.getReportList(category);
 	}
 	
 	

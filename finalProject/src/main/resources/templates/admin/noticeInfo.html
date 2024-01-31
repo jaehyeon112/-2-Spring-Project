@@ -21,48 +21,52 @@
 			<div class="container-fluid">
 				<div class="container">
 					<div class="page_tits">
-						<h3>공지사항 작성</h3>
+						<h3>공지사항</h3>
 					</div>
 					<br> <br>
 					<div class="content">
 						<section>
-							<form name="insertNotice" action="noticeInsert" method="post">
+							<form name="updateNotice" action="updateNotice" method="post">
 								<div class="col-md-12">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label for="title">중요도</label>
-											<select name="priority" class="nav-item dropdown form-control">
+											<label for="priority">중요도</label>
+											<select name="priority" id="priority" class="nav-item dropdown form-control">
+												<option class="dropdown-item" selected th:if="${info.priority}==0" th:text="일반" hidden value="0"></option>
+												<option class="dropdown-item" selected th:if="${info.priority}==1" th:text="중요" hidden value="1"></option>
 												<option class="dropdown-item" value="0">일반</option>
 												<option class="dropdown-item" value="1">중요</option>
 											</select>
 											<input name="category" value="b01" type="hidden">
+											<input name="detailCate" th:value="${info.detailCate}" type="hidden">
 										</div>
 										<div class="form-group">
 											<label for="author"> 작성자 </label> 
-											<input type="text" class="form-control" value="관리자" readonly>
+											<input type="text" name="memId" id="memId" class="form-control" value="관리자" readonly>
 										</div>
 										<div class="form-group" style="width: 500px">
-											<label for="title">제목</label> <input type="text"
-												class="form-control" name="title" placeholder="제목을 입력하세요">
+											<label for="title">제목</label> 
+											<input class="form-control" name="title" id="title" th:value="${info.title}">
 										</div>
 										<div class="form-group" style="width: 500px">
 											<label for="content"> 내용 </label>
-											<textarea class="form-control" name="content" cols="50"
-												rows="5" placeholder="내용을 입력하세요"></textarea>
+											<textarea class="form-control" cols="50"
+												rows="5" th:text="${info.content}" name="content" id="content"></textarea>
 										</div>
 									</div>
 									<p class="btn_set">
-										<button type="submit" style="float: right;" class="btn btn-success m-1">등록</button>
+										<button type="submit" id="modNo" style="float: right;" class="btn btn-success m-1">수정</button>
+										<button type="button" id="delNo" th:onclick="conf([[${info.category}]],[[${info.detailCate}]])" style="float: right;" class="btn btn-danger m-1">삭제</button>
 									</p>
 								</div>
 							<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
 							    <div class="modal-dialog" role="document">
 							        <div class="modal-content">
 							            <div class="modal-header">
-							                <h5 class="modal-title" id="deleteConfirmationModalLabel">등록 확인</h5>
+							                <h5 class="modal-title" id="deleteConfirmationModalLabel">삭제 확인</h5>
 							            </div>
 							            <div class="modal-body">
-							                <p>정말 등록하시겠습니까?</p>
+							                <p>정말 삭제하시겠습니까?</p>
 							            </div>
 							            <div class="modal-footer">
 							                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">네</button>
@@ -71,12 +75,25 @@
 							        </div>
 							    </div>
 							 </div>
-							</form>
-							<script>
-								$('form[name="insertNotice"]').on('submit',boardInsert);
-								console.log($('form[name="insertNotice"]'))
+							 <script>
+								function conf(ca,de){
+									$("#confimModal").modal("show");
+									$(".btn-secondary").click(function () {
+								    	$.ajax('../delNotice?category='+ca+'&detailCate='+de)
+									    .done(result => {
+									    	location.href="boardList?category=b01"
+									    })
+									    .fail(err => console.log(err));
+									});
+								};
+								
+								$("#noBtn").click(function () {
+									$("#confimModal").modal("hide");
+								});
+								
+								$('form[name="updateNotice"]').on('submit',boardUpdate);
 	
-								function boardInsert(event){
+								function boardUpdate(event){
 									event.preventDefault();
 									let title = $('[name="title"]');
 									let content = $('[name="content"]');
@@ -92,22 +109,13 @@
 										return;
 									};
 									
-									$("#confimModal").modal("show");
-									$("#noBtn").on('click',function () {
-									    $("#confimModal").modal("hide");
-									});
+									updateNotice.submit();
 									
-									$("#yesBtn").on('click',function () {
-										insertNotice.submit();
-									});
 								};
 								
-								$(".btn-secondary").click(function () {
-								    $("#confimModal").modal("hide");
-								});
-								
 							</script>
-						</section>
+						</form>
+					</section>
 					</div>
 				</div>
 			</div>
