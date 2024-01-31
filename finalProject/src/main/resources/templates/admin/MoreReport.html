@@ -1,0 +1,22 @@
+			<div id="more">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>신고자</th>
+						<th>신고날짜</th>
+						<th>신고사유</th>
+					</tr>
+				</thead>
+				<tbody>
+				 	<th:block th:each="report,st : ${reportList}">
+						<tr>
+							 <td th:text="${st.count}">번호</td>
+							 <td th:text="${report.memId}" >신고자</td>
+							 <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td>
+							 <td th:text="${report.repReason}" >신고사유</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			</div>

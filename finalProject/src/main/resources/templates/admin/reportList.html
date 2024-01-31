@@ -37,7 +37,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				 	<th:block th:each="report,st : ${reportList}" >
+				 	<th:block th:each="report,st : ${reportList}">
 						<tr>
 							 <td th:text="${st.count}">번호</td>
 							 <td th:text="${report.memId}" >신고자</td>
@@ -47,14 +47,14 @@
 					</th:block>
 				</tbody>
 			</table>
-		</div>
+			</div>
 		</div>
 		<script th:inline="javascript">
 			function show1(){
-				$('#tableData').load("../boardList?category=b01 #notice");
+				$('#tableData').load("../getReportList?category=r01 #notice");
 			}
 			function show2(){
-				$('#tableData').load("../faqList #faq");
+				$('#tableData').load("../MoreReport?category=r02 #more");
 			}
 		</script>
       </div>

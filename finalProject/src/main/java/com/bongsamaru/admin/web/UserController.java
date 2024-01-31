@@ -121,6 +121,13 @@ public class UserController {
 		return "admin/reportList";
 	}
 	
+	@GetMapping("MoreReport")
+	public String getReportList1(@RequestParam(name="category") String category,Model model) {
+		List<ReportVO> list = userService.getReportList(category);
+		model.addAttribute("reportList",list);
+		return "admin/MoreReport";
+	}
+	
 	@GetMapping("noticeInsert")
 	public String insertNotice() {
 		return "admin/Noticeinsert";
