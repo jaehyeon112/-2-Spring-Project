@@ -13,14 +13,14 @@
     <legend> Donation Regit Form </legend>
 
     <div class="form-group">
-      <label for="exampleInputEmail1" class="form-label mt-4">시설단체명</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="call session value">
+      <label for="inputFacName" class="form-label mt-4">시설단체명</label>
+      <input type="email" class="form-control" id="inputFacName" aria-describedby="emailHelp" placeholder="call session value">
       <small id="emailHelp" class="form-text text-muted">회원 가입시 등록한 시설의 이름</small>
     </div>
     
     <div class="form-group">
-      <label for="exampleSelect1" class="form-label mt-4"> 유형 선택하는 select </label>
-      <select class="form-select" id="exampleSelect1">
+      <label for="categories" class="form-label mt-4"> 유형 선택하는 select </label>
+      <select class="form-select" id="categories">
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -30,9 +30,9 @@
     </div>
     
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">기부모금기간 (DATE)</label>
-      <input type="date" class="form-control" id="exampleInputPassword1" placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" class="form-control" id="exampleInputPassword1" placeholder="기부모금종료기간 " autocomplete="off">
+      <label for="sPeriod" class="form-label mt-4">기부모금기간 (DATE)</label>
+      <input type="date" class="form-control" id="sPeriod" placeholder="기부모금시작 " autocomplete="off">
+      <input type="date" class="form-control" id="ePeriod" placeholder="기부모금종료기간 " autocomplete="off">
     </div>
 
     <div class="form-group">
@@ -41,46 +41,65 @@
     </div>
     
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">목표모금액</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="(원)" autocomplete="off">
+      <label for="goalAmt" class="form-label mt-4">목표모금액</label>
+      <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
     </div>
 
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">기부금사용계획(+)</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="구체적사업내용" autocomplete="off"> 
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="구체적사업비" autocomplete="off">
+      <label for="detailBiz" class="form-label mt-4">기부금사용계획(+)</label>
+      <div id = "dynamicFields" class="mb-3">
+      	<div class="input-group">
+	      <input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off"> 
+	      <input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">
+	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs()">+</button>
+      	</div>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">사업대상</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="기부금 사업대상 입력" autocomplete="off">
+      <label for="bTarget" class="form-label mt-4">사업대상</label>
+      <input type="text" class="form-control" id="bTarget" placeholder="기부금 사업대상 입력" autocomplete="off">
     </div>
 
 
     <div class="form-group">
-      <label for="exampleTextarea" class="form-label mt-4">기대효과</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
+      <label for="expEffect" class="form-label mt-4">기대효과</label>
+      <textarea class="form-control" id="expEffect" rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
     </div>
     
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">소개글-제목</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="동적" autocomplete="off">
+      <label for="articleTitle" class="form-label mt-4">소개글-제목</label>
+      <input type="text" class="form-control" id="articleTitle" placeholder="동적" autocomplete="off">
     </div>
 	
 	<div class="form-group">
-      <label for="exampleTextarea" class="form-label mt-4">소개글</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+      <label for="article" class="form-label mt-4">소개글</label>
+      <textarea class="form-control" id="article" rows="3"></textarea>
     </div>
     
+    
     <div class="form-group">
-      <label for="exampleInputPassword1" class="form-label mt-4">관련링크</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="null 가능" autocomplete="off">
+	  <label for="article" class="form-label mt-4">소개글</label>
+	    <div id="articleContainer" class="mb-3">
+	        <div class="input-group">
+	        	<input type="text" class="form-control" id="articleTitle" placeholder="제목" autocomplete="off">
+	        </div>
+	        <div class="input-group">
+	            <textarea class="form-control" id="article" rows="3"></textarea>
+	        </div>
+	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs()">+</button>
+	    </div>
+	</div>
+    
+    <div class="form-group">
+      <label for="relatedLink" class="form-label mt-4">관련링크</label>
+      <input type="text" class="form-control" id="relatedLink" placeholder="null 가능" autocomplete="off">
     </div>
 
 
     <div class="form-group">
-      <label for="formFile" class="form-label mt-4">추가 이미지 첨부파일</label>
-      <input class="form-control" type="file" id="formFile">
+      <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일</label>
+      <input class="form-control" type="file" id="formFile2">
     </div>
     
     
@@ -105,5 +124,22 @@
     
   </fieldset>
 </form>
+
+
+<script>
+	function addInputs(){
+		let container = document.getElementById("dynamicFields");
+		let newFields = document.createElement("div");
+		newFields.className = "input-group mb-3";
+		newFields.innerHTML = 
+			 '<input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off">'+
+	      	 '<input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">'+
+	      	 '<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this)">-</button>';
+	    container.appendChild(newFields);  	    	 
+	}
+	
+	function removeInputs(button){
+		button.parentNode.remove();
+	}
+</script>
 </body>
-</html>

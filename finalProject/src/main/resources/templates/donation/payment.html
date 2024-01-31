@@ -32,13 +32,16 @@
 			        IMP.init("imp48428178");
 			
 			        function requestPay() {
+			        	
+			        	let amountInput = document.getElementById('c_address'.value();
+			        	
 			            IMP.request_pay(
 			                {
 			                    pg: "kakaopay.TC0ONETIME",		//KG이니시스 pg파라미터 값
 			                    pay_method: "card",		//결제 방법
 			                    merchant_uid: "1",//주문번호
 			                    name: "당근 10kg",		//상품 명
-			                    amount: 1,			//금액
+			                    amount: parseInt(amountInput),			//금액
 			      				buyer_email: "gildong@gmail.com",
 			      				buyer_name: "홍길동",
 			      				buyer_tel: "010-4242-4242",
@@ -125,16 +128,16 @@
 
 			            <div class="row">
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-info btn-block disabled">무통장입금</button>
+			                    <button type="button" class="btn btn-info btn-block disabled" id="depositBtn">무통장입금</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-warning btn-block disabled">카카오페이</button>
+			                    <button type="button" class="btn btn-warning btn-block disabled" id="kakaoPayBtn">카카오페이</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-success btn-block disabled">토스페이</button>
+			                    <button type="button" class="btn btn-success btn-block disabled" id="tossPayBtn">토스페이</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-danger btn-block disabled">카드결제</button>
+			                    <button type="button" class="btn btn-danger btn-block disabled" id="cardPayBtn">카드결제</button>
 			                </div>
 			            </div>
 
@@ -172,12 +175,32 @@
 
 		
 		<script>
-		    // 기부할 금액 입력란의 값이 변경될 때마다 표시 부분 업데이트
+		    // 입력 -> 표
 		    document.getElementById('c_address').addEventListener('input', function() {
 		        let amountInput = this.value;
-		        // 표시 부분 업데이트
+		        // 표 업데이트
 		        document.getElementById('displayAmount').textContent = amountInput + '원';
 		    });
+		    
+		    
+		    
+		    //페이s 결제버튼 클릭 
+		    document.getElementById('kakaoPayBtn').addEventListener('click', function(){
+		    	requestKakaoPay();
+		    });
+		    
+		   document.getElementById('kakaoPayBtn').addEventListener('click', function(){
+		    	requestCardPay();
+		    })
+		    
+		    // 결제함수
+		    function requestKakaoPay(){
+			   
+		   }
+		   
+		    function requestCardPay(){
+				   
+			   }
 		</script>	
 	</body>
 
