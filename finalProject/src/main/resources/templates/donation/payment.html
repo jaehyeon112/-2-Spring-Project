@@ -12,7 +12,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
   <link rel="shortcut icon" href="favicon.png">
-
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap4" />
 
@@ -21,7 +20,49 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="donation/payment/css/tiny-slider.css" rel="stylesheet">
 		<link href="donation/payment/css/style.css" rel="stylesheet">
-		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+		
+		<!-- 아임포트 api -->
+			 <!-- jQuery -->
+			  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+			 <!-- iamport.payment.js -->
+			  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+			  
+			  <script>
+			        var IMP = window.IMP;
+			        IMP.init("imp48428178");
+			
+			        function requestPay() {
+			            IMP.request_pay(
+			                {
+			                    pg: "kakaopay.TC0ONETIME",		//KG이니시스 pg파라미터 값
+			                    pay_method: "card",		//결제 방법
+			                    merchant_uid: "1234578",//주문번호
+			                    name: "당근 10kg",		//상품 명
+			                    amount: 1,			//금액
+			      				buyer_email: "gildong@gmail.com",
+			      				buyer_name: "홍길동",
+			      				buyer_tel: "010-4242-4242",
+			      				buyer_addr: "서울특별시 강남구 신사동",
+			      				buyer_postcode: "01181"
+			      				
+			      				
+			     	
+			                },
+			                function (rsp) {
+			      				//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+			                    if (rsp.success) {
+			                        //서버 검증 요청 부분
+			                    } else {
+			                        alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+			                    }
+			                }
+			            );
+			        }
+   		 	</script>
+    <meta charset="UTF-8"/>
+    <title>Sample Payment</title>
+    
+		<title>Payment</title>
 	</head>
 
 	<body>
@@ -60,7 +101,7 @@
 		            <div class="form-group row">
 		              <div class="col-md-12">
 		                <label for="c_address" class="text-black">기부할 금액 <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">
+		                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="기부할 금액을 입력해주세요">
 		              </div>
 		            </div>
 
@@ -109,21 +150,14 @@
 		            </div>
 
 		                <div class="form-group">
-		                  <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">결제하기</button>
+		                  <button class="btn btn-black btn-lg py-3 btn-block"  onclick="requestPay()">결제하기</button>
 		                </div>
-
-		              
-
-
-
 
 		          </div>
 		        </div>
 		        <div class="col-md-6">
 
-
-
-		        </div>
+	        </div>
 		      </div>
 		      <!-- </form> -->
 		    </div>
@@ -135,17 +169,16 @@
 		<script src="donation/payment/js/tiny-slider.js"></script>
 		<script src="donation/payment/js/custom.js"></script>
 		
-		
-		
+
 		
 		<script>
-    // 기부할 금액 입력란의 값이 변경될 때마다 표시 부분 업데이트
-    document.getElementById('c_address').addEventListener('input', function() {
-        let amountInput = this.value;
-        // 표시 부분 업데이트
-        document.getElementById('displayAmount').textContent = amountInput + '원';
-    });
-</script>
+		    // 기부할 금액 입력란의 값이 변경될 때마다 표시 부분 업데이트
+		    document.getElementById('c_address').addEventListener('input', function() {
+		        let amountInput = this.value;
+		        // 표시 부분 업데이트
+		        document.getElementById('displayAmount').textContent = amountInput + '원';
+		    });
+		</script>	
 	</body>
 
 </html>

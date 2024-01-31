@@ -18,15 +18,6 @@ class FinalProjectApplicationTests {
 	
 	
 
-   @Test
-   void 상세조회() {
-	   DonaVO donaVO = new DonaVO();
-//	   donaVO.setDonId(1);
-	   DonaVO did = donaMapper.selectDona(1);
-	   System.out.println(did);
-	   //assertThat(did.getTitle(), "제목");
-//	   assertThat(did.isEmpty()).isEqualTo(false); 
-	   
+   
    }
    
-}

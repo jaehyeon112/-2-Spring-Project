@@ -18,8 +18,12 @@ public class DonaServiceImpl implements DonaService {
 	
 	@Override
 	public List<DonaVO> getDonaList() {
-		
 		return donaMapper.getDonaList();
+	}
+	
+	@Override
+	public DonaVO getDonaDetail(Integer donId) {
+		return donaMapper.getDonaDetail(donId);
 	}
 
 }
