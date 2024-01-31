@@ -72,7 +72,7 @@
 			</div>
 
 
-
+<button type="button" th:onclick="pagingReq()"></button>
 
 <nav class="blog-pagination justify-content-center d-flex">
 				<ul class="pagination">
@@ -103,7 +103,7 @@
 
         $.ajax({
             type:'GET',
-            url:'facilityList/',
+            url:'facilityList',
             data: {region: selectedRegion},
             success: function (data) {
                 displayFilteredFacilities(data);
@@ -122,6 +122,13 @@
             filteredFacilitiesDiv.append('<p>' + facility.facName + '</p>');
         });
     }
+    
+    
+    
+    
+/*     const pagingReq = ()=>{
+    	location.href = "/facilityList/paging"
+    } */
 </script>
 
 

@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +45,8 @@ public class facilityController {
 	 * return regions; }
 	 */
 	@GetMapping("facilityList")
-	public String getFacilityList(Model model) {
-		List<FacilityVO> list = facilityService.getFacilityList();
+	public String getFacilityList(String region, String facId, Model model) {
+		List<FacilityVO> list = facilityService.getFacilityList(region, facId);
 		model.addAttribute("facilityList", list);
 		System.out.println(list);
 		return "facility/facilityList";
@@ -56,7 +59,14 @@ public class facilityController {
 	 * model.addAttribute("facilityList", list); System.out.println(list); return
 	 * "facility/facilityList"; }
 	 */
-
+	// /list/paging?page=1
+	/*
+	 * @GetMapping("/paging") public String paging(@PageableDefault(page=1) Pageable
+	 * pageable, Model model){ pageable.getPageNumber(); Page<FacilityVO>
+	 * facilityList = facilityService.paging(pageable;) return
+	 * 
+	 * }
+	 */
 	
 	
 	
