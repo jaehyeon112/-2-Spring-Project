@@ -24,4 +24,12 @@
 		from member where MEM_ID = #{memId}
 	</select>
 
+
+	<select id="countMemId" resultType="int">
+	    SELECT COUNT(*)
+	    FROM member
+	    WHERE mem_id = #{memId}
+	</select>
+
+
 </mapper>

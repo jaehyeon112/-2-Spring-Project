@@ -25,4 +25,6 @@ public class CommonUserController {
         model.addAttribute("userNickname", userNickname); // 모델에 닉네임 추가
         return "layout"; // 뷰 이름 반환
     }
+	
+	
 }

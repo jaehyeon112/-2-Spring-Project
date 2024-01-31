@@ -1,145 +1,145 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 
 <head>
-    <title>회원가입</title>
-    <style>
-    li {
-    display: flex;
-    padding: 20px 15px 20px 23px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #e5e5e5;
-}
-   	
-.btn_border_black:hover {
-    border-color: #fbb200;
-    background-color: #fbb200;
-    color: #fff;
-}
-
-.btn_border_black {
-     display: inline-block; 
-     border: 1px solid #000; 
-     background-color: transparent; 
-     color: #000; 
-     transition: all 0.25s ease;
-      
-}
-
-		button{
-			cursor:pointer;
+	<title>회원가입</title>
+	<style>
+		.check_wrap li {
+			display: flex;
+			padding: 20px 15px 20px 23px;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid #e5e5e5;
 		}
-					
-		.signup{
-		display: block;
-		    margin: 0 auto;
-		    width: 280px;
-		    height: 70px;
-		    }
-  
-    	.gray_box {
-		    padding: 15px;
-		    border: 1px solid #bfbfbf !important;
-		    background-color: #f4f4f4;
-		    font-size: 0.875rem;
+
+		.btn_border_black:hover {
+			border-color: #fbb200;
+			background-color: #fbb200;
+			color: #fff;
 		}
-    	
-        .hidden {
-            display: none;
-        }
-        
-    	 .radio-group {
-            display: flex;
-            align-items: center;
-            height: 36px; 
-        }
 
-        .radio-group input[type="radio"],
-        .radio-group label {
-            cursor: pointer;
-        }
+		.btn_border_black {
+			display: inline-block;
+			border: 1px solid #000;
+			background-color: transparent;
+			color: #000;
+			transition: all 0.25s ease;
 
-        .radio-group label {
-            margin-left: 5px; 
-            margin-right: 20px; 
-        }
-    
-    	
-        .form-control {
-            width: 300px;
-        }
-        
+		}
+
+		button {
+			cursor: pointer;
+		}
+
+		.signup {
+			display: block;
+			margin: 0 auto;
+			width: 280px;
+			height: 70px;
+		}
+
+		.gray_box {
+			padding: 15px;
+			border: 1px solid #bfbfbf !important;
+			background-color: #f4f4f4;
+			font-size: 0.875rem;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.radio-group {
+			display: flex;
+			align-items: center;
+			height: 36px;
+		}
+
+		.radio-group input[type="radio"],
+		.radio-group label {
+			cursor: pointer;
+		}
+
+		.radio-group label {
+			margin-left: 5px;
+			margin-right: 20px;
+		}
+
+
+		.form-control {
+			width: 300px;
+		}
+
 		.plus-bnt {
-            width: 450px;
-        }
-        
-        .small-bnt{
-        	width: 150px;
-        }
-		
-        .subheading {
-            font-size: 14px;
-            color: black;
-            font-weight: 600;
-            margin-top:30px;
-            margin-bottom:10px;
-        }
-
-        .bigText {
-            font-size: 22px;
-            font-weight: 700;
-            color: black;
-        }
-
-        .highlight {
-            font-size: 16px;
-            font-style: normal;
-            color: #fbb200;
-        }
-        .btncolor{
-        background-color: #fbb200;
-	    border: 1px solid #fbb200;
-	    border-radius: 4px;
-	    adding: 5px 10px;
-	    font-weight: 600;
-	    font-size: 0.75rem;
-	    color: #000;
-	    width: 100px;
-	    margin-left:15px;
-        }
-		.input-label{
-			height:15px;
+			width: 450px;
 		}
-        [type="radio"] {
-            appearance: none;
-            border: max(2px, 0.1em) solid #fbb200;
-            border-radius: 50%;
-            width: 1.25em;
-            height: 1.25em;
-            transition: border 0.1s ease-in-out;
-        }
 
-        [type="radio"]:checked {
-            border: 0.4em solid #fbb200;
-        }
+		.small-bnt {
+			width: 150px;
+		}
 
-        .write_item_row {
-            display: flex;
-            margin-top:30px;
-            justify-content: space-between;
-        }
+		.subheading {
+			font-size: 14px;
+			color: black;
+			font-weight: 600;
+			margin-top: 30px;
+			margin-bottom: 10px;
+		}
 
-        .write_item_row > .write_item {
-            flex: 0 1 50%;
-            max-width: 50%;
-        }
-        
-	    /* 체크박스 스타일링 */
-/* 	.check_wrap {
+		.bigText {
+			font-size: 22px;
+			font-weight: 700;
+			color: black;
+		}
+
+		.highlight {
+			font-size: 16px;
+			font-style: normal;
+			color: #fbb200;
+		}
+
+		.btncolor {
+			background-color: #fbb200;
+			border: 1px solid #fbb200;
+			border-radius: 4px;
+			adding: 5px 10px;
+			font-weight: 600;
+			font-size: 0.75rem;
+			color: #000;
+			width: 100px;
+			margin-left: 15px;
+		}
+
+		.input-label {
+			height: 15px;
+		}
+
+		[type="radio"] {
+			appearance: none;
+			border: max(2px, 0.1em) solid #fbb200;
+			border-radius: 50%;
+			width: 1.25em;
+			height: 1.25em;
+			transition: border 0.1s ease-in-out;
+		}
+
+		[type="radio"]:checked {
+			border: 0.4em solid #fbb200;
+		}
+
+		.write_item_row {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.write_item_row>.write_item {
+			flex: 0 1 50%;
+			max-width: 50%;
+		}
+
+		/* 체크박스 스타일링 */
+		/* 	.check_wrap {
 	    display: flex;
 	    align-items: center;
 	    flex-wrap: wrap;
@@ -147,348 +147,575 @@
 	}
  */
 		.check_wrap input[type="checkbox"] {
-		    display: none; /* 기본 체크박스 숨기기 */
+			display: none;
+			/* 기본 체크박스 숨기기 */
 		}
-		
+
 		.check_wrap label {
-		    margin-right: 15px;
-		    padding-left: 25px;
-		    position: relative;
-		    cursor: pointer;
+			margin-right: 15px;
+			padding-left: 25px;
+			position: relative;
+			cursor: pointer;
 		}
-		
-			/* 사용자 정의 체크박스 디자인 */
+
+		/* 사용자 정의 체크박스 디자인 */
 		.check_wrap label:before {
-		    content: '';
-		    position: absolute;
-		    left: 0;
-		    top: 50%;
-		    transform: translateY(-50%);
-		    width: 20px;
-		    height: 20px;
-		    border: 2px solid #fbb200;
-		    border-radius: 3px;
-		    background-color: white;
-		    transition: background-color 0.2s, border-color 0.2s; /* 부드러운 색상 변화 */
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border: 2px solid #fbb200;
+			border-radius: 3px;
+			background-color: white;
+			transition: background-color 0.2s, border-color 0.2s;
+			/* 부드러운 색상 변화 */
 		}
-		
+
 		/* 체크박스 체크 시 스타일 */
-		.check_wrap input[type="checkbox"]:checked + label:before {
-		    background-color: #fbb200; /* 배경을 노란색으로 */
-		    border-color: #fbb200; /* 테두리를 노란색으로 */
-		}	
-    </style>
+		.check_wrap input[type="checkbox"]:checked+label:before {
+			background-color: #fbb200;
+			/* 배경을 노란색으로 */
+			border-color: #fbb200;
+			/* 테두리를 노란색으로 */
+		}
+	</style>
 </head>
 
 <body>
-    <section layout:fragment="content">
-        <div class="container" style="padding:100px;">
-            <div class="bigText">회원가입</div>
-            <div class="subheading">구분</div>
-            <div class="radio-group">
-            <input type="radio" id="member" name="signup" value="member"checked>
-            <label for="member" class="input-label" >일반</label>
-            <input type="radio" id="facility" name="signup" value="facility">
-             <label for="facility" class="input-label">시설</label>
+
+	<section layout:fragment="content">
+		<div class="container" style="padding:100px;">
+			<div class="bigText">회원가입</div>
+
+			<div class="write_item_row">
+				<div class="write_item">
+					<div class="subheading"><em class="highlight">*</em>구분</div>
+					<div class="radio-group">
+						<input type="radio" id="member" name="signup" value="member" checked>
+						<label for="member" class="input-label">일반</label>
+						<input type="radio" id="facility" name="signup" value="facility">
+						<label for="facility" class="input-label">시설</label>
+					</div>
+				</div>
+				<div class="write_item">
+					<div class="subheading"><em class="highlight"></em>프로필</div>
+					<img id="imagePreview" src="/userresources/image/심사방법.png"
+						style="border-radius: 100%; width:100px; height:100px;">
+					<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
+					<button class="uploadBtn">Upload</button>
+				</div>
 			</div>
+
+			<script>
+				document.getElementById('imageInput').addEventListener('change', function (event) {
+					var image = document.getElementById('imagePreview');
+					var file = event.target.files[0];
+					var reader = new FileReader();
+
+					reader.onloadend = function () {
+						image.src = reader.result;
+					}
+
+					if (file) {
+						reader.readAsDataURL(file);
+					} else {
+						image.src = "";
+					}
+				});
+
+
+				$('.uploadBtn').click(function () {
+					var formData = new FormData(); //FormData 객체 생성
+					var inputFile = $("input[type='file']");
+					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+					var files = inputFile[0].files;
+					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+					for (var i = 0; i < files.length; i++) {
+						console.log(files[i]);
+						formData.append("uploadFiles", files[i]); //키,값으로 append 
+					}
+					formData.append("code", "p01")
+					formData.append("codeNo", $('#userId').val());
+
+					//jQuery.ajax
+					$.ajax({
+						url: '/uploadsAjax',
+						type: 'POST',
+						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+						data: formData,
+						success: function (result) {
+							console.log(result)
+							alert('성공!')
+
+						},
+						error: function (reject) {
+							alert('실풰!')
+							console.log(reject);
+						}
+					});
+				});
+			</script>
+
 			<!-- 한 블럭 -->
-            <div class="write_item_row ">
-                <div class="write_item">
-                    <div class="subheading">
-                        <em class="highlight">*</em>아이디
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control" placeholder="아이디를 입력해주세요">
-                    <input type="button" class="btn btncolor" value="중복확인">
-                </div>
-                
-                
-                <div class="write_item user">
-                    <div class="subheading">
-                        <em class="highlight">*</em>닉네임
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control" placeholder="닉네임을 입력해주세요">
-                    <input type="button" class="btn btncolor" value="중복확인">
-            	
-                
-                </div>
-                
-                
-                <div class="write_item facility hidden">
-                    <div class="subheading">
-                        <em class="highlight">*</em>대표자명
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="대표자명을 입력해주세요">
-            
-                </div>
-                
-            
-                 
-            </div> 
-            
-            <!-- 한 블럭 -->
-            <div class="write_item_row">
-                <div class="write_item">
-                    <div class="subheading">
-                        <em class="highlight">*</em>비밀번호
-                    </div>
-                    <input style="display: inline;" type="password" class="form-control  plus-bnt" placeholder="비밀번호를 입력해주세요">
-                </div>
-                <div class="write_item">
-                    <div class="subheading">
-                        <em class="highlight">*</em>비밀번호 확인
-                    </div>
-                    <input style="display: inline;" type="password" class="form-control  plus-bnt" placeholder="비밀번호를 한번 더 입력해주세요">
-                </div>
-            </div> 
-            
-            <div class="write_item_row">
-                <div class="write_item">
-                    <div class="subheading">
-                        <em class="highlight">*</em>휴대폰 본인인증
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control" placeholder="연락처를 입력해주세요">
-                    <input type="button" class="btn btncolor" value="인증번호받기">
-                </div>
-                
-                <div class="write_item">
-                    <div class="subheading">
-                        <em class="highlight">*</em>인증번호
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control" placeholder="인증번호를 입력해주세요">
-                    <input type="button" class="btn btncolor" value="인증하기">
-                </div>
-            </div> 
-            
-                   <div class="write_item_row ">
-                <div class="write_item facility hidden">
-                    <div class="subheading">
-                        <em class="highlight">*</em>시설명
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control  plus-bnt" placeholder="시설명을 입력해주세요">
-                </div>
-                <div class="write_item facility hidden">
-                    <div class="subheading">
-                        <em class="highlight">*</em>사업자등록번호
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control  " placeholder="사업자등록번호를 입력해주세요">
-                    
-                </div>
-            </div> 
-         
-             <div class="write_item_row">
-                <div class="write_item user">
-                    <div class="subheading">
-                        <em class="highlight">*</em>주소
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control" placeholder="우편번호">
-                    <input type="button" class="btn btncolor" value="검색">
-                </div>
-                
-                <div class="write_item user">
-                    <div class="subheading">
-                        <em class="highlight">*</em>생년월일
-                    </div>
-                    <input style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
-                </div>
-                  
-            </div> 
-               
-            <div class="write_item_row" style="margin-top:0;">
-             <div class="write_item user">
-                    <input style="display: inline; margin-top:10px;" type="text" class="form-control plus-bnt"  placeholder="주소">
-                </div>
-                </div>
-            <!-- 리펙토링하셈 -->
-            <div class="user" >
-            <div class="subheading">관련학과</div>
-				<div class="radio-group">
-				    <input type="radio" id="d01" name="major" value="해당사항 없음" checked>
-				    <label for="d01" class="input-label">해당사항 없음</label>
-				    <input type="radio" id="d02" name="major" value="인문계열">
-				    <label for="d02" class="input-label">인문계열</label>
-				    <input type="radio" id="d03" name="major" value="사회계열">
-				    <label for="d03" class="input-label">사회계열</label>
-				    <input type="radio" id="d04" name="major" value="교육계열">
-				    <label for="d04" class="input-label">교육계열</label>
-				    <input type="radio" id="d05" name="major" value="공학계열">
-				    <label for="d05" class="input-label">공학계열</label>
-				    <input type="radio" id="d06" name="major" value="자연계열">
-				    <label for="d06" class="input-label">자연계열</label>
-				    <input type="radio" id="d07" name="major" value="의학계열">
-				    <label for="d07" class="input-label">의학계열</label>
-				    <input type="radio" id="d08" name="major" value="예체능계열">
-				    <label for="d08" class="input-label">예체능계열</label>
-				    <input type="radio" id="d09" name="major" value="보건계열">
-				    <label for="d09" class="input-label">보건계열</label>
+			<div class="write_item_row ">
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>아이디
+					</div>
+					<input id="userId" style="display: inline;" type="text" class="form-control" placeholder="아이디를 입력해주세요">
+					<input id="idCheck" type="button" class="btn btncolor" value="중복확인">
 				</div>
-				
-				<!-- 관심분야 체크박스들 -->
-				            <!-- 리펙토링하셈 -->
-				<div class="subheading">관심분야</div>
-				<div class="check_wrap">
-				    <input type="checkbox" id="f01" name="field" value="아동 및 천소년 관련">
-				    <label for="f01" class="check_btn">아동 및 천소년 관련</label>
-				    
-				    <input type="checkbox" id="f02" name="field" value="장애인 관련">
-				    <label for="f02" class="check_btn">장애인 관련</label>
-				    
-				    <input type="checkbox" id="f03" name="field" value="문화, 체육 관련">
-				    <label for="f03" class="check_btn">문화, 체육 관련</label>
-				    
-				    <input type="checkbox" id="f04" name="field" value="캠페인 관련">
-				    <label for="f04" class="check_btn">캠페인 관련</label>
-				    
-				    <input type="checkbox" id="f05" name="field" value="보건의료 관련">
-				    <label for="f05" class="check_btn">보건의료 관련</label>
-				    
-				    <input type="checkbox" id="f06" name="field" value="환경정리 관련">
-				    <label for="f06" class="check_btn">환경정리 관련</label>
-				    
-				    <input type="checkbox" id="f07" name="field" value="기타">
-				    <label for="f07" class="check_btn">기타</label>
+
+
+				<div class="write_item user">
+					<div class="subheading">
+						<em class="highlight">*</em>닉네임
+					</div>
+					<input id="nickCheck" style="display: inline;" type="text" class="form-control" placeholder="닉네임을 입력해주세요">
+					<input type="button" class="btn btncolor" value="중복확인">
+
+
 				</div>
+
+
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>대표자명
+					</div>
+					<input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="대표자명을 입력해주세요">
+
 				</div>
-				
+
+
+
+			</div>
+
+			<!-- 한 블럭 -->
+			<div class="write_item_row">
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>비밀번호
+					</div>
+					<input id="passCheck" style="display: inline;" type="password" class="form-control  plus-bnt"
+						placeholder="비밀번호를 입력해주세요">
+				</div>
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>비밀번호 확인
+					</div>
+					<input id="passCheck2" style="display: inline;" type="password" class="form-control  plus-bnt"
+						placeholder="비밀번호를 한번 더 입력해주세요">
+				</div>
+			</div>
+
+			<div class="write_item_row">
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>휴대폰 본인인증
+					</div>
+					<input id="phoneCheck" style="display: inline;" type="text" class="form-control" placeholder="연락처를 입력해주세요">
+					<input type="button" class="btn btncolor" value="인증번호받기">
+				</div>
+
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>인증번호
+					</div>
+					<input id="authCheck" style="display: inline;" type="text" class="form-control" placeholder="인증번호를 입력해주세요">
+					<input type="button" class="btn btncolor" value="인증하기">
+				</div>
+			</div>
+			<div class="write_item_row">
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>시설명
+					</div>
+					<input style="display: inline;" type="text" class="form-control  plus-bnt" placeholder="시설명을 입력해주세요">
+				</div>
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>사업자등록번호
+					</div>
+					<input style="display: inline;" type="text" class="form-control  " placeholder="사업자등록번호를 입력해주세요">
+					<input type="button" class="btn btncolor" value="인증하기">
+				</div>
+			</div>
+
+			<div class="write_item_row">
+				<div class="write_item user">
+					<div class="subheading">
+						<em class="highlight">*</em>주소
+					</div>
+					<input id="zipCheck" style="display: inline;" type="text" class="form-control" placeholder="우편번호">
+					<input type="button" class="btn btncolor" value="검색">
+					<input id="adrrCheck" style="display: inline; margin-top:10px" type="text" class="form-control plus-bnt"
+						placeholder="주소">
+
+
+				</div>
+
+				<div class="write_item user">
+					<div class="subheading">
+						<em class="highlight">*</em>생년월일
+					</div>
+					<input id="birthCheck" style="display: inline;" type="date" class="form-control">
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+			<div class="write_item_row">
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>시설 주소
+					</div>
+					<input style="display: inline;" type="text" class="form-control" placeholder="우편번호">
+					<input type="button" class="btn btncolor" value="검색">
+
+					<input style="display: inline; margin-top:10px" type="text" class="form-control plus-bnt" placeholder="주소">
+					<input style="display: inline; margin-top:10px" type="text" class="form-control plus-bnt" placeholder="상세주소">
+				</div>
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>설립연월
+					</div>
+					<input style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
+				</div>
+			</div>
+
+
+
+
+			<div class="write_item_row">
+				<div class="write_item">
+					<div class="subheading">
+						<em class="highlight">*</em>이메일
+					</div>
+					<input id="emailCheck" style="display: inline;" type="text" class="form-control "
+						placeholder="example@gmail.com">
+					<input id="emailCheckBtn" type="button" class="btn btncolor" value="인증하기">
+				</div>
+				<div class="write_item user">
+					<div class="subheading ">기부금영수증 발급여부</div>
+					<div class="radio-group ">
+						<input type="radio" id="receiptYes" name="receipt" value="1">
+						<label for="receiptYes" class="input-label">예</label>
+						<input type="radio" id="receiptNo" name="receipt" value="0">
+						<label for="receiptNo" class="input-label">아니오</label>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="write_item facility hidden">
+				<div class="subheading">
+					시설 홈페이지 주소
+				</div>
+				<input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="example@gmail.com">
+
+			</div>
+			<div class="facility hidden">
+
+				<div class="subheading">
+					시설 소개
+				</div>
+				<textarea style="display: inline; width:100%;" class="form-control plus-bnt" rows="5"></textarea>
+			</div>
+
+			<div class="d-flex justify-content-center ">
+				<img class="facility hidden" src="/userresources/image/심사방법.png" style="width:90%; margin-top:15px;" alt="">
+			</div>
+
+
+
+
+			<!-- 영수증발급여부 예 눌렀을때만 보임 -->
+			<div id="receipt" class="hidden" style="margin-top:10px;">
+				<div class="write_item_row ">
+					<div class="write_item " style="margin-bottom:10px;">
+						고유식별정보(주민등록번호) 수집·이용 동의(필수)<a style="color:black">[확인하기]</a>
+					</div>
+					<div class="write_item" style="line-height: 100%">
+						<div class="check_wrap">
+							<input type="checkbox" id="idenYes" name="field" value="아동 및 천소년 관련">
+							<label for="idenYes" class="check_btn">예</label>
+						</div>
+					</div>
+				</div>
 				<div class="write_item_row">
-	                <div class="write_item">
-	                    <div class="subheading">
-	                        이메일
-	                    </div>
-	                    <input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="이메일을 입력해주세요">
-	                </div>
-                  <div class="write_item user">
-                 <div class="subheading ">기부금영수증 발급여부</div>
-				<div class="radio-group ">
-				    <input type="radio" id="receiptYes" name="receipt" value="1" >
-				    <label for="receiptYes" class="input-label">예</label>
-				    <input type="radio" id="receiptNo" name="receipt" value="0">
-				    <label for="receiptNo" class="input-label">아니오</label>
-				     </div>
-				    </div>
-				    </div>
-				    
-				    
-				    
-				    <!-- 영수증발급여부 예 눌렀을때만 보임 -->
-				    <div id="receipt" class="hidden">
-				     <div class="write_item_row ">
-		                <div class="write_item ">
-							고유식별정보(주민등록번호) 수집·이용 동의(필수)<a style="color:black">[확인하기]</a>
+					<div class="write_item">
+						<div class="subheading" style="margin-top : 0">
+							<em class="highlight">*</em>실명
 						</div>
-		                <div class="write_item" style="line-height: 100%">
-		                <div class="check_wrap" >
-						    <input type="checkbox" id="idenYes" name="field" value="아동 및 천소년 관련">
-						    <label for="idenYes"  class="check_btn">예</label>
+						<input id="nameCheck" style="display: inline;" type="text" class="form-control plus-bnt"
+							placeholder="이름을 입력해주세요">
+					</div>
+					<div class="write_item">
+						<div class="subheading" style="margin-top : 0">
+							<em class="highlight">*</em>주민등록번호
 						</div>
-					 </div>									     
-				     </div>
-				     <div class="write_item_row">
-                <div class="write_item">
-                    <div class="subheading" style="margin-top : 0">
-                        <em class="highlight">*</em>실명
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="이름을 입력해주세요">
-                </div>
-                <div class="write_item">
-                    <div class="subheading" style="margin-top : 0">
-                        <em class="highlight">*</em>주민등록번호
-                    </div>
-                    <input style="display: inline;" type="text" class="form-control small-bnt" placeholder="주민번호 앞자리">
-                    <span style=" text-align: center!important;">-</span>
-                    <input style="display: inline;" type="text" class="form-control small-bnt" placeholder="주민번호 뒷자리">
-                    <input type="button" class="btn btncolor" value="인증하기">
-                </div>
-            </div> 
-            			
-            			<div class="mt-3 gray_box ">
-                            * 실명 확인이 안 되는 경우, 아래 링크를 통해 실명확인/갱신 부탁드립니다. <br>
-                            · 카드발급, 은행 거래와 같은 금융 이력이 없을 경우, NICE평가정보에 실명정보가 없을 수 있습니다.<br>
-                            · 실명등록/갱신: <a href="https://www.niceid.co.kr/name_guid.nc" target="_blank">https://www.niceid.co.kr/name_guid.nc</a>
-                        </div>
-                        <div class="mt-3 gray_box ">
-                            * 국세청 연말정산 간소화 서비스를 통해 기부금영수증을 받으시려면 주민등록번호를 입력해주세요. <br>
-                            · 근거법령 : 소득세법 제 160조의3, 법인세법 제11조의 2<br>
-                            · 이용목적 : 연말정산 기부금영수증 발급<br>
-                            · 보유기간 : 발급일로부터 5년 (기부금 이월공제자의 경우 최대 10년 보관 가능)<br>
-                            * 기부금영수증은 본인 명의로만 신청 가능합니다.  실제 기부자가 아닌 타인 명의로 허위 발급 시 소득세법 81조에 근거하여 법적 처벌을 받을 수 있습니다.
-                        </div>
-                        </div>
-            		<h4 style="margin-top:20px">서비스 항목 동의</h4>
-					<h6 class="mt-2 h6">사이트 이용을 위한 약관에 동의</h6>
-					
-					
-					<ul style="list-style-type: none; " class="check_wrap ">
-					    <li>
-					        <input id="serviceAllChk" name="serviceAllChk" type="checkbox" onclick="toggleAllChecks(this.checked)">
-					        <label style="font-size:14px; font-weight:700" for="serviceAllChk">서비스 항목에 모두 동의합니다</label>
-					    </li>
-					    
-					    <li>
-					        <input id="individualChk1" name="individualChk" type="checkbox" onclick="checkIndividual()">
-					        <label style="font-size:14px; font-weight:700" for="individualChk1">14세 이상입니다.(필수)</label>
-					    </li>
-					    <li>
-					        <input id="individualChk2" name="individualChk" type="checkbox" onclick="checkIndividual()">
-					        <label style="font-size:14px; font-weight:700" for="individualChk2">봉사마루 이용약관(필수)</label>
-					    </li>
-					    <li>
-					        <input id="individualChk3" name="individualChk" type="checkbox" onclick="checkIndividual()">
-					        <label style="font-size:14px; font-weight:700" for="individualChk3">개인정보 수집 및 이용(필수)</label>
-					    </li>
-					    <li>
-					        <input id="individualChk4" name="individualChk" type="checkbox" onclick="checkIndividual()">
-					        <label style="font-size:14px; font-weight:700" for="individualChk4">마케팅 개인정보 수집 및 이용 동의(선택)</label>
-					    </li>
-					    <li>
-					        <input id="individualChk5" name="individualChk" type="checkbox" onclick="checkIndividual()">
-					        <label style="font-size:14px; font-weight:700" for="individualChk5">이메일, 문자 수신 동의(선택)</label>
-					    </li>
-					   
-					</ul>
-					<script>
-					  function toggleAllChecks(isChecked) {
-					        // 'individualChk' 이름을 가진 모든 체크박스를 가져옵니다.
-					        const checkboxes = document.querySelectorAll('input[name="individualChk"]');
-					        
-					        // 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
-					        checkboxes.forEach(function(checkbox) {
-					            checkbox.checked = isChecked;
-					        });
-					    }
+						<input id="frontIdenCheck" style="display: inline;" type="text" class="form-control small-bnt"
+							placeholder="주민번호 앞자리">
+						<span style=" text-align: center!important;">-</span>
+						<input id="backIdenCheck" style="display: inline;" type="password" class="form-control small-bnt"
+							placeholder="주민번호 뒷자리">
+						<input type="button" class="btn btncolor" value="인증하기">
+					</div>
+				</div>
 
-					    function checkIndividual() {
-					        // 모든 'individualChk' 체크박스를 가져옵니다.
-					        const checkboxes = document.querySelectorAll('input[name="individualChk"]');
-					        const allChecked = Array.from(checkboxes).every(chk => chk.checked);
-					        
-					        // '모두 선택' 체크박스의 상태를 업데이트합니다.
-					        document.getElementById('serviceAllChk').checked = allChecked;
-					    }
-					</script>
-						<button  class="btn_border_black signup">회원가입</button>
-					
-        </div><!-- 이게 끝 -->
-        
-   			<script>
-   				$('#receiptYes').on('click', function(){
-   					$('#receipt').removeClass('hidden');
-   				})
-   				$('#receiptNo').on('click', function(){
-   					$('#receipt').addClass('hidden');
-   				})
-   				$('#facility').on('click', function(){
-   					$('.user').addClass('hidden');
-   					$('.facility').removeClass('hidden');
-   					$('#receipt').addClass('hidden');
-   					$('input[type="radio"]').prop('checked', false);
-   				})
-   				$('#member').on('click', function(){
-   					$('.user').removeClass('hidden');
-   					$('.facility').addClass('hidden');
-   				})
+				<div class="mt-3 gray_box ">
+					* 실명 확인이 안 되는 경우, 아래 링크를 통해 실명확인/갱신 부탁드립니다. <br>
+					· 카드발급, 은행 거래와 같은 금융 이력이 없을 경우, NICE평가정보에 실명정보가 없을 수 있습니다.<br>
+					· 실명등록/갱신: <a href="https://www.niceid.co.kr/name_guid.nc"
+						target="_blank">https://www.niceid.co.kr/name_guid.nc</a>
+				</div>
+				<div class="mt-3 gray_box ">
+					* 국세청 연말정산 간소화 서비스를 통해 기부금영수증을 받으시려면 주민등록번호를 입력해주세요. <br>
+					· 근거법령 : 소득세법 제 160조의3, 법인세법 제11조의 2<br>
+					· 이용목적 : 연말정산 기부금영수증 발급<br>
+					· 보유기간 : 발급일로부터 5년 (기부금 이월공제자의 경우 최대 10년 보관 가능)<br>
+					* 기부금영수증은 본인 명의로만 신청 가능합니다. 실제 기부자가 아닌 타인 명의로 허위 발급 시 소득세법 81조에 근거하여 법적 처벌을 받을 수 있습니다.
+				</div>
 
-   			</script>
-    </section>
+
+				<!-- 리펙토링하셈 -->
+				<div class="user">
+					<div class="subheading">관련학과</div>
+					<div class="radio-group">
+						<input type="radio" id="d01" name="major" value="해당사항 없음" checked>
+						<label for="d01" class="input-label">해당사항 없음</label>
+						<input type="radio" id="d02" name="major" value="인문계열">
+						<label for="d02" class="input-label">인문계열</label>
+						<input type="radio" id="d03" name="major" value="사회계열">
+						<label for="d03" class="input-label">사회계열</label>
+						<input type="radio" id="d04" name="major" value="교육계열">
+						<label for="d04" class="input-label">교육계열</label>
+						<input type="radio" id="d05" name="major" value="공학계열">
+						<label for="d05" class="input-label">공학계열</label>
+						<input type="radio" id="d06" name="major" value="자연계열">
+						<label for="d06" class="input-label">자연계열</label>
+						<input type="radio" id="d07" name="major" value="의학계열">
+						<label for="d07" class="input-label">의학계열</label>
+						<input type="radio" id="d08" name="major" value="예체능계열">
+						<label for="d08" class="input-label">예체능계열</label>
+						<input type="radio" id="d09" name="major" value="보건계열">
+						<label for="d09" class="input-label">보건계열</label>
+					</div>
+
+					<!-- 관심분야 체크박스들 -->
+					<!-- 리펙토링하셈 -->
+					<div class="subheading">관심분야</div>
+					<div class="check_wrap">
+						<input type="checkbox" id="f01" name="field" value="아동 및 천소년 관련">
+						<label for="f01" class="check_btn">아동 및 천소년 관련</label>
+
+						<input type="checkbox" id="f02" name="field" value="장애인 관련">
+						<label for="f02" class="check_btn">장애인 관련</label>
+
+						<input type="checkbox" id="f03" name="field" value="문화, 체육 관련">
+						<label for="f03" class="check_btn">문화, 체육 관련</label>
+
+						<input type="checkbox" id="f04" name="field" value="캠페인 관련">
+						<label for="f04" class="check_btn">캠페인 관련</label>
+
+						<input type="checkbox" id="f05" name="field" value="보건의료 관련">
+						<label for="f05" class="check_btn">보건의료 관련</label>
+
+						<input type="checkbox" id="f06" name="field" value="환경정리 관련">
+						<label for="f06" class="check_btn">환경정리 관련</label>
+
+						<input type="checkbox" id="f07" name="field" value="기타">
+						<label for="f07" class="check_btn">기타</label>
+					</div>
+				</div>
+
+
+			</div>
+			<h4 style="margin-top:20px">서비스 항목 동의</h4>
+			<h6 class="mt-2 h6">사이트 이용을 위한 약관에 동의</h6>
+
+
+			<ul style="list-style-type: none; " class="check_wrap">
+				<li class="navli">
+					<input id="serviceAllChk" name="serviceAllChk" type="checkbox" onclick="toggleAllChecks(this.checked)">
+					<label style="font-size:14px; font-weight:700" for="serviceAllChk">서비스 항목에 모두 동의합니다</label>
+				</li>
+
+				<li>
+					<input id="individualChk1" name="individualChk" type="checkbox" onclick="checkIndividual()">
+					<label style="font-size:14px; font-weight:700" for="individualChk1">14세 이상입니다.(필수)</label>
+				</li>
+				<li>
+					<input id="individualChk2" name="individualChk" type="checkbox" onclick="checkIndividual()">
+					<label style="font-size:14px; font-weight:700" for="individualChk2">봉사마루 이용약관(필수)</label>
+				</li>
+				<li>
+					<input id="individualChk3" name="individualChk" type="checkbox" onclick="checkIndividual()">
+					<label style="font-size:14px; font-weight:700" for="individualChk3">개인정보 수집 및 이용(필수)</label>
+				</li>
+				<li>
+					<input id="individualChk4" name="individualChk" type="checkbox" onclick="checkIndividual()">
+					<label style="font-size:14px; font-weight:700" for="individualChk4">마케팅 개인정보 수집 및 이용 동의(선택)</label>
+				</li>
+				<li>
+					<input id="individualChk5" name="individualChk" type="checkbox" onclick="checkIndividual()">
+					<label style="font-size:14px; font-weight:700" for="individualChk5">이메일, 문자 수신 동의(선택)</label>
+				</li>
+
+			</ul>
+			<script>
+				function toggleAllChecks(isChecked) {
+					// 'individualChk' 이름을 가진 모든 체크박스를 가져옵니다.
+					const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+
+					// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
+					checkboxes.forEach(function (checkbox) {
+						checkbox.checked = isChecked;
+					});
+				}
+
+				function checkIndividual() {
+					// 모든 'individualChk' 체크박스를 가져옵니다.
+					const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+					const allChecked = Array.from(checkboxes).every(chk => chk.checked);
+
+					// '모두 선택' 체크박스의 상태를 업데이트합니다.
+					document.getElementById('serviceAllChk').checked = allChecked;
+				}
+			</script>
+			<button id="signUpFacility" class="btn_border_black signup facility hidden">가입신청</button>
+			<button id="signUpUser" class="btn_border_black signup user">회원가입</button>
+
+		</div><!-- 이게 끝 -->
+
+		<script>
+			let userCheck = true;
+			let facilityCheck = false;
+			let receiptNO = true;
+			let receiptYes = false;
+
+			$('#receiptYes').on('click', function () {
+				$('#receipt').removeClass('hidden');
+				receiptNO = false;
+				receiptYes = true;
+			})
+
+			$('#receiptNo').on('click', function () {
+				$('#receipt').addClass('hidden');
+				receiptNO = true;
+				receiptYes = false;
+			})
+
+			$('#facility').on('click', function () {
+				$('.user').addClass('hidden');
+				$('.facility').removeClass('hidden');
+				$('#receipt').addClass('hidden');
+				$('input[type="radio"]').not('#facility').prop('checked', false);
+				userCheck = false;
+				facilityCheck = true;
+			})
+			$('#member').on('click', function () {
+				$('.user').removeClass('hidden');
+				$('.facility').addClass('hidden');
+				userCheck = true;
+				facilityCheck = false;
+			})
+
+			// 유저 빈칸 유효성 검사
+			$('#signUpUser').on('click', function () {
+						if ($('#userId').val().trim() === '') {
+							alert('아이디를 입력해주세요.');
+							$('#userId').focus();
+							return;
+						}
+						if ($('#nickCheck').val().trim() === '') {
+							alert('닉네임을 입력해주세요.');
+							$('#nickCheck').focus();
+							return;
+						}
+						if ($('#passCheck').val().trim() === '') {
+							alert('비밀번호를 입력해주세요.');
+							$('#passCheck').focus();
+							return;
+						}
+						if($('#passCheck2').val()!=$('#passCheck1').val()){
+							alert('비밀번호가 서로 일치하지 않습니다.');
+							$('#passCheck').focus();
+							return;
+						}
+						
+						if ($('#passCheck2').val().trim() === '') {
+							alert('비밀번호 확인을 입력해주세요.');
+							$('#passCheck2').focus();
+							return;
+						}
+						if ($('#phoneCheck').val().trim() === '') {
+							alert('연락처를 입력해주세요.');
+							$('#phoneCheck').focus();
+							return;
+						}
+						if ($('#authCheck').val().trim() === '') {
+							alert('인증번호를 입력해주세요.');
+							$('#authCheck').focus();
+							return;
+						}
+						if ($('#zipCheck').val().trim() === '') {
+							alert('우편번호를 입력해주세요.');
+							$('#zipCheck').focus();
+							return;
+						}
+						if ($('#adrrCheck').val().trim() === '') {
+							alert('주소를 입력해주세요.');
+							$('#adrrCheck').focus();
+							return;
+						}
+						if ($('#emailCheck').val().trim() === '') {
+							alert('이메일을 입력해주세요.');
+							$('#emailCheck').focus();
+							return;
+						}
+						if (receiptYes) {
+							if ($('#nameCheck').val().trim() === '') {
+								alert('실명을 입력해주세요.');
+								$('#nameCheck').focus();
+								return;
+							}
+							if ($('#frontIdenCheck').val().trim() === '') {
+								alert('주민등록번호 앞자리를 입력해주세요.');
+								$('#frontIdenCheck').focus();
+								return;
+							}
+							if ($('#backIdenCheck').val().trim() === '') {
+								alert('주민등록번호 뒷자리를 입력해주세요.');
+								$('#backIdenCheck').focus();
+								return;
+							}
+						}
+					})
+					
+					var email = $('#emailCheck').val().trim();
+					var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+					$('#emailCheckBtn').on('click',function(){
+						if (!emailRegex.test(email)) {
+						    alert('유효한 이메일 주소를 입력해주세요.');
+						    $('emailCheck').focus();
+						    return;
+						}
+					})
+					
+				
+		</script>
+	</section>
 </body>
 
 </html>
