@@ -1,5 +1,8 @@
 package com.bongsamaru.login.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +34,17 @@ public class LoginController {
 	
 	@PostMapping("/userSignUp")
 	@ResponseBody
-	public void userSignUp(@RequestBody UserVO vo) {
+	public Map<String, Object> userSignUp(@RequestBody UserVO vo) {
 		System.out.println(vo);
 		
-		userService.insertUser(vo);
+		 Map<String, Object> result = new HashMap<>();
+		 Boolean type = userService.insertUser(vo);
+		 if(type) {
+			result.put("result", "success"); 
+		 }
+		 result.put("result", "error"); 
+		
+		return result;
 	}
 	
 }

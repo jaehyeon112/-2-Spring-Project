@@ -627,18 +627,34 @@
 			let facilityCheck = false;
 			let receiptNO = true;
 			let receiptYes = false;
+			let valid = {
+					isUserId : false,
+					isNick : false,
+					isPhone : false,
+					isEmail : false,
+					isbirth : false,
+					isIdenYes : false,
+					isCheckBox1 : false,
+					isCheckBox2 : false,
+					isCheckBox3 : false,
+			}
+			
 			let isUserId = false;
 			let isNick = false;
 			let isPhone = false;
 			let checkNum = 0;
 			let isEmail = false;
 
+			
+			$('#userId').on('keydown', function() {
+			    isUserId = false;
+			    $('#userIdSuccess').addClass('hidden');
+			});
+			
 			//아이디 중복체크
 			function validateUserId() {
 				let userIdValue = $('#userId').val();
 				let isId = true;
-				isUserId = false;
-				$('#userIdSuccess').addClass('hidden');
 				$('#userIdError').hide();
 
 				// 아이디 입력 여부 확인
@@ -664,8 +680,6 @@
 					$('#userIdError').text('아이디에 한글을 사용할 수 없습니다.').show();
 					isId = false;
 				}
-
-
 				return isId;
 			}
 
@@ -741,7 +755,7 @@
 									$('#nickIdSuccess').removeClass('hidden');
 								} else {
 									alert('이미 존재하는 닉네임입니다.')
-									$('#nickCheckError').text('이미 존재하는 아이디입니다.').show();
+									$('#nickCheckError').text('이미 존재하는 닉네임입니다.').show();
 								}
 							},
 							error: function (reject) {
@@ -897,8 +911,7 @@
 					} else if (!validateUserId()) {
 						isValid = false;
 						alert('2');
-					} else {
-						$('#userIdSuccess').removeClass('hidden');
+					
 					}
 					// 닉네임 유효성 검사
 					if (isNick == false) {
@@ -1122,6 +1135,7 @@
 						dataType: 'json', // The type of data expected back from the server
 						success: function (res) {
 							console.log(res); // Handle the response from the server here
+							
 						},
 						error: function (xhr, status, error) {
 							// Handle errors here
