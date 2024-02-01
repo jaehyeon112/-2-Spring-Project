@@ -18,6 +18,7 @@
 	  </div>
 
 	<script>
+	// 현재 비밀번호 검증
 		$("#submitBtn").on('click', function() {
 		  let currentPassword = $("#currentPassword").val();
 
@@ -28,7 +29,7 @@
 		    success: function(response) {
 		      console.log(response);
 		      alert(response);
-		      window.location.href = "/my";
+		      window.location.href = "/profile";
 		    },
 		    error: function(xhr, status, error) {
 		      console.log(error);
