@@ -56,7 +56,6 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	public UserVO getUserVO() {
 		return userVO;
 	}
-
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -84,6 +83,5 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		
 	}
 }
