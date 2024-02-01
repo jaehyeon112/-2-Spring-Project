@@ -67,17 +67,7 @@
       <textarea class="form-control" id="expEffect" rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
     </div>
     
-    <div class="form-group">
-      <label for="articleTitle" class="form-label mt-4">소개글-제목</label>
-      <input type="text" class="form-control" id="articleTitle" placeholder="동적" autocomplete="off">
-    </div>
-	
-	<div class="form-group">
-      <label for="article" class="form-label mt-4">소개글</label>
-      <textarea class="form-control" id="article" rows="3"></textarea>
-    </div>
-    
-    
+
     <div class="form-group">
 	  <label for="article" class="form-label mt-4">소개글</label>
 	    <div id="articleContainer" class="mb-3">
@@ -127,14 +117,16 @@
 
 
 <script>
+	let count = 1;
 	function addInputs(){
+		count++;
 		let container = document.getElementById("dynamicFields");
 		let newFields = document.createElement("div");
 		newFields.className = "input-group mb-3";
 		newFields.innerHTML = 
-			 '<input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off">'+
-	      	 '<input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">'+
-	      	 '<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this)">-</button>';
+			 `<input type="text" class="form-control" id="detailBiz${count}" placeholder="구체적사업내용" autocomplete="off">`+
+	      	 `<input type="text" class="form-control" id="detailAmt${count}" placeholder="구체적사업비" autocomplete="off">`+
+	      	 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this)">-</button>`
 	    container.appendChild(newFields);  	    	 
 	}
 	

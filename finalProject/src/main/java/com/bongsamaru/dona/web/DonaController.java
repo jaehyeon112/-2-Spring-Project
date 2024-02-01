@@ -1,5 +1,7 @@
 package com.bongsamaru.dona.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,20 +23,24 @@ public class DonaController {
 	   @GetMapping("/donaMain")
 	    public String openDonaMainPage(Model model) {
 		   model.addAttribute("list", donaService.getDonaList());
+		   String h = "h";
+		   System.out.println("=======================");
+		   System.out.println(donaService.getCategoryList(h));
+		   System.out.println("=======================");
+		   model.addAttribute("categoryList", donaService.getCategoryList(h));
 	        return "donation/donaMain";
 	    }
 
 	// 기부 유형(categories) 전체리스트
-//	   @GetMapping("/categories")
-//	   @ResponseBody
-//	   public String showCategories(Model model) {
-//		  model.addAttribute("categories", donaService.getCategoryList());
-//		  return model;		   
-//	   }
+	   @GetMapping("/catetory")
+	   @ResponseBody
+	   public List<DonaVO> showCategories(@RequestParam("h") String h) {
+		  //model.addAttribute("categories", donaService.getCategoryList(h));
+		  return donaService.getCategoryList(h);		
+		   
+	   }
 	   
-	   
-	   
-	   
+
 
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
@@ -48,10 +54,10 @@ public class DonaController {
 	 // 기부상세 - 기부자목록 
 	  @GetMapping("/donaDetail/{id}")
 	  @ResponseBody
-	  public DonaVO donerList(@PathVariable Integer id, Model model) {
-		  DonaVO vo = donaService.getDoner(id);
-		  model.addAttribute("doner", vo);
-		  return vo;
+	  public List<DonaVO> donerList(@PathVariable Integer id, Model model) {
+		  model.addAttribute("doner", donaService.getDonerList(id));
+		  System.out.println("여기여기여기다!! " + donaService.getDonerList(id));
+		  return donaService.getDonerList(id);
 	  }
 	   
 	   

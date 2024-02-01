@@ -29,13 +29,13 @@ public class DonaServiceImpl implements DonaService {
 	}
 	
 	@Override
-	public DonaVO getDoner(Integer donId) {
-		return donaMapper.getDoner(donId);
+	public List<DonaVO> getDonerList(Integer donId) {
+		return donaMapper.getDonerList(donId);
 	}
 	
 	@Override
-	public List<DonaVO> getCategoryList() {
-		return donaMapper.getCategoryList();
+	public List<DonaVO> getCategoryList(String h) {
+		return donaMapper.getCategoryList(h);
 	}
 	
 	@Override

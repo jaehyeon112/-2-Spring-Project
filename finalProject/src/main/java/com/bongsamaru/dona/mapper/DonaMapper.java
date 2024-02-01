@@ -14,7 +14,7 @@ public interface DonaMapper {
 		public DonaVO getDonaDetail(Integer donId, String facId);
 	
 	// 기부자목록 in 상세페이지
-		public DonaVO getDoner(Integer donId);
+		public List<DonaVO> getDonerList(Integer donId);
 		
 	//댓글 - 전체리스트 
 		public List<DonaVO> getCommentsList();
@@ -23,7 +23,7 @@ public interface DonaMapper {
 		public int insertComments(DonaVO donaVO);
 		
 	//카테고리
-		List<DonaVO> getCategoryList();
+		List<DonaVO> getCategoryList(String h);
 
 	
 	//기부등록폼 

@@ -41,7 +41,7 @@ public class DonaVO {
     //don_ledger(기부장부) 테이블
 	    private Integer donLedId; // 기부장부번호
 	    //private Integer donId; 
-	    private Integer donAmp; // 기부금액
+	    private Integer donAmt; // 기부금액
 	    private String payMethod; //결제수단 (notnull)
 	    private Date payDate; // 결제일자
 	    private String payStat; //결제상태 (c3)
@@ -96,6 +96,13 @@ public class DonaVO {
 	    //private String content;
 	    private Date commDate;
 	    private String code;
+	    
+	    
+	//서브코드
+	    private String subCodeName;
+	    private String subCode;
+	    private String subCodeId;
+	    
 	    
 	    
 }

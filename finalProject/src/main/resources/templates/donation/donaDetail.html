@@ -105,7 +105,10 @@
                                             aria-controls="nav-about" aria-selected="true">Description</button>
                                         <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                             id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                            aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                                            aria-controls="nav-mission" aria-selected="false">DONERS</button>
+                                        <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                            id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review"
+                                            aria-controls="nav-review" aria-selected="false">Facility Review</button>
                                     </div>
                                 </nav>
                                 
@@ -125,6 +128,8 @@
                                             Susp endisse ultricies nisi vel quam suscipit </p>
                                         <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
                                             icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
+                                            
+                                      <!--  표 넣을 곳  -->      
                                         <div class="px-2">
                                             <div class="row g-4">
                                                 <div class="col-6">
@@ -175,28 +180,21 @@
                                     
                                     <!-- Reviews 안의 영역 -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-                                        <div class="d-flex">
-                                            <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                        <div class="d-flex">  
+                                            <div class="doner">
                                                 <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
+                                                    <h5>작성자명</h5>
                                                     <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <p class="mb-2" style="font-size: 14px;">날짜 출력하기 </p>
                                                     </div>
                                                 </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                                <p> 기부금액 </p>
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                                <p class="mb-2" style="font-size: 14px;"></p>
                                                 <div class="d-flex justify-content-between">
                                                     <h5>Sam Peters</h5>
                                                     <div class="d-flex mb-3">
@@ -212,6 +210,42 @@
                                             </div>
                                         </div>
                                     </div> <!--  end 리뷰안의 영역 -->
+                                    
+                                    <!--  모금후기  -->
+                                     <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                                        <div class="d-flex">  
+                                            
+                                                <div class="d-flex justify-content-between">
+                                                    <h5>작성자명</h5>
+                                                    <div class="d-flex mb-3">
+                                                        <p class="mb-2" style="font-size: 14px;">날짜 출력하기 </p>
+                                                    </div>
+                                                </div>
+                                                <p> 기부금액 </p>
+                                           
+                                        </div>
+                                        <div class="d-flex">
+                                            <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                            <div class="">
+                                                <p class="mb-2" style="font-size: 14px;"></p>
+                                                <div class="d-flex justify-content-between">
+                                                    <h5>Sam Peters</h5>
+                                                    <div class="d-flex mb-3">
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
+                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                            </div>
+                                        </div>
+                                    </div> <!--  end 모금후기  영역 -->
+                                    
+                                    
+                                    
                                     
                                     <div class="tab-pane" id="nav-vision" role="tabpanel">
                                         <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
@@ -243,7 +277,7 @@
                     <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
                             <div class="col-lg-12">
-                                
+                                	 
                                 <p class="mb-3">Category: 유형</p>
                              	<div class="info-item"><strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원 </div>
 								<div class="progress">           
@@ -420,23 +454,50 @@
     
     
     <script>
-    // reviews nav에 기부자 리스트 보여주기.
-    	document.querySelector('#nav-mission-tab').addEventListener('click', getDonerInfo);
+    //날짜변환 
+    function dateFormat(data){
     	
-    	function getDonerInfo(){
-    		$.ajax('http://localhost:8585/donaDetail?id=1&facId=greenfrog')
-    		.done(result => {
-    			console.log('getDoner' , result);
-    		})
-    		.fail(err => console.log(err));
-    		})	
-    	}
-    	
-    	
-   	// 댓글
-   	
-   	
-    </script>
+	    let date = new Date(data);
+	    
+	    let year = date.getFullYear();
+	    let month = ('0' + (date.getMonth()+1)).slice(-2);
+	    let day = ('0' + (date.getDate()+1)).slice(-2);
+	    
+	    let today = year + '/' + month + '/' + day; 
+	    
+	    return today;
+	    
+    }
+    
+    //기부자 목록 데이터 가져오기.
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "/donaDetail/" + [[${dona.donId}]], 
+            type: "GET",
+            dataType: "json", 
+            success: function (data) {
+            	console.log(data[0]);
+            	console.log(data);
+            	console.log(data.length);
+            	
+            	for(let i= 0; i < data.length; i++){
+            		console.log("포문");
+            		console.log(data.length);
+            		console.log(data[0]);
+            		console.log(data[1]);
+            		console.log(data[i]);
+                	$(".doner").html("기부자 목록: " + data[i].memId + "," + " \n" + data[i].donAmt + ", " + dateFormat(data[i].payDate));
+            	}
+                
+            },
+            error: function () {
+             
+                alert("데이터 가져오기 실패 .");
+            }
+        });
+    });
+</script>
     </body>
 
 </html>
