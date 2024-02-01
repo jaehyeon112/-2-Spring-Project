@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import groovy.transform.builder.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,11 +31,5 @@ public class UserVO implements Serializable {
 	private String memStat;
 	private String memName;
 	
-	@Builder
-	public UserVO(String memEmail, String memId,String memPhone, String memPwd) { // 응답, 요청 다됨
-		this.memId = memId;
-		this.memEmail = memEmail;
-		this.memPhone = memPhone;
-		this.memPwd = memPwd;
-	}
+
 }

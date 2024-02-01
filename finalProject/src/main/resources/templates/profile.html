@@ -62,6 +62,10 @@
 						  </span>
 					</div>
 				</li>
+				<li class="hidden">
+					<div> 아이디</div>
+					<input type="text" id="id" th:value="${item.memId}">
+				</li>
 				<li>
 					<div> 닉네임</div>
 					<input type="text" th:value="${item.memNick}">
@@ -83,21 +87,16 @@
 				</li>
 				<li id="email1">
 				  <div>이메일</div>
-				  <input type="email" id="recipientEmail" placeholder="이메일 주소를 입력하세요" th:value="${list.memEmail}" readonly>
+				  <input type="email" id="recipientEmail" placeholder="변경하실 이메일 주소를 입력하세요" >
 				  <button type="button" id="sendButton">인증번호 전송</button>
+				  <button id="ChangeEmailBtn" class="hidden">변경하기</button>
 				</li>
 				<li id="email2" class="hidden">
-				  <div>이메일</div>
-				  <input type="text" id="verificationCode" placeholder="인증번호 4자리를 입력하세요">
+				  <div id="name">이메일</div>
+				  <input type="text" id="verificationCode" placeholder="인증번호 4자리를 입력하세요" >
 				  <button type="button" id="verifyButton">인증번호 확인</button>
 				  <div id="message"></div>
-				</li>
-				<li id="email3" class="hidden">
-				  <div>이메일</div>
-				  <input type="text" id="ChangeEmail" placeholder="변경하실 이메일을 입력하세요">
-				  <button id="ChangeEmailBtn">변경</button>
-				  <div id="message"></div>
-				</li>				
+				</li>			
 				<li>
 					<input type="text" id="zip" th:value="${item.memZip} " class="hidden">
 					<div>주소</div>
@@ -135,8 +134,10 @@
 			</ul>
 		<th:block th:each="item : ${list}">
 	</div>
-	<script type="text/javascript">
-
+	<script th:inline="javascript">
+    let memId = $("#id").val();
+    console.log(memId,'아이디');
+	
 	let checkNum = 0;
 	
 	
@@ -190,8 +191,8 @@ $('#sendButton').on('click',function() {
   }
 
   alert("인증번호가 발송되었습니다.");
-  $("#email1").addClass('hidden');
-  $("#email2").removeClass('hidden');
+  $("#email1").hide();
+  $("#email2").show();
   $.ajax({
     type: "POST",
     url: "/email/send",
@@ -232,8 +233,12 @@ $('#verifyButton').on('click',function() {
 	    // 인증 성공 시 처리
 	    if (response == "success") {
 	      alert("인증되었습니다.");
-	      $("#email2").addClass('hidden');
-	      $("#email3").removeClass('hidden');
+	      $("#email1").show();
+	      $("#sendButton").hide();
+	      $("#ChangeEmailBtn").show();
+	      $("#verificationCode").hide();
+	      $("#verifyButton").hide();
+	      $("#name").hide();
 	    } else {
 	      alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
 /* 	      $("#message").text("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
@@ -241,6 +246,29 @@ $('#verifyButton').on('click',function() {
 	    }
 	  },
 	});
+});
+
+// 이메일 변경
+$('#ChangeEmailBtn').on('click',function() {
+	let recipientEmail = $("#recipientEmail").val();
+	
+	$.ajax({
+		  type: "POST",
+		  url: "/profile",
+		  data: JSON.stringify({
+			  	memId: memId,
+			    memEmail: recipientEmail
+		  }),
+		  contentType: "application/json",
+		  success: function (response) {
+		    alert("이메일 변경 성공");
+		    $("#ChangeEmailBtn").hide();
+		    $("#email1").show();
+		  },
+		  error: function (xhr, status, error) {
+		    alert("이메일 변경 실패");
+		  }
+		});
 });
 
 // 이미지 파일 변경
