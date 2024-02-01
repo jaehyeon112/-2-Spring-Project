@@ -17,10 +17,18 @@
         <link rel="stylesheet" href="/userresources/vendors/nice-select/css/nice-select.css">
         <link rel="stylesheet" href="/userresources/vendors/owl-carousel/owl.carousel.min.css">
         <!-- main css -->
-        <link rel="stylesheet" href="/userresources/css/style.css">
-        <link rel="stylesheet" href="/userresources/css/responsive.css">
+        <link rel="stylesheet" href="userresources/css/style.css">
+        <link rel="stylesheet" href="userresources/css/responsive.css">
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- font -->
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap" rel="stylesheet">
+		<style>
+		  @import url('https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap');
+		</style>
     </head>
 <body>
 	    <!--================Header Area =================-->
@@ -41,8 +49,8 @@
                                <li class="nav-item submenu dropdown">
                                 <a style="cursor: pointer" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <ul class="dropdown-menu" >
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/}">봉사마루</a></li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/}">시설</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/intro}">봉사마루</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/intro2}">시설소개</a></li>
                                 </ul>
                             </li> 
                            <li class="nav-item submenu dropdown">
@@ -55,9 +63,8 @@
                             </li> 
                             <li class="nav-item"><a class="nav-link" th:href="@{/}">기부</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/}">챌린지</a></li>
-                            
                     		<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">로그인</a></li>
-						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}" th:text="${userNickname} + '님 환영합니다~'">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/my}" th:text="|${userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
