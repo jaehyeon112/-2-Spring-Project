@@ -22,31 +22,24 @@ public class DonaController {
 	//기부 메인페이지 - 전체리스트
 	   @GetMapping("/donaMain")
 	    public String openDonaMainPage(Model model) {
-		   model.addAttribute("list", donaService.getDonaList());
+		   List<DonaVO> donaList = donaService.getDonaList();
+		   model.addAttribute("list", donaList);
+		   
+		   
 		   String h = "h";
-		   System.out.println("=======================");
-		   System.out.println(donaService.getCategoryList(h));
-		   System.out.println("=======================");
-		   model.addAttribute("categoryList", donaService.getCategoryList(h));
+		   List<DonaVO> categoryList = donaService.getCategoryList(h);
+		   model.addAttribute("categoryList", categoryList);
 	        return "donation/donaMain";
 	    }
-
-	// 기부 유형(categories) 전체리스트
-	   @GetMapping("/catetory")
-	   @ResponseBody
-	   public List<DonaVO> showCategories(@RequestParam("h") String h) {
-		  //model.addAttribute("categories", donaService.getCategoryList(h));
-		  return donaService.getCategoryList(h);		
-		   
-	   }
-	   
-
 
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
 	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam("facId") String facId, Model model) { 
 		   DonaVO dona = donaService.getDonaDetail(donId, facId);
 		    model.addAttribute("dona", dona);
+		    
+		    List<DonaVO> donaList = donaService.getDonaList();
+		    model.addAttribute("list", donaList);
 	       return "donation/donaDetail";
 	    }    
 	   

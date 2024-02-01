@@ -62,7 +62,7 @@
  		 		sub_code_name
 		FROM 	sub_code 
 		WHERE	sub_code_id 
-		LIKE  	#{h}||'%'
+		LIKE CONCAT(#{h}, '%')
  	</select>
  	
 <!-- 댓글 
