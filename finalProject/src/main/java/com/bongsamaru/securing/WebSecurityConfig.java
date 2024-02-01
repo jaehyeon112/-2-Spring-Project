@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.bongsamaru.admin.service.UserSuccessHandler;
 
 
 @Configuration
@@ -20,13 +19,13 @@ public class WebSecurityConfig {
 		return new BCryptPasswordEncoder();	
 	}
 	
-	  @Autowired
-	  private UserSuccessHandler success;
+	  //@Autowired
+	  //private UserSuccessHandler success;
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-		    .csrf().disable()
+			.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
 				.antMatchers("/**")
 				.permitAll()
@@ -35,7 +34,7 @@ public class WebSecurityConfig {
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
-				.successHandler(success)
+			//	.successHandler(success)
 				.usernameParameter("username")
 				.permitAll()
 			)

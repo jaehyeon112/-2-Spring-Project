@@ -52,11 +52,10 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	public String getUserNickname() {
 		return userVO.getMemNick();
 	}
-
-	public UserVO getUserVO() {
-	      return userVO;
-	}
 	
+	public UserVO getUserVO() {
+		return userVO;
+	}
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub

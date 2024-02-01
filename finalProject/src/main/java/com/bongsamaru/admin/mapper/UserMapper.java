@@ -6,4 +6,5 @@ import com.bongsamaru.admin.service.UserVO;
 
 public interface UserMapper {
 	public UserVO userList(String mem);
+	public int countMemId(String MemId);
 }
