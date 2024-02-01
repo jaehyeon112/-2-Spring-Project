@@ -150,9 +150,7 @@
 								        </div>
 								        
 								       <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-    										<span th:text="${dona.recStat == '0' ? '모금중' : '모금완료'}"></span>
-    										
-    										
+    										<span th:text="${dona.recStat} == '0' ? '모금중' : '모금완료'"></span>
 										</div>
 
 

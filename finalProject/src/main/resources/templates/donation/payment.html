@@ -39,17 +39,13 @@
 			                {
 			                    pg: "kakaopay.TC0ONETIME",		//KG이니시스 pg파라미터 값
 			                    pay_method: "card",		//결제 방법
-			                    merchant_uid: "1",//주문번호
+			                    merchant_uid: "1", //주문번호
 			                    name: "당근 10kg",		//상품 명
-			                    amount: parseInt(amountInput),			//금액
-			      				buyer_email: "gildong@gmail.com",
+			                    amount: parseInt(amountInput),	//금액
+			      				buyer_email: "gildong@gmail.com", // 
 			      				buyer_name: "홍길동",
 			      				buyer_tel: "010-4242-4242",
-			      				buyer_addr: "서울특별시 강남구 신사동",
-			      				buyer_postcode: "01181"
-			      				
-			      				
-			     	
+
 			                },
 			                function (rsp) {
 			      				//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
@@ -175,32 +171,71 @@
 
 		
 		<script>
-		    // 입력 -> 표
+		    //입력 -> 표
 		    document.getElementById('c_address').addEventListener('input', function() {
 		        let amountInput = this.value;
 		        // 표 업데이트
-		        document.getElementById('displayAmount').textContent = amountInput + '원';
+		    	document.getElementById('displayAmount').textContent = amountInput + '원';
 		    });
 		    
 		    
 		    
-		    //페이s 결제버튼 클릭 
+		   //페이s 결제버튼 클릭 
+		    
 		    document.getElementById('kakaoPayBtn').addEventListener('click', function(){
 		    	requestKakaoPay();
 		    });
 		    
-		   document.getElementById('kakaoPayBtn').addEventListener('click', function(){
+		   document.getElementById('cardPayBtn').addEventListener('click', function(){
 		    	requestCardPay();
 		    })
 		    
+		    document.getElementById('tossPayBtn').addEventListener('click', function(){
+		    	requestTossPay();
+		    })
+		    
+		    document.getElementById('depositBtn').addEventListener('click', function(){
+		    	requestDepositPay();
+		    })
+		    
+		    
+		    
 		    // 결제함수
-		    function requestKakaoPay(){
+		    function requestPay(){
+			   
 			   
 		   }
 		   
-		    function requestCardPay(){
+		    
+		    
+		   // 페이 선택함수
+		   function selectPay(){
+			   
+			   let card = document.getElementById('cardPayBtn');
+			   let kakao = document.getElementById('kakaoPayBtn');
+			   let toss = document.getElementById('tossPayBtn');
+			   let deposit = document.getElementById('depositBtn');
+			   
+				   if(card){
+					  this.pg = kakaopay.TC0ONETIME;
+				   }
+				   
+				   if(kakao){
+					   
+					  this.pg = html5_inicis.INIBillTst;
+				   }
+	
+				   if(toss){
+					   this.pg = tosspay;
+				   }
+				   
+				   if(deposit){
+					   this.pg = 아직;
+				   }
 				   
 			   }
+			   
+		   }
 		</script>	
 	</body>
 

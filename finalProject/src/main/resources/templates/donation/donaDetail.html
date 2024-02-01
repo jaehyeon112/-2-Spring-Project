@@ -97,6 +97,7 @@
 
                             </div>
                             <div class="col-lg-12">
+                            	<!-- 상세페이지 안에 nav -->
                                 <nav>
                                     <div class="nav nav-tabs mb-3">
                                         <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
@@ -107,9 +108,11 @@
                                             aria-controls="nav-mission" aria-selected="false">Reviews</button>
                                     </div>
                                 </nav>
+                                
                                 <div class="tab-content mb-5">
                                     <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                    		<<!-- 메인이미지 -->
+                                    
+                                    		<!-- 메인이미지 -->
 				                            <div class="col-lg-6">
 				                                <div class="border rounded">
 				                                    <a href="#">
@@ -117,6 +120,7 @@
 				                                    </a>
 				                                </div>
 				                            </div>
+				                            
                                         <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc. 
                                             Susp endisse ultricies nisi vel quam suscipit </p>
                                         <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
@@ -168,6 +172,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Reviews 안의 영역 -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <div class="d-flex">
                                             <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
@@ -205,28 +211,20 @@
                                                     words etc. Susp endisse ultricies nisi vel quam suscipit </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> <!--  end 리뷰안의 영역 -->
+                                    
                                     <div class="tab-pane" id="nav-vision" role="tabpanel">
                                         <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
                                             amet diam et eos labore. 3</p>
                                         <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
                                             Clita erat ipsum et lorem et sit</p>
                                     </div>
-                                </div>
+                                </div> <!-- 하위 nav 안의 영역  -->
                             </div>
                             <form action="#">
-                                <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                                <h4 class="mb-5 fw-bold"> 댓글 달기 </h4>
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="Yur Name *">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="border-bottom rounded">
-                                            <input type="email" class="form-control border-0" placeholder="Your Email *">
-                                        </div>
-                                    </div>
+     
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
                                             <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
@@ -417,6 +415,28 @@
 
     <!-- Template Javascript -->
     <script src="donation/board/js/main.js"></script>
+    
+    
+    
+    
+    <script>
+    // reviews nav에 기부자 리스트 보여주기.
+    	document.querySelector('#nav-mission-tab').addEventListener('click', getDonerInfo);
+    	
+    	function getDonerInfo(){
+    		$.ajax('http://localhost:8585/donaDetail?id=1&facId=greenfrog')
+    		.done(result => {
+    			console.log('getDoner' , result);
+    		})
+    		.fail(err => console.log(err));
+    		})	
+    	}
+    	
+    	
+   	// 댓글
+   	
+   	
+    </script>
     </body>
 
 </html>
