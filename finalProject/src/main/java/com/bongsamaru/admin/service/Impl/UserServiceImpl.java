@@ -30,5 +30,13 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		}
 		return new UserDetailVO(vo);
 	}
+
+	@Override
+	public Boolean countMemId(String memId) {
+		if(userMapper.countMemId(memId) == 1){
+			return false;
+		}
+		return true;
+	}
 	
 }
