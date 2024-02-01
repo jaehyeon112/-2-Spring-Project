@@ -1,4 +1,4 @@
-package com.bongsamaru.facility.web;
+package com.bongsamaru.challenges.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private FacilityInfoInterceptor facilityInfoInterceptor;
+    private ChallengeInfoInterceptor facilityInfoInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(facilityInfoInterceptor)
-                .addPathPatterns("/facilityInfo/**");  // "/facilityInfo/**" 경로에만 적용
+                .addPathPatterns("/challenge/**");  // "/facilityInfo/**" 경로에만 적용
     }
 }

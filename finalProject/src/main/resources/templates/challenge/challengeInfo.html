@@ -10,33 +10,38 @@
 	<section layout:fragment="content">
 
 		<section class="blog_area">
+			<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a> 
+				<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
 			<div class="container">
 				<div class="row">
-					<th:block th:each="list:${challengeInfo}">
+			
+					<th:block th:each="list:${session.challengeInfo}">
 						<th:block th:each="file:${challengeFile}">
 
 							<div class="col-lg-8">
 								<div class="blog_left_sidebar">
-									<div>
-										<a th:href="@{/challengeInfo(chalId=${challengeInfo.chalId})}">챌린지
-											소개</a> <a
-											th:href="@{/challengesList(chalId=${challengeInfo.chalId})}">챌린지
-											참여</a>
+									<div class="gallery_img">
+										<img src="/image/초록개구리.png" alt="">
+									<div class="hover">
+										<a class="light"><i class="fa fa-expand"></i></a>
 									</div>
-									<p th:text="${challengeInfo.title}"></p>
+							       </div>
+									<p th:text="${list.title}"></p>
 								</div>
 							</div>
 						</th:block>
 
-						<th:block th:each="list:${challengeInfo}">
+						
 
 							<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
+							<th:block th:each="list:${session.challengeInfo}">
 							<div class="col-lg-4">
 								<div class="blog_right_sidebar">
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${list.title}"></h3>
 										<div class="media post_item">
-											<img src="image/초록개구리.png" alt="post">
+											<img src="/image/초록개구리.png" alt="post">
+											
 											<div class="media-body">
 												<h3>How to</h3>
 												<p th:text="${list.partMethod1}"></p>

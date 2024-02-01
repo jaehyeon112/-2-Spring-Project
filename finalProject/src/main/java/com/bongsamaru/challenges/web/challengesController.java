@@ -2,6 +2,8 @@ package com.bongsamaru.challenges.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,17 +26,18 @@ public class challengesController {
 		return "challenge/challengeList";
 	}
 	
-	@GetMapping("/challengeInfo")
-	public String getChallengeInfo(@RequestParam(name="chalId") Integer chalId, Model model) {
+	@GetMapping("/challenge/challengeInfo")
+	public String getChallengeInfo(@RequestParam(name="chalId") Integer chalId, Model model,HttpServletRequest request) {
 		ChallengesVO vo = challengeService.getChallengeInfo(chalId);
-		model.addAttribute("challengeInfo", vo);
+		request.getSession().setAttribute("challengeInfo",vo);
+		//model.addAttribute("challengeInfo", vo);
 		List<ChallengesVO> file = challengeService.getChallengeFile(chalId);
 		model.addAttribute("challengeFile", file);
 		return "challenge/challengeInfo";
 	}
 	
 	
-	@GetMapping("/challengesList")
+	@GetMapping("/challenge/challengesList")
 	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Model model) {
 		List<ChallengesVO> dList = challengeService.getChallengesList(chalId);
 		model.addAttribute("challengesList", dList);
