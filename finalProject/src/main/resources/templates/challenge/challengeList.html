@@ -7,80 +7,31 @@
 <title>챌린지리스트</title>
 </head>
 <body>
-<div class="row imageGallery1" id="gallery" style="position: relative; height: 679.112px;">
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 0px; top: 0px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/01.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/01.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 239px; top: 0px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/02.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/02.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 479px; top: 0px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/03.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/03.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 0px; top: 175px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/04.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/04.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 479px; top: 175px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/06.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/05.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 239px; top: 251px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/05.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/06.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 0px; top: 427px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/01-1.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/01-1.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 239px; top: 427px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/02-1.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/02-1.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 gallery_item" style="position: absolute; left: 479px; top: 427px;">
-                        <div class="gallery_img">
-                            <img src="image/gallery/03-1.jpg" alt="">
-                            <div class="hover">
-                            	<a class="light" href="image/gallery/03-1.jpg"><i class="fa fa-expand"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+	<section layout:fragment="content">
+		<h1>함께 할 수 있는 챌린지,</h1>
+		<p>참여자수 보여줄까?</p>
+		<p>함께하고싶은 챌린지가 있으신가요?</p>
+		<th:block th:each="challenge:${challengeList}">
+			<div class="row imageGallery1" id="gallery"
+				style="position: relative; height: 679.112px;">
+				<div class="col-md-4 gallery_item"
+					style="position: absolute; left: 0px; top: 0px;">
+					<div class="gallery_img">
+						<img src="../image/초록개구리.png" alt="">
+						<div class="hover">
+							<a class="light"
+								th:href="@{/challengeInfo(chalId=${challenge.chalId})}"><i
+								class="fa fa-expand"></i></a>
+
+						</div>
+						<p th:text="${challenge.title}"></p>
+						<p th:text="${challenge.memId}"></p>
+
+					</div>
+
+				</div>
+			</div>
+		</th:block>
+	</section>
 </body>
 </html>

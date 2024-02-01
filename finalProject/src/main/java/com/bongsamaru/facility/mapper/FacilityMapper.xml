@@ -50,12 +50,12 @@
 </select>
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">
-	SELECT D1.DON_ID                       		AS donId,           
-	       D1.TITLE                        		AS title, 
-	       D1.GOAL_AMT                     		AS goalAmt, 
-		   D1.REC_STAT                     		AS state,
-		   SUM(NVL(D2.DON_AMT,0))          		AS donationAmt, 
-		   COUNT(DISTINCT D2.MEM_ID)     		AS donors,
+	SELECT D1.DON_ID                       		  AS donId,           
+	       D1.TITLE                        		  AS title, 
+	       D1.GOAL_AMT                     		  AS goalAmt, 
+		   D1.REC_STAT                     		  AS state,
+		   SUM(NVL(D2.DON_AMT,0))          		  AS donationAmt, 
+		   COUNT(DISTINCT D2.MEM_ID)     		  AS donors,
 		   (SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio
 		   
 	  FROM DONATION D1 

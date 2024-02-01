@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>챌린지 상세정보</title>
+</head>
+<body>
+	<section layout:fragment="content">
+
+		<section class="blog_area">
+			<div class="container">
+				<div class="row">
+					<th:block th:each="list:${challengeInfo}">
+						<th:block th:each="file:${challengeFile}">
+
+							<div class="col-lg-8">
+								<div class="blog_left_sidebar">
+									<div>
+										<a th:href="@{/challengeInfo(chalId=${challengeInfo.chalId})}">챌린지
+											소개</a> <a
+											th:href="@{/challengesList(chalId=${challengeInfo.chalId})}">챌린지
+											참여</a>
+									</div>
+									<p th:text="${challengeInfo.title}"></p>
+								</div>
+							</div>
+						</th:block>
+
+						<th:block th:each="list:${challengeInfo}">
+
+							<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
+							<div class="col-lg-4">
+								<div class="blog_right_sidebar">
+									<aside class="single_sidebar_widget popular_post_widget">
+										<h3 class="widget_title" th:text="${list.title}"></h3>
+										<div class="media post_item">
+											<img src="image/초록개구리.png" alt="post">
+											<div class="media-body">
+												<h3>How to</h3>
+												<p th:text="${list.partMethod1}"></p>
+												<p th:text="${list.partMethod2}"></p>
+											</div>
+										</div>
+									</aside>
+								</div>
+							</div>
+				</div>
+			</div>
+		</section>
+		</th:block>
+
+	</section>
+</body>
+</html>
