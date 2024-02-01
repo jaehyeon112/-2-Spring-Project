@@ -24,8 +24,7 @@ public class DonaController {
 	    public String openDonaMainPage(Model model) {
 		   List<DonaVO> donaList = donaService.getDonaList();
 		   model.addAttribute("list", donaList);
-		   
-		   
+		      
 		   String h = "h";
 		   List<DonaVO> categoryList = donaService.getCategoryList(h);
 		   model.addAttribute("categoryList", categoryList);
@@ -68,7 +67,11 @@ public class DonaController {
 	
 	//폼
 	   @GetMapping("/form")
-	    public String opeform() {
+	    public String opeform(Model model) {
+		   String h = "h";
+		   List<DonaVO> categoryList = donaService.getCategoryList(h);
+		   model.addAttribute("categoryList", categoryList);
+	 
 	        return "donation/form";
 	    }   
 }

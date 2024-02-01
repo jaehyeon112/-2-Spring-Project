@@ -19,13 +19,9 @@
     </div>
     
     <div class="form-group">
-      <label for="categories" class="form-label mt-4"> 유형 선택하는 select </label>
-      <select class="form-select" id="categories">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+      <label for="categories" class="form-label mt-4"> 유형</label>
+      <select class="form-select" id="categories" >
+        <option th:each="category : ${categoryList}" th:text="${category.subCodeName}">1</option>
       </select>
     </div>
     
@@ -51,7 +47,7 @@
       	<div class="input-group">
 	      <input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off"> 
 	      <input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">
-	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs()">+</button>
+	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
     </div>
@@ -77,20 +73,30 @@
 	        <div class="input-group">
 	            <textarea class="form-control" id="article" rows="3"></textarea>
 	        </div>
-	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs()">+</button>
+	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs('articleContainer')">+</button>
 	    </div>
 	</div>
     
-    <div class="form-group">
-      <label for="relatedLink" class="form-label mt-4">관련링크</label>
-      <input type="text" class="form-control" id="relatedLink" placeholder="null 가능" autocomplete="off">
+<div class="form-group">
+    <label for="relatedLink" class="form-label mt-4">관련링크(+)</label>
+    <div id="relatedLinkContainer" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" id="relatedLink" placeholder="null 가능" autocomplete="off">
+            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('relatedLinkContainer')">+</button>
+        </div>
     </div>
+</div>
 
 
-    <div class="form-group">
-      <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일</label>
-      <input class="form-control" type="file" id="formFile2">
+<div class="form-group">
+    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
+    <div id="formFile2Container" class="mb-3">
+        <div class="input-group">
+            <input class="form-control" type="file" id="formFile2">
+            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
+        </div>
     </div>
+</div>
     
     
     <fieldset class="form-group">
@@ -117,21 +123,80 @@
 
 
 <script>
-	let count = 1;
-	function addInputs(){
-		count++;
-		let container = document.getElementById("dynamicFields");
-		let newFields = document.createElement("div");
-		newFields.className = "input-group mb-3";
-		newFields.innerHTML = 
-			 `<input type="text" class="form-control" id="detailBiz${count}" placeholder="구체적사업내용" autocomplete="off">`+
-	      	 `<input type="text" class="form-control" id="detailAmt${count}" placeholder="구체적사업비" autocomplete="off">`+
-	      	 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this)">-</button>`
-	    container.appendChild(newFields);  	    	 
-	}
+	let dynamicFieldsCount = 1;
+	let articleContainerCount = 1;
+	let relatedLinkContainerCount = 1;
+	let formFile2ContainerCount = 1;
+	let count;
 	
-	function removeInputs(button){
-		button.parentNode.remove();
-	}
+    function addInputs(type) {
+        
+        let container = document.getElementById(type);
+        if (!container) {
+            console.error("찾을 수 없는 CONTAINER: " + type);
+            return;
+        }
+
+        switch (type) {
+        case "dynamicFields":
+            count = dynamicFieldsCount++;
+            break;
+        case "articleContainer":
+            count = articleContainerCount++;
+            break;
+        case "relatedLinkContainer":
+            count = relatedLinkContainerCount++;
+            break;
+        case "formFile2Container":
+            count = formFile2ContainerCount++;
+            break;
+        default:
+            console.error("Invalid type: " + type);
+            return;
+    }
+
+        
+        let newFields = document.createElement("div");
+        newFields.className = "mb-3";
+
+        if (type === "dynamicFields") {
+            newFields.innerHTML =
+                `<div class="input-group">` +
+                `<input type="text" class="form-control" id="detailBiz${count}" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control" id="detailAmt${count}" placeholder="구체적사업비" autocomplete="off">` +
+                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
+                `</div>`;
+        } else if (type === "articleContainer") {
+            newFields.innerHTML =
+                `<div class="input-group">` +
+                `<input type="text" class="form-control" id="articleTitle${count}" placeholder="제목" autocomplete="off">` +
+                `</div>` +
+                `<div class="input-group">` +
+                `<textarea class="form-control" id="article${count}" rows="3"></textarea>` +
+                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
+                `</div>`;
+        } else if (type === "relatedLinkContainer") {
+            newFields.innerHTML =
+                `<div class="input-group">` +
+                `<input type="text" class="form-control" id="relatedLink${count}" placeholder="null 가능" autocomplete="off">` +
+                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
+                `</div>`;
+        } else if (type === "formFile2Container") {
+            newFields.innerHTML =
+                `<div class="input-group">` +
+                `<input class="form-control" type="file" id="formFile2${count}">` +
+                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
+                `</div>`;
+        }
+
+        container.appendChild(newFields);
+    }
+
+    function removeInputs(button, type) {
+        button.parentNode.remove();
+    }
 </script>
+
+
+
 </body>
