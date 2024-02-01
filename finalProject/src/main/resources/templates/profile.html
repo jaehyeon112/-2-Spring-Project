@@ -55,11 +55,11 @@
 				<li>
 					<div class="area_thumb">
 						<h1>프로필</h1>
-						<a data-tiara-layer="profile_img" data-tiara-action-name="프로필수정_클릭" class="link_thumb" href="/profile">
 						  <span class="profile_thumb">
 						    <img id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 사진" class="img_thumb" src="https://t1.kakaocdn.net/together_image/common/avatar/avatar04.png">
+						  	<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
+							<button class="uploadBtn">Upload</button>
 						  </span>
-						</a>
 					</div>
 				</li>
 				<li>
@@ -240,6 +240,57 @@ $('#verifyButton').on('click',function() {
 	      $("#message").css("color", "red"); // 실패 메시지를 빨간색으로 표시 */
 	    }
 	  },
+	});
+});
+
+// 이미지 파일 변경
+$('#imageInput').on('change', function (event) {
+    var image = $('#profileImage')[0];
+    var file = event.target.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+        image.src = reader.result;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        image.src = "";
+    }
+});
+
+// 이미지 파일 업로드
+$('.uploadBtn').click(function () {
+	var formData = new FormData(); //FormData 객체 생성
+	var inputFile = $("input[type='file']");
+	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+	var files = inputFile[0].files;
+	//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+	//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+	for (var i = 0; i < files.length; i++) {
+		console.log(files[i]);
+		formData.append("uploadFiles", files[i]); //키,값으로 append 
+	}
+	formData.append("code", "p01")
+	formData.append("codeNo", $('#userId').val());
+
+	//jQuery.ajax
+	$.ajax({
+		url: '/uploadsAjax',
+		type: 'POST',
+		processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+		contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+		data: formData,
+		success: function (result) {
+			console.log(result)
+			alert('성공!')
+
+		},
+		error: function (reject) {
+			alert('실풰!')
+			console.log(reject);
+		}
 	});
 });
 </script>
