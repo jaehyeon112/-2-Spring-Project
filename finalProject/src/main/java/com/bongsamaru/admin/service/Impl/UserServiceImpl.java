@@ -46,4 +46,11 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		}
 		return true;
 	}
+	@Override
+	public Boolean insertUser(UserVO vo) {
+		if(userMapper.userSignUp(vo) == 1){
+			return false;
+		}
+		return true;
+	}
 }
