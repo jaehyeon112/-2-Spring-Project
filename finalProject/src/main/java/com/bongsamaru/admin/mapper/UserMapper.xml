@@ -30,6 +30,12 @@
 	    FROM member
 	    WHERE mem_id = #{memId}
 	</select>
+	
+	<select id="countMemNick" resultType="int">
+	    SELECT COUNT(*)
+	    FROM member
+	    WHERE mem_nick = #{memNick}
+	</select>
 
 
 </mapper>

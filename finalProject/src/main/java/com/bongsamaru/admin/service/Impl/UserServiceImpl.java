@@ -39,4 +39,11 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		return true;
 	}
 	
+	@Override
+	public Boolean countMemNick(String memNick) {
+		if(userMapper.countMemNick(memNick) == 1){
+			return false;
+		}
+		return true;
+	}
 }
