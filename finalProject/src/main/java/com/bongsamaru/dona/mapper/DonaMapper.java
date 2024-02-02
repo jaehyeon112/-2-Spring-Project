@@ -20,7 +20,7 @@ public interface DonaMapper {
 		public List<DonaVO> getCommentsList(Integer donId);
 		
 	//댓글 insert
-		public int insertComments(DonaVO donaVO);
+		public int insertComment(DonaVO donaVO);
 		
 	//카테고리
 		List<DonaVO> getCategoryList(String h);

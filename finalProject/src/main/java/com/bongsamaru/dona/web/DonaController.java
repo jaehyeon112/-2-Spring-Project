@@ -53,11 +53,11 @@ public class DonaController {
 	   
 	  //댓글 삽입
 	   @PostMapping("/donaDetail")
-	   public String insertComment(DonaVO donaVO) {
-		    //댓글 넣기 
-		    donaService.insertComment(donaVO);
+	   public String insertComment(@RequestParam("id") Integer donId, DonaVO donaVO) {
 		    
-	       return "redirect:donaDetail";
+		    donaService.insertComment(donId, donaVO);
+		    return "redirect:/donaDetail?id=" + donId + "&facId=" + donaVO.getFacId();
+
 	   }
 	   
 	 // 기부상세 - 기부자목록 

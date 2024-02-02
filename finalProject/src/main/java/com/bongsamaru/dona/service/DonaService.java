@@ -23,7 +23,7 @@ public interface DonaService {
 	public List<DonaVO> getCommentList(Integer donId);
 	
 	//댓글 등록하기
-	public int insertComment(DonaVO donaVO);
+	public int insertComment(Integer donId, DonaVO donaVO);
 	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);

@@ -422,7 +422,15 @@
     
     // 댓글달기
     function postComment(){
+    	
+    	
     	let comm = document.getElementById('comment').value;
+    	let commData = {
+
+    			content : comm
+
+    		}
+    
     	
     		console.log(comm);
     	
@@ -430,7 +438,7 @@
     	$.ajax({
     		type : "POST",
     		url : "/donaDetail"  ,
-    		data : comm,
+    		data : commData,
     		success : function(response){
  				document.getElementById('comment').value = '';
     		},
