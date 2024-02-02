@@ -18,7 +18,6 @@
 			color: red;
 			display: none;
 			font-size: 0.875rem;
-			/* 예시, 필요에 따라 조정하세요 */
 		}
 
 		.check_wrap li {
@@ -596,26 +595,7 @@
 						문자 수신 동의(선택)</label></li>
 
 			</ul>
-			<script>
-				function toggleAllChecks(isChecked) {
-					// 'individualChk' 이름을 가진 모든 체크박스를 가져옵니다.
-					const checkboxes = document.querySelectorAll('input[name="individualChk"]');
 
-					// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
-					checkboxes.forEach(function (checkbox) {
-						checkbox.checked = isChecked;
-					});
-				}
-
-				function checkIndividual() {
-					// 모든 'individualChk' 체크박스를 가져옵니다.
-					const checkboxes = document.querySelectorAll('input[name="individualChk"]');
-					const allChecked = Array.from(checkboxes).every(chk => chk.checked);
-
-					// '모두 선택' 체크박스의 상태를 업데이트합니다.
-					document.getElementById('serviceAllChk').checked = allChecked;
-				}
-			</script>
 			<button id="signUpFacility" class="btn_border_black signup facility hidden">가입신청</button>
 			<button id="signUpUser" class="btn_border_black signup user">회원가입</button>
 
@@ -628,53 +608,80 @@
 			let receiptNO = true;
 			let receiptYes = false;
 			let valid = {
-					isUserId : false,
-					isNick : false,
-					isPhone : false,
-					isEmail : false,
-					isbirth : false,
-					isIdenYes : false,
-					isCheckBox1 : false,
-					isCheckBox2 : false,
-					isCheckBox3 : false,
+				isUserId: false,
+				isNick: false,
+				isPhone: false,
+				isEmail: false,
+				isbirth: false,
+				isCheckBox1: false,
+				isCheckBox2: false,
+				isCheckBox3: false,
 			}
-			
+
 			let isUserId = false;
 			let isNick = false;
 			let isPhone = false;
 			let checkNum = 0;
 			let isEmail = false;
 
-			
-			$('#userId').on('keydown', function() {
-			    isUserId = false;
-			    $('#userIdSuccess').addClass('hidden');
+
+			$('#userId').on('keydown', function () {
+				isUserId = false;
+				valid.isUserId = false;
+				$('#userIdSuccess').addClass('hidden');
 			});
-			
+
+			$('#nickCheck').on('keydown', function () {
+				valid.isNick = false;
+				$('#nickIdSuccess').addClass('hidden');
+			});
+
+			$('#birthCheck').on('change', checkAgeValidity)
+
+
+			function checkAgeValidity() {
+				const birthDate = new Date($('#birthCheck').val());
+				const currentDate = new Date();
+				const currentYear = currentDate.getFullYear();
+				const birthYear = birthDate.getFullYear();
+
+				let age = currentYear - birthYear;
+
+				const m = currentDate.getMonth() - birthDate.getMonth();
+				if (m < 0 || (m === 0 && currentDate.getDate() < birthDate.getDate())) {
+					age--;
+				}
+				if (age < 14) {
+					$('#birthError').text('만 14세 이상만 가입할 수 있습니다.').show();
+					valid.isbirth = false;
+					return false;
+				}
+
+				$('#birthError').hide();
+				valid.isbirth = true;
+				return true;
+			}
+
 			//아이디 중복체크
 			function validateUserId() {
 				let userIdValue = $('#userId').val();
 				let isId = true;
 				$('#userIdError').hide();
-
 				// 아이디 입력 여부 확인
 				if (!userIdValue) {
 					$('#userIdError').text('아이디를 입력해주세요.').show();
 					isId = false;
 				}
-
 				// 공백 포함 여부 확인 (이전 검사가 통과했을 경우에만 수행)
 				if (isId && userIdValue.includes(' ')) {
 					$('#userIdError').text('아이디에 공백을 포함할 수 없습니다.').show();
 					isId = false;
 				}
-
 				// 길이 검사 (이전 검사가 통과했을 경우에만 수행)
 				if (isId && (userIdValue.length < 4 || userIdValue.length > 12)) {
 					$('#userIdError').text('아이디는 4글자 이상, 12글자 이하로 입력해주세요.').show();
 					isId = false;
 				}
-
 				// 한글 포함 여부 검사 (이전 검사가 통과했을 경우에만 수행)
 				if (isId && /[\u3131-\uD79D]/ugi.test(userIdValue)) {
 					$('#userIdError').text('아이디에 한글을 사용할 수 없습니다.').show();
@@ -694,7 +701,7 @@
 								console.log(result)
 								if (result) {
 									alert('사용할 수 있는 아이디입니다.')
-									isUserId = true;
+									valid.isUserId = true;
 									$('#userIdSuccess').removeClass('hidden');
 								} else {
 									alert('이미 존재하는 아이디입니다.')
@@ -751,7 +758,7 @@
 								console.log(result)
 								if (result) {
 									alert('사용할 수 있는 닉네임입니다.')
-									isNick = true;
+									valid.isNick = true;
 									$('#nickIdSuccess').removeClass('hidden');
 								} else {
 									alert('이미 존재하는 닉네임입니다.')
@@ -767,6 +774,52 @@
 				}
 			})
 
+			function toggleAllChecks(isChecked) {
+				// 'individualChk' 이름을 가진 모든 체크박스를 가져옵니다.
+				const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+
+				// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
+				checkboxes.forEach(function (checkbox) {
+					checkbox.checked = isChecked;
+					valid.isCheckBox1 = isChecked;
+					valid.isCheckBox2 = isChecked;
+					valid.isCheckBox3 = isChecked;
+				});
+			}
+
+			function checkIndividual() {
+				// 모든 'individualChk' 체크박스를 가져옵니다.
+				const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+				const allChecked = Array.from(checkboxes).every(chk => chk.checked);
+
+				// '모두 선택' 체크박스의 상태를 업데이트합니다.
+				document.getElementById('serviceAllChk').checked = allChecked;
+			}
+
+			$('#individualChk1').on('click', function () {
+				if (valid.isCheckBox1 == false) {
+					valid.isCheckBox1 = true;
+				} else {
+					valid.isCheckBox1 = false;
+				}
+				console.log(valid.isCheckBox1);
+			})
+			$('#individualChk2').on('click', function () {
+				if (valid.isCheckBox2 == false) {
+					valid.isCheckBox2 = true;
+				} else {
+					valid.isCheckBox2 = false;
+				}
+				console.log(valid.isCheckBox2);
+			})
+			$('#individualChk3').on('click', function () {
+				if (valid.isCheckBox3 == false) {
+					valid.isCheckBox3 = true;
+				} else {
+					valid.isCheckBox3 = false;
+				}
+				console.log(valid.isCheckBox3);
+			})
 
 			$('#receiptYes').on('click', function () {
 				$('#receipt').removeClass('hidden');
@@ -882,14 +935,15 @@
 					$('#phoneCheck').attr("readonly", true);
 					$('#authCheck').attr("readonly", true);
 
-					isPhone = true;
+					valid.isPhone = true;
 					$('#phoneAuthSuccess').removeClass('hidden');
-					//인증되었다는 success
 				} else {
 					alert('실패~')
+					$('#authCheckError').text('인증번호가 일치하지 않습니다.').show();
 					//인증실패의 밑에 ㅇㅋ?
 				}
 			})
+
 
 
 
@@ -903,7 +957,7 @@
 
 					// 아이디 유효성 검사
 
-					if (isUserId == false) {
+					if (valid.isUserId == false) {
 						console.log('체크는?' + isUserId);
 						$('#userIdError').text('아이디 중복체크를 해주세요.').show();
 						isValid = false;
@@ -911,10 +965,10 @@
 					} else if (!validateUserId()) {
 						isValid = false;
 						alert('2');
-					
+
 					}
 					// 닉네임 유효성 검사
-					if (isNick == false) {
+					if (valid.isNick == false) {
 						console.log('체크는?' + isNick);
 						$('#nickCheckError').text('닉네임 중복체크를 해주세요.').show();
 						isValid = false;
@@ -992,6 +1046,8 @@
 											}
 										}
 					 */
+
+
 					// 우편번호 유효성 검사
 					let zipCheckValue = $('#zipCheck').val();
 					if (!zipCheckValue) {
@@ -1101,6 +1157,8 @@
 						return;
 					}
 
+					const areAllTrue = Object.values(valid).every(value => value === true);
+					console.log(areAllTrue + " 이게 결과값");
 
 
 					// 여기에서 폼 제출 또는 AJAX 호출을 수행할 수 있습니다.
@@ -1127,21 +1185,21 @@
 
 
 
-					$.ajax({
-						type: "POST",
-						url: "/userSignUp",
-						contentType: "application/json", // Ensure you have the correct content type
-						data: JSON.stringify(obj), // Convert your object to a JSON string
-						dataType: 'json', // The type of data expected back from the server
-						success: function (res) {
-							console.log(res); // Handle the response from the server here
-							
-						},
-						error: function (xhr, status, error) {
-							// Handle errors here
-							console.error("Error occurred: ", status, error);
-						}
-					});
+					/* 	$.ajax({
+							type: "POST",
+							url: "/userSignUp",
+							contentType: "application/json", // Ensure you have the correct content type
+							data: JSON.stringify(obj), // Convert your object to a JSON string
+							dataType: 'json', // The type of data expected back from the server
+							success: function (res) {
+								console.log(res); // Handle the response from the server here
+
+							},
+							error: function (xhr, status, error) {
+								// Handle errors here
+								console.error("Error occurred: ", status, error);
+							}
+						}); */
 
 				});
 			})
@@ -1200,9 +1258,7 @@
 							$('#emailAuthCheckBnt').attr("disabled", true);
 							$('#emailCheck').attr("readonly", true);
 							$('#emailAuthCheck').attr("readonly", true);
-							isEmail = true;
-
-
+							valid.isEmail = true;
 						} else {
 							alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
 						}

@@ -69,9 +69,10 @@ public class FileController {
 	        String uuid = UUID.randomUUID().toString();
 	        //저장할 파일 이름 중간에 "_"를 이용하여 구분
 	        
-	        String uploadFileName = folderPath +File.separator + uuid + "_" + fileName;
+	        String uploadFileName = folderPath + "/" + uuid + "_" + fileName;
 	        
 	        String saveName = uploadPath + File.separator + uploadFileName;
+	        String saveName2 = "/upload/" + uploadFileName;
 	        
 	        Path savePath = Paths.get(saveName);
 	        //Paths.get() 메서드는 특정 경로의 파일 정보를 가져옵니다.(경로 정의하기)
@@ -84,7 +85,7 @@ public class FileController {
 	        }
 	        // DB에 해당 경로 저장
 	        FilesVO fileVO = new FilesVO();
-	        fileVO.setFilePath(saveName);
+	        fileVO.setFilePath(saveName2);
 	        fileVO.setFileName(originalName);
 	        int size = (int)fileSizeTest;
 	        fileVO.setFileSize(size);
@@ -106,7 +107,7 @@ public class FileController {
 	private String makeFolder() {
 		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		// LocalDate를 문자열로 포멧
-		String folderPath = str.replace("/", File.separator);
+		String folderPath = str.replace("\\", "/");
 		File uploadPathFoler = new File(uploadPath, folderPath);
 		// File newFile= new File(dir,"파일명");
 		if (uploadPathFoler.exists() == false) {
