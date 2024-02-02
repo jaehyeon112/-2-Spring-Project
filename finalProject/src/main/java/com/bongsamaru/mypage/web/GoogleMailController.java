@@ -129,7 +129,7 @@ public class GoogleMailController {
         } catch (Exception e) {
         	
         }
-        return "profile";
+        return "my/profile";
     }
     
 

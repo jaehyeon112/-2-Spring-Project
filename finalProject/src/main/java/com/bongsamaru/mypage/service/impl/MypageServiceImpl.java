@@ -1,10 +1,13 @@
 package com.bongsamaru.mypage.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.admin.service.UserVO;
 import com.bongsamaru.mypage.mapper.MypageMapper;
+import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.mypage.service.MypageService;
 
 @Service
@@ -35,5 +38,11 @@ public class MypageServiceImpl implements MypageService{
 	public Integer getGibuCount(String memId) {
 		// TODO Auto-generated method stub
 		return mypageMapper.getGibuCount(memId);
+	}
+	
+	@Override
+	public List<DonledgerVO> getGibuList(String memId) {
+		// TODO Auto-generated method stub
+		return mypageMapper.getGibuList(memId);
 	}
 }

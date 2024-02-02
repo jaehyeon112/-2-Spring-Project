@@ -22,7 +22,7 @@ public class PasswordController {
     
 	@GetMapping("/pass")
 	public String getPasswordForm() {
-	    return "pass";
+	    return "my/pass";
 	}
 
 	@PostMapping("/passwordCheck")

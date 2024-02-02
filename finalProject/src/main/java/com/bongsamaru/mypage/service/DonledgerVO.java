@@ -12,11 +12,12 @@ public class DonledgerVO {
 	private Integer donLedId;
 	private Integer donId;
 	private Integer donAmt;
-	private Integer payMethod;
+	private String payMethod;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date payDate;
 	private String payStat;
 	private Integer payId;
 	private String anonCheck;
 	private String memId;
+	private String title;
 }

@@ -48,7 +48,7 @@ public class ProfileController {
 	            }
 	        }
 
-	        return "profile";
+	        return "my/profile";
 	    }
 	
     // coolSMS 구현 로직 연결  
