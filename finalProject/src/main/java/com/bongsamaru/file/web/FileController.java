@@ -17,7 +17,8 @@ public class FileController {
 	
     @Autowired
     private FileService fileService;
-
+    
+    
     @PostMapping("/uploadsAjax")
     @ResponseBody
     public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, String codeNo) {
@@ -27,6 +28,7 @@ public class FileController {
         	System.out.println(code);
         	System.out.println(codeNo);
         	System.out.println("업로드 컨트롤러상의~?");
+        	
             return fileService.uploadFiles(uploadFiles, code, codeNo);
         } catch (IOException e) {
             e.printStackTrace();
