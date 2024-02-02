@@ -16,6 +16,7 @@ import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -145,6 +146,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateReport(Integer reqCode,Integer repId) {
 		return userMapper.updateReport(reqCode,repId);
+	}
+
+	@Override
+	public List<FilesVO> selectFile(String codeNo) {
+		return userMapper.selectFile(codeNo);
 	}
 
 }

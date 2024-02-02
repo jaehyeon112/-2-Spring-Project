@@ -11,6 +11,7 @@ import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 public interface AdminService {
 	public List<UserVO> getUserList(String memStat);
@@ -38,4 +39,5 @@ public interface AdminService {
 	public int updateInquire(Integer boardId);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
+	public List<FilesVO> selectFile(String codeNo);
 }

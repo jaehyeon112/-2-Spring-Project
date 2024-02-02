@@ -41,7 +41,7 @@
 				 	<th:block th:each="board,st : ${boardList}" >
 						<tr>
 							 <td th:text="${st.count}">번호</td>
-							 <td><a th:text="${board.title}" class="cur" th:href="@{noticeInfo(category=${board.category},detailCate=${board.detailCate})}"></a></td>
+							 <td><a th:text="${board.title}" class="cur" th:href="@{noticeInfo(category=${board.category},detailCate=${board.detailCate},codeNo=${board.detailCate})}"></a></td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy년 MMM dd일')}" >작성일</td>
 							 <td th:text="${board.views}" >조회수</td>
 							 <td th:if="${board.priority}==0" >일반</td>

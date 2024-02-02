@@ -3,7 +3,6 @@ package com.bongsamaru.admin.web;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +21,7 @@ import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 @Controller
 public class UserController {
@@ -137,8 +137,7 @@ public class UserController {
 
 	@PostMapping("noticeInsert")
 	public String insertNoticePro(BoardVO boardVO) {
-		var vo = userService.insertNotice(boardVO);
-		System.out.println(vo);
+		userService.insertNotice(boardVO);
 		return "redirect:boardList?category=b01";
 	}
 	//자주하는 질문 등록
@@ -178,8 +177,11 @@ public class UserController {
 	}
 	
 	@GetMapping("noticeInfo")
-	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
+	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,@RequestParam(name="codeNo") String codeNo,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
+		List<FilesVO> files = userService.selectFile(codeNo);
+		model.addAttribute("files",files);
+		System.out.println(files);
 		model.addAttribute("info",vo);
 		return "admin/noticeInfo";
 	}

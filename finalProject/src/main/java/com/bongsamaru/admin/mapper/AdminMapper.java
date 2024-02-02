@@ -3,7 +3,6 @@ package com.bongsamaru.admin.mapper;
 
 import java.util.List;
 
-
 import com.bongsamaru.common.BoardVO;
 import com.bongsamaru.common.CommentsVO;
 import com.bongsamaru.common.DonationLedgerVO;
@@ -13,6 +12,7 @@ import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 public interface AdminMapper {
 	public List<UserVO> getUserList(String memStat);
@@ -40,4 +40,5 @@ public interface AdminMapper {
 	public int updateInquire(Integer boardId);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
+	public List<FilesVO> selectFile(String codeNo);
 }
