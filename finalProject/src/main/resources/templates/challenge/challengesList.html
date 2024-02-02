@@ -6,143 +6,140 @@
 <meta charset="UTF-8">
 <title>챌린지 참여 리스트</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
-  Kakao.init('c089c8172def97eb00c07217cae17495'); // 사용하려는 앱의 JavaScript 키 입력
+	Kakao.init('c089c8172def97eb00c07217cae17495'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
-    
+
 <style>
-.input-file-button{
-  padding: 6px 25px;
-  background-color:yellowgreen;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
+.input-file-button {
+	padding: 6px 25px;
+	background-color: yellowgreen;
+	border-radius: 4px;
+	color: white;
+	cursor: pointer;
 }
 </style>
 </head>
 <body>
 
 	<section layout:fragment="content">
-	  <th:block th:each="list:${challengesList}">
-		<section class="blog_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="blog_left_sidebar">
-                            
-                            <div class="row imageGallery1" id="gallery"
-						style="position: relative; height: 679.112px;">
-						<div class="col-md-4 gallery_item">
-							<div class="gallery_img">
-								<img src="/image/초록개구리.png" alt="post">
-								<div class="hover">
-									<a class="light"><i class="fa fa-expand"></i></a>
-								</div>
-							</div>
-							<p th:text="${list.memId}"></p>
-						</div>
+		<th:block th:each="list:${challengesList}">
+			<section class="blog_area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="blog_left_sidebar">
 
-					</div>
-                            
-                           
-                        </div>
-                    </div>
-                    <!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
-                    <th:block th:each="list:${session.challengeInfo}">
+								<div class="row imageGallery1" id="gallery"
+									style="position: relative; height: 679.112px;">
+									<div class="col-md-4 gallery_item">
+										<div class="gallery_img">
+											<img src="/image/초록개구리.png" alt="post">
+											<div class="hover">
+												<a class="light"><i class="fa fa-expand"></i></a>
+											</div>
+										</div>
+										<p th:text="${list.memId}"></p>
+									</div>
+
+								</div>
+
+
+							</div>
+						</div>
+						<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
+						<th:block th:each="list:${session.challengeInfo}">
 							<div class="col-lg-4">
 								<div class="blog_right_sidebar">
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${list.title}"></h3>
 										<div class="media post_item">
 											<img src="/image/초록개구리.png" alt="post">
-											
+
 											<div class="media-body">
 												<h3>How to</h3>
 												<p th:text="${list.partMethod1}"></p>
 												<p th:text="${list.partMethod2}"></p>
-												<button type="button" data-toggle="modal" data-target="#myModal">챌린지 참여하기</button>
+												<button type="button" data-toggle="modal"
+													data-target="#myModal">챌린지 참여하기</button>
 
-<a id="kakaotalk-sharing-btn" href="javascript:shareMessage()">
-  <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-    alt="카카오톡 공유 보내기 버튼" />
-</a>
+												<a id="kakaotalk-sharing-btn"
+													href="javascript:shareMessage()"> <img
+													src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+													alt="카카오톡 공유 보내기 버튼" />
+												</a>
 
-<script>
-  function shareMessage() {
-    Kakao.Share.sendScrap({
-      requestUrl: 'https://developers.kakao.com',
-    });
-  }
-</script>
+
 											</div>
 										</div>
 									</aside>
 								</div>
 							</div>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 		</th:block>
 
-                    
-                    
-	
-			<!-- 정적모달 -->
-			<div class="modal" tabindex="-1"  id="myModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">챌린지 참여하기</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close">x</button>
-						</div>
-						<div class="modal-body">
+
+
+
+		<!-- 정적모달 -->
+		<div class="modal" tabindex="-1" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">챌린지 참여하기</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close">x</button>
+					</div>
+					<div class="modal-body">
 						<form action="challengesInsert" method="post">
-						<div class="form-group">
-						<input type="hidden" name="chalDetId" value="${list.chalDetId}">
-						<input type="hidden" name="chalId" value="${list.chalId}">
-						<input type="hidden" name="memId" value="${list.memId}">
-						<label for="file-video" class="input-file-button">영상첨부
-						<input type="file" id="file-video" name="" style="display:none">
-						</label>
-						<br>
-						<label for="file-video" class="input-file-button">영상첨부
-						<input type="file" id="file-video" style="display:none">
-						</label>
-							<textarea name="dContent" maxlength="500"></textarea>
-						</div>
+							<div class="form-group">
+								<input type="hidden" name="chalDetId" value="${list.chalDetId}">
+								<input type="hidden" name="chalId" value="${list.chalId}">
+								<input type="hidden" name="memId" value="${list.memId}">
+								<label for="file-video" class="input-file-button">영상첨부 <input
+									type="file" id="file-video" name="" style="display: none">
+								</label> <br> <label for="file-video" class="input-file-button">영상첨부
+									<input type="file" id="file-video" style="display: none">
+								</label>
+								<textarea name="dContent" maxlength="500"></textarea>
+							</div>
 						</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">저장하기</button>
-						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary">저장하기</button>
 					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 	<!-- jQuery -->
 
 
 
-<script>
-  $(document).ready(function () {
-    // 모달이 표시될 때 이벤트 처리
-    $('#myModal').on('show.bs.modal', function (e) {
-      // 모달이 표시될 때 실행할 코드
-    });
+	<script>
+		$(document).ready(function() {
+			// 모달이 표시될 때 이벤트 처리
+			$('#myModal').on('show.bs.modal', function(e) {
+				// 모달이 표시될 때 실행할 코드
+			});
 
-    // 모달이 숨겨질 때 이벤트 처리
-    $('#myModal').on('hidden.bs.modal', function (e) {
-      // 모달이 숨겨질 때 실행할 코드
-    });
-  });
-</script>
+			// 모달이 숨겨질 때 이벤트 처리
+			$('#myModal').on('hidden.bs.modal', function(e) {
+				// 모달이 숨겨질 때 실행할 코드
+			});
+		});
+	</script>
 </body>
 </html>

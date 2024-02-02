@@ -1,19 +1,11 @@
 package com.bongsamaru.challenges.web;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +15,18 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bongsamaru.challenges.mapper.ChallengeMapper;
 import com.bongsamaru.challenges.service.ChallengesService;
 import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.file.service.FileService;
+import com.bongsamaru.file.service.FilesVO;
 
 @Controller
 public class challengesController {
 	
 	@Autowired
 	ChallengesService challengeService;
-	ChallengeMapper challengeMapper;
+	@Autowired
+    private FileService fileService;
 	
 	
 	@GetMapping("/challengeList")
@@ -71,7 +65,13 @@ public class challengesController {
 	
 	@PostMapping("/challenge/challengesList")
 	@ResponseBody
-	public int getChallengesInsert(ChallengesVO challengeVO) {
+	public int getChallengesInsert(@RequestPart MultipartFile[] uploadFiles,FilesVO fileVO,  String codeNo, ChallengesVO challengeVO) {
+		try {
+			fileService.uploadFiles(uploadFiles,"p04", codeNo);
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
 		int chalsId = challengeService.getChallengesInsert(challengeVO);
 		return chalsId;
 	}
