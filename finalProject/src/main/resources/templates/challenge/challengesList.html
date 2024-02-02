@@ -6,17 +6,12 @@
 <meta charset="UTF-8">
 <title>챌린지 참여 리스트</title>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script>
+
+
+<!-- <script>
 	Kakao.init('c089c8172def97eb00c07217cae17495'); // 사용하려는 앱의 JavaScript 키 입력
-</script>
+</script> -->
 
 <style>
 .input-file-button {
@@ -56,11 +51,11 @@
 							</div>
 						</div>
 						<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
-						<th:block th:each="list:${session.challengeInfo}">
+					
 							<div class="col-lg-4">
 								<div class="blog_right_sidebar">
 									<aside class="single_sidebar_widget popular_post_widget">
-										<h3 class="widget_title" th:text="${list.title}"></h3>
+										<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
 										<div class="media post_item">
 											<img src="/image/초록개구리.png" alt="post">
 
@@ -71,11 +66,7 @@
 												<button type="button" data-toggle="modal"
 													data-target="#myModal">챌린지 참여하기</button>
 
-												<a id="kakaotalk-sharing-btn"
-													href="javascript:shareMessage()"> <img
-													src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-													alt="카카오톡 공유 보내기 버튼" />
-												</a>
+												
 
 
 											</div>
@@ -86,31 +77,32 @@
 					</div>
 				</div>
 			</section>
-		</th:block>
+		
 
 
 
 
 		<!-- 정적모달 -->
-		<div class="modal" tabindex="-1" id="myModal">
+		<div class="modal fade" tabindex="-1" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">챌린지 참여하기</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close">x</button>
+					
 					</div>
 					<div class="modal-body">
 						<form action="challengesInsert" method="post">
 							<div class="form-group">
-								<input type="hidden" name="chalDetId" value="${list.chalDetId}">
-								<input type="hidden" name="chalId" value="${list.chalId}">
-								<input type="hidden" name="memId" value="${list.memId}">
-								<label for="file-video" class="input-file-button">영상첨부 <input
-									type="file" id="file-video" name="" style="display: none">
-								</label> <br> <label for="file-video" class="input-file-button">영상첨부
-									<input type="file" id="file-video" style="display: none">
+								<img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
+					               
+								<label for="file-image" class="input-file-button" >이미지첨부 
+								<input type="file" name="uploadFiles" id="file-image" style="display: none" multiple>
+								</label> 
+								<br> 
+								<label for="file-video" class="input-file-button">영상첨부
+								<input type="file" id="file-video" style="display: none">
 								</label>
+								 <button class="uploadBtn">Upload</button>
 								<textarea name="dContent" maxlength="500"></textarea>
 							</div>
 						</form>
@@ -132,7 +124,57 @@
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
 			$('#myModal').on('show.bs.modal', function(e) {
-				// 모달이 표시될 때 실행할 코드
+			
+				document.getElementById('file-image').addEventListener('change', function (event) {
+					var image = document.getElementById('imagePreview');
+					var file = event.target.files[0];
+					var reader = new FileReader();
+
+					reader.onloadend = function () {
+						image.src = reader.result;
+					}
+
+					if (file) {
+						reader.readAsDataURL(file);
+					} else {
+						image.src = "";
+					}
+				});
+
+
+				$('.uploadBtn').click(function () {
+					var formData = new FormData(); //FormData 객체 생성
+					var inputFile = $("input[type='file']");
+					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+					var files = inputFile[0].files;
+					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+					for (var i = 0; i < files.length; i++) {
+						console.log(files[i]);
+						formData.append("uploadFiles", files[i]); //키,값으로 append 
+					}
+					formData.append("code", "p04")
+					formData.append("codeNo", $('#chalDetId').val());
+
+					//jQuery.ajax
+					$.ajax({
+						url: '/uploadsAjax',
+						type: 'POST',
+						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+						data: formData,
+						success: function (result) {
+							console.log(result)
+							alert('성공!')
+
+						},
+						error: function (reject) {
+							alert('실풰!')
+							console.log(reject);
+						}
+					});
+				});
+			
 			});
 
 			// 모달이 숨겨질 때 이벤트 처리

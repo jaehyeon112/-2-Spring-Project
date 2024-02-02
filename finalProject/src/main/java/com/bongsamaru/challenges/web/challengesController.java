@@ -53,27 +53,37 @@ public class challengesController {
 		model.addAttribute("challengesList", dList);
 		return "challenge/challengesList";
 	}
-	@GetMapping("/challenge/challengeInsert")
+	@GetMapping("/challenge/challengeInsertForm")
 	public String insertChallengeForm() {
 		return "/challenge/challengeInsert";
 	}
-	@PostMapping("/challenge/challengeInsert")
-	public int getChallengeInsert(ChallengesVO challengeVO) {
-		int chalId = challengeService.getChallengeInsert(challengeVO);
-		return chalId;
-	}
 	
-	@PostMapping("/challenge/challengesList")
+	//게시글등록
+	@PostMapping("/challenge/challengeInsert")
 	@ResponseBody
-	public int getChallengesInsert(@RequestPart MultipartFile[] uploadFiles,FilesVO fileVO,  String codeNo, ChallengesVO challengeVO) {
+	public String getChallengeInsert(@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
+		challengeService.getChallengeInsert(challengeVO);
+		String chalId = challengeVO.getCodeNo();
 		try {
-			fileService.uploadFiles(uploadFiles,"p04", codeNo);
+			fileService.uploadFiles(uploadFiles,"p04", chalId);
 		} catch (IOException e) {
-		
 			e.printStackTrace();
 		}
-		int chalsId = challengeService.getChallengesInsert(challengeVO);
-		return chalsId;
+			return chalId;
+	}
+	
+	//게시글 참여
+	@PostMapping("/challenge/challengeDeInsert")
+	@ResponseBody	
+	public String getChallengesInsert (@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
+		challengeService.getChallengesInsert(challengeVO);
+		String chalDetId = challengeVO.getCodeNo();
+		try {
+			fileService.uploadFiles(uploadFiles,"p04", chalDetId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return chalDetId;
 	}
 	
 	

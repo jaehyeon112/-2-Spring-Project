@@ -76,8 +76,8 @@ SELECT  C.CHAL_DET_ID,
 
 <!-- 챌린지 등록-->
 <insert id="getChallengeInsert" parameterType="ChallengesVO">
-	<selectKey keyProperty="chalDetId" resultType="int"	order="BEFORE">
-			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHALLENGE
+	<selectKey keyProperty="chalId" resultType="int"	order="BEFORE">
+			SELECT NVL(MAX(CHAL_ID),0)+1 FROM CHALLENGE
 	</selectKey>
 		INSERT ALL 
 		

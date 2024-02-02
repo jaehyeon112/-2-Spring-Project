@@ -23,16 +23,15 @@ public class FileController {
     public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, String codeNo) {
         try {
         	System.out.println("업로드 컨트롤러상의~?");
-        	
         	System.out.println(uploadFiles);
         	System.out.println(code);
         	System.out.println(codeNo);
-        	
         	System.out.println("업로드 컨트롤러상의~?");
             return fileService.uploadFiles(uploadFiles, code, codeNo);
         } catch (IOException e) {
             e.printStackTrace();
             return null; // 혹은 적절한 에러 메시지와 함께 응답을 반환
         }
+        
     }
 }
