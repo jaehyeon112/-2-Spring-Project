@@ -1,29 +1,33 @@
 package com.bongsamaru.mypage.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.bongsamaru.admin.service.UserDetailVO;
+import com.bongsamaru.common.UserVO;
+import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
+import com.bongsamaru.user.service.UserDetailVO;
 
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RequiredArgsConstructor
-@RestController
-public class ProfileController {
+@Controller
+public class ProfileController<userVO> {
 	
-
+	@Autowired
+	MypageService mypageService;
+	
 	 @GetMapping("/profile")
 	    public String profile(Model model) {
 	        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,7 +48,7 @@ public class ProfileController {
 	            }
 	        }
 
-	        return "profile";
+	        return "my/profile";
 	    }
 	
     // coolSMS 구현 로직 연결  
@@ -54,5 +58,10 @@ public class ProfileController {
         return smsService.PhoneNumberCheck(to);
     }
     
-	
+    // 수정
+    @PostMapping("/profile")
+	public void updateEmail(@RequestBody UserVO userVO) {
+		mypageService.updateEmail(userVO);
+		
+	}
 }

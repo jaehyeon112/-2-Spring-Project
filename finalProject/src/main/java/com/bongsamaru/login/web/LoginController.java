@@ -1,6 +1,7 @@
 package com.bongsamaru.login.web;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bongsamaru.admin.service.UserService;
 import com.bongsamaru.common.UserVO;
+import com.bongsamaru.user.service.UserService;
 
 @Controller
 public class LoginController {
