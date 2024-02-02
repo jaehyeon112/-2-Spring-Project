@@ -80,15 +80,7 @@ public class DonaVO {
 	    private Date facEstDate;
 	    
 
-	// 기부- 카테고리(유형구분)
-	    private String category1;
-	    private String category2;
-	    private String category3;
-	    private String category4;
-	    private String category5;
-	    private String category6;
-	    private String category7;
-	    
+
 	    
 	// 댓글 table (comments)
 	    private Integer commId;

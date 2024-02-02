@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	
+
 
     <head>
+  
         <meta charset="utf-8">
         <title> Donation Main Page</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,7 +14,7 @@
 
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" >
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
 
         <!-- Icon Font Stylesheet -->
@@ -30,7 +34,8 @@
     </head>
 
     <body>
-
+	
+	<section layout:fragment="content">
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -38,27 +43,7 @@
         <!-- Spinner End -->
 
 
-        <!-- Navbar start -->
-        <div class="container-fluid fixed-top">
 
-            <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6"> 기부</h1></a>
-
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
-                            <a href="shop.html" class="nav-item nav-link active">모집중</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">모금완료</a>
-
-                           
-                        </div>
-
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
 
 
         <!-- Modal Search Start -->
@@ -131,6 +116,19 @@
                                 </div>
                             </div>
                         </div>
+                        
+                 
+                        <div class="navbar-nav mx-auto">
+                            <a href="shop.html" class="nav-item nav-link active">모집중</a>
+                            <a href="shop-detail.html" class="nav-item nav-link">모금완료</a>     
+                        </div>
+
+                        
+                        
+                        
+                        
+                        
+                        
                         <div class="row g-4">
      
                             <div class="col-lg-9">
@@ -194,6 +192,7 @@
                 </div>
             </div>
         </div>
+        </div>
         <!-- Fruits Shop End-->
 
 
@@ -216,7 +215,7 @@
 
     <!-- Template Javascript -->
     <script src="donation/board/js/main.js"></script>
-    
+
     
     
     <script>
@@ -226,6 +225,8 @@
 		    })
 		    .fail(err => console.log(err));
     </script>
+ 
+      </section>
     </body>
 
 </html>

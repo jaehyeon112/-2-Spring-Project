@@ -6,7 +6,8 @@
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
 <!doctype html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +36,7 @@
 	</head>
 
 	<body>
-
+	 <section layout:fragment="content">
 
 
 		<!-- Start Hero Section -->
@@ -94,16 +95,17 @@
 
 			            <div class="row">
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-info btn-block disabled" id="depositBtn">무통장입금</button>
+			                	<!--  class="btn btn-info btn-block disabled" -->
+			                    <button type="button" class="btn btn-info btn-block " id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-warning btn-block disabled" id="kakaoPayBtn">카카오페이</button>
+			                    <button type="button" class="btn btn-warning btn-block " id="kakaoPayBtn" onclick="selectPaymentMethod('kakaoPay')">카카오페이</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-success btn-block disabled" id="tossPayBtn">토스페이</button>
+			                    <button type="button" class="btn btn-success btn-block " id="tossPayBtn" onclick="selectPaymentMethod('toss')">토스페이</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-danger btn-block disabled" id="cardPayBtn">카드결제</button>
+			                    <button type="button" class="btn btn-danger btn-block " id="cardPayBtn" onclick="selectPaymentMethod('card')">카드결제</button>
 			                </div>
 			            </div>
 
@@ -154,21 +156,43 @@
 		<script>
 			let selectedPaymentMethod = '';  //결제수단 
 			
-			function selectPaymentMethod(method){
-				selectedPaymentMethod
+			function selectPaymentMethod(paymentMethod){
+				selectedPaymentMethod = paymentMethod;
+				alert('결제수단 :  ' + selectedPaymentMethod + '  선택 ! ');
 			}
 		
-		
+			function getPg(paymentMethod){
+				switch(paymentMethod){
+					case 'deposit':
+						return 무통장;
+					case 'kakao':
+						return kakaopay.TC0ONETIME;	
+					case 'toss':
+						return tosspay;	
+					case 'card':
+						return html5_inicis.INIBillTst;
+					default:
+						return '';
+				} 
+			}
+			
+
 			 var IMP = window.IMP;
 			 IMP.init("imp48428178");
 			
 			 function requestPay() {
 			        	
+			 if (!selectedPaymentMethod) {
+			     alert('결제 수단을 선택해주세요.');
+			     return;
+			  }	 
+				 
+				 
 			   let amountInput = document.getElementById('c_address').value;
 			        	
 			     IMP.request_pay({
-			        pg: "kakaopay",
-			        pay_method: "card",
+			        pg: getPg(selectedPaymentMethod),
+			        pay_method: selectedPaymentMethod,
 			        merchant_uid: "ORD20180131-0000011",   // 주문번호
 			        name: "노르웨이 회전 의자",
 			        amount:  parseInt(amountInput),   // 숫자 타입
@@ -179,7 +203,7 @@
 			       }, function (rsp) { // callback
 			          $.ajax({
 			            type: 'POST',
-			            url: '/verify/' + rsp.imp_uid
+			            url: '/payment' + rsp.imp_uid
 			         }).done(function(data) {
 			             if(rsp.paid_amount === data.response.amount){
 			                alert("결제 성공");
@@ -190,6 +214,7 @@
 			       });
 			     }
    		 </script>
+   	</section>
 	</body>
 
 </html>

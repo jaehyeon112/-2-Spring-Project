@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <!-- 다른 필요한 CSS 파일들을 여기에 추가 -->
 </head>
 <body>
+ <section layout:fragment="content">
 <form>
   <fieldset>
     <legend> Donation Regit Form </legend>
@@ -198,5 +200,5 @@
 </script>
 
 
-
+</section>
 </body>

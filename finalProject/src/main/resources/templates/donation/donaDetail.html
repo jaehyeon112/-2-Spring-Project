@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 
     <head>
         <meta charset="utf-8">
@@ -32,7 +33,7 @@
     </head>
 
     <body>
-
+  	<section layout:fragment="content">
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -40,7 +41,7 @@
         <!-- Spinner End -->
 
 
-        <!-- Navbar start -->
+        <!-- Navbar start 
         <div class="container-fluid fixed-top">
 
             <div class="container px-0">
@@ -426,12 +427,9 @@
     	
     	let comm = document.getElementById('comment').value;
     	let commData = {
-
     			content : comm
-
     		}
-    
-    	
+
     		console.log(comm);
     	
     	
@@ -447,17 +445,12 @@
     			console.error('댓글등록 실패ㅠㅠ ', error);
     		}
     	})
-    	
-    	
-    	
-
-    	
-    	
+  
     }
     
 </script>
 
-
+</section>
     </body>
 
 </html>
