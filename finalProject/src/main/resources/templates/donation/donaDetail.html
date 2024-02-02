@@ -323,7 +323,7 @@
 				                <img src="donation/board/img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
 				            </div>
 				            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
-				                <span th:text="${dona.recStat} == '0' ? '모금중' : '모금완료'"></span>Vegetable
+				                <span th:text="${dona.recStat} == '0' ? '모금중' : '모금완료'"></span>
 				            </div>
 				            <div class="p-4 pb-0 rounded-bottom">
 				                <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}"> 제목</a></h4>

@@ -70,7 +70,9 @@
 	<insert id="insertComments" parameterType="DonaVO">
 	<selectKey keyProperty="commId" resultType="int" order="BEFORE">
 
-	SELECT COMMENTS_SEQ.nextval From DUAL
+		SELECT 
+			COMMENTS_SEQ.nextval 
+		FROM DUAL
 	
 	</selectKey>
 		INSERT INTO comments
@@ -122,7 +124,7 @@
 	 			) 
  			VALUES 
  			(
-	 			#{donationSeq.Nextval}
+	 			donation_seq
 	 			, #{facId}
 	 			, #{title}
 	 			, #{recPeriod}
