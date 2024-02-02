@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bongsamaru.admin.service.UserDetailVO;
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
+import com.bongsamaru.user.service.UserDetailVO;
 
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RequiredArgsConstructor
 @Controller
-public class ProfileController {
+public class ProfileController<userVO> {
 	
 	@Autowired
 	MypageService mypageService;

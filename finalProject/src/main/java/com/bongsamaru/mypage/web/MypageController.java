@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bongsamaru.admin.service.UserDetailVO;
-import com.bongsamaru.mypage.service.HeartVO;
 import com.bongsamaru.mypage.service.MypageService;
+import com.bongsamaru.user.service.UserDetailVO;
+
+
+
 
 /**
  * Handles requests for the application home page.

@@ -3,7 +3,7 @@ package com.bongsamaru.mypage.service;
 
 import java.util.List;
 
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 
 public interface MypageService {
 	

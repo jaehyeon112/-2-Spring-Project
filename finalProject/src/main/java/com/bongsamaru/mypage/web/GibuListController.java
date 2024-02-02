@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.bongsamaru.admin.service.UserDetailVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.mypage.service.MypageService;
+import com.bongsamaru.user.service.UserDetailVO;
 
 /**
  * Handles requests for the application home page.

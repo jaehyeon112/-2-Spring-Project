@@ -2,7 +2,7 @@ package com.bongsamaru.mypage.mapper;
 
 import java.util.List;
 
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
 public interface MypageMapper {

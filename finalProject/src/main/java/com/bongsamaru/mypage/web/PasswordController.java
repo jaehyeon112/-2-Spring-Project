@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bongsamaru.admin.service.UserDetailVO;
+import com.bongsamaru.user.service.UserDetailVO;
 
 @Controller
 public class PasswordController {
