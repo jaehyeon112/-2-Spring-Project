@@ -26,11 +26,10 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
-<!-- 		</dependency>  -->
-
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,7 +39,11 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-
+		<!-- 내가추가함 -->
+			<dependency>
+			    <groupId>org.thymeleaf.extras</groupId>
+			    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -72,8 +75,18 @@
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 		</dependency>
+	<!--본인인증 의존성 추가-->
+	<dependency>
+	  <groupId>net.nurigo</groupId>
+	  <artifactId>javaSDK</artifactId>
+	  <version>2.2</version>
+	</dependency>
+	<!--google Mail -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-mail</artifactId>
+	</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
