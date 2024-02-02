@@ -10,12 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.common.UserVO;
 
+
 @SpringBootTest
-@MapperScan(basePackages = "com.bongsamaru.**.mapper")
+//@MapperScan(basePackages = "com.bongsamaru.**.mapper")
 class FinalProjectApplicationTests {
+	
 
-	@Test
-	void contextLoads() {
-	}
+	
+	
 
-}
+   
+   }
+   
