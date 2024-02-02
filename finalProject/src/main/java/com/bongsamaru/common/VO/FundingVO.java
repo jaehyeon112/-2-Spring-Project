@@ -1,4 +1,4 @@
-package com.bongsamaru.facility.VO;
+package com.bongsamaru.common.VO;
 
 import lombok.Data;
 

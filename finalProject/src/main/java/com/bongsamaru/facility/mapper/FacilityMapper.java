@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.bongsamaru.facility.VO.FacilityVO;
-import com.bongsamaru.facility.VO.FundingVO;
-import com.bongsamaru.facility.VO.VolunteerVO;
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 
 public interface FacilityMapper {
 	

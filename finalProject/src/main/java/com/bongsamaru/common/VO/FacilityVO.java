@@ -1,4 +1,4 @@
-package com.bongsamaru.facility.VO;
+package com.bongsamaru.common.VO;
 
 import java.util.Date;
 
@@ -29,6 +29,8 @@ public class FacilityVO {
 	private String memApp;
 	
 	//join문으로 생긴 별칭
-	private Integer donaitonAmt;
-	private Integer donors;
+	
+	 private Integer donaitonAmt; 
+	 private Integer donors;
+	 
 }

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.RegionVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.facility.Service.FacilityService;
-import com.bongsamaru.facility.VO.FacilityVO;
-import com.bongsamaru.facility.VO.FundingVO;
-import com.bongsamaru.facility.VO.VolunteerVO;
 @Controller
 public class facilityController {
 	@Autowired

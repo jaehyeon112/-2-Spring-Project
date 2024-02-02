@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.challenges.service.ChallengesService;
-import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.common.VO.ChallengesVO;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.file.service.FilesVO;
 
@@ -50,6 +50,7 @@ public class challengesController {
 	@GetMapping("/challenge/challengesList")
 	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Model model) {
 		List<ChallengesVO> dList = challengeService.getChallengesList(chalId);
+		//System.out.println(dList);
 		model.addAttribute("challengesList", dList);
 		return "challenge/challengesList";
 	}
@@ -65,7 +66,7 @@ public class challengesController {
 		challengeService.getChallengeInsert(challengeVO);
 		String chalId = challengeVO.getCodeNo();
 		try {
-			fileService.uploadFiles(uploadFiles,"p04", chalId);
+			fileService.uploadFiles(uploadFiles,"p03", chalId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,11 +76,13 @@ public class challengesController {
 	//게시글 참여
 	@PostMapping("/challenge/challengeDeInsert")
 	@ResponseBody	
-	public String getChallengesInsert (@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
+	public Integer getChallengesInsert (@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
+		challengeVO.setMemId("maru0505");
 		challengeService.getChallengesInsert(challengeVO);
-		String chalDetId = challengeVO.getCodeNo();
+		System.out.println("챌린지참여"+challengeVO);
+		Integer chalDetId = challengeVO.getChalDetId();
 		try {
-			fileService.uploadFiles(uploadFiles,"p04", chalDetId);
+			fileService.uploadFiles(uploadFiles,"p04", chalDetId.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

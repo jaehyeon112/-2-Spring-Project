@@ -3,16 +3,15 @@ package com.bongsamaru.admin.mapper;
 
 import java.util.List;
 
-
-import com.bongsamaru.common.BoardVO;
-import com.bongsamaru.common.CommentsVO;
-import com.bongsamaru.common.DonationLedgerVO;
-import com.bongsamaru.common.DonationVO;
-import com.bongsamaru.common.FacilityVO;
-import com.bongsamaru.common.FaqVO;
-import com.bongsamaru.common.ReportVO;
-import com.bongsamaru.common.UserVO;
-import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CommentsVO;
+import com.bongsamaru.common.VO.DonationLedgerVO;
+import com.bongsamaru.common.VO.DonationVO;
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.ReportVO;
+import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 
 public interface AdminMapper {
 	public List<UserVO> getUserList(String memStat);

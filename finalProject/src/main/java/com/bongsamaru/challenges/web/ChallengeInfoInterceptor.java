@@ -6,9 +6,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bongsamaru.challenges.service.ChallengesService;
-import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.facility.Service.FacilityService;
-import com.bongsamaru.facility.VO.FacilityVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

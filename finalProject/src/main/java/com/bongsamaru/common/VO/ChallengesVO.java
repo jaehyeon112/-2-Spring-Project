@@ -1,4 +1,4 @@
-package com.bongsamaru.challenges.vo;
+package com.bongsamaru.common.VO;
 
 import java.util.Date;
 

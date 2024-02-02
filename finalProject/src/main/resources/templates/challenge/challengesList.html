@@ -26,13 +26,14 @@
 <body>
 
 	<section layout:fragment="content">
-		<th:block th:each="list:${challengesList}">
+		
 			<section class="blog_area">
 				<div class="container">
 					<div class="row">
+					<th:block th:each="list:${challengesList}">
 						<div class="col-lg-8">
 							<div class="blog_left_sidebar">
-
+								
 								<div class="row imageGallery1" id="gallery"
 									style="position: relative; height: 679.112px;">
 									<div class="col-md-4 gallery_item">
@@ -50,6 +51,7 @@
 
 							</div>
 						</div>
+						</th:block>
 						<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
 					
 							<div class="col-lg-4">
@@ -61,14 +63,10 @@
 
 											<div class="media-body">
 												<h3>How to</h3>
-												<p th:text="${list.partMethod1}"></p>
-												<p th:text="${list.partMethod2}"></p>
+												<p th:text="${session.challengeInfo.partMethod1}"></p>
+												<p th:text="${session.challengeInfo.partMethod2}"></p>
 												<button type="button" data-toggle="modal"
 													data-target="#myModal">챌린지 참여하기</button>
-
-												
-
-
 											</div>
 										</div>
 									</aside>
@@ -76,22 +74,22 @@
 							</div>
 					</div>
 				</div>
-			</section>
+			
 		
 
 
-
-
-		<!-- 정적모달 -->
-		<div class="modal fade" tabindex="-1" id="myModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">챌린지 참여하기</h5>
-					
-					</div>
-					<div class="modal-body">
-						<form action="challengesInsert" method="post">
+<div class="modal" tabindex="-1" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">챌린지 참여하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+      
 							<div class="form-group">
 								<img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
 					               
@@ -99,24 +97,40 @@
 								<input type="file" name="uploadFiles" id="file-image" style="display: none" multiple>
 								</label> 
 								<br> 
-								<label for="file-video" class="input-file-button">영상첨부
+								<!-- <label for="file-video" class="input-file-button">영상첨부
 								<input type="file" id="file-video" style="display: none">
-								</label>
-								 <button class="uploadBtn">Upload</button>
-								<textarea name="dContent" maxlength="500"></textarea>
+								</label> -->
+								<textarea id="content" name="content" maxlength="500"></textarea>
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary">저장하기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- jQuery -->
+						
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary uploadBtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</section>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -153,12 +167,15 @@
 						console.log(files[i]);
 						formData.append("uploadFiles", files[i]); //키,값으로 append 
 					}
-					formData.append("code", "p04")
-					formData.append("codeNo", $('#chalDetId').val());
+					
+					formData.append("chalId", [[${session.challengeInfo.chalId}]])
+					formData.append("dContent", $('#content').val());
+				//	formData.append("code", "p04")
+				//	formData.append("codeNo", $('#chalDetId').val());
 
 					//jQuery.ajax
 					$.ajax({
-						url: '/uploadsAjax',
+						url: '/challenge/challengeDeInsert',
 						type: 'POST',
 						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
 						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.

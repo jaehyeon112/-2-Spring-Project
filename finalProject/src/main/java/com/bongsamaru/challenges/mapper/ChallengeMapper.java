@@ -2,7 +2,7 @@ package com.bongsamaru.challenges.mapper;
 
 import java.util.List;
 
-import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.common.VO.ChallengesVO;
 
 public interface ChallengeMapper {
 	

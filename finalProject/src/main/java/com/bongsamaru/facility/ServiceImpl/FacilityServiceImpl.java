@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.facility.Service.FacilityService;
-import com.bongsamaru.facility.VO.FacilityVO;
-import com.bongsamaru.facility.VO.FundingVO;
-import com.bongsamaru.facility.VO.VolunteerVO;
 import com.bongsamaru.facility.mapper.FacilityMapper;
 @Service
 public class FacilityServiceImpl implements FacilityService {

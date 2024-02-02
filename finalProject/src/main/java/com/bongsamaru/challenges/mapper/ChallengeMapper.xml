@@ -102,36 +102,18 @@ SELECT  C.CHAL_DET_ID,
 				#{partMethod1},
 				#{partMethod2},)
  
-    	INTO FILES
-		    	(FILE_ID,
-		    	 FILE_PATH,
-		    	 FILE_ORDER,
-		    	 UPLOAD_DATE,
-		    	 FILE_NAME,
-		    	 EXTENSION,
-		    	 FILE_SIZE,
-		    	 CODE,
-		    	 CODE_NO)
-    	VALUES
-		    	( FILES_SEQ.nextval,
-		    	 #{filePath},
-		    	 (SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo}  AND CODE='p03'),
-		    	  sysdate,
-		    	 #{fileName},
-		    	 #{extension},
-		    	 #{fileSize},
-		    	 #{code},
-		    	 #{codeNo})
+    	
  SELECT * FROM DUAL
 </insert>
 
 <!-- 한 챌린지  참여 등록-->
 <insert id="getChallengesInsert" parameterType="ChallengesVO">
 	<selectKey keyProperty="chalDetId" resultType="int"
-			order="BEFORE">SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHALDETAIL</selectKey> 
+			order="BEFORE">
+			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHAL_DETAIL</selectKey> 
 		INSERT ALL 
 		
-		INTO CHALDETAIL
+		INTO CHAL_DETAIL
 			(CHAL_DET_ID,
 			 CHAL_ID,
 			 CONTENT,                 
@@ -144,27 +126,7 @@ SELECT  C.CHAL_DET_ID,
 			sysdate,
 			#{memId})
  
-    	INTO FILES
-	    	(FILE_ID,
-	    	 FILE_PATH,
-	    	 FILE_ORDER,
-	    	 UPLOAD_DATE,
-	    	 FILE_NAME,
-	    	 EXTENSION,
-	    	 FILE_SIZE,
-	    	 CODE,
-	    	 CODE_NO)
-	    VALUES
-	    	( FILES_SEQ.nextval,
-	    	 #{filePath},
-	    	 (SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo} AND CODE='p04'),
-	    	 sysdate,
-	    	 #{fileName},
-	    	 #{extension},
-	    	 #{fileSize},
-	    	 #{code},
-	    	 #{codeNo})
- SELECT * FROM DUAL;		
+ SELECT * FROM DUAL		
 </insert>
 
 

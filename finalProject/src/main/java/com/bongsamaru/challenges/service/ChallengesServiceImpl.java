@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.challenges.mapper.ChallengeMapper;
-import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.common.VO.ChallengesVO;
 @Service
 public class ChallengesServiceImpl implements ChallengesService{
 	
@@ -39,6 +39,7 @@ public class ChallengesServiceImpl implements ChallengesService{
 		int result = challengeMapper.getChallengeInsert(challengeVO);
 		if(result ==1) {
 			return challengeVO.getChalId();
+			
 		}else {
 			return -1;
 		}	

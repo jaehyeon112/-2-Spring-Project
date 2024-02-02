@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bongsamaru.common.UserVO;
+import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.mypage.service.MypageService;

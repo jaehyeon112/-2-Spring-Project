@@ -2,7 +2,7 @@ package com.bongsamaru.challenges.service;
 
 import java.util.List;
 
-import com.bongsamaru.challenges.vo.ChallengesVO;
+import com.bongsamaru.common.VO.ChallengesVO;
 
 public interface ChallengesService {
 	

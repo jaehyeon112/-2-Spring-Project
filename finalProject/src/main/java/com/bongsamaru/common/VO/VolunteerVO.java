@@ -1,4 +1,4 @@
-package com.bongsamaru.facility.VO;
+package com.bongsamaru.common.VO;
 
 import java.util.Date;
 
@@ -15,4 +15,8 @@ public class VolunteerVO {
 	private String title; 
 	private String location; 
 	private Date volDate; 
+	//별칭
+	private Integer vol;
+	private Integer fac;
+	private String memId;
 }

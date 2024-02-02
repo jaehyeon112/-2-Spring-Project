@@ -1,4 +1,4 @@
-package com.bongsamaru.common;
+package com.bongsamaru.common.VO;
 
 import java.io.Serializable;
 import java.util.Date;
