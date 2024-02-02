@@ -76,46 +76,52 @@ SELECT  C.CHAL_DET_ID,
 
 <!-- 챌린지 등록-->
 <insert id="getChallengeInsert" parameterType="ChallengesVO">
-	<selectKey keyProperty="chalDetId" resultType="int"
-			order="BEFORE">SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHALLENGE</selectKey>
+	<selectKey keyProperty="chalDetId" resultType="int"	order="BEFORE">
+			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHALLENGE
+	</selectKey>
 		INSERT ALL 
 		
 		INTO CHALLENGE
-		(CHAL_ID,
-		 MEM_ID,
-		 TITLE,
-		 CONTENT,
-		 EXP_IMPACT,
-		 ACTION_REASON,
-		 REG_DATE,
-		 PART_METHOD1,
-		 PART_METHOD2
-		 )VALUES
-		(#{chalDetId},
-		#{chalId},
-		#{content},
-		#{partDate},
-		#{memId})
+				(CHAL_ID,
+				 MEM_ID,
+				 TITLE,
+				 CONTENT,
+				 EXP_IMPACT,
+				 ACTION_REASON,
+				 REG_DATE,
+				 PART_METHOD1,
+				 PART_METHOD2)
+		 VALUES
+				(#{chalId},
+				#{memId},
+				#{title},
+				#{content},
+				#{expImpact},
+				#{actionReason},
+				#{regDate},
+				#{partMethod1},
+				#{partMethod2},)
  
     	INTO FILES
-    	(FILE_ID,
-    	 FILE_PATH,
-    	 FILE_ORDER,
-    	 UPLOAD_DATE,
-    	 FILE_NAME,
-    	 EXTENSION,
-    	 FILE_SIZE,
-    	 CODE,
-    	 CODE_NO)VALUES
-    	(#{fileId},
-    	 #{filePath},
-    	 #{fileOrder},
-    	 #{uploadDate},
-    	 #{fileName},
-    	 #{extension},
-    	 #{fileSize},
-    	 #{code},
-    	 #{codeNo})
+		    	(FILE_ID,
+		    	 FILE_PATH,
+		    	 FILE_ORDER,
+		    	 UPLOAD_DATE,
+		    	 FILE_NAME,
+		    	 EXTENSION,
+		    	 FILE_SIZE,
+		    	 CODE,
+		    	 CODE_NO)
+    	VALUES
+		    	( FILES_SEQ.nextval,
+		    	 #{filePath},
+		    	 (SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo}  AND CODE='p03'),
+		    	  sysdate,
+		    	 #{fileName},
+		    	 #{extension},
+		    	 #{fileSize},
+		    	 #{code},
+		    	 #{codeNo})
  SELECT * FROM DUAL
 </insert>
 
@@ -126,36 +132,38 @@ SELECT  C.CHAL_DET_ID,
 		INSERT ALL 
 		
 		INTO CHALDETAIL
-		(CHAL_DET_ID,
-		 CHAL_ID,
-		 CONTENT                     AS dContent,
-		 PARAT_DATE,
-		 MEM_ID)VALUES
-		(#{chalDetId},
-		#{chalId},
-		#{content},
-		#{partDate},
-		#{memId})
+			(CHAL_DET_ID,
+			 CHAL_ID,
+			 CONTENT,                 
+			 PART_DATE,
+			 MEM_ID)
+		 VALUES
+			(#{chalDetId},
+			#{chalId},
+			#{dContent},
+			sysdate,
+			#{memId})
  
     	INTO FILES
-    	(FILE_ID,
-    	 FILE_PATH,
-    	 FILE_ORDER,
-    	 UPLOAD_DATE,
-    	 FILE_NAME,
-    	 EXTENSION,
-    	 FILE_SIZE,
-    	 CODE,
-    	 CODE_NO)VALUES
-    	(#{fileId},
-    	 #{filePath},
-    	 #{fileOrder},
-    	 #{uploadDate},
-    	 #{fileName},
-    	 #{extension},
-    	 #{fileSize},
-    	 #{code},
-    	 #{codeNo})
+	    	(FILE_ID,
+	    	 FILE_PATH,
+	    	 FILE_ORDER,
+	    	 UPLOAD_DATE,
+	    	 FILE_NAME,
+	    	 EXTENSION,
+	    	 FILE_SIZE,
+	    	 CODE,
+	    	 CODE_NO)
+	    VALUES
+	    	( FILES_SEQ.nextval,
+	    	 #{filePath},
+	    	 (SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo} AND CODE='p04'),
+	    	 sysdate,
+	    	 #{fileName},
+	    	 #{extension},
+	    	 #{fileSize},
+	    	 #{code},
+	    	 #{codeNo})
  SELECT * FROM DUAL;		
 </insert>
 
