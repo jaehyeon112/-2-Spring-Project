@@ -27,5 +27,10 @@ public class CommonUserController {
         return "layout"; // 뷰 이름 반환
     }
 	
+	@GetMapping("/signup")
+	public String signup() {
+		
+		return "  ";	
+	}
 	
 }

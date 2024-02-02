@@ -1,7 +1,8 @@
 package com.bongsamaru.user.service;
 
-import com.bongsamaru.common.UserVO;
+import java.util.List;
 
+import com.bongsamaru.common.CategoryLikeVO;
 import com.bongsamaru.common.UserVO;
 
 public interface UserService {
@@ -9,4 +10,5 @@ public interface UserService {
 	public Boolean countMemId(String memId);
 	public Boolean countMemNick(String memNick);
 	public Boolean insertUser(UserVO vo);
+	public List<CategoryLikeVO> selectCategory();
 }
