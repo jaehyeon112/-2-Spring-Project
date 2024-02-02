@@ -3,16 +3,16 @@ package com.bongsamaru.admin.web;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bongsamaru.admin.service.UserService;
+import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.BoardVO;
 import com.bongsamaru.common.CommentsVO;
 import com.bongsamaru.common.DonationLedgerVO;
@@ -26,7 +26,7 @@ import com.bongsamaru.common.VolunteerVO;
 @Controller
 public class UserController {
 	@Autowired
-	UserService userService;
+	AdminService userService;
 	
 	@GetMapping("userList")
 	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
