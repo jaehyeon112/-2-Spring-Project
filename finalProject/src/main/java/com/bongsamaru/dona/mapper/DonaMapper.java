@@ -17,7 +17,7 @@ public interface DonaMapper {
 		public List<DonaVO> getDonerList(Integer donId);
 		
 	//댓글 - 전체리스트 
-		public List<DonaVO> getCommentsList();
+		public List<DonaVO> getCommentsList(Integer donId);
 		
 	//댓글 insert
 		public int insertComments(DonaVO donaVO);

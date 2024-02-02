@@ -19,9 +19,11 @@ public interface DonaService {
 	public List<DonaVO> getDonerList(Integer donId);
 	
 	
-	//댓글 상세페이지 안에
+	//댓글 리스트
+	public List<DonaVO> getCommentList(Integer donId);
 	
-	
+	//댓글 등록하기
+	public int insertComment(DonaVO donaVO);
 	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);

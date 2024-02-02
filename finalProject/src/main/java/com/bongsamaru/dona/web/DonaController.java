@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
+
 
 @Controller
 public class DonaController {
@@ -34,21 +36,36 @@ public class DonaController {
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
 	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam("facId") String facId, Model model) { 
+		   //상세페이지
 		   DonaVO dona = donaService.getDonaDetail(donId, facId);
 		    model.addAttribute("dona", dona);
 		    
+		    //기부자목록
 		    List<DonaVO> donaList = donaService.getDonaList();
 		    model.addAttribute("list", donaList);
-	       return "donation/donaDetail";
+		    
+		    //댓글리스트
+		    List<DonaVO> commentList = donaService.getCommentList(donId);
+		    model.addAttribute("comment", commentList);
+		    
+		    return "donation/donaDetail";
 	    }    
 	   
+	  //댓글 삽입
+	   @PostMapping("/donaDetail")
+	   public String insertComment(DonaVO donaVO) {
+		    //댓글 넣기 
+		    donaService.insertComment(donaVO);
+		    
+	       return "redirect:donaDetail";
+	   }
 	   
 	 // 기부상세 - 기부자목록 
 	  @GetMapping("/donaDetail/{id}")
 	  @ResponseBody
 	  public List<DonaVO> donerList(@PathVariable Integer id, Model model) {
 		  model.addAttribute("doner", donaService.getDonerList(id));
-		  System.out.println("여기여기여기다!! " + donaService.getDonerList(id));
+		  	System.out.println("여기여기여기다!! " + donaService.getDonerList(id));
 		  return donaService.getDonerList(id);
 	  }
 	   
@@ -65,13 +82,26 @@ public class DonaController {
 	        return "donation/paymentComplete";
 	    } 
 	
-	//폼
+	//등록폼
 	   @GetMapping("/form")
-	    public String opeform(Model model) {
+	    public String openRegitform(Model model) {
 		   String h = "h";
 		   List<DonaVO> categoryList = donaService.getCategoryList(h);
 		   model.addAttribute("categoryList", categoryList);
 	 
 	        return "donation/form";
 	    }   
+	
+	//후기폼
+	   @GetMapping("/reviewform")
+	    public String openRevform(Model model) {
+		   return "donation/reviewform";
+	   }
+
+	// 기부신청폼
+	   @GetMapping("/applyform")
+	    public String openapplyform(Model model) {
+		   return "donation/forDonaform";
+	   }
+	   
 }

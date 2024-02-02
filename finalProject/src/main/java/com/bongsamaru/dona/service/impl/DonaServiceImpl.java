@@ -22,21 +22,40 @@ public class DonaServiceImpl implements DonaService {
 		return donaMapper.getDonaList();
 	}
 	
-	
+//상세페이지	
 	@Override
 	public DonaVO getDonaDetail(Integer donId, String facId) {
 		return donaMapper.getDonaDetail(donId, facId);
 	}
-	
+//기부자목록	
 	@Override
 	public List<DonaVO> getDonerList(Integer donId) {
 		return donaMapper.getDonerList(donId);
 	}
-	
+//카테고리	
 	@Override
 	public List<DonaVO> getCategoryList(String h) {
 		return donaMapper.getCategoryList(h);
 	}
+	
+//댓글 리스트
+	@Override
+	public List<DonaVO> getCommentList(Integer donId) {
+		return donaMapper.getCommentsList(donId);
+	}
+
+//댓글삽입	
+	@Override
+	public int insertComment(DonaVO donaVO) {
+		int result = donaMapper.insertComments(donaVO);
+		
+			if(result == 1) {
+				return donaVO.getDonId();
+			}else {
+				return -1;
+			}
+	}
+	
 	
 	@Override
 	public int insertDonation(DonaVO donaVO) {

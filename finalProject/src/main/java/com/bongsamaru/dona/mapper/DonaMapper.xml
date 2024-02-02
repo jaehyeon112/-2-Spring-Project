@@ -64,39 +64,74 @@
 		WHERE	sub_code_id 
 		LIKE CONCAT(#{h}, '%')
  	</select>
- 	
-<!-- 댓글 
-	<select id = "getCommentList" resultType="DonaVO">
+
 	
-	</select>-->
+<!-- 댓글 등록폼  -->	
+	<insert id="insertComments" parameterType="DonaVO">
+	<selectKey keyProperty="commId" resultType="int" order="BEFORE">
+
+	SELECT COMMENTS_SEQ.nextval From DUAL
+	
+	</selectKey>
+		INSERT INTO comments
+			(
+			comm_id
+			, content
+			,comm_date
+			, code
+			)
+		VALUES
+			(
+			#{commId}
+			, #{content}
+			, sysdate
+			,'c01'
+			)	
+	</insert>
+ 	
+ 	
+ <!--  댓글 리스트 -->
+ 	<select id = "getCommentsList" resultType="DonaVO">
+	 	SELECT 
+	 		c.comm_id 
+	        , c.mem_id
+	        , c.content
+	        , c.comm_date
+	        , c.parent_id
+		FROM comments c 
+		JOIN donation d ON c.parent_id = d.don_id
+		JOIN member m  ON c.mem_id = m.mem_id
+		WHERE d.don_id = #{donId}
+ 	</select>
+ 	
  	
  <!-- 기부등록폼 -->
  	<insert id="insertDonation" parameterType="DonaVO">
  		INSERT INTO donation 
- 			(
- 			don_id
- 			, fac_id
- 			, title
- 			, rec_period
- 			, end_period
- 			, goal_amt
- 			, proj_target
- 			, intro
- 			, rec_stat
- 			, exp_effect
- 			) 
+	 			(
+	 			don_id
+	 			, fac_id
+	 			, title
+	 			, rec_period
+	 			, end_period
+	 			, goal_amt
+	 			, proj_target
+	 			, intro
+	 			, rec_stat
+	 			, exp_effect
+	 			) 
  			VALUES 
  			(
- 			#{DONATION_SEQ.NEXTVAL}
- 			, #{facId}
- 			, #{title}
- 			, #{recPeriod}
- 			, #{endPeriod}
- 			, #{goalAmt}
- 			, #{projTarget}
- 			, #{intro}
- 			, #{recStat}
- 			, #{expEffect}
+	 			#{donationSeq.Nextval}
+	 			, #{facId}
+	 			, #{title}
+	 			, #{recPeriod}
+	 			, #{endPeriod}
+	 			, #{goalAmt}
+	 			, #{projTarget}
+	 			, #{intro}
+	 			, #{recStat}
+	 			, #{expEffect}
  			)
  	</insert>
  </mapper>

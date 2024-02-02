@@ -95,8 +95,10 @@ public class DonaVO {
 	    //private String memId;
 	    //private String content;
 	    private Date commDate;
+	    private Integer parentId;
 	    private String code;
-	    
+	    private String codeName; 
+	
 	    
 	//서브코드
 	    private String subCodeName;
