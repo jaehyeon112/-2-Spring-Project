@@ -44,7 +44,16 @@
 										<div class="form-group" style="width: 500px">
 											<label for="title">제목</label> <input type="text"
 												class="form-control" name="title" placeholder="제목을 입력하세요">
-										</div>
+										</div><br>
+										<div class="form-group">
+											<div class="subheading">
+												<em class="highlight"></em>파일첨부
+											</div>
+											<input class="form-control" id="imageInput"
+												name="uploadFiles" type="file" multiple><br>
+												<img id="imagePreview" src="/userresources/image/미리보기.jpg"
+											style="width: 100px; height: 100px;">
+										</div><br>
 										<div class="form-group" style="width: 500px">
 											<label for="content"> 내용 </label>
 											<textarea class="form-control" name="content" cols="50"
@@ -52,7 +61,7 @@
 										</div>
 									</div>
 									<p class="btn_set">
-										<button type="submit" style="float: right;" class="btn btn-success m-1">등록</button>
+										<button type="submit" style="float: right;" name="subm" class="btn btn-success m-1">등록</button>
 									</p>
 								</div>
 							<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -99,6 +108,7 @@
 									
 									$("#yesBtn").on('click',function () {
 										insertNotice.submit();
+										fileSub();
 									});
 								};
 								
@@ -106,6 +116,52 @@
 								    $("#confimModal").modal("hide");
 								});
 								
+								document.getElementById('imageInput').addEventListener('change', function (event) {
+									var image = document.getElementById('imagePreview');
+									var file = event.target.files[0];
+									var reader = new FileReader();
+
+									reader.onloadend = function () {
+										image.src = reader.result;
+									}
+
+									if (file) {
+										reader.readAsDataURL(file);
+									} else {
+										image.src = "";
+									}
+								});
+
+
+								function fileSub() {
+									var formData = new FormData(); //FormData 객체 생성
+									var inputFile = $("input[type='file']");
+									//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+									var files = inputFile[0].files;
+									//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+									//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+									for (var i = 0; i < files.length; i++) {
+										formData.append("uploadFiles", files[i]); //키,값으로 append 
+									}
+									formData.append("code", "p05")
+									formData.append("codeNo", $('#userId').val());
+
+									//jQuery.ajax
+									$.ajax({
+										url: '/uploadsAjax',
+										type: 'POST',
+										processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+										contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+										data: formData,
+										success: function (result) {
+											alert('사진성공!')
+										},
+										error: function (reject) {
+											alert('실풰!')
+											console.log(reject);
+										}
+									});
+								};
 							</script>
 						</section>
 					</div>

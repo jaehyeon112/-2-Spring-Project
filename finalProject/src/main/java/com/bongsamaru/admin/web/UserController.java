@@ -137,7 +137,8 @@ public class UserController {
 
 	@PostMapping("noticeInsert")
 	public String insertNoticePro(BoardVO boardVO) {
-		userService.insertNotice(boardVO);
+		var vo = userService.insertNotice(boardVO);
+		System.out.println(vo);
 		return "redirect:boardList?category=b01";
 	}
 	//자주하는 질문 등록
