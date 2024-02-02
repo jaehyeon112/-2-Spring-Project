@@ -59,13 +59,18 @@
 				CATEGORY,
 				MEM_ID,
 				REP_DATE,
-				REPORTED_DATE,
+				CATEGORY_NO,
 				REP_REASON,
 				REQ_CODE
 		from report
 		where CATEGORY = #{category}
 		order by rep_id
 	</select>
+	<update id="updateReport" parameterType="ReportVO">
+		update report
+		set REQ_CODE = #{reqCode}
+		where REP_Id = #{repId}
+	</update>
 	<select id="getFacilityList" resultType="FacilityVO">
 		select FAC_ID,
 				BIZ_NUM,
@@ -197,7 +202,13 @@
 			PRIORITY,
 			MEM_ID,
 			DETAIL_CATE)
-		values(board_id.NEXTVAL,#{category},#{title},#{content},#{priority},'ADMIN',notice_id.NEXTVAL)
+		values(board_id.NEXTVAL
+				,#{category}
+				,#{title}
+				,#{content}
+				,#{priority}
+				,'ADMIN'
+				,notice_id.NEXTVAL)
 	</insert>
 	<insert id="faqInsert" parameterType="FaqVO">
 		insert into faq(
@@ -205,7 +216,23 @@
 			CATEGORY,
 			TITLE,
 			CONTENT)
-		values(FAQ_SEQ.NEXTVAL,#{category},#{title},#{content})
+		values(FAQ_SEQ.NEXTVAL
+				,#{category}
+				,#{title}
+				,#{content})
+	</insert>
+	<insert id="inquireComments" parameterType="CommentsVO">
+		insert into comments(
+			COMM_ID,
+			MEM_ID,
+			CONTENT,
+			COMM_DATE,
+			CODE)
+		values(COMMENTS_SEQ.NEXTVAL
+				,'ADMIN'
+				,#{content}
+				,sysdate
+				,'c02')
 	</insert>
 	<select id="getFaqList" resultType="FaqVO">
 		select FAQ_ID,
@@ -237,4 +264,17 @@
 	<update id="updateDonRegApp" parameterType="FacilityVO">
 		update donation set don_reg_app=1 where don_id=#{donId}
 	</update>
+	<update id="updateInquire" parameterType="Integer">
+		update board set PRIORITY=1 where board_id=#{boardId}
+	</update>
+	<select id="inquireCommentOne" resultType="CommentsVO">
+		select COMM_ID,
+				MEM_ID,
+				CONTENT,
+				COMM_DATE,
+				CODE
+		from comments
+		where DETAIL_CODE=#{detailCode}
+		and CODE = 'c02'
+	</select>
 </mapper>

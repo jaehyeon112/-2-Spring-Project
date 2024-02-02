@@ -15,5 +15,5 @@ public class BoardVO {
 	private Integer priority;
 	private String memId;
 	private Date modDate;
-	private String detailCate;
+	private Integer detailCate;
 }

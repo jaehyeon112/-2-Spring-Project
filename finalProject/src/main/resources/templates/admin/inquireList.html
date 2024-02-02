@@ -34,7 +34,7 @@
 							 <td th:text="${board.title}" >제목</td>
 							 <td th:text="${board.content}" >내용</td>
 							 <td th:if="${board.priority}==0"><a class="cur" th:href="@{inquireInfo(category=${board.category},detailCate=${board.detailCate})}">답변 대기 중</a></td>
-							 <td th:if="${board.priority}==1" >답변 완료</td>
+							 <td th:if="${board.priority}==1" ><a class="cur" th:href="@{inquireComment(category=${board.category},detailCate=${board.detailCate})}">답변 완료</a></td>
 						</tr>
 					</th:block>
 				</tbody>

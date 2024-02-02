@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class ReportVO {
 	private Integer repId;
-	private String category;
+	private String category;	//신고 카테고리
+	private Integer categoryNo;		//신고 상세카테고리
 	private String memId;
 	private Date repDate;
-	private Date reportedDate;
 	private String repReason;
-	private String reqCode;
+	private Integer reqCode;	//신고 처리상태
 }

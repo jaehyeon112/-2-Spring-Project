@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.admin.mapper.UserMapper;
 import com.bongsamaru.admin.service.UserService;
 import com.bongsamaru.common.BoardVO;
+import com.bongsamaru.common.CommentsVO;
 import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public BoardVO getNoticeOne(String category, String detailCate) {
+	public BoardVO getNoticeOne(String category, Integer detailCate) {
 		return userMapper.getNoticeOne(category, detailCate);
 	}
 
@@ -124,6 +125,26 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<ReportVO> getReportList(String category) {
 		return userMapper.getReportList(category);
+	}
+
+	@Override
+	public int inquireComments(CommentsVO commentsVO) {
+		return userMapper.inquireComments(commentsVO);
+	}
+
+	@Override
+	public int updateInquire(Integer boardId) {
+		return userMapper.updateInquire(boardId);
+	}
+
+	@Override
+	public CommentsVO inquireCommentOne(Integer detailCode) {
+		return userMapper.inquireCommentOne(detailCode);
+	}
+
+	@Override
+	public int updateReport(Integer reqCode,Integer repId) {
+		return userMapper.updateReport(reqCode,repId);
 	}
 	
 	

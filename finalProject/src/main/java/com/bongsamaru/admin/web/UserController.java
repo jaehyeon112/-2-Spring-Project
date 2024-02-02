@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.UserService;
 import com.bongsamaru.common.BoardVO;
+import com.bongsamaru.common.CommentsVO;
 import com.bongsamaru.common.DonationLedgerVO;
 import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
@@ -149,6 +151,12 @@ public class UserController {
 		userService.faqInsert(faqVO);
 		return "redirect:boardList?category=b01";
 	}
+	
+	@PostMapping("inquireComments")
+	public String inquireComments(CommentsVO commentsVO) {
+		userService.inquireComments(commentsVO);
+		return "redirect:inquireList?category=b02";
+	}
 
 	@GetMapping("updateFacApp")
 	@ResponseBody
@@ -169,14 +177,14 @@ public class UserController {
 	}
 	
 	@GetMapping("noticeInfo")
-	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") String detailCate,Model model) {
+	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
 		model.addAttribute("info",vo);
 		return "admin/noticeInfo";
 	}
 	
 	@GetMapping("inquireInfo")
-	public String getNoticeOne1(@RequestParam(name="category") String category,@RequestParam(name="detailCate") String detailCate,Model model) {
+	public String getNoticeOne1(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
 		model.addAttribute("info",vo);
 		return "admin/inquireInfo";
@@ -205,5 +213,28 @@ public class UserController {
 	public String updateNotice(BoardVO boardVO) {
 		userService.updateNotice(boardVO);
 		return "redirect:boardList?category=b01";
+	}
+	
+	@GetMapping("updateInquire")
+	@ResponseBody
+	public int updateInquire(@RequestParam(name="boardId") Integer boardId) {
+		return userService.updateInquire(boardId);
+	}
+	
+	@GetMapping("inquireComment")
+	public String inquireComment(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
+		BoardVO vo = userService.getNoticeOne(category,detailCate);
+		CommentsVO comm = userService.inquireCommentOne(detailCate);
+		model.addAttribute("info",vo);
+		model.addAttribute("comm",comm);
+		System.out.println(comm);
+		return "admin/inquireComment";
+	}
+
+	@PostMapping("updateReport")
+	@ResponseBody
+	public String updateReport(@RequestParam Integer reqCode, @RequestParam Integer repId) {
+		userService.updateReport(reqCode,repId);
+		return "redirect:getReportList?category=r01";
 	}
 }
