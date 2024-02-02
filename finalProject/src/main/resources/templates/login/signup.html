@@ -533,7 +533,7 @@
 					받을 수 있습니다.
 				</div>
 
-
+				</div>
 				<!-- 리펙토링하셈 -->
 				<div class="user">
 					<div class="subheading">관련학과</div>
@@ -564,7 +564,6 @@
 							class="check_btn">환경정리 관련</label> <input type="checkbox" id="f07" name="field" value="기타"> <label
 							for="f07" class="check_btn">기타</label>
 					</div>
-				</div>
 
 
 			</div>
@@ -607,6 +606,7 @@
 			let facilityCheck = false;
 			let receiptNO = true;
 			let receiptYes = false;
+			let isDenYes = false;
 			let valid = {
 				isUserId: false,
 				isNick: false,
@@ -850,7 +850,14 @@
 				$('.error-message').hide();
 			})
 
-
+			$('#idenYes').on('click',function(){
+				if(isDenYes){
+					isDenYes = false
+				}else{
+					isDenYes = true;
+				}
+				console.log("주민번호 동의에 대한? " + isDenYes)
+			})
 
 			function validateEmail() {
 				let isEmailCheck = true;
@@ -1103,35 +1110,20 @@
 
 
 					if (receiptYes) {
-
-						// 실명 유효성 검사
-						let nameCheckValue = $('#nameCheck').val();
-						if (!nameCheckValue) {
-							$('#nameCheckError').text('실명을 입력해주세요.').show();
-							isValid = false;
-							alert('21');
-						} else {
-							nameCheckValue = nameCheckValue.replace(/\s+/g, ''); // 공백 제거
-							if (nameCheckValue === '') {
-								$('#nameCheckError').text('실명에 공백을 포함할 수 없습니다.').show();
-								isValid = false;
-								alert('22');
-							}
+						if(!isDenYes){
+							alert('기부금 영수증 처리를 위해 고유식별정보(주민등록번호) 수집·이용 동의에 체크 해주세요.')
+							$('#idenYes').focus();
+							return;
 						}
+						// 실명 유효성 검사
+						if (!validateRealName()) {
+    					    isValid = false;
+   						 }	
 
 						// 주민등록번호 앞자리 유효성 검사
 						let frontIdenCheckValue = $('#frontIdenCheck').val();
-						if (!frontIdenCheckValue) {
-							$('#frontIdenCheckError').text('주민등록번호 앞자리를 입력해주세요.').show();
+						if (validateResidentNumber()){
 							isValid = false;
-							alert('23');
-						} else {
-							frontIdenCheckValue = frontIdenCheckValue.replace(/\s+/g, ''); // 공백 제거
-							if (frontIdenCheckValue === '') {
-								$('#frontIdenCheckError').text('주민등록번호 앞자리에 공백을 포함할 수 없습니다.').show();
-								isValid = false;
-								alert('24');
-							}
 						}
 
 						// 주민등록번호 뒷자리 유효성 검사
@@ -1156,36 +1148,42 @@
 						}, 'slow');
 						return;
 					}
-
-					const areAllTrue = Object.values(valid).every(value => value === true);
-					console.log(areAllTrue + " 이게 결과값");
-
-
-					// 여기에서 폼 제출 또는 AJAX 호출을 수행할 수 있습니다.
-					// 예: 폼 데이터를 서버로 전송하는 AJAX 호출
+					const falseKeys = [];
+					// 객체의 키-값 쌍을 반복하면서 false 값을 찾음
+					Object.entries(valid).forEach(([key, value]) => {
+					    if (value === false) {
+					        console.log(`${key}의 값은 false입니다.`);
+					        falseKeys.push(key);  // false 값을 가진 키를 배열에 추가
+					        
+					    }
+					});
 
 					let obj = {
-						memId: $('#userId').val(),
-						memPwd: $('#passCheck').val(),
-						memNick: $('#nickCheck').val(),
-						memPhone: $('#phoneCheck').val(),
-						memZip: $('#zipCheck').val(),
-						memAddr: $('#addrCheck').val(),
-						memBdate: $('#birthCheck').val(),
-						memDept: $('input[name="major"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
-						memEmail: $('#emailCheck').val(),
-						donReceipt: $('input[name="receipt"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
-						memSsn: $('#frontIdenCheck').val() + $('#backIdenCheck').val(), // 주민번호 앞자리와 뒷자리를 결합합니다.
-						emailAgree: $('#individualChk4').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
-						smsAgree: $('#individualChk5').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
-						memStat: 'M02', // 이 값은 예시로 넣은 것이며, 실제 상황에 맞게 조정해야 합니다.
-						memName: $('#nameCheck').val()
-					};
-					console.log(obj)
-
-
-
-					/* 	$.ajax({
+							memId: $('#userId').val(),
+							memPwd: $('#passCheck').val(),
+							memNick: $('#nickCheck').val(),
+							memPhone: $('#phoneCheck').val(),
+							memZip: $('#zipCheck').val(),
+							memAddr: $('#addrCheck').val(),
+							memBdate: $('#birthCheck').val(),
+							memDept: $('input[name="major"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
+							memEmail: $('#emailCheck').val(),
+							donReceipt: $('input[name="receipt"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
+							memSsn: $('#frontIdenCheck').val() + $('#backIdenCheck').val(), // 주민번호 앞자리와 뒷자리를 결합합니다.
+							emailAgree: $('#individualChk4').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
+							smsAgree: $('#individualChk5').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
+							memStat: 'M02', // 이 값은 예시로 넣은 것이며, 실제 상황에 맞게 조정해야 합니다.
+							memName: $('#nameCheck').val()
+						};
+					
+					
+					
+					const areAllTrue = Object.values(valid).every(value => value === true);
+					if(areAllTrue){
+						
+						alert('회원가입 진행해!')
+						
+						$.ajax({
 							type: "POST",
 							url: "/userSignUp",
 							contentType: "application/json", // Ensure you have the correct content type
@@ -1193,13 +1191,28 @@
 							dataType: 'json', // The type of data expected back from the server
 							success: function (res) {
 								console.log(res); // Handle the response from the server here
-
+								 window.location.href = '/'
 							},
 							error: function (xhr, status, error) {
 								// Handle errors here
 								console.error("Error occurred: ", status, error);
 							}
-						}); */
+						});
+						
+					}else{
+					// false 값을 가진 키들을 출력 (필요한 경우)
+					console.log('False 값을 가진 키들:', falseKeys);
+					}
+					
+					// 여기에서 폼 제출 또는 AJAX 호출을 수행할 수 있습니다.
+					// 예: 폼 데이터를 서버로 전송하는 AJAX 호출
+
+					
+					console.log(obj)
+
+
+
+					
 
 				});
 			})
@@ -1264,12 +1277,62 @@
 						}
 					},
 				});
-
-
-
-
-
 			})
+			
+			// 실명 유효성 검사 함수
+function validateRealName() {
+    let realName = $('#nameCheck').val();
+    let isRealNameValid = true;
+
+    $('#nameCheckError').hide(); // 에러 메시지 초기화
+
+    // 실명 입력 여부 확인
+    if (!realName) {
+        $('#nameCheckError').text('실명을 입력해주세요.').show();
+        isRealNameValid = false;
+    } else {
+        // 한글만 포함되어 있는지 확인
+        const koreanRegex = /^[가-힣]+$/;
+        if (!koreanRegex.test(realName)) {
+            $('#nameCheckError').text('실명은 한글만 가능합니다.').show();
+            isRealNameValid = false;
+        }
+    }
+
+    return isRealNameValid;
+}
+
+// 주민등록번호 앞자리와 생년월일 일치 여부 검사 함수
+function validateResidentNumber() {
+    let frontIden = $('#frontIdenCheck').val();
+    let birthDate = $('#birthCheck').val();
+    let isResidentNumberValid = true;
+
+    $('#frontIdenCheckError').hide(); // 에러 메시지 초기화
+
+    // 주민등록번호 앞자리 입력 여부 확인
+    if (!frontIden) {
+        $('#frontIdenCheckError').text('주민등록번호 앞자리를 입력해주세요.').show();
+        isResidentNumberValid = false;
+    } else {
+        // 생년월일과 주민등록번호 앞자리 비교
+        const birthYear = birthDate.split('-')[0]; // YYYY 형식 추출
+        const birthMonthDay = birthDate.split('-')[1] + birthDate.split('-')[2]; // MMDD 형식 추출
+        const birthYearLastTwo = birthYear.slice(-2); // 년도의 마지막 두 자리
+
+        const residentFront6 = frontIden.slice(0, 6); // 주민번호 앞 6자리
+        const residentYear = frontIden.slice(0, 2); // 주민번호에서 년도 부분
+        const residentMonthDay = frontIden.slice(2); // 주민번호에서 월,일 부분
+
+        // 년도 및 월일이 일치하는지 확인
+        if (residentYear !== birthYearLastTwo || residentMonthDay !== birthMonthDay) {
+            $('#frontIdenCheckError').text('주민등록번호 앞자리가 생년월일과 일치하지 않습니다.').show();
+            isResidentNumberValid = false;
+        }
+    }
+
+    return isResidentNumberValid;
+}
 		</script>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
