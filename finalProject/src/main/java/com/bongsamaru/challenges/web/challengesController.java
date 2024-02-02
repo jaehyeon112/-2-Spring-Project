@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bongsamaru.challenges.service.ChallengesService;
 import com.bongsamaru.common.VO.ChallengesVO;
 import com.bongsamaru.file.service.FileService;
-import com.bongsamaru.file.service.FilesVO;
+
 
 @Controller
 public class challengesController {
