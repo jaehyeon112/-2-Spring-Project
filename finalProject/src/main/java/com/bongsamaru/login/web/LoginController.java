@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.UserService;
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 
 @Controller
 public class LoginController {

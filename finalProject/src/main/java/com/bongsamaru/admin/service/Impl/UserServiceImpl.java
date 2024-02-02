@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.admin.mapper.UserMapper;
 import com.bongsamaru.admin.service.UserDetailVO;
 import com.bongsamaru.admin.service.UserService;
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 
 @Service
 public class UserServiceImpl implements UserService,UserDetailsService{

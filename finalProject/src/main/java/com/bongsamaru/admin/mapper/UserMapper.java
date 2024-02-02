@@ -1,6 +1,6 @@
 package com.bongsamaru.admin.mapper;
 
-import com.bongsamaru.admin.service.UserVO;
+import com.bongsamaru.common.UserVO;
 
 public interface UserMapper {
 	public UserVO userList(String mem);
