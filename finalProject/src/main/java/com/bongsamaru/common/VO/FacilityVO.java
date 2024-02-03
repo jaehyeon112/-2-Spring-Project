@@ -1,8 +1,10 @@
-package com.bongsamaru.common;
+package com.bongsamaru.common.VO;
 
 import java.util.Date;
 
 import lombok.Data;
+
+
 @Data
 public class FacilityVO {
 	
@@ -14,7 +16,7 @@ public class FacilityVO {
 	private Integer facZip;
 	private String facAddr;
 	private String facAddrDetail;
-	private String resion;
+	private String region;
 	private Date facEstDate;
 	private String facEmail;
 	private String facWeb;
@@ -25,4 +27,10 @@ public class FacilityVO {
 	private String donAcct;
 	private String donApp;
 	private String memApp;
+	
+	//join문으로 생긴 별칭
+	
+	 private Integer donaitonAmt; 
+	 private Integer donors;
+	 
 }
