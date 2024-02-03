@@ -3,7 +3,7 @@ package com.bongsamaru.user.mapper;
 import java.util.List;
 
 import com.bongsamaru.common.UserCategoryVO;
-import com.bongsamaru.common.UserVO;
+import com.bongsamaru.common.VO.UserVO;
 
 public interface UserMapper {
 	public UserVO userList(String mem);

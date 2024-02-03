@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.common.UserCategoryVO;
-import com.bongsamaru.common.UserVO;
+import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.user.service.UserDetailVO;
 import com.bongsamaru.user.service.UserService;
@@ -62,4 +62,6 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	public UserVO userList(String mem) {
 		return userMapper.userList(mem);
 	}
+	
+	
 }

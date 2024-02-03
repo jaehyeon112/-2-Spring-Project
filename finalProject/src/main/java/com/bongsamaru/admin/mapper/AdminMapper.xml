@@ -129,7 +129,8 @@
 				DON_REG_APP,
 				EXP_EFFECT
 		from donation
-		order by DON_ID
+		where DON_REG_APP = #{donRegApp}
+		order by rec_period desc
 	</select>
 	<select id="getDonOne" resultType="DonationVO">
 		select DON_ID,
@@ -162,6 +163,12 @@
 		where CATEGORY = #{category}
 		order by BOARD_ID
 	</select>
+	<select id="maxNotice" resultType="int">
+		select 
+        max(board_id) max
+		from board
+		where CATEGORY = 'b01'
+	</select>
 	<select id="getNoticeOne" resultType="BoardVO">
 		select BOARD_ID,
 			TITLE,
@@ -192,6 +199,11 @@
 		from board
 		where CATEGORY = #{category}
 		and detail_cate = #{detailCate}
+	</delete>
+	<delete id="delFile" parameterType="String">
+		delete 
+		from files 
+		where file_path = #{filePath}
 	</delete>
 	<insert id="insertNotice" parameterType="BoardVO">
 		insert into board(
@@ -276,5 +288,33 @@
 		from comments
 		where DETAIL_CODE=#{detailCode}
 		and CODE = 'c02'
+	</select>
+	<select id="selectFile" resultType="FilesVO">
+		select * from files where code='p05' and code_no=#{codeNo}
+	</select>
+	<select id="DonationKing" resultType="DonledgerVO">
+		select sum(don_amt) as total,mem_id,(select mem_name from member where mem_id=don_ledger.mem_id) as mName
+        from don_ledger 
+        where pay_date BETWEEN (SELECT TRUNC(SYSDATE, 'MM')
+        FROM   DUAL) and (SELECT LAST_DAY(SYSDATE) from dual)
+        group by mem_id
+        order by total desc
+	</select>
+	<select id="meetingList" resultType="VolunteerVO">
+		select meet_name
+				,vol_id
+				,cap
+				,region
+				,REC_PERIOD
+				,end_period
+				,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code=1) as meetingCnt
+        from volunteer
+        where room_stat=1
+	</select>
+	<select id="tagList" resultType="TagVO">
+		select tag_content,
+				vol_id
+		from tag 
+		order by tag_id
 	</select>
 </mapper>
