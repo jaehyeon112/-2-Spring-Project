@@ -65,19 +65,31 @@
 		}
 
 		.radio-group {
-			display: flex;
-			align-items: center;
-			height: 36px;
+		    display: flex;
+		    flex-direction: row; /* 가로로 나열 */
+		    flex-wrap: wrap; /* 필요한 경우 다음 줄로 넘어감 */
+		    align-items: center;
+		    overflow-x: auto; /* 가로 스크롤바 표시 */
 		}
-
-		.radio-group input[type="radio"],
-		.radio-group label {
-			cursor: pointer;
+		
+		.radio-option {
+		    display: flex;
+		    align-items: center;
+		    margin-right: 15px; /* 옵션 사이의 가로 간격 조정 */
+		    margin-bottom: 10px; /* 옵션 사이의 세로 간격 조정 */
 		}
-
+		
+		[type="radio"] {
+		    margin-right: 5px; /* 라디오 버튼과 라벨 사이의 간격 */
+		}
+		
+		[type="radio"]:checked {
+		    /* 스타일 변경 없음 */
+		}
+		
 		.radio-group label {
-			margin-left: 5px;
-			margin-right: 20px;
+		    cursor: pointer;
+		    margin-right: 20px; /* 라벨 사이의 간격을 조정합니다. 이 부분은 필요에 따라 조정 */
 		}
 
 		.form-control {
@@ -152,13 +164,12 @@
 		}
 
 		/* 체크박스 스타일링 */
-		/* 	.check_wrap {
+		 	.check_wrap {
 	    display: flex;
 	    align-items: center;
 	    flex-wrap: wrap;
 	    margin-top: 10px;
 	}
- */
 		.check_wrap input[type="checkbox"] {
 			display: none;
 			/* 기본 체크박스 숨기기 */
@@ -186,6 +197,15 @@
 			transition: background-color 0.2s, border-color 0.2s;
 			/* 부드러운 색상 변화 */
 		}
+		
+		
+		.checkbox-option {
+		    display: flex;
+		    align-items: center; /* 체크박스와 라벨을 동일 선상에 위치시킵니다. */
+		    margin-right: 15px; /* 옵션 사이의 가로 간격 조정 */
+		    margin-bottom: 10px; /* 옵션 사이의 세로 간격 조정 */
+		}
+	
 
 		/* 체크박스 체크 시 스타일 */
 		.check_wrap input[type="checkbox"]:checked+label:before {
@@ -201,6 +221,7 @@
 
 
 	<section layout:fragment="content">
+	<div th:text="${category}"></div>
 		<div class="container" style="padding: 100px;">
 			<div class="bigText">회원가입</div>
 
@@ -226,7 +247,8 @@
 					<button class="uploadBtn">Upload</button>
 				</div>
 			</div>
-
+			
+			
 			<script>
 				document.getElementById('imageInput').addEventListener('change', function (event) {
 					var image = document.getElementById('imagePreview');
@@ -538,33 +560,38 @@
 				<div class="user">
 					<div class="subheading">관련학과</div>
 					<div class="radio-group">
-						<input type="radio" id="d01" name="major" value="해당사항 없음" checked>
-						<label for="d01" class="input-label">해당사항 없음</label> <input type="radio" id="d02" name="major" value="인문계열">
-						<label for="d02" class="input-label">인문계열</label> <input type="radio" id="d03" name="major" value="사회계열">
-						<label for="d03" class="input-label">사회계열</label> <input type="radio" id="d04" name="major" value="교육계열">
-						<label for="d04" class="input-label">교육계열</label> <input type="radio" id="d05" name="major" value="공학계열">
-						<label for="d05" class="input-label">공학계열</label> <input type="radio" id="d06" name="major" value="자연계열">
-						<label for="d06" class="input-label">자연계열</label> <input type="radio" id="d07" name="major" value="의학계열">
-						<label for="d07" class="input-label">의학계열</label> <input type="radio" id="d08" name="major" value="예체능계열">
-						<label for="d08" class="input-label">예체능계열</label> <input type="radio" id="d09" name="major" value="보건계열">
-						<label for="d09" class="input-label">보건계열</label>
+					    <div th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('d')}" class="radio-option">
+					        <input type="radio" th:id="${userCategory.id}" th:name="major" th:value="${userCategory.name}">
+					        <label th:for="${userCategory.id}" class="input-label" th:text="${userCategory.name}"></label>
+					    </div>
 					</div>
+									
 
 					<!-- 관심분야 체크박스들 -->
 					<!-- 리펙토링하셈 -->
 					<div class="subheading">관심분야</div>
 					<div class="check_wrap">
-						<input type="checkbox" id="f01" name="field" value="아동 및 천소년 관련">
-						<label for="f01" class="check_btn">아동 및 천소년 관련</label> <input type="checkbox" id="f02" name="field"
-							value="장애인 관련"> <label for="f02" class="check_btn">장애인 관련</label> <input type="checkbox" id="f03"
-							name="field" value="문화, 체육 관련"> <label for="f03" class="check_btn">문화, 체육 관련</label> <input
-							type="checkbox" id="f04" name="field" value="캠페인 관련"> <label for="f04" class="check_btn">캠페인 관련</label>
-						<input type="checkbox" id="f05" name="field" value="보건의료 관련"> <label for="f05" class="check_btn">보건의료
-							관련</label> <input type="checkbox" id="f06" name="field" value="환경정리 관련"> <label for="f06"
-							class="check_btn">환경정리 관련</label> <input type="checkbox" id="f07" name="field" value="기타"> <label
-							for="f07" class="check_btn">기타</label>
+					    <div id="interest" th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('f')}" class="checkbox-option">
+					        <input type="checkbox" th:id="${userCategory.id}" th:name="field" th:value="${userCategory.name}">
+					        <label th:for="${userCategory.id}" class="check_btn" th:text="${userCategory.name}"></label>
+					    </div>
 					</div>
-
+					<input id="ttt" type="button" >
+					<script>
+					// 셀렉트 박스의 결과값을 저장함
+					let selectBox = [];
+						$('#interest input').change(function(){
+							var id = $(this).attr('id');
+							if($(this).is(':checked')){
+								selectBox.push(id)
+							}else{
+								selectBox = selectBox.filter(function(item) {
+				                    return item !== id;
+								});
+							}
+							console.log(selectBox)
+						})
+					</script>
 
 			</div>
 			<h4 style="margin-top: 20px">서비스 항목 동의</h4>

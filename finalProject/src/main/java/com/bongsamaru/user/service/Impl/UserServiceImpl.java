@@ -1,13 +1,15 @@
 package com.bongsamaru.user.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.UserCategoryVO;
 import com.bongsamaru.common.UserVO;
-
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.user.service.UserDetailVO;
 import com.bongsamaru.user.service.UserService;
@@ -25,6 +27,13 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 			throw new UsernameNotFoundException("no name");
 		}
 		return new UserDetailVO(vo);
+	}
+	
+	
+	
+	@Override
+	public List<UserCategoryVO> userCategoty() {
+		return userMapper.categoryList();
 	}
 
 	@Override
