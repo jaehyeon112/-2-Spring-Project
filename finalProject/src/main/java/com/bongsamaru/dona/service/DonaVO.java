@@ -27,6 +27,7 @@ public class DonaVO {
 	    private Integer donationCount; //기부인원수
 	    private Integer donationRatio; //목표금액대비 기부금비율
 	    private String facilityName; //시설명
+	    private Integer total;
 	    //상세페이지
 	    private String dday; //디데이
 	    

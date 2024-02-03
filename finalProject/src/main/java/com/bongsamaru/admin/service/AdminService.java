@@ -2,6 +2,7 @@ package com.bongsamaru.admin.service;
 
 import java.util.List;
 
+import com.bongsamaru.common.TagVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
@@ -11,13 +12,17 @@ import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.DonledgerVO;
+
 
 public interface AdminService {
 	public List<UserVO> getUserList(String memStat);
 	public List<BoardVO> getBoardList(String category);
 	public List<FacilityVO> getFacilityList();
-	public List<DonationVO> getDonationList();
+	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
+	public List<DonledgerVO> DonationKing();
 	public int insertNotice(BoardVO boardVO);
 	public List<FaqVO> getFaqList();
 	public UserVO getUserOne(String memId);
@@ -38,4 +43,9 @@ public interface AdminService {
 	public int updateInquire(Integer boardId);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
+	public List<FilesVO> selectFile(String codeNo);
+	public int maxNotice();
+	public int delFile(String filePath);
+	public List<FacilityVO> meetingList();
+	public List<TagVO> tagList();
 }

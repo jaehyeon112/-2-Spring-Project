@@ -10,7 +10,8 @@
  			d.title,
  			d.goal_amt,
  			COUNT(f.don_id) AS donationCount,
- 			(SUM(f.don_amt) / d.goal_amt) * 100 AS donationRatio,
+ 			nvl(SUM(f.don_amt),0) total,
+ 			nvl((SUM(f.don_amt) / d.goal_amt) * 100,0) AS donationRatio,
  			c.fac_name AS facilityName,
  			d.rec_stat,
  			d.don_id,
@@ -18,7 +19,7 @@
  		FROM donation d
  			LEFT JOIN don_ledger f ON d.don_id = f.don_id
  			LEFT JOIN facility c ON d.fac_id = c.fac_id
- 		
+ 		where d.DON_REG_APP = 1
  		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id
  	
  	</select>
