@@ -58,14 +58,16 @@
 												<em class="highlight"></em>파일첨부
 											</div>
 											<input class="form-control" id="imageInput"
-												name="uploadFiles" type="file" multiple><br>
+												name="uploadFiles" type="file" multiple>
+												<br>
+												<div th:each="file : ${files}">
+													<div id="imagePreview1"><img th:src="${file.filePath}" th:if="${file.filePath != null}"
+													style="width: 100px; height: 100px;"><a th:onclick="delFile([[${file.filePath}]])">삭제</a></div>
+												</div>
+												<br>
 												<img id="imagePreview" src="/userresources/image/미리보기.jpg"
 											style="width: 100px;display:none; height: 100px;">
 											<input type="text" class="form-control" id="textFiles" value ="" style="display:none;" readonly>
-										</div>
-										<div th:each="file : ${files}">
-											<img id="imagePreview" th:src="${file.filePath}" th:if="${file.filePath != null}"
-											style="width: 100px; height: 100px;">
 										</div>
 									</div>
 									<p class="btn_set">
@@ -90,6 +92,15 @@
 							    </div>
 							 </div>
 							 <script>
+							 	function delFile(del){
+							 		$.ajax('../delFile?filePath='+encodeURI(del))
+								    .done(result => {
+								    	//location.href="noticeInfo?category=[[${info.category}]]&detailCate=[[${info.detailCate}]]&codeNo=[[${info.detailCate}]]"
+								 		var image1 = document.getElementById('imagePreview1');
+								 		image1.style.display='none';
+								    })
+								    .fail(err => console.log(err));
+							 	}
 								function conf(ca,de){
 									$("#confimModal").modal("show");
 									$(".btn-secondary").click(function () {
@@ -122,9 +133,10 @@
 										content.focus();
 										return;
 									};
-									
 									updateNotice.submit();
+									fileSub();
 								};
+								
 								document.getElementById('imageInput').addEventListener('change', function (event) {
 									var image = document.getElementById('imagePreview');
 									var text = document.getElementById('textFiles');
@@ -132,7 +144,6 @@
 									image.src = "/userresources/image/미리보기.jpg";
 									var file = event.target.files[0];
 									let type = (event.target.files[0].type).substring(0,5)
-									console.log(event.target.files)
 									if(type!='image'){
 										text.value = event.target.files[0].name
 										text.style.display='block';
@@ -151,6 +162,7 @@
 										image.src = "";
 									}
 								});
+								
 								function fileSub() {
 									var formData = new FormData(); //FormData 객체 생성
 									var inputFile = $("input[type='file']");
@@ -158,11 +170,15 @@
 									var files = inputFile[0].files;
 									//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
 									//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+									if(files.length==0){
+										return;
+									}
+									
 									for (var i = 0; i < files.length; i++) {
 										formData.append("uploadFiles", files[i]); //키,값으로 append 
 									}
 									formData.append("code", "p05")
-									formData.append("codeNo", $('#userId').val());
+									formData.append("codeNo", [[${info.detailCate}]]);
 
 									//jQuery.ajax
 									$.ajax({
@@ -172,11 +188,10 @@
 										contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
 										data: formData,
 										success: function (result) {
-											alert('사진성공!')
+											console.log('사진성공!');
 										},
 										error: function (reject) {
-											alert('실풰!')
-											console.log(reject);
+											console.log('실풰! : '+reject)
 										}
 									});
 								};

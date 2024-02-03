@@ -14,9 +14,11 @@ import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
+import com.bongsamaru.common.TagVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
 import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.DonledgerVO;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -39,8 +41,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<DonationVO> getDonationList() {
-		return userMapper.getDonationList();
+	public List<DonationVO> getDonationList(String donRegApp) {
+		return userMapper.getDonationList(donRegApp);
 	}
 	
 	@Override
@@ -151,6 +153,31 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<FilesVO> selectFile(String codeNo) {
 		return userMapper.selectFile(codeNo);
+	}
+
+	@Override
+	public int maxNotice() {
+		return userMapper.maxNotice();
+	}
+
+	@Override
+	public int delFile(String filePath) {
+		return userMapper.delFile(filePath);
+	}
+
+	@Override
+	public List<DonledgerVO> DonationKing() {
+		return userMapper.DonationKing();
+	}
+
+	@Override
+	public List<FacilityVO> meetingList() {
+		return userMapper.meetingList();
+	}
+
+	@Override
+	public List<TagVO> tagList() {
+		return userMapper.tagList();
 	}
 
 }

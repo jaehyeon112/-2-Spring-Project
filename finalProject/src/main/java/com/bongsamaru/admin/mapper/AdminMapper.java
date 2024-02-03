@@ -10,17 +10,22 @@ import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
+import com.bongsamaru.common.TagVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
 import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.DonledgerVO;
 
 public interface AdminMapper {
 	public List<UserVO> getUserList(String memStat);
 	public List<FaqVO> getFaqList();
 	public List<BoardVO> getBoardList(String category);
 	public List<FacilityVO> getFacilityList();
-	public List<DonationVO> getDonationList();
+	public List<FacilityVO> meetingList();
+	public List<TagVO> tagList();
+	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
+	public List<DonledgerVO> DonationKing();
 	public UserVO getUserOne(String memId);
 	public int insertNotice(BoardVO boardVO);
 	public int faqInsert(FaqVO faqVO);
@@ -41,4 +46,6 @@ public interface AdminMapper {
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
+	public int maxNotice();
+	public int delFile(String filePath);
 }

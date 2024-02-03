@@ -19,14 +19,41 @@ import com.bongsamaru.common.DonationVO;
 import com.bongsamaru.common.FacilityVO;
 import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.ReportVO;
+import com.bongsamaru.common.TagVO;
 import com.bongsamaru.common.UserVO;
 import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.dona.service.DonaService;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.DonledgerVO;
 
 @Controller
 public class UserController {
 	@Autowired
 	AdminService userService;
+	
+	@Autowired
+	DonaService donaService;
+	
+	@GetMapping("AdminMain")
+	public String AdminMain(Model model) {
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("dona", donaList);
+		List<DonledgerVO> king = userService.DonationKing();
+		model.addAttribute("king", king);
+		List<FacilityVO> list = userService.meetingList();
+		model.addAttribute("meet", list);
+		List<TagVO> tags = userService.tagList();
+		model.addAttribute("tag", tags);
+		return "admin/adminMain";
+	}
+	
+	@GetMapping("donationList")
+	public String donationList(Model model) {
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("dona", donaList);
+		return "admin/donationList";
+	}
 	
 	@GetMapping("userList")
 	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
@@ -73,9 +100,9 @@ public class UserController {
 	}
 	
 	@GetMapping("facilityApprove")
-	public String getFacilityList(Model model) {
+	public String getFacilityList(@RequestParam(name="donRegApp") String donRegApp,Model model) {
 		List<FacilityVO> list = userService.getFacilityList();
-		List<DonationVO> list2 = userService.getDonationList();
+		List<DonationVO> list2 = userService.getDonationList(donRegApp);
 		model.addAttribute("facilityList",list);
 		model.addAttribute("donationList",list2);
 		return "admin/facilityApprove";
@@ -140,6 +167,14 @@ public class UserController {
 		userService.insertNotice(boardVO);
 		return "redirect:boardList?category=b01";
 	}
+	
+	@GetMapping("maxNotice")
+	@ResponseBody
+	public int maxNotice() {
+		var cnt = userService.maxNotice();
+		return cnt;
+	}
+	
 	//자주하는 질문 등록
 	@GetMapping("faqInsert")
 	public String faqInsert() {
@@ -240,4 +275,12 @@ public class UserController {
 		userService.updateReport(reqCode,repId);
 		return "redirect:getReportList?category=r01";
 	}
+	
+	@GetMapping("delFile")
+	@ResponseBody
+	public int delFile(@RequestParam(name="filePath") String filePath) {
+		System.out.println("실행되니...");
+		return userService.delFile(filePath);
+	}
+	
 }
