@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service; // @Service 어노테이션 사�
 import org.springframework.web.multipart.MultipartFile; // MultipartFile 인터페이스 사용
 
 import com.bongsamaru.file.mapper.FileMapper; // FileMapper 사용
-import com.bongsamaru.file.service.FilesVO; // FilesVO 사용 (해당 경로 확인 필요)
 
 
 @Service
