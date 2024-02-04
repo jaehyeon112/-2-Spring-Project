@@ -38,7 +38,8 @@
     #{memName}
 )
    </insert>
-
+	
+	
 
    <select id="userList" resultType="UserVO">
       select MEM_ID,
@@ -81,5 +82,12 @@ or main_code_id = 'f'
 
 	</select>
 	
+	<insert id="insertCate" parameterType="String">
+		insert into interest (interest_id,interest_code, mem_id) values
+		(interest_seq.nextVal,#{name},#{id})
+	</insert>	
 	
+	<select id="login" resultType="UserFacilityVO">
+		select * from userfacilityView where id = #{id}
+	</select>
 </mapper>

@@ -1,27 +1,37 @@
 package com.bongsamaru.login.web;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.bongsamaru.common.UserCategoryVO;
+import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.user.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class LoginController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private FileService fileService;
 	
 	@GetMapping("/idCheck/{memId}")
 	@ResponseBody
@@ -37,17 +47,38 @@ public class LoginController {
 	
 	@PostMapping("/userSignUp")
 	@ResponseBody
-	public Map<String, Object> userSignUp(@RequestBody UserVO vo) {
-		System.out.println(vo);
+	public ResponseEntity<String> userSignUp(@RequestParam(value = "files", required = false) MultipartFile[] files 
+										   , @RequestParam("userVO") String userVO
+										   , @RequestParam(value = "category", required = false) String category){
 		
-		 Map<String, Object> result = new HashMap<>();
-		 Boolean type = userService.insertUser(vo);
-		 if(type) {
-			result.put("result", "success"); 
-		 }
-		 result.put("result", "error"); 
+		ObjectMapper objectMapper = new ObjectMapper();
+		UserVO vo = new UserVO();
+		try {
+			vo = objectMapper.readValue(userVO, UserVO.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
-		return result;
+		List<String> categories = new ArrayList<>();
+		try {
+			categories = objectMapper.readValue(category, new TypeReference<List<String>>(){});
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		if( userService.userInsert(vo, categories ) ) {
+			if(files != null && files.length > 0 ) {
+				try {
+					fileService.uploadFiles(files,"p01",vo.getMemId());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return ResponseEntity.ok("회원가입 성공!");
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패");
+		}
 	}
 	
 	@GetMapping("signup")

@@ -10,7 +10,10 @@ import com.bongsamaru.user.service.UserDetailVO;
 
 @Controller
 public class CommonUserController {
-
+	
+	
+	
+	
 	@GetMapping("/")
     public String someMethod(Model model) {
 		
