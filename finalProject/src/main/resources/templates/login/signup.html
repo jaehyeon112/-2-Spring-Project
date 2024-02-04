@@ -4,7 +4,79 @@
 
 <head>
 	<title>회원가입</title>
+	
+	
 	<style>
+	
+	.service_agreement .checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.service_agreement input[type="checkbox"] {
+    display: none; /* 기본 체크박스 숨기기 */
+}
+
+.service_agreement .check-btn {
+    margin-right: 15px;
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+    font-weight: 600; /* 레이블 폰트 굵기 */
+}
+
+/* 사용자 정의 체크박스 디자인 */
+.service_agreement .check-btn:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fbb200;
+    border-radius: 3px;
+    background-color: white;
+    transition: background-color 0.2s, border-color 0.2s; /* 부드러운 색상 변화 */
+}
+
+/* 체크박스 체크 시 스타일 */
+.service_agreement input[type="checkbox"]:checked + .check-btn:before {
+    background-color: #fbb200; /* 배경을 노란색으로 */
+    border-color: #fbb200; /* 테두리를 노란색으로 */
+}
+
+
+		.file-input-container {
+		    position: relative;
+		    display: flex;
+		    align-items: center;
+		    gap: 10px;
+		}
+		
+		.file-input {
+		    width: 0.1px;
+		    height: 0.1px;
+		    opacity: 0;
+		    overflow: hidden;
+		    position: absolute;
+		    z-index: -1;
+		}
+		
+		.custom-file-label {
+		    background-color: #fbb200;
+		    color: white;
+		    padding: 10px 15px;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-weight: bold;
+		}
+		
+		.custom-file-label:hover {
+		    background-color: darken(#fbb200, 10%);
+		}
+	
 		.success-message {
 			color: green;
 		}
@@ -69,7 +141,6 @@
 		    flex-direction: row; /* 가로로 나열 */
 		    flex-wrap: wrap; /* 필요한 경우 다음 줄로 넘어감 */
 		    align-items: center;
-		    overflow-x: auto; /* 가로 스크롤바 표시 */
 		}
 		
 		.radio-option {
@@ -221,6 +292,13 @@
 			border-color: #fbb200;
 			/* 테두리를 노란색으로 */
 		}
+		
+		.profile-container {
+		    display: flex;
+		    align-items: center;
+		    justify-content: start;
+		    gap: 20px; /* 이미지와 파일 입력 사이의 간격 */
+		}
 	</style>
 </head>
 
@@ -228,7 +306,6 @@
 
 
 	<section layout:fragment="content">
-	<div th:text="${category}"></div>
 		<div class="container" style="padding: 100px;">
 			<div class="bigText">회원가입</div>
 
@@ -245,16 +322,22 @@
 					</div>
 				</div>
 				<div class="write_item">
-					<div class="subheading">
-						<em class="highlight"></em>프로필
-					</div>
-					<img id="imagePreview" src="/userresources/image/심사방법.png"
-						style="border-radius: 100%; width: 100px; height: 100px;"> <input class="form-control" id="imageInput"
-						name="uploadFiles" type="file" multiple>
-					<button class="uploadBtn">Upload</button>
+				    <div class="subheading">
+				        <em class="highlight"></em>프로필
+				    </div>
+				    <div class="profile-container"> <!-- 추가된 컨테이너 -->
+				        <div class="image-container">
+				            <img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
+				        </div>
+				        <div class="file-input-container">
+				            <input class="form-control file-input"  id="imageInput" name="uploadFiles" type="file"  >
+				             <label for="imageInput" class="custom-file-label">파일선택</label>
+				              <span id="file-chosen">파일명</span>
+				        </div>
+				    </div>
 				</div>
-			</div>
-			
+				</div>
+				
 			
 		
 
@@ -542,25 +625,25 @@
 
 
 			<ul style="list-style-type: none;" class="service_agreement">
-				<li class="navli"><input id="serviceAllChk" name="serviceAllChk" type="checkbox"
-						onclick="toggleAllChecks(this.checked)"> <label style="font-size: 14px; font-weight: 700"
+				<li  class="checkbox-option"><input id="serviceAllChk" name="serviceAllChk" type="checkbox"
+						onclick="toggleAllChecks(this.checked)"> <label class="check-btn"
 						for="serviceAllChk">서비스
 						항목에 모두 동의합니다</label></li>
 
-				<li><input id="individualChk1" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						style="font-size: 14px; font-weight: 700" for="individualChk1">14세
+				<li class="checkbox-option"><input id="individualChk1" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
+						 class="check-btn" for="individualChk1">14세
 						이상입니다.(필수)</label></li>
-				<li><input id="individualChk2" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						style="font-size: 14px; font-weight: 700" for="individualChk2">봉사마루
+				<li class="checkbox-option"><input id="individualChk2" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
+						 class="check-btn" for="individualChk2">봉사마루
 						이용약관(필수)</label></li>
-				<li><input id="individualChk3" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						style="font-size: 14px; font-weight: 700" for="individualChk3">개인정보
+				<li class="checkbox-option"><input id="individualChk3" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
+						 class="check-btn" for="individualChk3">개인정보
 						수집 및 이용(필수)</label></li>
-				<li><input id="individualChk4" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						style="font-size: 14px; font-weight: 700" for="individualChk4">이메일
+				<li class="checkbox-option"><input id="individualChk4" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
+						 class="check-btn" for="individualChk4">이메일
 						수신 동의(선택)</label></li>
-				<li><input id="individualChk5" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						style="font-size: 14px; font-weight: 700" for="individualChk5">
+				<li class="checkbox-option"><input id="individualChk5" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
+						 class="check-btn" for="individualChk5">
 						문자 수신 동의(선택)</label></li>
 
 			</ul>
@@ -1197,22 +1280,32 @@
 
 				});
 			})
-		document.getElementById('imageInput').addEventListener('change', function (event) {
-					var image = document.getElementById('imagePreview');
-					var file = event.target.files[0];
-					var reader = new FileReader();
+	document.getElementById('imageInput').addEventListener('change', function(event) {
+    var label = document.querySelector('.custom-file-label');
+    var fileChosen = document.getElementById('file-chosen');
+    var files = event.target.files;
 
-					reader.onloadend = function () {
-						image.src = reader.result;
-					}
-
-					if (file) {
-						reader.readAsDataURL(file);
-					} else {
-						image.src = "";
-					}
-				});
-
+    if (files.length > 0) {
+        label.textContent = '파일 선택';
+        fileChosen.textContent = files[0].name; // 파일명을 업데이트
+    } else {
+        label.textContent = '파일 선택';
+        fileChosen.textContent = '파일명'; // 파일이 선택되지 않았을 때의 텍스트
+    }
+    
+    // 이미지 미리보기 기능 (이미 작성된 코드)
+    var image = document.getElementById('imagePreview');
+    var file = files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        image.src = reader.result;
+    }
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        image.src = "";
+    }
+});
 			
 			
 			
