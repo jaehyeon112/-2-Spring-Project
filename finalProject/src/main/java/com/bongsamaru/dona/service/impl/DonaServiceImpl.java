@@ -71,4 +71,19 @@ public class DonaServiceImpl implements DonaService {
 		}
 		
 	}
+	
+	@Override
+	public int paymentProcess(DonaVO donaVO) {
+		int result = donaMapper.paymentProcess(donaVO);
+		
+		if(result == 1 ) {
+			return donaVO.getDonLedId();
+		}else {
+		return -1;
+		}
+	}
+	
+	
+	
+	
 }

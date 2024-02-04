@@ -138,4 +138,39 @@
 	 			, #{expEffect}
  			)
  	</insert>
+ 	
+ 	
+ <!-- 카드결제 -->
+ 	<insert id="paymentProcess" parameterType="DonaVO">
+	 	<selectKey keyProperty="donLedId" resultType="int" order="BEFORE">
+	
+			SELECT 
+				DONLEDGER_SEQ.nextval 
+			FROM DUAL
+		</selectKey>
+		INSERT INTO donLedger
+			(
+			don_led_id
+			, don_id
+			, don_amt
+			, pay_method
+			, pay_date
+			, pay_stat
+			, pay_id
+			, anon_check
+			, mem_id
+			)
+			VALUES
+			(
+			#{donLedId}
+			, #{donId}
+			, #{donAmt}
+			, #{payMethod}
+			, #{payDate}
+			, #{payStat}
+			, #{payId}
+			, #{anonCheck}
+			, #{memId}
+			)
+ 	</insert>
  </mapper>

@@ -28,5 +28,6 @@ public interface DonaService {
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);
 	
-	
+	//결제하기
+	public int paymentProcess(DonaVO donaVO);
 }
