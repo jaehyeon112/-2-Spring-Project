@@ -97,4 +97,17 @@ public class facilityController {
 		return "facility/facilityVolunteer";
 	}
 	
+	
+	
+	//시설 마이페이지
+	
+	@GetMapping("facilityMyPage")
+	public String insertFacilityMyPage() {
+		
+		return "facility/facilityMyPage";
+	}
+	
+	
+	
+	
 }

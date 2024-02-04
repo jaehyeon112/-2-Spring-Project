@@ -54,9 +54,10 @@ public class challengesController {
 		model.addAttribute("challengesList", dList);
 		return "challenge/challengesList";
 	}
-	@GetMapping("/challenge/challengeInsertForm")
+	//등록페이지 열기
+	@GetMapping("/challenge/challengeInsert")
 	public String insertChallengeForm() {
-		return "/challenge/challengeInsert";
+		return "challenge/challengeInsert";
 	}
 	
 	//게시글등록
