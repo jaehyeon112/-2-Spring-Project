@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>기부금 정산</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<section layout:fragment="content">
+	<div class="body-wrapper">
+      <!--  Header Start -->
+		<div class="divFooter" th:insert="~{admin/adminHeader :: head}"></div>
+      <!--  Header End -->
+      <div class="container-fluid">
+		<div class="container">
+		<h2>기부금 정산</h2>
+		<div id="tableData">
+			<table class="table" id="classic">
+				<thead>
+					<tr>
+						<th>시설명</th>
+						<th>프로젝트명</th>
+						<th>마감일</th>
+						<th>목표금액</th>
+						<th>모금된 금액</th>
+						<th>은행명</th>
+						<th>계좌</th>
+						<th>정산처리</th>
+					</tr>
+				</thead>
+				<tbody>
+				 	<th:block th:each="don : ${donSel}" >
+						<tr>
+							 <td th:text="${don.facId}" class="btn-deleteAsk"></td>
+							 <td th:text="${don.title}" class="btn-deleteAsk"></td>
+							 <td th:if="${don.extPeriod}==null" th:text="${#dates.format(don.endPeriod, 'yyyy년 MMM dd일')}" class="btn-deleteAsk"></td>
+							 <td th:if="${don.extPeriod}!=null" th:text="${#dates.format(don.extPeriod, 'yyyy년 MMM dd일')}" class="btn-deleteAsk"></td>
+							 <td data-th-text="${#numbers.formatInteger(don.goalAmt, 1, 'COMMA') + '원'}" class="btn-deleteAsk"></td>
+							 <td data-th-text="${#numbers.formatInteger(don.total, 1, 'COMMA') + '원'}" class="btn-deleteAsk"></td>
+							 <td th:text="${don.backName}" class="btn-deleteAsk"></td>
+							 <td th:text="${don.bankAcct}" class="btn-deleteAsk"></td>
+							 <td><button onclick="song()">송금하기</button></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+			<div class="modal fade" id="mymodal" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content" id="content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="deleteConfirmationModalLabel"></h5>
+			            </div>
+			            <div class="modal-body">
+			                <div>
+			                	<table class="table">
+			                		<thead>
+				                		<tr>
+				                			<th>시설명</th>
+				                			<td id="name"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>프로젝트명</th>
+				                			<td id="type"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>사업자번호</th>
+				                			<td id="bizNum"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>은행명</th>
+				                			<td id="facZip"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>계좌번호</th>
+				                			<td id="addr"></td>
+				                		</tr>
+				                		<tr>
+				                			<th>입금할 금액</th>
+				                			<td id="esta"></td>
+				                		</tr>
+			                		</thead>
+			                	</table>
+			                </div>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="false">닫기</button>
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="false">송금하기</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+			function dateFormat(value, format) {
+			    let date = value == "" ? new Date() : new Date(value);
+			    let year = date.getFullYear();
+			    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+			    let day = ("0" + date.getDate()).slice(-2);
+			    let result = format
+			      .replace("yyyy", year)
+			      .replace("MM", month)
+			      .replace("dd", day);
+			    return result;
+			};
+			
+			function wonComma(number) {
+			    if (number < 1000) {
+			      return number
+			    }
+			    return number.toLocaleString();
+			};
+			
+		    function song() {
+		    	$("#mymodal").modal("show");
+		    }
+		    
+		    $(".btn-secondary").click(function () {
+		      $("#mymodal").modal("hide");
+		    });
+		</script>
+      </div>
+    </div>
+	</section>
+</body>
+</html>

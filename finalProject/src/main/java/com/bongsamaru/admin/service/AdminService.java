@@ -2,7 +2,6 @@ package com.bongsamaru.admin.service;
 
 import java.util.List;
 
-import com.bongsamaru.common.TagVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
@@ -10,8 +9,10 @@ import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.ReportVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
@@ -48,4 +49,9 @@ public interface AdminService {
 	public int delFile(String filePath);
 	public List<FacilityVO> meetingList();
 	public List<TagVO> tagList();
+	public List<VolunteerVO> facVolunteerList();
+	public List<VolunteerVO> memMeetList(String memId);
+	public List<DonaVO> donationLedgerList(String recStat);
+	public List<DonaVO> facDonLedgerList(Integer donId);
+	public List<DonaVO> donationSettlement();
 }

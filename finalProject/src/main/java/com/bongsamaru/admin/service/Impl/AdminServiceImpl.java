@@ -14,9 +14,10 @@ import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.ReportVO;
-import com.bongsamaru.common.TagVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
@@ -178,6 +179,31 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<TagVO> tagList() {
 		return userMapper.tagList();
+	}
+
+	@Override
+	public List<VolunteerVO> facVolunteerList() {
+		return userMapper.facVolunteerList();
+	}
+
+	@Override
+	public List<VolunteerVO> memMeetList(String memId) {
+		return userMapper.memMeetList(memId);
+	}
+
+	@Override
+	public List<DonaVO> donationLedgerList(String recStat) {
+		return userMapper.donationLedgerList(recStat);
+	}
+
+	@Override
+	public List<DonaVO> facDonLedgerList(Integer donId) {
+		return userMapper.facDonLedgerList(donId);
+	}
+
+	@Override
+	public List<DonaVO> donationSettlement() {
+		return userMapper.donationSettlement();
 	}
 
 }

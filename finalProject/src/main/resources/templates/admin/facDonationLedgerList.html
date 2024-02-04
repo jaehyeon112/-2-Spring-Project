@@ -1,0 +1,60 @@
+		<div id="fac">
+		<h4 th:each="ledger,st : ${fac}" th:if="${st.count}<2">프로젝트명 : [[${ledger.title}]]</h4>
+		<div class="btn-group" style="float:right;">
+		  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		    프로젝트별
+		  </button>
+		  <ul class="dropdown-menu">
+		  	<li><a class="dropdown-item cur" onclick="show1()">전체보기</a></li>
+		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==0"><a class="dropdown-item" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  </ul>
+		</div>
+		<table class="table" th:if="${fac.size}!=0">
+			<thead>
+				<tr>
+					<th>입금날짜</th>
+					<th>기부자</th>
+					<th>기부금액</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr th:each="ledger : ${fac}">
+						 <td th:text="${#dates.format(ledger.payDate, 'yyyy년 MMM dd일')}"></td>
+						 <td th:if="${ledger.anonCheck}=='1'">익명기부자</td>
+						 <td th:if="${ledger.anonCheck}=='0'" th:text="${ledger.memId}">익명</td>
+						 <td data-th-text="${#numbers.formatInteger(ledger.donAmt, 1, 'COMMA') + '원'}"></td>
+					</tr>
+			</tbody>
+		</table>
+		<h5 style="margin:auto;text-align:center" class="table" th:if="${fac.size}==0">현재 프로젝트에 기부된 금액이 없습니다.</h5>
+		</div>
+		<div id="fac2">
+		<h4 th:each="ledger,st : ${fac}" th:if="${st.count}<2">프로젝트명 : [[${ledger.title}]]</h4>
+		<div class="btn-group" style="float:right;">
+		  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		    프로젝트별
+		  </button>
+		  <ul class="dropdown-menu">
+		  	<li><a class="dropdown-item cur" onclick="show2()">전체보기</a></li>
+		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==1"><a class="dropdown-item" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  </ul>
+		</div>
+		<table class="table" th:if="${fac.size}!=0">
+			<thead>
+				<tr>
+					<th>입금날짜</th>
+					<th>기부자</th>
+					<th>기부금액</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr th:each="ledger : ${fac}">
+						 <td th:text="${#dates.format(ledger.payDate, 'yyyy년 MMM dd일')}"></td>
+						 <td th:if="${ledger.anonCheck}=='1'">익명기부자</td>
+						 <td th:if="${ledger.anonCheck}=='0'" th:text="${ledger.memId}">익명</td>
+						 <td data-th-text="${#numbers.formatInteger(ledger.donAmt, 1, 'COMMA') + '원'}"></td>
+					</tr>
+			</tbody>
+		</table>
+		<h5 style="margin:auto;text-align:center" class="table" th:if="${fac.size}==0">현재 프로젝트에 기부된 금액이 없습니다.</h5>
+		</div>

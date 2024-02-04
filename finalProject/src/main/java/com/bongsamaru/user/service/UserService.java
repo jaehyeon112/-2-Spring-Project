@@ -1,11 +1,10 @@
 package com.bongsamaru.user.service;
 
 
+import com.bongsamaru.common.VO.CategoryLikeVO;
 import com.bongsamaru.common.VO.UserVO;
 
 import java.util.List;
-
-import com.bongsamaru.common.CategoryLikeVO;
 
 
 public interface UserService {

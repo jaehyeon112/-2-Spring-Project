@@ -14,7 +14,9 @@ public class VolunteerVO {
 	private String category; 
 	private String title; 
 	private String location; 
-	private Date volDate; 
+	private Date volDate;
+	private Integer capCnt;
+	private String facName; 
 	//영희
 	private Integer vol;
 	private Integer fac;
@@ -26,8 +28,9 @@ public class VolunteerVO {
 	private String meetPurp;
 	private String meetDesc;
 	private String region;
-	private Integer toomStat;
+	private Integer roomStat;
 	private Integer meetingCnt;
 	private Date recPeriod;
 	private Date endPeriod;
+	private Date appDate;
 }

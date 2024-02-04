@@ -8,11 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
+import com.bongsamaru.common.VO.CategoryLikeVO;
 import com.bongsamaru.common.VO.UserVO;
-
-import com.bongsamaru.common.CategoryLikeVO;
-
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.user.service.UserDetailVO;
 import com.bongsamaru.user.service.UserService;
