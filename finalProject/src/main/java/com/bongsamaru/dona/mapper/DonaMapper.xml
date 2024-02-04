@@ -32,7 +32,7 @@
 		     d.rec_period,
 		     d.end_period,
 		     d. goal_amt,
-		     trunc(d.end_period- d.rec_period) as dday,
+		     trunc(sysdate - d.end_period) as dday,
 		     e.fac_id,
 		     e.fac_name,
 		     e.fac_intro,
@@ -67,7 +67,7 @@
 
 	
 <!-- 댓글 등록폼  -->	
-	<insert id="insertComments" parameterType="DonaVO">
+	<insert id="insertComment" parameterType="DonaVO">
 	<selectKey keyProperty="commId" resultType="int" order="BEFORE">
 
 		SELECT 
@@ -79,8 +79,9 @@
 			(
 			comm_id
 			, content
-			,comm_date
+			, comm_date
 			, code
+			 , parent_id
 			)
 		VALUES
 			(
@@ -88,6 +89,7 @@
 			, #{content}
 			, sysdate
 			,'c01'
+			, #{donId}
 			)	
 	</insert>
  	

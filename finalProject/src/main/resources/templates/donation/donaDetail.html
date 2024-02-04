@@ -431,12 +431,14 @@
     		}
 
     		console.log(comm);
+    	console.log(commData);
     	
     	
     	$.ajax({
     		type : "POST",
-    		url : "/donaDetail"  ,
-    		data : commData,
+    		url : "/donaDetail/" + [[${dona.donId}]]  ,
+    		 data: { content: comm },
+    		 contentType: 'application/x-www-form-urlencoded', // 변경
     		success : function(response){
  				document.getElementById('comment').value = '';
     		},
@@ -444,9 +446,9 @@
 
     			console.error('댓글등록 실패ㅠㅠ ', error);
     		}
-    	})
+    	});
   
-    }
+    };
     
 </script>
 

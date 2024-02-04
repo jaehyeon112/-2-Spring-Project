@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,13 +53,21 @@ public class DonaController {
 	    }    
 	   
 	  //댓글 삽입
-	   @PostMapping("/donaDetail")
-	   public String insertComment(@RequestParam("id") Integer donId, DonaVO donaVO) {
-		    
-		    donaService.insertComment(donId, donaVO);
-		    return "redirect:/donaDetail?id=" + donId + "&facId=" + donaVO.getFacId();
-
-	   }
+//	   @PostMapping("/donaDetail/{id}")
+//	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
+//		    
+//		   DonaVO donaVO = new DonaVO();  // 필요한 데이터에 따라 객체를 생성해야 합니다.
+//		    donaService.insertComment(id, donaVO);
+//
+//		    //return "redirect:/donaDetail?id=" + donId + "&facId=" + donaVO.getFacId();
+//		    return "redirect:/donaDetail?id=" + id + "&facId=" + donaVO.getFacId();
+//	   }
+//	   @PostMapping("/donaDetail/{id}")
+//	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
+//	       DonaVO donaVO = new DonaVO();  // DonaVO 객체 생성 및 초기화 (필요한 데이터에 따라서)
+//	       donaService.insertComment(id, donaVO);
+//	       return "redirect:/donaDetail?id=" + id + "&facId=" + donaVO.getFacId();
+//	   }
 	   
 	 // 기부상세 - 기부자목록 
 	  @GetMapping("/donaDetail/{id}")

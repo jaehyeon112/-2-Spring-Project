@@ -44,22 +44,17 @@ public class DonaServiceImpl implements DonaService {
 		return donaMapper.getCommentsList(donId);
 	}
 
-//댓글삽입	
 	@Override
-	public int insertComment(Integer donId, DonaVO donaVO) {
-//		int result = donaMapper.insertComments(donaVO);
-//		
-//			if(result == 1) {
-//				return donaVO.getDonId();
-//			}else {
-//				return -1;
-//			}
-		 try {
-		        donaVO.setDonId(donId); // 댓글을 등록할 기부 프로젝트의 ID 설정
-		        return donaMapper.insertComment(donaVO);
-		    } catch (Exception e) {
-		        throw new RuntimeException("댓글 등록 중 오류가 발생했습니다.", e);
-		    }
+	public int insertComment(Integer donId, String content) {
+	    DonaVO donaVO = new DonaVO();
+	    donaVO.setDonId(donId);
+	    donaVO.setContent(content);
+	    
+	    try {
+	        return donaMapper.insertComment(donaVO);
+	    } catch (Exception e) {
+	        throw new RuntimeException("댓글 등록 중 오류가 발생했습니다.", e);
+	    }
 	}
 	
 
