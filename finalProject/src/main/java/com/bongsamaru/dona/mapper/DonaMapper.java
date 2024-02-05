@@ -9,6 +9,9 @@ public interface DonaMapper {
 	
 	// 메인페이지 전체리스트
 		List<DonaVO> getDonaList();
+	
+	// 모금중.모금완료
+	//	List<DonaVO> getRecStat(String recStat);
 		
 	// 상세페이지1 (don_id)
 		public DonaVO getDonaDetail(Integer donId, String facId);

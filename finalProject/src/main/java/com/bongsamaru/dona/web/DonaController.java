@@ -31,13 +31,14 @@ public class DonaController {
 	
 	//기부 메인페이지 - 전체리스트
 	   @GetMapping("/donaMain")
-	    public String openDonaMainPage(Model model) {
+	    public String openDonaMainPage( Model model) {
 		   List<DonaVO> donaList = donaService.getDonaList();
 		   model.addAttribute("list", donaList);
 		      
 		   String h = "h";
 		   List<DonaVO> categoryList = donaService.getCategoryList(h);
 		   model.addAttribute("categoryList", categoryList);
+		   
 	        return "donation/donaMain";
 	    }
 
@@ -49,7 +50,7 @@ public class DonaController {
 		    model.addAttribute("dona", dona);
 		    
 		    //기부자목록
-		    List<DonaVO> donaList = donaService.getDonaList();
+		    List<DonaVO> donaList = donaService.getDonerList(donId);
 		    model.addAttribute("list", donaList);
 		    
 		    //댓글리스트

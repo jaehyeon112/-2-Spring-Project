@@ -105,36 +105,31 @@
                         
 		
 						<!-- 모집중, 모금완료 섹션 -->
-						<div class="col-lg-12 d-flex justify-content-center" >
+						<div class="col-lg-12 d-flex justify-content-center"  > 
 						    <div class="mb-4">
 						        <h4>진행 상태</h4>
 						        <div class="btn-group" role="group">
 						         
-						            <a href="shop.html" class="btn btn-primary  mr-2 rounded">모집중</a>
-						            <a href="shop-detail.html" class="btn btn-primary rounded">모금완료</a>
+						            <a href="#" id="btnRecruiting" class="btn btn-primary  mr-2 rounded">모집중</a>
+						            <a href="#" id="btnCompleted" class="btn btn-primary rounded">모금완료</a>
 						        </div>
 						    </div>
 						</div>
 
-                        
-                        
-                        
-                        
-                        
-                        
-                       
      
-                            <div class="col-lg-12">
-                                <div class="row g-4 justify-content-center">
-                                   <div class="col-md-6 col-lg-6 col-xl-4 " th:each="dona : ${list}">
-								    <div class="rounded position-relative fruite-item">
-								        <div class="fruite-img">
-								            <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-								        </div>
+                         <div class="col-lg-12">
+                            <div class="row g-4 justify-content-center" >
+                               <div class="col-md-6 col-lg-6 col-xl-4 "  id="result-container" th:each="dona : ${list}">
+								  <div class="rounded position-relative fruite-item" style="filter: grayscale(${dona.recStat} != '0' ? 1 : 0)">
+								     <div class="fruite-img">
+								        <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
+								      </div>
+								        
 								        
 								       <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
     										<span th:text="${dona.recStat} == '0' ? '모금중' : '모금완료'"></span>
 										</div>
+
 
 
 
@@ -144,7 +139,6 @@
 								           
 								            <div class="info-item">
 								                <strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원
-								                
 								            </div>
 								            <div class="info-item">
 								                <strong>n명 참여:</strong><span th:text="${dona.donationCount}"></span>명
@@ -189,13 +183,8 @@
         <!-- Fruits Shop End-->
 
 
-       
-       
-
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
         
     <!-- JavaScript Libraries -->
@@ -212,13 +201,12 @@
     
     
     <script>
-	    $.ajax('/categories/')
-		    .done(result => {
-		        console.log(result);
-		    })
-		    .fail(err => console.log(err));
+
+
     </script>
  
+ 
+ 	
       </section>
     </body>
 

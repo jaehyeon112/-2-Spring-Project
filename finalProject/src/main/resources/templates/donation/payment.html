@@ -212,7 +212,7 @@
 			function getPg(paymentMethod){
 				switch(paymentMethod){
 					case 'deposit':
-						return 무통장;
+						return '무통장';
 					case 'kakao':
 						return 'kakaopay.TC0ONETIME';
 					case 'toss':
@@ -260,8 +260,9 @@
 			          $.ajax({
 			            type: 'POST',
 			            url: '/paymentProcess',
+			            contentType: 'application/json',
 			            data: JSON.stringify({
-			                donLedId: 'DONLEDGER_SEQ.NEXTVAL', 
+			               // donLedId: 'DONLEDGER_SEQ.NEXTVAL', 
 			                donAmt: parseInt(amountInput),
 			                payMethod: selectedPaymentMethod,
 			                payDate: payDate,

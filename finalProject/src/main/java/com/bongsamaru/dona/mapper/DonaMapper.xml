@@ -22,7 +22,8 @@
  		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id
  	
  	</select>
- 	
+
+ 
 <!-- 상세페이지 조회1 (don_id) -->
  	<select id="getDonaDetail" resultType="DonaVO">
  		SELECT 
@@ -148,7 +149,7 @@
 				DONLEDGER_SEQ.nextval 
 			FROM DUAL
 		</selectKey>
-		INSERT INTO donLedger
+		INSERT INTO don_ledger
 			(
 			don_led_id
 			, don_id

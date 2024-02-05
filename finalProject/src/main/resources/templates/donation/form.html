@@ -131,31 +131,51 @@
 	let formFile2ContainerCount = 1;
 	let count;
 	
+    const MAX_DYNAMIC_FIELDS = 2; // 동적사업내용 추가 최대 허용 개수
+    const MAX_ARTICLE_CONTAINERS = 2; // 소개글 추가 최대 허용 개수
+    const MAX_RELATED_LINK_CONTAINERS = 1; // 관련링크 추가 최대 허용 개수
+    const MAX_FORM_FILE_2_CONTAINERS = 1; // 추가 이미지 첨부파일 추가 최대 허용 개수
+
     function addInputs(type) {
-        
         let container = document.getElementById(type);
         if (!container) {
-            console.error("찾을 수 없는 CONTAINER: " + type);
+            console.error("컨테이너를 찾을 수 없습니다: " + type);
             return;
         }
 
         switch (type) {
-        case "dynamicFields":
-            count = dynamicFieldsCount++;
-            break;
-        case "articleContainer":
-            count = articleContainerCount++;
-            break;
-        case "relatedLinkContainer":
-            count = relatedLinkContainerCount++;
-            break;
-        case "formFile2Container":
-            count = formFile2ContainerCount++;
-            break;
-        default:
-            console.error("Invalid type: " + type);
-            return;
-    }
+            case "dynamicFields":
+                if (dynamicFieldsCount > MAX_DYNAMIC_FIELDS) {
+                    alert("동적사업내용 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = dynamicFieldsCount++;
+                break;
+            case "articleContainer":
+                if (articleContainerCount > MAX_ARTICLE_CONTAINERS) {
+                    alert("소개글 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = articleContainerCount++;
+                break;
+            case "relatedLinkContainer":
+                if (relatedLinkContainerCount > MAX_RELATED_LINK_CONTAINERS) {
+                    alert("관련링크 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = relatedLinkContainerCount++;
+                break;
+            case "formFile2Container":
+                if (formFile2ContainerCount > MAX_FORM_FILE_2_CONTAINERS) {
+                    alert("추가 이미지 첨부파일 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = formFile2ContainerCount++;
+                break;
+            default:
+                console.error("유효하지 않은 타입입니다: " + type);
+                return;
+        }
 
         
         let newFields = document.createElement("div");
@@ -194,10 +214,57 @@
         container.appendChild(newFields);
     }
 
+
+
     function removeInputs(button, type) {
-        button.parentNode.remove();
+        //해당 컨테이너의 모든 자식 요소 삭제
+        let container = button.parentNode.parentNode;
+        container.parentNode.removeChild(container);
     }
+    
+    
+    
+    //날자 선택
+
+
+     document.addEventListener("DOMContentLoaded", function() {
+         let startDateInput = document.getElementById("sPeriod");
+         let endDateInput = document.getElementById("ePeriod");
+
+         // 오늘 날짜
+         let today = new Date();
+         today.setHours(0, 0, 0, 0);
+
+         // 시작날짜는 오늘 이후부터 선택 가능하도록 설정합니다.
+         startDateInput.min = today.toISOString().split("T")[0];
+
+         // 종료날짜는 오늘로부터 3개월 이후까지 선택 가능하도록 설정합니다.
+         let threeMonthsLater = new Date(today);
+         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+         endDateInput.min = (new Date(today.getTime() + 24 * 60 * 60 * 1000)).toISOString().split("T")[0];
+         endDateInput.max = threeMonthsLater.toISOString().split("T")[0];
+
+         // 시작날짜와 종료날짜의 변경을 감지하여 오늘 이전의 날짜는 선택하지 못하도록 합니다.
+         function checkStartDate() {
+             // 시작날짜가 오늘 이전이면 오늘 이후로 설정합니다.
+             let selectedStartDate = new Date(startDateInput.value);
+             if (selectedStartDate < today) {
+                 startDateInput.value = today.toISOString().split("T")[0];
+             }
+
+             // 종료날짜가 시작날짜 이전이면 시작날짜로 설정합니다.
+             let selectedEndDate = new Date(endDateInput.value);
+             if (selectedEndDate < selectedStartDate) {
+                 endDateInput.value = startDateInput.value;
+             }
+         }
+
+         // 시작날짜 입력값이 변경될 때 checkStartDate 함수를 호출합니다.
+         startDateInput.addEventListener("input", checkStartDate);
+     });
 </script>
+
+
 
 
 </section>
