@@ -39,6 +39,12 @@ public class LoginController {
 		return userService.countMemId(memId);
 	}
 	
+	@GetMapping("/biznum/{bizNum}")
+	@ResponseBody
+	public Boolean facBizCheck(@PathVariable String bizNum) {
+		return userService.countBizNum(bizNum);
+	}
+	
 	@GetMapping("/nickCheck/{memNick}")
 	@ResponseBody
 	public Boolean idNick(@PathVariable String memNick) {

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
@@ -50,9 +51,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Override
 	public Boolean countMemId(String memId) {
 		if(userMapper.countMemId(memId) == 1){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -61,6 +62,14 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public Boolean insertFac(FacilityVO vo) {
+		if(userMapper.facilitySignUp(vo)==1) {
+			return true;
+		}
+		return false;	
 	}
 	
 	@Override
@@ -91,8 +100,15 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 			 } 
 			 return true;
 		};
-		
 		return false;
+	}
+	
+	@Override
+	public Boolean countBizNum(String num) {
+		if(userMapper.checkBizNum(num) == 1) {
+			return false;
+		}
+		return true;
 	}
 	
 }

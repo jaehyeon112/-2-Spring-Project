@@ -65,8 +65,8 @@
 
    <select id="countMemId" resultType="int">
        SELECT COUNT(*)
-       FROM member
-       WHERE mem_id = #{memId}
+       FROM UserFacilityView
+       WHERE id = #{id}
    </select>
    
    <select id="countMemNick" resultType="int">
@@ -90,4 +90,41 @@ or main_code_id = 'f'
 	<select id="login" resultType="UserFacilityVO">
 		select * from userfacilityView where id = #{id}
 	</select>
+	
+	<select id="checkBizNum" resultType="int">
+		select count(*) from facility where biz_num = #{biz_num}
+	</select>
+	
+	<insert id="facilitySignUp" parameterType="FacilityVO">
+	insert into facility(
+						fac_id
+						,fac_pwd 
+						,biz_num
+						,fac_name
+						,fac_zip
+						,fac_addr 
+						,fac_addr_detail 
+						,fac_est_date 
+						,fac_email 
+						,fac_web 
+						,fac_intro 
+						,rep_name 
+						,rep_phone
+				)values(
+						#{facId}
+					   ,#{facPwd}
+					   ,#{bizNum}
+					   ,#{facName}
+					   ,#{facZip}
+					   ,#{facAddr}
+					   ,#{facAddrDetail}
+					   ,#{facEstDate}
+					   ,#{facEmail}
+					   ,#{facWeb}
+					   ,#{facIntro}
+					   ,#{repName}
+					   ,#{repPhone}
+									)
+	</insert>
+	
 </mapper>

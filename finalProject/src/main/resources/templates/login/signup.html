@@ -4,79 +4,83 @@
 
 <head>
 	<title>회원가입</title>
-	
-	
+
+
 	<style>
-	
-	.service_agreement .checkbox-option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
+		.service_agreement .checkbox-option {
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px;
+		}
 
-.service_agreement input[type="checkbox"] {
-    display: none; /* 기본 체크박스 숨기기 */
-}
+		.service_agreement input[type="checkbox"] {
+			display: none;
+			/* 기본 체크박스 숨기기 */
+		}
 
-.service_agreement .check-btn {
-    margin-right: 15px;
-    padding-left: 25px;
-    position: relative;
-    cursor: pointer;
-    font-weight: 600; /* 레이블 폰트 굵기 */
-}
+		.service_agreement .check-btn {
+			margin-right: 15px;
+			padding-left: 25px;
+			position: relative;
+			cursor: pointer;
+			font-weight: 600;
+			/* 레이블 폰트 굵기 */
+		}
 
-/* 사용자 정의 체크박스 디자인 */
-.service_agreement .check-btn:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fbb200;
-    border-radius: 3px;
-    background-color: white;
-    transition: background-color 0.2s, border-color 0.2s; /* 부드러운 색상 변화 */
-}
+		/* 사용자 정의 체크박스 디자인 */
+		.service_agreement .check-btn:before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border: 2px solid #fbb200;
+			border-radius: 3px;
+			background-color: white;
+			transition: background-color 0.2s, border-color 0.2s;
+			/* 부드러운 색상 변화 */
+		}
 
-/* 체크박스 체크 시 스타일 */
-.service_agreement input[type="checkbox"]:checked + .check-btn:before {
-    background-color: #fbb200; /* 배경을 노란색으로 */
-    border-color: #fbb200; /* 테두리를 노란색으로 */
-}
+		/* 체크박스 체크 시 스타일 */
+		.service_agreement input[type="checkbox"]:checked+.check-btn:before {
+			background-color: #fbb200;
+			/* 배경을 노란색으로 */
+			border-color: #fbb200;
+			/* 테두리를 노란색으로 */
+		}
 
 
 		.file-input-container {
-		    position: relative;
-		    display: flex;
-		    align-items: center;
-		    gap: 10px;
+			position: relative;
+			display: flex;
+			align-items: center;
+			gap: 10px;
 		}
-		
+
 		.file-input {
-		    width: 0.1px;
-		    height: 0.1px;
-		    opacity: 0;
-		    overflow: hidden;
-		    position: absolute;
-		    z-index: -1;
+			width: 0.1px;
+			height: 0.1px;
+			opacity: 0;
+			overflow: hidden;
+			position: absolute;
+			z-index: -1;
 		}
-		
+
 		.custom-file-label {
-		    background-color: #fbb200;
-		    color: white;
-		    padding: 10px 15px;
-		    border-radius: 5px;
-		    cursor: pointer;
-		    font-weight: bold;
+			background-color: #fbb200;
+			color: white;
+			padding: 10px 15px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-weight: bold;
 		}
-		
+
 		.custom-file-label:hover {
-		    background-color: darken(#fbb200, 10%);
+			background-color: darken(#fbb200, 10%);
 		}
-	
+
 		.success-message {
 			color: green;
 		}
@@ -137,30 +141,36 @@
 		}
 
 		.radio-group {
-		    display: flex;
-		    flex-direction: row; /* 가로로 나열 */
-		    flex-wrap: wrap; /* 필요한 경우 다음 줄로 넘어감 */
-		    align-items: center;
+			display: flex;
+			flex-direction: row;
+			/* 가로로 나열 */
+			flex-wrap: wrap;
+			/* 필요한 경우 다음 줄로 넘어감 */
+			align-items: center;
 		}
-		
+
 		.radio-option {
-		    display: flex;
-		    align-items: center;
-		    margin-right: 15px; /* 옵션 사이의 가로 간격 조정 */
-		    margin-bottom: 10px; /* 옵션 사이의 세로 간격 조정 */
+			display: flex;
+			align-items: center;
+			margin-right: 15px;
+			/* 옵션 사이의 가로 간격 조정 */
+			margin-bottom: 10px;
+			/* 옵션 사이의 세로 간격 조정 */
 		}
-		
+
 		[type="radio"] {
-		    margin-right: 5px; /* 라디오 버튼과 라벨 사이의 간격 */
+			margin-right: 5px;
+			/* 라디오 버튼과 라벨 사이의 간격 */
 		}
-		
+
 		[type="radio"]:checked {
-		    /* 스타일 변경 없음 */
+			/* 스타일 변경 없음 */
 		}
-		
+
 		.radio-group label {
-		    cursor: pointer;
-		    margin-right: 20px; /* 라벨 사이의 간격을 조정합니다. 이 부분은 필요에 따라 조정 */
+			cursor: pointer;
+			margin-right: 20px;
+			/* 라벨 사이의 간격을 조정합니다. 이 부분은 필요에 따라 조정 */
 		}
 
 		.form-control {
@@ -235,19 +245,20 @@
 		}
 
 		/* 체크박스 스타일링 */
-		 	.check_wrap {
-	    display: flex;
-	    align-items: center;
-	    flex-wrap: wrap;
-	    margin-top: 10px;
-	}
-	
-	/* 서비스 동의 항목을 위한 새로운 클래스를 추가합니다. */
-.service_agreement {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
+		.check_wrap {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			margin-top: 10px;
+		}
+
+		/* 서비스 동의 항목을 위한 새로운 클래스를 추가합니다. */
+		.service_agreement {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
 		.check_wrap input[type="checkbox"] {
 			display: none;
 			/* 기본 체크박스 숨기기 */
@@ -275,15 +286,18 @@
 			transition: background-color 0.2s, border-color 0.2s;
 			/* 부드러운 색상 변화 */
 		}
-		
-		
+
+
 		.checkbox-option {
-		    display: flex;
-		    align-items: center; /* 체크박스와 라벨을 동일 선상에 위치시킵니다. */
-		    margin-right: 15px; /* 옵션 사이의 가로 간격 조정 */
-		    margin-bottom: 10px; /* 옵션 사이의 세로 간격 조정 */
+			display: flex;
+			align-items: center;
+			/* 체크박스와 라벨을 동일 선상에 위치시킵니다. */
+			margin-right: 15px;
+			/* 옵션 사이의 가로 간격 조정 */
+			margin-bottom: 10px;
+			/* 옵션 사이의 세로 간격 조정 */
 		}
-	
+
 
 		/* 체크박스 체크 시 스타일 */
 		.check_wrap input[type="checkbox"]:checked+label:before {
@@ -292,12 +306,13 @@
 			border-color: #fbb200;
 			/* 테두리를 노란색으로 */
 		}
-		
+
 		.profile-container {
-		    display: flex;
-		    align-items: center;
-		    justify-content: start;
-		    gap: 20px; /* 이미지와 파일 입력 사이의 간격 */
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			gap: 20px;
+			/* 이미지와 파일 입력 사이의 간격 */
 		}
 	</style>
 </head>
@@ -322,26 +337,28 @@
 					</div>
 				</div>
 				<div class="write_item">
-				    <div class="subheading">
-				        <em class="highlight"></em>프로필
-				    </div>
-				    <div class="profile-container"> <!-- 추가된 컨테이너 -->
-				        <div class="image-container">
-				            <img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
-				        </div>
-				        <div class="file-input-container">
-				            <input class="form-control file-input"  id="imageInput" name="uploadFiles" type="file"  >
-				             <label for="imageInput" class="custom-file-label">파일선택</label>
-				              <span id="file-chosen">파일명</span>
-				        </div>
-				    </div>
+					<div class="subheading">
+						<em class="highlight"></em>프로필
+					</div>
+					<div class="profile-container">
+						<!-- 추가된 컨테이너 -->
+						<div class="image-container">
+							<img id="imagePreview" src="/userresources/image/심사방법.png"
+								style="border-radius: 100%; width: 100px; height: 100px;">
+						</div>
+						<div class="file-input-container">
+							<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+							<label for="imageInput" class="custom-file-label">파일선택</label>
+							<span id="file-chosen">파일명</span>
+						</div>
+					</div>
 				</div>
-				</div>
-				
-			
-		
+			</div>
 
-				
+
+
+
+
 
 			<!-- 한 블럭 -->
 			<div class="write_item_row ">
@@ -447,22 +464,46 @@
 					<div class="error-message" id="authCheckError"></div>
 					<div id="emailAuthSuccess" class="hidden success-message">인증번호가 확인되었습니다.</div>
 				</div>
-
 			</div>
+
+			<div class="write_item_row">
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>시설 주소
+					</div>
+					<input id="facAddr1" style="display: inline;" type="text" class="form-control" placeholder="우편번호" maxlength="5" readonly> <input
+						id="facAddr" type="button" class="btn btncolor" value="검색"> <input id="facAddr2" readonly
+						style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt" placeholder="주소"> <input
+						id="facAddr3" style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt"
+						placeholder="상세주소">
+				</div>
+				<div class="write_item facility hidden">
+					<div class="subheading">
+						<em class="highlight">*</em>설립연월
+					</div>
+					<input style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
+				</div>
+			</div>
+
+
 
 			<div class="write_item_row">
 				<div class="write_item facility hidden">
 					<div class="subheading">
 						<em class="highlight">*</em>시설명
 					</div>
-					<input style="display: inline;" type="text" class="form-control  plus-bnt" placeholder="시설명을 입력해주세요">
+					<input style="display: inline;" id="facName" type="text" class="form-control  plus-bnt"
+						placeholder="시설명을 입력해주세요">
 				</div>
 				<div class="write_item facility hidden">
 					<div class="subheading">
 						<em class="highlight">*</em>사업자등록번호
 					</div>
-					<input style="display: inline;" type="text" class="form-control  " placeholder="사업자등록번호를 입력해주세요"> <input
-						type="button" class="btn btncolor" value="인증하기">
+					<input id="facAuth" style="display: inline;" type="text" class="form-control" maxlength="10"
+						placeholder="사업자등록번호를 입력해주세요">
+					<input type="button" id="facAuthBnt" class="btn btncolor" value="인증하기">
+					<div class="error-message" id="facAuthError"></div>
+					<div id="facAuthSuccess" class="hidden success-message">인증번호가 확인되었습니다.</div>
 				</div>
 			</div>
 
@@ -496,23 +537,6 @@
 
 
 
-			<div class="write_item_row">
-				<div class="write_item facility hidden">
-					<div class="subheading">
-						<em class="highlight">*</em>시설 주소
-					</div>
-					<input style="display: inline;" type="text" class="form-control" placeholder="우편번호"> <input type="button"
-						class="btn btncolor" value="검색"> <input style="display: inline; margin-top: 10px" type="text"
-						class="form-control plus-bnt" placeholder="주소"> <input style="display: inline; margin-top: 10px" type="text"
-						class="form-control plus-bnt" placeholder="상세주소">
-				</div>
-				<div class="write_item facility hidden">
-					<div class="subheading">
-						<em class="highlight">*</em>설립연월
-					</div>
-					<input style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
-				</div>
-			</div>
 
 
 
@@ -597,27 +621,28 @@
 					받을 수 있습니다.
 				</div>
 
+			</div>
+			<!-- 리펙토링하셈 -->
+			<div class="user">
+				<div class="subheading">관련학과</div>
+				<div class="radio-group">
+					<div th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('d')}" class="radio-option">
+						<input type="radio" th:id="${userCategory.id}" th:name="major" th:value="${userCategory.name}">
+						<label th:for="${userCategory.id}" class="input-label" th:text="${userCategory.name}"></label>
+					</div>
 				</div>
-				<!-- 리펙토링하셈 -->
-				<div class="user">
-					<div class="subheading">관련학과</div>
-					<div class="radio-group">
-					    <div th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('d')}" class="radio-option">
-					        <input type="radio" th:id="${userCategory.id}" th:name="major" th:value="${userCategory.name}">
-					        <label th:for="${userCategory.id}" class="input-label" th:text="${userCategory.name}"></label>
-					    </div>
-					</div>
-									
 
-					<!-- 관심분야 체크박스들 -->
-					<!-- 리펙토링하셈 -->
-					<div class="subheading">관심분야</div>
-					<div class="check_wrap">
-					    <div id="interest" th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('f')}" class="checkbox-option">
-					        <input type="checkbox" th:id="${userCategory.id}" th:name="field" th:value="${userCategory.name}">
-					        <label th:for="${userCategory.id}" class="check_btn" th:text="${userCategory.name}"></label>
-					    </div>
+
+				<!-- 관심분야 체크박스들 -->
+				<!-- 리펙토링하셈 -->
+				<div class="subheading">관심분야</div>
+				<div class="check_wrap">
+					<div id="interest" th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('f')}"
+						class="checkbox-option">
+						<input type="checkbox" th:id="${userCategory.id}" th:name="field" th:value="${userCategory.name}">
+						<label th:for="${userCategory.id}" class="check_btn" th:text="${userCategory.name}"></label>
 					</div>
+				</div>
 
 			</div>
 			<h4 style="margin-top: 20px">서비스 항목 동의</h4>
@@ -625,25 +650,24 @@
 
 
 			<ul style="list-style-type: none;" class="service_agreement">
-				<li  class="checkbox-option"><input id="serviceAllChk" name="serviceAllChk" type="checkbox"
-						onclick="toggleAllChecks(this.checked)"> <label class="check-btn"
-						for="serviceAllChk">서비스
+				<li class="checkbox-option"><input id="serviceAllChk" name="serviceAllChk" type="checkbox"
+						onclick="toggleAllChecks(this.checked)"> <label class="check-btn" for="serviceAllChk">서비스
 						항목에 모두 동의합니다</label></li>
 
-				<li class="checkbox-option"><input id="individualChk1" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						 class="check-btn" for="individualChk1">14세
+				<li class="checkbox-option"><input id="individualChk1" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn" for="individualChk1">14세
 						이상입니다.(필수)</label></li>
-				<li class="checkbox-option"><input id="individualChk2" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						 class="check-btn" for="individualChk2">봉사마루
+				<li class="checkbox-option"><input id="individualChk2" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn" for="individualChk2">봉사마루
 						이용약관(필수)</label></li>
-				<li class="checkbox-option"><input id="individualChk3" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						 class="check-btn" for="individualChk3">개인정보
+				<li class="checkbox-option"><input id="individualChk3" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn" for="individualChk3">개인정보
 						수집 및 이용(필수)</label></li>
-				<li class="checkbox-option"><input id="individualChk4" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						 class="check-btn" for="individualChk4">이메일
+				<li class="checkbox-option"><input id="individualChk4" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn" for="individualChk4">이메일
 						수신 동의(선택)</label></li>
-				<li class="checkbox-option"><input id="individualChk5" name="individualChk" type="checkbox" onclick="checkIndividual()"> <label
-						 class="check-btn" for="individualChk5">
+				<li class="checkbox-option"><input id="individualChk5" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn" for="individualChk5">
 						문자 수신 동의(선택)</label></li>
 
 			</ul>
@@ -660,6 +684,14 @@
 			let receiptNO = true;
 			let receiptYes = false;
 			let isDenYes = false;
+			let vaildFac = {
+				isUserId: false,
+				isName: false,
+				isPhone: false,
+				isEmail: false,
+				isFacBirth: false,
+			}
+
 			let valid = {
 				isUserId: false,
 				isNick: false,
@@ -770,19 +802,19 @@
 				}
 			})
 
-					// 셀렉트 박스의 결과값을 저장함
-					let selectBox = [];
-						$('#interest input').change(function(){
-							var id = $(this).attr('id');
-							if($(this).is(':checked')){
-								selectBox.push(id)
-							}else{
-								selectBox = selectBox.filter(function(item) {
-				                    return item !== id;
-								});
-							}
-							console.log(selectBox)
-						})
+			// 셀렉트 박스의 결과값을 저장함
+			let selectBox = [];
+			$('#interest input').change(function () {
+				var id = $(this).attr('id');
+				if ($(this).is(':checked')) {
+					selectBox.push(id)
+				} else {
+					selectBox = selectBox.filter(function (item) {
+						return item !== id;
+					});
+				}
+				console.log(selectBox)
+			})
 
 			//닉네임 중복체크
 			function validateNickname() {
@@ -915,10 +947,10 @@
 				$('.error-message').hide();
 			})
 
-			$('#idenYes').on('click',function(){
-				if(isDenYes){
+			$('#idenYes').on('click', function () {
+				if (isDenYes) {
 					isDenYes = false
-				}else{
+				} else {
 					isDenYes = true;
 				}
 				console.log("주민번호 동의에 대한? " + isDenYes)
@@ -1015,9 +1047,9 @@
 					//인증실패의 밑에 ㅇㅋ?
 				}
 			})
-			
-		
-		
+
+
+
 
 
 			$(document).ready(function () {
@@ -1054,7 +1086,7 @@
 
 					// 비밀번호 유효성 검사
 					let passCheckValue = $('#passCheck').val();
-					 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+					const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 					if (!passCheckValue) {
 						$('#passCheckError').text('비밀번호를 입력해주세요.').show();
 						isValid = false;
@@ -1066,9 +1098,9 @@
 							isValid = false;
 							alert('6');
 						} else if (!passwordRegex.test(passCheckValue)) {
-					        $('#passCheckError').text('비밀번호는 8자 이상이며, 숫자와 특수문자를 포함해야 합니다.').show();
+							$('#passCheckError').text('비밀번호는 8자 이상이며, 숫자와 특수문자를 포함해야 합니다.').show();
 							isValid = false;
-					    }
+						}
 					}
 
 					// 비밀번호 확인 유효성 검사
@@ -1154,11 +1186,11 @@
 
 					// 이메일 유효성 검사
 					valid.isNick == false
-					
+
 					if (valid.isEmail == false) {
 						$('#emailError').text('이메일을 인증검사 받아야합니다.').show();
 						isValid = false;
-					}else if(!validateEmail()){
+					} else if (!validateEmail()) {
 						isValid = false;
 					}
 
@@ -1172,19 +1204,19 @@
 
 
 					if (receiptYes) {
-						if(!isDenYes){
+						if (!isDenYes) {
 							alert('기부금 영수증 처리를 위해 고유식별정보(주민등록번호) 수집·이용 동의에 체크 해주세요.')
 							$('#idenYes').focus();
 							return;
 						}
 						// 실명 유효성 검사
 						if (!validateRealName()) {
-    					    isValid = false;
-   						 }	
+							isValid = false;
+						}
 
 						// 주민등록번호 앞자리 유효성 검사
 						let frontIdenCheckValue = $('#frontIdenCheck').val();
-						if (validateResidentNumber()){
+						if (validateResidentNumber()) {
 							isValid = false;
 						}
 
@@ -1213,102 +1245,102 @@
 					const falseKeys = [];
 					// 객체의 키-값 쌍을 반복하면서 false 값을 찾음
 					Object.entries(valid).forEach(([key, value]) => {
-					    if (value === false) {
-					        console.log(`${key}의 값은 false입니다.`);
-					        falseKeys.push(key);  // false 값을 가진 키를 배열에 추가
-					        
-					    }
+						if (value === false) {
+							console.log(`${key}의 값은 false입니다.`);
+							falseKeys.push(key); // false 값을 가진 키를 배열에 추가
+
+						}
 					});
 
 					let obj = {
-							memId: $('#userId').val(),
-							memPwd: $('#passCheck').val(),
-							memNick: $('#nickCheck').val(),
-							memPhone: $('#phoneCheck').val(),
-							memZip: $('#zipCheck').val(),
-							memAddr: $('#addrCheck').val(),
-							memBdate: $('#birthCheck').val(),
-							memDept: $('input[name="major"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
-							memEmail: $('#emailCheck').val(),
-							donReceipt: $('input[name="receipt"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
-							memSsn: $('#frontIdenCheck').val() + $('#backIdenCheck').val(), // 주민번호 앞자리와 뒷자리를 결합합니다.
-							emailAgree: $('#individualChk4').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
-							smsAgree: $('#individualChk5').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
-							memStat: 'm02', // 이 값은 예시로 넣은 것이며, 실제 상황에 맞게 조정해야 합니다.
-							memName: $('#nameCheck').val()
-						};
-					
-					
-					
+						memId: $('#userId').val(),
+						memPwd: $('#passCheck').val(),
+						memNick: $('#nickCheck').val(),
+						memPhone: $('#phoneCheck').val(),
+						memZip: $('#zipCheck').val(),
+						memAddr: $('#addrCheck').val(),
+						memBdate: $('#birthCheck').val(),
+						memDept: $('input[name="major"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
+						memEmail: $('#emailCheck').val(),
+						donReceipt: $('input[name="receipt"]:checked').val(), // 라디오 버튼의 경우 선택된 값을 가져옵니다.
+						memSsn: $('#frontIdenCheck').val() + $('#backIdenCheck').val(), // 주민번호 앞자리와 뒷자리를 결합합니다.
+						emailAgree: $('#individualChk4').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
+						smsAgree: $('#individualChk5').is(':checked') ? '1' : '0', // 체크박스의 경우 체크 여부에 따라 값을 설정합니다.
+						memStat: 'm02', // 이 값은 예시로 넣은 것이며, 실제 상황에 맞게 조정해야 합니다.
+						memName: $('#nameCheck').val()
+					};
+
+
+
 					const areAllTrue = Object.values(valid).every(value => value === true);
-					if(areAllTrue){
-						
+					if (areAllTrue) {
+
 						let formData = new FormData();
 						formData.append("userVO", JSON.stringify(obj));
 						formData.append("category", JSON.stringify(selectBox));
 						var inputFile = $("input[type='file']");
 						var files = inputFile[0].files;
 						for (var i = 0; i < files.length; i++) {
-						    formData.append("files", files[i]);
+							formData.append("files", files[i]);
 						}
-						
-						
+
+
 						$.ajax({
 							type: "POST",
 							url: "/userSignUp",
 							data: formData, // Convert your object to a JSON string
-							processData: false,  // 데이터를 쿼리 문자열로 변환하지 않도록 설정
-						    contentType: false,  // 기본값인 application/x-www-form-urlencoded로 설정하지 않도록 설정
+							processData: false, // 데이터를 쿼리 문자열로 변환하지 않도록 설정
+							contentType: false, // 기본값인 application/x-www-form-urlencoded로 설정하지 않도록 설정
 							success: function (res) {
 								console.log(res); // Handle the response from the server here
-								 window.location.href = '/'
+								window.location.href = '/'
 							},
 							error: function (xhr, status, error) {
 								// Handle errors here
 								console.error("Error occurred: ", status, error);
 							}
 						});
-						
-					}else{
-					// false 값을 가진 키들을 출력 (필요한 경우)
-					console.log('False 값을 가진 키들:', falseKeys);
+
+					} else {
+						// false 값을 가진 키들을 출력 (필요한 경우)
+						console.log('False 값을 가진 키들:', falseKeys);
 					}
-					
+
 					// 여기에서 폼 제출 또는 AJAX 호출을 수행할 수 있습니다.
 					// 예: 폼 데이터를 서버로 전송하는 AJAX 호출
 
 
 				});
 			})
-	document.getElementById('imageInput').addEventListener('change', function(event) {
-    var label = document.querySelector('.custom-file-label');
-    var fileChosen = document.getElementById('file-chosen');
-    var files = event.target.files;
+			document.getElementById('imageInput').addEventListener('change', function (event) {
+				var label = document.querySelector('.custom-file-label');
+				var fileChosen = document.getElementById('file-chosen');
+				var files = event.target.files;
 
-    if (files.length > 0) {
-        label.textContent = '파일 선택';
-        fileChosen.textContent = files[0].name; // 파일명을 업데이트
-    } else {
-        label.textContent = '파일 선택';
-        fileChosen.textContent = '파일명'; // 파일이 선택되지 않았을 때의 텍스트
-    }
-    
-    // 이미지 미리보기 기능 (이미 작성된 코드)
-    var image = document.getElementById('imagePreview');
-    var file = files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        image.src = reader.result;
-    }
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        image.src = "";
-    }
-});
-			
-			
-			
+				if (files.length > 0) {
+					label.textContent = '파일 선택';
+					fileChosen.textContent = files[0].name; // 파일명을 업데이트
+				} else {
+					label.textContent = '파일 선택';
+					fileChosen.textContent = '파일명'; // 파일이 선택되지 않았을 때의 텍스트
+				}
+
+				// 이미지 미리보기 기능 (이미 작성된 코드)
+				var image = document.getElementById('imagePreview');
+				var file = files[0];
+				var reader = new FileReader();
+				reader.onloadend = function () {
+					image.src = reader.result;
+				}
+				if (file) {
+					reader.readAsDataURL(file);
+				} else {
+					image.src = "";
+				}
+			});
+
+
+
 			$('#emailCheckBtn').on('click', function () {
 				let email = $('#emailCheck').val();
 
@@ -1370,61 +1402,109 @@
 					},
 				});
 			})
-			
+
 			// 실명 유효성 검사 함수
-function validateRealName() {
-    let realName = $('#nameCheck').val();
-    let isRealNameValid = true;
+			function validateRealName() {
+				let realName = $('#nameCheck').val();
+				let isRealNameValid = true;
 
-    $('#nameCheckError').hide(); // 에러 메시지 초기화
+				$('#nameCheckError').hide(); // 에러 메시지 초기화
 
-    // 실명 입력 여부 확인
-    if (!realName) {
-        $('#nameCheckError').text('실명을 입력해주세요.').show();
-        isRealNameValid = false;
-    } else {
-        // 한글만 포함되어 있는지 확인
-        const koreanRegex = /^[가-힣]+$/;
-        if (!koreanRegex.test(realName)) {
-            $('#nameCheckError').text('실명은 한글만 가능합니다.').show();
-            isRealNameValid = false;
-        }
-    }
+				// 실명 입력 여부 확인
+				if (!realName) {
+					$('#nameCheckError').text('실명을 입력해주세요.').show();
+					isRealNameValid = false;
+				} else {
+					// 한글만 포함되어 있는지 확인
+					const koreanRegex = /^[가-힣]+$/;
+					if (!koreanRegex.test(realName)) {
+						$('#nameCheckError').text('실명은 한글만 가능합니다.').show();
+						isRealNameValid = false;
+					}
+				}
 
-    return isRealNameValid;
-}
+				return isRealNameValid;
+			}
 
-// 주민등록번호 앞자리와 생년월일 일치 여부 검사 함수
-function validateResidentNumber() {
-    let frontIden = $('#frontIdenCheck').val();
-    let birthDate = $('#birthCheck').val();
-    let isResidentNumberValid = true;
+			// 주민등록번호 앞자리와 생년월일 일치 여부 검사 함수
+			function validateResidentNumber() {
+				let frontIden = $('#frontIdenCheck').val();
+				let birthDate = $('#birthCheck').val();
+				let isResidentNumberValid = true;
 
-    $('#frontIdenCheckError').hide(); // 에러 메시지 초기화
+				$('#frontIdenCheckError').hide(); // 에러 메시지 초기화
 
-    // 주민등록번호 앞자리 입력 여부 확인
-    if (!frontIden) {
-        $('#frontIdenCheckError').text('주민등록번호 앞자리를 입력해주세요.').show();
-        isResidentNumberValid = false;
-    } else {
-        // 생년월일과 주민등록번호 앞자리 비교
-        const birthYear = birthDate.split('-')[0]; // YYYY 형식 추출
-        const birthMonthDay = birthDate.split('-')[1] + birthDate.split('-')[2]; // MMDD 형식 추출
-        const birthYearLastTwo = birthYear.slice(-2); // 년도의 마지막 두 자리
+				// 주민등록번호 앞자리 입력 여부 확인
+				if (!frontIden) {
+					$('#frontIdenCheckError').text('주민등록번호 앞자리를 입력해주세요.').show();
+					isResidentNumberValid = false;
+				} else {
+					// 생년월일과 주민등록번호 앞자리 비교
+					const birthYear = birthDate.split('-')[0]; // YYYY 형식 추출
+					const birthMonthDay = birthDate.split('-')[1] + birthDate.split('-')[2]; // MMDD 형식 추출
+					const birthYearLastTwo = birthYear.slice(-2); // 년도의 마지막 두 자리
 
-        const residentFront6 = frontIden.slice(0, 6); // 주민번호 앞 6자리
-        const residentYear = frontIden.slice(0, 2); // 주민번호에서 년도 부분
-        const residentMonthDay = frontIden.slice(2); // 주민번호에서 월,일 부분
+					const residentFront6 = frontIden.slice(0, 6); // 주민번호 앞 6자리
+					const residentYear = frontIden.slice(0, 2); // 주민번호에서 년도 부분
+					const residentMonthDay = frontIden.slice(2); // 주민번호에서 월,일 부분
 
-        // 년도 및 월일이 일치하는지 확인
-        if (residentYear !== birthYearLastTwo || residentMonthDay !== birthMonthDay) {
-            $('#frontIdenCheckError').text('주민등록번호 앞자리가 생년월일과 일치하지 않습니다.').show();
-            isResidentNumberValid = false;
-        }
-    }
+					// 년도 및 월일이 일치하는지 확인
+					if (residentYear !== birthYearLastTwo || residentMonthDay !== birthMonthDay) {
+						$('#frontIdenCheckError').text('주민등록번호 앞자리가 생년월일과 일치하지 않습니다.').show();
+						isResidentNumberValid = false;
+					}
+				}
 
-    return isResidentNumberValid;
-}
+				return isResidentNumberValid;
+			}
+
+			//시설 api
+
+			$('#facAuthBnt').on('click', function () {
+				let fac = $('#facAuth').val();
+				fac = fac.replace(/[^0-9]/g, '');
+				console.log(fac)
+				let data = {
+					"b_no": [$('#facAuth').val()] // 사업자번호 "xxxxxxx" 로 조회 시,
+				};
+
+				$.ajax({
+					url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=JxjILV8BuO4zKqeFYbrkNXtGp2oJzpGCXS5En2AgAaJfx2%2F3cFgZqBDu3v1%2F002AqHYVarFqTcZ2J8tdWJyizQ%3D%3D", // serviceKey 값을 xxxxxx에 입력
+					type: "POST",
+					data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+					dataType: "JSON",
+					contentType: "application/json",
+					accept: "application/json",
+					success: function (result) {
+						if (result.match_cnt != null) {
+							$.ajax({
+								url: "/biznum/" + fac,
+								type: "GET",
+								success: function (result) {
+									console.log(result)
+									if (result) {
+										$('#facAuthError').hide();
+										$('#facAuthSuccess').removeClass('hidden');
+									} else {
+										$('#facAuthError').text('이미 등록된 사업자 등록번호 입니다.').show();
+										$('#facAuthSuccess').addClass('hidden');
+									}
+								},
+								error: function (result) {
+									alert("실패")
+								}
+							})
+						} else {
+							$('#facAuthSuccess').addClass('hidden');
+							$('#facAuthError').text('존재하지 않는 사업자 등록 번호입니다.').show();
+						}
+					},
+					error: function (result) {
+						console.log(result.responseText); //responseText의 에러메세지 확인
+						alert('실패')
+					}
+				});
+			})
 		</script>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
@@ -1460,6 +1540,39 @@ function validateResidentNumber() {
 
 			// 주소 검색 버튼 클릭 이벤트에 addr 함수 연결
 			$('#addrBnt').on('click', addr);
+			$('#facAddr').on('click', facAddr);
+
+
+			function facAddr() {
+				new daum.Postcode({
+					oncomplete: function (data) {
+						// 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소 변수
+						var roadAddr = data.roadAddress;
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있고, "동/로/가"로 끝난다면 추가
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있으면, 괄호까지 추가한 최종 문자열을 만듦
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('facAddr1').value = data.zonecode;
+						document.getElementById("facAddr2").value = roadAddr;
+						// 커서를 상세주소 필드로 이동한다.
+						document.getElementById("facAddr3").focus();
+					}
+				}).open(); // 여기에 닫는 괄호를 추가함
+			}
 		</script>
 
 	</section>
