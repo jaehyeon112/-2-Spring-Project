@@ -2,12 +2,14 @@ package com.bongsamaru.admin.service;
 
 import java.util.List;
 
+import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
@@ -54,4 +56,8 @@ public interface AdminService {
 	public List<DonaVO> donationLedgerList(String recStat);
 	public List<DonaVO> facDonLedgerList(Integer donId);
 	public List<DonaVO> donationSettlement();
+	public DonaVO checkFacDonation(Integer donId);
+	public List<RemittanceVO> remittanceList();
+	public int insertRemittance(RemittanceVO remittanceVO);
+	public List<AlertVO> alertList();
 }

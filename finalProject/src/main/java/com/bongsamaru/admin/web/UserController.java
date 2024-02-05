@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.AdminService;
+import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.common.VO.VolunteerVO;
-
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
@@ -50,6 +51,8 @@ public class UserController {
 		model.addAttribute("tag", tags);
 		List<VolunteerVO> facVol = userService.facVolunteerList();
 		model.addAttribute("facVol", facVol);
+		List<AlertVO> alert = userService.alertList();
+		model.addAttribute("alert", alert);
 		return "admin/adminMain";
 	}
 	
@@ -79,12 +82,21 @@ public class UserController {
 		return "admin/facDonationLedgerList";
 	}
 	
+	//기부금 정산
 	@GetMapping("donationSettlementList")
 	public String donationSettlementList(Model model) {
 		List<DonaVO> list = userService.donationSettlement();
 		model.addAttribute("donSel", list);
 		return "admin/donationSettlementList";
 	}
+	
+	@PostMapping("insertRemittance")
+	@ResponseBody
+	public int insertRemittance(RemittanceVO remittanceVO) {
+		System.out.println(remittanceVO);
+		return userService.insertRemittance(remittanceVO);
+	}
+	
 	
 	@GetMapping("donationDone")
 	public String donationDone(Model model) {
@@ -107,6 +119,13 @@ public class UserController {
 		List<VolunteerVO> facVol = userService.facVolunteerList();
 		model.addAttribute("facVol", facVol);
 		return "admin/facVolList";
+	}
+	
+	@GetMapping("donationReceiptList")
+	public String donationReceiptList(Model model) {
+		List<RemittanceVO> remList = userService.remittanceList();
+		model.addAttribute("remList", remList);
+		return "admin/donationReceiptList";
 	}
 	
 	@GetMapping("userList")
@@ -234,6 +253,14 @@ public class UserController {
 		return cnt;
 	}
 	
+	@GetMapping("checkFacDonation")
+	@ResponseBody
+	public DonaVO checkFacDonation(@RequestParam(name="donId") Integer donId) {
+		DonaVO vo = userService.checkFacDonation(donId);
+		System.out.println(vo);
+		return vo;
+	}
+	
 	//자주하는 질문 등록
 	@GetMapping("faqInsert")
 	public String faqInsert() {
@@ -324,7 +351,6 @@ public class UserController {
 		CommentsVO comm = userService.inquireCommentOne(detailCate);
 		model.addAttribute("info",vo);
 		model.addAttribute("comm",comm);
-		System.out.println(comm);
 		return "admin/inquireComment";
 	}
 
@@ -338,7 +364,6 @@ public class UserController {
 	@GetMapping("delFile")
 	@ResponseBody
 	public int delFile(@RequestParam(name="filePath") String filePath) {
-		System.out.println("실행되니...");
 		return userService.delFile(filePath);
 	}
 	

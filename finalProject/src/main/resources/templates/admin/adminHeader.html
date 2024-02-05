@@ -2,8 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>footer.html</title>
+<title>header</title>
 </head>
+<style>
+.cur{
+	cursor:pointer;
+}
+#exampleModal{
+	width : 300px;
+}
+.modal-body{
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+</style>
 <body>
     <div th:fragment="head">
      <header class="app-header">
@@ -14,14 +26,15 @@
                 <i class="ti ti-menu-2"></i>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                <i class="ti ti-bell-ringing"></i>
-                <div class="notification bg-primary rounded-circle"></div>
+            <li class="nav-item cur">
+              <a class="nav-link nav-icon-hover">
+                <i class="ti ti-bell-ringing" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                <div class="notification bg-primary rounded-circle" style="display:none">
+                </div>
               </a>
             </li>
           </ul>
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav" onclick="show()">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
@@ -50,7 +63,34 @@
           </div>
         </nav>
       </header>
+      <script>
+      	function show(){
+      		$(".rounded-circle").css("display","block");
+      	}
+      </script>
+      <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="exampleModalLabel" style="text-align:center;">알림</h4>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <hr>
+		      <div class="modal-body" style="max-height: calc(100vh - 300px); overflow-x: hidden; overflow-y: auto;">
+				<div th:each="alert : ${alert}">
+					<h5 th:if="${alert.category}=='o01'"><a href="/getReportList?category=r01">새로운 신고</a></h5>
+					<h5 th:if="${alert.category}=='o02'">새로운 승인신청</h5>
+					<h5 th:if="${alert.category}=='o03'">새로운 문의사항</h5>
+					<p th:text="${alert.content}">새로운 알림입니다</p>
+				<br>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+	  </div>
     </div>
-  
 </body>
 </html>

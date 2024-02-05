@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.admin.mapper.AdminMapper;
 import com.bongsamaru.admin.service.AdminService;
+import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
@@ -204,6 +207,30 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<DonaVO> donationSettlement() {
 		return userMapper.donationSettlement();
+	}
+
+	@Override
+	public DonaVO checkFacDonation(Integer donId) {
+		return userMapper.checkFacDonation(donId);
+	}
+
+	@Override
+	public List<RemittanceVO> remittanceList() {
+		return userMapper.remittanceList();
+	}
+	
+	@Transactional
+	@Override
+	public int insertRemittance(RemittanceVO remittanceVO) {
+		//송금 확인코드 변경
+		userMapper.updatePaidCode(remittanceVO.getDonId());
+		//송금 테이블에 삽입
+		return userMapper.insertRemittance(remittanceVO);
+	}
+
+	@Override
+	public List<AlertVO> alertList() {
+		return userMapper.alertList();
 	}
 
 }

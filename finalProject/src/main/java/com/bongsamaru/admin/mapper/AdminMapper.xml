@@ -165,7 +165,7 @@
 	</select>
 	<select id="maxNotice" resultType="int">
 		select 
-        max(board_id) max
+        max(detail_cate) max
 		from board
 		where CATEGORY = 'b01'
 	</select>
@@ -362,13 +362,51 @@
 				,title
 				,end_period
 				,ext_period
-				,goal_amt,
-				(select nvl(SUM(don_amt),0) total from don_ledger where don_id=donation.don_id group by don_id) as total
+				,goal_amt
+				,nvl((select SUM(don_amt) from don_ledger where don_id=donation.don_id group by don_id),0) as total
 				,(select fac_bank from facility where fac_id=donation.fac_id) as backName
 				,(select don_acct from facility where fac_id=donation.fac_id) as bankAcct
 		from donation 
 		where rec_stat=1 
 		and paid_code=0
 		order by don_id
+	</select>
+	<select id="checkFacDonation" resultType="DonaVO">
+		select f.fac_name
+				,d.title
+				,f.BIZ_NUM
+				,f.fac_bank
+				,f.don_acct
+				,d.don_id
+				,nvl((select SUM(don_amt) from don_ledger where don_id=d.don_id group by don_id),0) as total
+		from facility f join donation d
+		on f.fac_id=d.fac_id
+		where d.rec_stat=1 
+		and d.paid_code=0
+		and d.don_id=#{donId}
+	</select>
+	<select id="remittanceList" resultType="RemittanceVO">
+		select rem_total
+				,rem_date
+				,(select fac_id from donation where don_id=remittance.don_id) facName
+				,(select title from donation where don_id=remittance.don_id) title
+				,(select file_name from files where code='p06' and code_no=remittance.don_id) checking
+				,deadline_date 
+		from remittance
+	</select>
+	<update id="updatePaidCode" parameterType="RemittanceVO">
+		update donation set paid_code=1 where don_id=#{donId}
+	</update>
+	<insert id="insertRemittance" parameterType="RemittanceVO">
+		insert into remittance values(rem_seq.NEXTVAL,#{donId},#{remTotal},sysdate,#{remBank},#{remAcct},TO_CHAR(SYSDATE+7, 'YYYY-MM-DD'))
+	</insert>
+	<select id="alertList" resultType="AlertVO">
+		select ALERT_ID
+				,CATEGORY
+				,CONTENT
+				,ALERT_DATE
+				,READ_FLAG
+		from alert
+		where mem_id='ADMIN'
 	</select>
 </mapper>

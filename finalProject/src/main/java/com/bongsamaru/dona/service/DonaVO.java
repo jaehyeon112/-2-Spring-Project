@@ -82,6 +82,9 @@ public class DonaVO {
 	    private String facName;
 	    private String facIntro;
 	    private Date facEstDate;
+	    private String bizNum;
+	    private String facBank;
+	    private String donAcct;
 	    
 
 	// 기부- 카테고리(유형구분)
