@@ -58,17 +58,20 @@ public class DonaController {
 		    List<DonaVO> commentList = donaService.getCommentList(donId);
 		    model.addAttribute("comment", commentList);
 		    
+		    //랜덤
+		    List<DonaVO> random = donaService.getDonaList();
+			   model.addAttribute("randomlist", random);
 		    return "donation/donaDetail";
 	    }    
 	   
-	  //댓글 삽입
+	  //댓글 삽입1
 	   @PostMapping("/donaDetail/{id}")
 	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
 	      // donaService.insertComment(id, content);
 	       return "redirect:/donaDetail?id=" + id;
 	   }
 	   
-	   //이걸로해보자 댓글
+	   //이걸로해보자 댓글2
 	   @PostMapping("commentInsert")
 	   public String insertCommentProc(DonaVO donaVO) {
 		   donaService.insertComment(donaVO);

@@ -40,143 +40,113 @@
         </div>
         <!-- Spinner End -->
 
-
-        <!-- Navbar start 
-        <div class="container-fluid fixed-top">
-
-            <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6"> Donation Detail Page</h1></a>
-
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link">기부Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link active">메뉴1</a>
-
-                            <a href="contact.html" class="nav-item nav-link">메뉴2</a>
-                        </div>
-
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Navbar End -->
-
-
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Search End -->
-
-
-
-
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
-            <div class="container py-5">
-                <div class="row g-4 mb-5">
-                    <div class="col-lg-8 col-xl-9">
-                        <div class="row g-4">
-  
-                            <div class="col-lg-6">
-                                <h4 class="fw-bold mb-3" th:text="${dona.title}">제목</h4>
-
-                            </div>
-                            <div class="col-lg-12">
-                            	<!-- 상세페이지 안에 nav -->
-                                <nav>
-                                    <div class="nav nav-tabs mb-3">
-                                        <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
-                                            id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
-                                            aria-controls="nav-about" aria-selected="true">Description</button>
-                                        <button class="nav-link border-white border-bottom-0" type="button" role="tab"
-                                            id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                            aria-controls="nav-mission" aria-selected="false">DONERS</button>
-                                        <button class="nav-link border-white border-bottom-0" type="button" role="tab"
-                                            id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review"
-                                            aria-controls="nav-review" aria-selected="false">Facility Review</button>
-                                    </div>
-                                </nav>
+          <div class="container py-5">
+             <div class="row g-4 mb-5">
+                <div class="col-lg-8 col-xl-9">
+                  <div class="row g-4">
+                     <div class="col-lg-6">
+                      <h4 class="fw-bold mb-3" th:text="${dona.title}">제목</h4>
+                      </div>
+                      <div class="col-lg-12">
+                      <!-- 상세페이지 안에 nav -->
+                         <nav>
+                           <div class="nav nav-tabs mb-3">
+                             <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                              id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                              aria-controls="nav-about" aria-selected="true">Description</button>
+                             <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                 aria-controls="nav-mission" aria-selected="false">DONERS</button>
+                              <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review"
+                                   aria-controls="nav-review" aria-selected="false">Facility Review</button>
+                               </div>
+                           </nav>
                                 
-                                <div class="tab-content mb-5">
-                                    <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                          <div class="tab-content mb-5">
+                          <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                                     
-                                    		<!-- 메인이미지 -->
-				                            <div class="col-lg-6">
-				                                <div class="border rounded">
-				                                    <a href="#">
-				                                        <img src="donation/board/img/single-item.jpg" class="img-fluid rounded" alt="Image">
-				                                    </a>
-				                                </div>
-				                            </div>
-				                            
-                                        <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc. 
-                                            Susp endisse ultricies nisi vel quam suscipit </p>
-                                        <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
-                                            icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
-                                            
-                                      <!--  표 넣을 곳  -->      
-                                        <div class="px-2">
-                                            <div class="row g-4">
-                                                <div class="col-6">
-                                                    <div class="row bg-light align-items-center text-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Weight</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">1 kg</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Country of Origin</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Agro Farm</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Quality</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Organic</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Сheck</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Healthy</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                        <div class="col-6">
-                                                            <p class="mb-0">Min Weight</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="mb-0">250 Kg</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                          		<!-- 메인이미지 -->
+	                            <div class="col-lg-6">
+	                                <div class="border rounded">
+	                                    <a href="#">
+	                                        <img src="donation/board/img/single-item.jpg" class="img-fluid rounded" alt="Image">
+	                                    </a>
+	                                </div>
+	                            </div>
+	                            
+	                        	<div>  
+                                  <h3>제목(intro)</h3>
+                                  <p>소개글(intro)</p>
+                                </div>     
+                                
+                                <div>
+	                               	<h5>관련 콘텐츠 (link)</h5>
+	                                <p>link주소</p>
+                                </div>
+                                
+                               <div>
+	                              <h3> 추가이미지</h3>
+	                               <p>link주소</p>
+                               </div>
+                               
+                               
+                                <div>
+	                              <h3> 기부금사용계획</h3>
+	                               <table border="1">
+		                               	<thead>
+		                               	<tr>
+		                               		<th>총집행금액</th>
+		                               		<th th:colspan="2">헤더2</th>
+		                               	</tr>
+		                               	</thead>
+		                               	
+		                               	<tbody>
+							            
+							            <tr th:each="row : ${data}">
+							                
+							                <td>사업비</td>
+							                <!-- 두 번째 열: 데이터1 -->
+							                <td th:text="${row.data1}"></td>
+							                <!-- 세 번째 열: 데이터2 -->
+							                <td th:text="${row.data2}"></td>
+							            </tr>
+							        </tbody>
+	                               </table>
+                               </div>
+                               
+                                <div>
+	                              <h3> 사업대상 및 기대효과 </h3>
+									<table border="1">
+									    <thead>
+									        <tr>
+									            <th>사업기간</th>
+									        </tr>
+									        <tr>
+									            <th>사업대상</th>
+									        </tr>
+									        <tr>
+									            <th>기대효과</th>
+									        </tr>
+									    </thead>
+									    <tbody>
+									        <tr>
+									            <td></td>
+									            <td></td>
+									            <td></td>
+									        </tr>
+									        <tr>
+									            <td colspan="2"></td>
+									            <td colspan="2"></td>
+									            <td colspan="2"></td>
+									        </tr>
+									    </tbody>
+									</table>
+
+                               </div>
+                               
                                     </div>
                                     
                                     <!-- Reviews 안의 영역 -->
@@ -198,13 +168,7 @@
                                                 <p class="mb-2" style="font-size: 14px;"></p>
                                                 <div class="d-flex justify-content-between">
                                                     <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
+                                             
                                                 </div>
                                                 <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
                                                     words etc. Susp endisse ultricies nisi vel quam suscipit </p>
@@ -227,21 +191,15 @@
                                         </div>
                                         <div class="d-flex">
                                             <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
+                                           
                                                 <p class="mb-2" style="font-size: 14px;"></p>
                                                 <div class="d-flex justify-content-between">
                                                     <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
+                                    
                                                 </div>
                                                 <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
                                                     words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
+                                           
                                         </div>
                                     </div> <!--  end 모금후기  영역 -->
                                     
@@ -271,9 +229,9 @@
                                         </div>
                                         
                                         
-                                           <div id="commentList" th:each="com : ${comment}">
-                                           	<p><span th:text="${com.memId} + ' : ' + ${com.content}">댓글나와랑</span></p>
-                                            </div>
+                                    <div id="commentList" th:each="com : ${comment}">
+                                      <p><span th:text="${com.memId} + ' : ' + ${com.content}">댓글나와랑</span></p>
+                                    </div>
                                     </div>
                                 </div>
                             </form>
@@ -282,20 +240,25 @@
                    
                     <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
-                            <div class="col-lg-12">
-                                	 
-                                <p class="mb-3">Category: 유형</p>
-                             	<div class="info-item"><strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원 </div>
-								<div class="progress">           
-		   							<div class="progress-bar-striped bg-success" th:text="${dona.donationRatio}" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"> </div>
-								</div>
-								<div class="mb-3"><strong><span th:text="${dona.donationRatio}"></span> %</strong> </div>
-                                <p class="mb-4"><span th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd')} + '~' + ${#dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></span></p>
-                                <p class="mb-4">D-Day : <span th:text="${dona.dday}"></span></p>
-								
-								<p class="mb-4">목표기부금액미달시 계획변경가능합니다.</p>
-                                <a href="payment" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> 기부하기 </a>
-                            </div>
+							<div class="col-lg-12" th:if="${dona.recStat == '0'}">
+							    <p class="mb-3">Category: 유형</p>
+							    <div class="info-item"><strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원 </div>
+							    <div class="progress">           
+							        <div class="progress-bar-striped bg-success" th:text="${dona.donationRatio}" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"> </div>
+							    </div>
+							    <div class="mb-3"><strong><span th:text="${dona.donationRatio}"></span> %</strong> </div>
+							    <p class="mb-4"><span th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd')} + '~' + ${#dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></span></p>
+							    <p class="mb-4">D-Day : <span th:text="${dona.dday}"></span></p>
+							    <p class="mb-4">목표기부금액미달시 계획변경가능합니다.</p>
+							</div>
+							<!-- 버튼 부분 유지 -->
+							<button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
+							        th:if="${dona.recStat == '0'}" onclick="location.href='payment'">
+							    <i class="fa fa-shopping-bag me-2 text-primary"></i> 
+							    <span th:text="${dona.recStat == '0' ? '기부하기' : '모금완료'}"></span>
+							</button>
+
+
                             <div class="col-lg-12">
                                 <h4 class="mb-4">시설소개</h4>
                                 <div class="d-flex align-items-center justify-content-start">
@@ -316,10 +279,10 @@
                         </div>
                     </div>
                 </div>
-                <h1 class="fw-bold mb-0">여러분의 도움이 필요합니다(다른 리스트 보여주는 곳 랜덤)</h1>
+                <h3 class="fw-bold mb-0"> Randomly show</h3>
 				<div class="vesitable">
 				    <div class="owl-carousel vegetable-carousel justify-content-center">
-				        <div class="border border-primary rounded position-relative vesitable-item" th:each="dona : ${list}">
+				        <div class="border border-primary rounded position-relative vesitable-item" th:each="dona : ${randomlist}">
 				            <div class="vesitable-img">
 				                <img src="donation/board/img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
 				            </div>
@@ -351,7 +314,7 @@
 				</div> <!-- vesitable end -->
 
           	</div>
-          	</div>
+       </div>
    
         <!-- Single Product End -->
     
@@ -378,6 +341,9 @@
     
     
     <script>
+    
+    
+    
     //날짜변환 
     function dateFormat(data){
     	

@@ -71,7 +71,7 @@
 		            <div class="form-group row">
 		              <div class="col-md-12">
 		                <label for="c_address" class="text-black">기부할 금액 <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="기부할 금액을 입력해주세요">
+		                <input type="text"  class="form-control" id="c_address" name="c_address" placeholder="기부할 금액을 입력해주세요">
 		              </div>
 		            </div>
 
@@ -150,10 +150,13 @@
 		    	document.getElementById('displayAmount').textContent = amountInput + '원';
 		    });
 		    
+
 		</script>	
 		
 		
 		<script>
+		
+			
 			let selectedPaymentMethod = '';  //결제수단 
 			
 			function selectPaymentMethod(paymentMethod){
@@ -164,13 +167,13 @@
 			function getPg(paymentMethod){
 				switch(paymentMethod){
 					case 'deposit':
-						return 무통장;
+						return '무통장';
 					case 'kakao':
-						return kakaopay.TC0ONETIME;	
+						return 'kakaopay.TC0ONETIME';	
 					case 'toss':
-						return tosspay;	
+						return 'tosspay';	
 					case 'card':
-						return html5_inicis.INIBillTst;
+						return 'html5_inicis.INIBillTst';
 					default:
 						return '';
 				} 
@@ -182,28 +185,82 @@
 			
 			 function requestPay() {
 			        	
-			 if (!selectedPaymentMethod) {
-			     alert('결제 수단을 선택해주세요.');
-			     return;
-			  }	 
-				 
-				 
-			   let amountInput = document.getElementById('c_address').value;
-			        	
-			     IMP.request_pay({
-			        pg: getPg(selectedPaymentMethod),
-			        pay_method: selectedPaymentMethod,
-			        merchant_uid: "ORD20180131-0000011",   // 주문번호
-			        name: "노르웨이 회전 의자",
-			        amount:  parseInt(amountInput),   // 숫자 타입
-			        buyer_email: "gildong@gmail.com",
-			        buyer_name: "홍길동",
-			         buyer_tel: "010-4242-4242",
+				    let amountInput = document.getElementById('c_address').value;
+				    let agreementCheckbox = document.getElementById('c_ship_different_address');
+				    
+				    if (!amountInput) {
+				        alert('기부할 금액을 입력해주세요.');
+				        return;
+				    }
+				    if (!selectedPaymentMethod) {
+				        alert('결제 수단을 선택해주세요.');
+				        return;
+				    }
 
-			       }, function (rsp) { // callback
-			          $.ajax({
-			            type: 'POST',
-			            url: '/paymentProcess'
+				    if (!agreementCheckbox.checked) {
+				        alert('약관에 동의해주세요.');
+				        return;
+				    }
+
+				    // 오늘 날짜 구하기
+				    let today = new Date();
+				    let year = today.getFullYear();
+				    let month = today.getMonth() + 1;
+				    let day = today.getDate();
+
+				    // 시간 구하기
+				    let hours = today.getHours();
+				    let minutes = today.getMinutes();
+				    let seconds = today.getSeconds();
+
+				    // 10보다 작은 경우 앞에 0 추가
+				    month = month < 10 ? '0' + month : month;
+				    day = day < 10 ? '0' + day : day;
+				    hours = hours < 10 ? '0' + hours : hours;
+				    minutes = minutes < 10 ? '0' + minutes : minutes;
+				    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+				    let currentDate = year + '-' + month + '-' + day;
+				    let currentTime = hours + ':' + minutes + ':' + seconds;
+
+				    // 결제 일자 및 결제 번호 생성
+				    let payDate = currentDate + ' ' + currentTime;
+				    let payId = 'merchant' + currentDate.replace(/-/g, '') + '-' + currentTime.replace(/:/g, '');
+
+				    // 세션에서 회원 아이디를 가져오는 부분
+				    let memId = "${list.memId}";
+
+				    // 여기서 익명 체크 여부를 어떻게 가져오는지에 따라 수정이 필요할 수 있습니다.
+				    let anonCheck = document.getElementById('c_create_account').checked; // 익명 체크 여부
+
+				    // 여기서 donId의 title 값을 가져오는 코드를 작성해주세요.
+				    // 아래는 예시로 "노르웨이 회전 의자"로 임시로 지정한 것입니다.
+				    let donTitle = "노르웨이 회전 의자";
+
+				    // 나머지 코드는 변경하지 않고 유지
+				    IMP.request_pay({
+				        pg: getPg(selectedPaymentMethod),
+				        pay_method: selectedPaymentMethod,
+				        merchant_uid: "ORD" + currentDate.replace(/-/g, '') + '-' + currentTime.replace(/:/g, ''),
+				        name: donTitle,
+				        amount: parseInt(amountInput),
+				    }, function (rsp) {
+				        $.ajax({
+				            type: 'POST',
+				            url: '/paymentProcess',
+				            contentType: 'application/json', 
+				            data: 
+				            	JSON.stringify({
+				                donLedId: 'DONLEDGER_SEQ.NEXTVAL', // 이 부분은 사용하는 DBMS에 따라 시퀀스를 어떻게 다루는지에 따라 수정이 필요합니다.
+				                donAmt: parseInt(amountInput),
+				                payMethod: selectedPaymentMethod,
+				                payDate: payDate,
+				                payStat: 'g01',
+				                payId: payId,
+				                anonCheck: anonCheck,
+				                memId: memId
+				            	})
+				            
 			         }).done(function(data) {
 			             if(rsp.paid_amount === data.response.amount){
 			                alert("결제 성공");

@@ -245,44 +245,7 @@
     
     
     
-    //날자 선택
-
-
-     document.addEventListener("DOMContentLoaded", function() {
-         let startDateInput = document.getElementById("sPeriod");
-         let endDateInput = document.getElementById("ePeriod");
-
-         // 오늘 날짜
-         let today = new Date();
-         today.setHours(0, 0, 0, 0);
-
-         // 시작날짜는 오늘 이후부터 선택 가능하도록 설정합니다.
-         startDateInput.min = today.toISOString().split("T")[0];
-
-         // 종료날짜는 오늘로부터 3개월 이후까지 선택 가능하도록 설정합니다.
-         let threeMonthsLater = new Date(today);
-         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
-         endDateInput.min = (new Date(today.getTime() + 24 * 60 * 60 * 1000)).toISOString().split("T")[0];
-         endDateInput.max = threeMonthsLater.toISOString().split("T")[0];
-
-         // 시작날짜와 종료날짜의 변경을 감지하여 오늘 이전의 날짜는 선택하지 못하도록 합니다.
-         function checkStartDate() {
-             // 시작날짜가 오늘 이전이면 오늘 이후로 설정합니다.
-             let selectedStartDate = new Date(startDateInput.value);
-             if (selectedStartDate < today) {
-                 startDateInput.value = today.toISOString().split("T")[0];
-             }
-
-             // 종료날짜가 시작날짜 이전이면 시작날짜로 설정합니다.
-             let selectedEndDate = new Date(endDateInput.value);
-             if (selectedEndDate < selectedStartDate) {
-                 endDateInput.value = startDateInput.value;
-             }
-         }
-
-         // 시작날짜 입력값이 변경될 때 checkStartDate 함수를 호출합니다.
-         startDateInput.addEventListener("input", checkStartDate);
-     });
+    
 </script>
 
 
