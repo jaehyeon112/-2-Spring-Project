@@ -90,54 +90,14 @@ a {
 </head>
 <body>
 <section layout:fragment="content">
-<!-- 마이페이지 사이드바 -->
-	<div class="row" style="color: black;">
-  		<div class="col-sm-2">
-  			<div>
-  				<h4 onclick="window.location.href='/my'">마이페이지</h4>
-  			</div>
-  			<div class="list-group" id="myList" role="tablist">
-  			  <h4>기부</h4>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/gibuList" role="tab">기부내역</a>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/gibuReceipt" role="tab">기부영수증</a>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/gibuActivity" role="tab">활동증서</a>
-  			  <h4>봉사</h4>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/dayList" role="tab">하루모임</a>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/clubList" role="tab">동아리</a>
-				  <a class="list-group-item list-group-item-action" data-toggle="list" href="/facilityList" role="tab">봉사시설</a>
-			</div>
-  	</div>
+<div class="row" style="color: black;">
+  	<div class="side" th:insert="~{my/sidebar::side}"></div>
 	<div class="col-sm-10">
 	  	<div class="container">
 		  	<h2>동아리참여내역</h2>
 		</div>
 	</div>
 </div>
-
-<script  th:inline="javascript">
-	$(function () {
-		$('#myList a').click(function (e) {
-		    e.preventDefault(); // 기본 동작인 링크 이동을 막습니다.
-		    var href = $(this).attr('href'); // 클릭한 요소의 href 속성 값을 가져옵니다.
-			window.location.href = href; // 해당 경로로 이동합니다.
-		});
-	});
-		
-	$(function () {
-	// 현재 페이지의 URL을 가져옵니다.
-		var currentUrl = window.location.href;
-
-		// 리스트 항목을 순회하며 현재 페이지와 연관된 항목을 찾습니다.
-		$('#myList a').each(function () {
-		var href = $(this).attr('href');
-			    
-		// 현재 페이지와 href 속성 값이 일치하는 경우 해당 항목을 활성화합니다.
-			if (currentUrl.indexOf(href) > -1) {
-				$(this).addClass('active');
-			}
-		});
-	});
-</script>
 </section>
 </body>
 </html>

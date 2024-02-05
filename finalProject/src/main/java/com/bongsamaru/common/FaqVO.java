@@ -8,4 +8,5 @@ public class FaqVO {
 	private String category;
 	private String title;
 	private String content;
+	private boolean expanded;
 }

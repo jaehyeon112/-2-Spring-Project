@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.navigation-bar {
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+div[th:if] {
+  display: none;
+}
+
+.container {
+	text-align : center;
+	font-family: 'Orbit', sans-serif;
+}
+
+.navigation-bar {
+	text-align : center;
+}
+.title_cont {
+	font-size: 17px;
+	margin: 47px 0 45px;
+}
+.wrap_cont {
+	padding-bottom: 30px;
+}
+.accordion {
+	margin-top: 30px;
+	border-top: 0 none;
+}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+<div class="row" style="color: black;">
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
+	<div class="col-sm-10">
+		<div class="container">
+		  	<h2 style="font-family: 'Orbit', sans-serif;">자주하는질문</h2>
+			<div class="title_cont">
+				<span class="nav-item" onclick="select('a01')">기부</span>
+				<span class="nav-item" onclick="select('a02')">봉사</span>
+				<span class="nav-item" onclick="select('a03')">챌린지</span>
+			</div>
+			<div class="wrap_cont">
+				<div class="accordion" id="accordionExample">
+				  <div th:each="item : ${list}" class="card" th:data-category="${item.category}" th:if="${item.category == 'a01' or item.category == 'a02' or item.category == 'a03'}">
+				    <div class="card-header" th:id="'heading' + ${item.faqId}">
+				      <h2 class="mb-0">
+				        <button style="color:black;" class="btn btn-link text-center" type="button" data-toggle="collapse" th:data-target="'#collapse' + ${item.faqId}" th:aria-expanded="false" th:aria-controls="'collapse' + ${item.faqId}">
+				          [[${item.title}]]
+				        </button>
+				      </h2>
+				    </div>
+				
+				    <div th:id="'collapse' + ${item.faqId}" class="collapse" th:classappend="${item.expanded ? 'show' : ''}" th:aria-labelledby="'heading' + ${item.faqId}" data-parent="#accordionExample">
+				      <div class="card-body">
+				        [[${item.content}]]
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<!-- 페이징 네비게이션 -->
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+			        <li class="page-item" th:if="${pageVO.getPreviousPage() > 0}">
+			            <a class="page-link" th:href="@{'/faq?nowPage=' + ${pageVO.getPreviousPage()} + '&amp;cntPerPage=' + ${pageVO.getCntPerPage()}}" tabindex="-1">이전페이지</a>
+			        </li>
+			        <li class="page-item">
+			            <a class="page-link" th:href="@{'/faq?nowPage=1&amp;cntPerPage=' + ${pageVO.cntPerPage}}"><span th:text="1"></span></a>
+			        </li>
+			        <li class="page-item" th:each="pageNum : ${#numbers.sequence(2, pageVO.lastPage - 1)}">
+			            <a class="page-link" th:href="@{'/faq?nowPage=' + ${pageNum} + '&amp;cntPerPage=' + ${pageVO.cntPerPage}}"><span th:text="${pageNum}"></span></a>
+			        </li>
+			        <li class="page-item" th:if="${pageVO.lastPage > 5}">
+			            <span class="page-link">...</span>
+			        </li>
+			        <li class="page-item" th:if="${pageVO.lastPage > 1}">
+			            <a class="page-link" th:href="@{'/faq?nowPage=' + ${pageVO.lastPage} + '&amp;cntPerPage=' + ${pageVO.cntPerPage}}"><span th:text="${pageVO.lastPage}"></span></a>
+			        </li>
+			        <li class="page-item" th:if="${pageVO.getNextPage() <= pageVO.getLastPage()}">
+			            <a class="page-link" th:href="@{'/faq?nowPage=' + ${pageVO.getNextPage()} + '&amp;cntPerPage=' + ${pageVO.getCntPerPage()}}">다음페이지</a>
+			        </li>
+			    </ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<script>
+// 기부, 봉사, 챌린지를 선택하는 함수
+function select(category) {
+  // 선택된 카테고리에 해당하는 모든 아이템을 보여줍니다.
+  let cards = $(`[data-category="${category}"]`);
+  console.log(cards,'카테고리 선택');
+  cards.each(function() {
+    console.log($(this),'확인')
+	  $(this).show();
+    
+  });
+  
+
+  // 선택된 카테고리 이외의 아이템은 숨깁니다.
+  const otherCards = $(`[data-category]:not([data-category="${category}"])`);
+  otherCards.each(function() {
+    $(this).hide();
+  });
+// 초기화 시 모든 아이템을 보여줍니다.
+}
+select('a01');
+</script>
+</section>
+</body>
+</html>

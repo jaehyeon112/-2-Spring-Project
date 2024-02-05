@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Bootstrap JS (Popper.js 포함) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap');
+		  
+</style>
+<body>
+<!-- 마이페이지 사이드바 -->
+ <div th:fragment="side">
+ 	<h1>고객센터</h1>
+ 	<hr>
+  	<div> 
+  		<h4 onclick="window.location.href='/my'">공지사항</h4>
+  	</div>
+  		<div class="list-group" id="myList" role="tablist">
+  		<h4>자주하는질문</h4>
+			<a class="list-group-item list-group-item-action" data-toggle="list" th:href="@{/gibuList}" role="tab">기부내역</a>
+			<a class="list-group-item list-group-item-action" data-toggle="list" href="/gibuReceipt" role="tab">기부영수증</a>
+			<a class="list-group-item list-group-item-action" data-toggle="list" href="/gibuActivity" role="tab">활동증서</a>
+	<div> 
+  		<h4 onclick="window.location.href='/my'">1:1문의</h4>
+  	</div>
+	</div>
+<script th:inline="javascript">
+		$('#myList a').click(function (e) {
+		    var href = $(this).attr('href'); // 클릭한 요소의 href 속성 값을 가져옵니다.
+			window.location.href = href; // 해당 경로로 이동합니다.
+		});
+		
+	$(function () {
+	// 현재 페이지의 URL을 가져옵니다.
+		var currentUrl = window.location.href;
+
+		// 리스트 항목을 순회하며 현재 페이지와 연관된 항목을 찾습니다.
+		$('#myList a').each(function () {
+		var href = $(this).attr('href');
+			    
+		// 현재 페이지와 href 속성 값이 일치하는 경우 해당 항목을 활성화합니다.
+			if (currentUrl.indexOf(href) > -1) {
+				$(this).addClass('active');
+			}
+		});
+});
+</script>
+</div>
+</body>
+</html>
