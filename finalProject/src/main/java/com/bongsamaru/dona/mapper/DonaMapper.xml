@@ -122,12 +122,13 @@
 	 			, goal_amt
 	 			, proj_target
 	 			, intro
+	 			, intro_title
 	 			, rec_stat
 	 			, exp_effect
 	 			) 
  			VALUES 
  			(
-	 			donation_seq
+	 			donation_seq.nextval
 	 			, #{facId}
 	 			, #{title}
 	 			, #{recPeriod}
@@ -135,11 +136,38 @@
 	 			, #{goalAmt}
 	 			, #{projTarget}
 	 			, #{intro}
+	 			,#{introTitle}
 	 			, #{recStat}
 	 			, #{expEffect}
  			)
  	</insert>
  	
+ 	<insert id="insertDonDetail" parameterType="DonaVO">
+ 	  INSERT INTO Don_Detail 
+	 	  (
+		 	  donId
+		 	  , usePlan
+		 	  , link
+		 	  , link2
+		 	  , use_plan2
+		 	  , use_plan3
+		 	  , use_plan_amt
+		 	  , use_plan_amt2
+		 	  , use_plan_amt3
+	 	  )
+	        VALUES 
+	        (
+		        #{donId}
+		        , #{usePlan}
+		        , #{link}
+		        , #{link2}
+		        , #{usePlan2}
+		        , #{usePlan3}
+		        , #{usePlanAmt}
+		        , #{usePlanAmt2}
+		        , #{usePlanAmt3}
+	        )
+ 	</insert>
  	
  <!-- 카드결제 -->
  	<insert id="paymentProcess" parameterType="DonaVO">

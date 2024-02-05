@@ -20,6 +20,7 @@ public class DonaVO {
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
 	    private String intro; //소개 (v2000)
+	    private String introTitle;// 소개글제목
 	    private String recStat; //모집현황(c3)
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
@@ -34,8 +35,14 @@ public class DonaVO {
     //Don_Detail(기부상세) 테이블
 	    private Integer donDetId; //기부등록상세번호 (notnull)
 	    //private Integer donId; 
-	    private String usePlan; // 기부금 사용계획 
+	    private String usePlan; // 기부금 사용계획 - 구체적사업내용
 	    private String link; //관련링크
+	    private String link2; //관련링크2
+	    private String usePlan2;
+	    private String usePlan3;
+	    private String usePlanAmt; // 기부금 사용계획 - 구체적사업비
+	    private String usePlanAmt2;
+	    private String usePlanAmt3;
     
     
     //don_ledger(기부장부) 테이블

@@ -45,16 +45,13 @@ public class DonaServiceImpl implements DonaService {
 	}
 
 	@Override
-	public int insertComment(Integer donId, String content) {
-	    DonaVO donaVO = new DonaVO();
-	    donaVO.setDonId(donId);
-	    donaVO.setContent(content);
-	    
-	    try {
-	        return donaMapper.insertComment(donaVO);
-	    } catch (Exception e) {
-	        throw new RuntimeException("댓글 등록 중 오류가 발생했습니다.", e);
-	    }
+	public int insertComment(DonaVO donaVO) {
+		int result = donaMapper.insertComment(donaVO);
+		if(result == 1) {
+			return donaVO.getCommId();
+		}else {
+			return -1; 
+		}
 	}
 	
 
@@ -70,6 +67,16 @@ public class DonaServiceImpl implements DonaService {
 			return -1;
 		}
 		
+	}
+	@Override
+	public int insertDonDetail(DonaVO donaVO) {
+	int result = donaMapper.insertDonDetail(donaVO);
+		
+		if(result == 1) {
+			return donaVO.getDonId();
+		}else {
+			return -1;
+		}
 	}
 	
 	@Override

@@ -32,6 +32,11 @@ public interface DonaMapper {
 	//기부등록폼 
 		public int insertDonation(DonaVO donaVO);
 	
+		public int insertDonDetail(DonaVO donaVO);
+		//public int insertFiles(DonaVO donaVO);
+		
+		
+	
 	//결제프로세스
 	 public int paymentProcess(DonaVO donaVO);
 		

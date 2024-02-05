@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +45,7 @@ public class DonaController {
 
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
-	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam("facId") String facId, Model model) { 
+	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam(name = "facId", required = true) String facId, Model model) { 
 		   //상세페이지
 		   DonaVO dona = donaService.getDonaDetail(donId, facId);
 		    model.addAttribute("dona", dona);
@@ -61,21 +62,19 @@ public class DonaController {
 	    }    
 	   
 	  //댓글 삽입
-//	   @PostMapping("/donaDetail/{id}")
-//	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
-//		    
-//		   DonaVO donaVO = new DonaVO();  // 필요한 데이터에 따라 객체를 생성해야 합니다.
-//		    donaService.insertComment(id, donaVO);
-//
-//		    //return "redirect:/donaDetail?id=" + donId + "&facId=" + donaVO.getFacId();
-//		    return "redirect:/donaDetail?id=" + id + "&facId=" + donaVO.getFacId();
-//	   }
-//	   @PostMapping("/donaDetail/{id}")
-//	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
-//	       DonaVO donaVO = new DonaVO();  // DonaVO 객체 생성 및 초기화 (필요한 데이터에 따라서)
-//	       donaService.insertComment(id, donaVO);
-//	       return "redirect:/donaDetail?id=" + id + "&facId=" + donaVO.getFacId();
-//	   }
+	   @PostMapping("/donaDetail/{id}")
+	   public String insertComment(@PathVariable Integer id, @RequestParam("content") String content) {
+	      // donaService.insertComment(id, content);
+	       return "redirect:/donaDetail?id=" + id;
+	   }
+	   
+	   //이걸로해보자 댓글
+	   @PostMapping("commentInsert")
+	   public String insertCommentProc(DonaVO donaVO) {
+		   donaService.insertComment(donaVO);
+		   return "redirect:/donation/donaDetail?id=" + donaVO.getDonId();
+	   }
+	   
 	   
 	 // 기부상세 - 기부자목록 
 	  @GetMapping("/donaDetail/{id}")
@@ -143,9 +142,21 @@ public class DonaController {
 		   String h = "h";
 		   List<DonaVO> categoryList = donaService.getCategoryList(h);
 		   model.addAttribute("categoryList", categoryList);
-	 
+		   model.addAttribute("donaVO", new DonaVO()); // 빈개체 추가
 	        return "donation/form";
 	    }   
+	   
+	   
+	   @PostMapping("/form")
+	   public String registerDona(@ModelAttribute DonaVO donaVO) {
+		  
+			   donaService.insertDonation(donaVO);
+			   donaService.insertDonDetail(donaVO);
+			   
+			   return "redirect:/donation/donaMain";
+		   
+	   }
+	   
 	
 	//후기폼
 	   @GetMapping("/reviewform")
