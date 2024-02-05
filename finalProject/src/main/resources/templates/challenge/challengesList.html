@@ -59,7 +59,7 @@
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
 										<div class="media post_item">
-											<img src="/image/초록개구리.png" alt="post">
+											<img th:src="${FileList[0].filePath}" alt="post">
 
 											<div class="media-body">
 												<h3>How to</h3>

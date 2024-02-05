@@ -5,31 +5,284 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>챌린지리스트</title>
+<title>챌린지등록</title>
 </head>
 <body>
 	<section layout:fragment="content">
-	  <input type="text" th:readonly="true" placeholder="메인 이미지 들어갈 자리입니다"> 
-									<img src="/image/초록개구리.png" alt="메인사진 예시">
-                              
-                           
-                                <textarea placeholder="챌린지 제목을 작상해 주세요"></textarea>
-                          
-                                      <input type="text" th:readonly placeholder="기대효과 이미지 들어갈 자리입니다"> 
-									  <img src="/image/초록개구리.png" alt="기대효과사진 예시">
-                                    
-                                      <input type="text" th:readonly placeholder="기대효과 이미지 들어갈 자리입니다">
-                                      <img src="/image/초록개구리.png" alt="기대효과사진 예시">
-                                    
-                                        <textarea placeholder="기대효과를 작상해 주세요"></textarea>	
-                                        <input type ="date">"챌린지를 마감할 날짜를 선택해주세요"
-                                        										
-                                    
-                        <p>HowTo</p>
-<input type="text" placeholder="1.'텀블러 사진 혹은 영상을 인증한다"> 
-<input type="text" placeholder="2. 제출"> 
-                        
-       
+		<div class="comment-form">
+			<section class="blog_area single-post-area">
+				<form name="insertForm" action="challengeInsert" method="post" enctype="multipart/form-data">
+					<div class="container" style="border: 1px solid black;">
+						<div class="row">
+							<div class="col-lg-8 posts-list">
+								<div class="single-post row">
+									<div class="col-lg-12">
+										<div class="feature-img">
+
+											<img src="/image/초록개구리.png" alt="메인사진 예시"> <br>
+											<p>"메인 이미지 들어갈 자리입니다"</p>
+										</div>
+									</div>
+
+									<div class="col-lg-12 col-md-12 blog_details">
+										<div class="form-group">
+											<p>"챌린지 제목을 작성해 주세요"</p>
+											<input type="text" name="title" placeholder="챌린지 제목을 작성해 주세요">
+
+										</div>
+									</div>
+
+									<div class="col-lg-12">
+										<div class="row">
+
+
+
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="행동이유 이미지 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="행동이유 이미지 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
+												</div>
+											</div>
+
+
+
+											<div class="col-lg-12 mt-25">
+												<div class="form-group">
+													<textarea name="actionReason" placeholder="행동이유를 작성해 주세요"></textarea>
+												</div>
+
+											</div>
+
+
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="기대효과과 이미지 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="기대효과 이미지 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
+												</div>
+											</div>
+
+
+
+											<div class="col-lg-12 mt-25">
+												<div class="form-group">
+													<textarea class="excert" name="expImpact"
+														placeholder="기대효과를 작성해 주세요"></textarea>
+												</div>
+											</div>
+
+
+
+
+
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="그외 자유내용 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-group">
+													<input type="text" class="form-control" id="subject"
+														th:readonly placeholder="그외 자유내용 이미지 들어갈 자리입니다"> <img
+														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
+												</div>
+											</div>
+
+
+
+											<div class="col-lg-12 mt-25">
+												<div class="form-group">
+													<textarea name="content"
+														placeholder="그 외 내용(인증안되는 사례 등)을 자유롭게 작성해 주세요"></textarea>
+												</div>
+
+											</div>
+
+
+
+
+
+
+
+
+
+
+											<p>함께할 날짜</p>
+											<div class="form-group form-inline">
+
+												<div class="form-group col-lg-6 col-md-6 name">
+													<input type="date" id="start" name="start">
+													<p>"챌린지를 시작하는 날짜는 오늘입니다"</p>
+												</div>
+												<div class="form-group col-lg-6 col-md-6 name">
+													<input type="date" id="regDate" name="regDate">
+													<p>챌린지를 마감할 날짜오늘부터 최소 한달, 최대 6개월까지 참여가능합니다</p>
+
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<p>HowTo</p>
+
+
+												<input type="text" name="partMethod1"
+													placeholder="1.텀블러 사진 혹은 영상을 인증한다" style="width: 500px">
+												<hr>
+												<input type="text" name="partMethod2" placeholder="2.제출"
+													style="width: 500px">
+											</div >
+										<div class="col-lg-12 mt-25">
+											<div class="form-group">
+												<img id="imagePreview" src="/userresources/image/심사방법.png"
+													style="border-radius: 100%; width: 100px; height: 100px;">
+
+												<label for="file-image" class="input-file-button">이미지첨부
+													<input type="file" name="uploadFiles" id="file-image"
+													style="display: none" multiple>
+												</label>
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<button type="submit" id="challengeInsert">작성하기</button>
+
+							</div>
+
+							<div class="col-lg-4"></div>
+						</div>
+
+					</div>
+				</form>
+			</section>
+
+		</div>
+		<script>
+		
+		//input date 관련
+			document.getElementById('start').value = new Date().toISOString()
+					.substring(0, 10);
+			;
+			$('input[name=start]').attr("readonly", true);
+
+			let minDate = new Date();
+			let maxDate = new Date();
+
+			minDate.setMonth(minDate.getMonth() + 1);
+			let startDate = minDate.toISOString().substring(0, 10);
+			maxDate.setMonth(maxDate.getMonth() + 6);
+			let endDate = maxDate.toISOString().substring(0, 10);
+
+			$('input[name=start]').prop("min", startDate);
+			$('input[name=regDate]').prop("max", endDate);
+		//form 등록관련	
+			$('form[name="insertForm"]').on('submit', challengeInsert);
+
+			function challengeInsert(event) {
+				event.preventDefault();
+
+				let title = $('[name="title"]');
+				let actionReason = $('[name="actionReason"]');
+				let impact = $('[name="expImpact"]');
+				let content = $('[name="content"]');
+				let end = $('[name="regDate"]');
+				let howTo1 = $('[name="partMethod1"]');
+				let howTo2 = $('[name="partMethod2"]');
+
+				if (title.val() == '') {
+					alert('제목이 입력되지 않았습니다');
+					title.focus();
+					return;
+				}
+				if (actionReason.val() == '') {
+					alert('행동이유가 입력되지 않았습니다');
+					actionReason.focus();
+					return;
+				}
+				if (impact.val() == '') {
+					alert('기대효과가 입력되지 않았습니다');
+					impact.focus();
+					return;
+				}
+				if (content.val() == '') {
+					alert('내용이 입력되지 않았습니다');
+					content.focus();
+					return;
+				}
+				if (end.val() == '') {
+					alert('챌린지 종료 날짜가 입력되지 않았습니다');
+					end.focus();
+					return;
+				}
+				if (howTo1.val() == '') {
+					alert('방법1이 입력되지 않았습니다');
+					howTo1.focus();
+					return;
+				}
+				if (howTo2.val() == '') {
+					alert('방법2가 입력되지 않았습니다');
+					howTo2.focus();
+					return;
+				}
+				
+				
+				//사진
+				var formData = new FormData(); //FormData 객체 생성
+					var inputFile = $("input[type='file']");
+					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+					var files = inputFile[0].files;
+					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+					for (var i = 0; i < files.length; i++) {
+						console.log(files[i]);
+						formData.append("uploadFiles", files[i]); //키,값으로 append 
+					}
+					var formInfo = $("form").serialize();
+					formData.append("formInfo", formInfo);
+						
+					
+						$.ajax({
+						url: '/challengeInsert',
+						type: 'POST',
+						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+						data: formData
+						success: function (result) {
+							console.log(result)
+							alert('성공!')
+
+						},
+						error: function (reject) {
+							alert('실풰!')
+							console.log(reject);
+						}
+					});
+					
+					
+					
+						document.forms.insertForm.submit();
+
+			}
+		</script>
+
 	</section>
 </body>
 </html>

@@ -15,8 +15,11 @@ public class ChallengesVO {
 	  private String ExpImpact;
 	  private String ActionReason;
 	  private String RegDate;
-	  private String PartMethod1;
-	  private String PartMethod2;
+	  private String partMethod1;
+	  private String partMethod2;
+	  private String profil;
+	  private Integer participants;
+	  private Integer allParticipants;
 	  
 	  private Integer chalDetId;
 	  private String dContent;
@@ -33,5 +36,5 @@ public class ChallengesVO {
 	  private String extension;
 	  private int fileSize;
 	  private String code;
-	  private String codeNo;
+	  private Integer codeNo;
 }

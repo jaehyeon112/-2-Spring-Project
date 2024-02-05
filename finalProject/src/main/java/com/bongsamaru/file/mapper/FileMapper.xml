@@ -16,7 +16,7 @@
     ) values (
         FILES_SEQ.nextval
         ,#{filePath}
-        ,(SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo})
+        ,(SELECT NVL(MAX(FILE_ORDER), 0) + 1 FROM files WHERE CODE_NO = #{codeNo} AND CODE=#{code})
         ,#{fileName}
         ,#{extension}
         ,#{fileSize}
