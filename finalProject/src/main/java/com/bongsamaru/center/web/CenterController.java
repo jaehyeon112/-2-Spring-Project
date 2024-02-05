@@ -50,10 +50,14 @@ public class CenterController {
 	         	} else if (cntPerPage == null) { 
 	         		cntPerPage = "10";
 	         	}
+	         	
 	         	vo = new PageVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage),category);
 	         	List<FaqVO> list = centerService.getFaqList(vo);
 	         	model.addAttribute("pageVO", vo);
 	         	model.addAttribute("list", list);
+	         	
+	         	System.out.println(list);
+	         	System.out.println(vo);
 	         	
 	         }
 	     }
