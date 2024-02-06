@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+	layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>챌린지등록</title>
@@ -11,6 +12,7 @@
 	<section layout:fragment="content">
 		<div class="comment-form">
 			<section class="blog_area single-post-area">
+			<!-- <span sec:authentication="principal.userVO"></span> -->
 				<form name="insertForm" action="challengeInsert" method="post" enctype="multipart/form-data">
 					<div class="container" style="border: 1px solid black;">
 						<div class="row">
@@ -115,15 +117,6 @@
 
 											</div>
 
-
-
-
-
-
-
-
-
-
 											<p>함께할 날짜</p>
 											<div class="form-group form-inline">
 
@@ -175,8 +168,10 @@
 			</section>
 
 		</div>
-		<script>
-		
+		<script th:inline="javascript">
+		  var username = [[${#authentication.principal.userVO.memNick}]];
+			console.log(username)
+			
 		//input date 관련
 			document.getElementById('start').value = new Date().toISOString()
 					.substring(0, 10);
@@ -191,7 +186,7 @@
 			maxDate.setMonth(maxDate.getMonth() + 6);
 			let endDate = maxDate.toISOString().substring(0, 10);
 
-			$('input[name=start]').prop("min", startDate);
+			$('input[name=regDate]').prop("min", startDate);
 			$('input[name=regDate]').prop("max", endDate);
 		//form 등록관련	
 			$('form[name="insertForm"]').on('submit', challengeInsert);
@@ -264,7 +259,7 @@
 						type: 'POST',
 						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
 						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
-						data: formData
+						data: formData,
 						success: function (result) {
 							console.log(result)
 							alert('성공!')

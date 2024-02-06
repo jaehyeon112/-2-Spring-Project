@@ -20,6 +20,7 @@ import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.RegionVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 @Controller
 public class facilityController {
@@ -102,9 +103,15 @@ public class facilityController {
 	//시설 마이페이지
 	
 	@GetMapping("facilityMyPage")
-	public String insertFacilityMyPage() {
+	public String getFacilityMyPage(Model model) {
+		List<DonaVO> list = facilityService.getDonaList();
+		model.addAttribute("donaList", list);
+		return "facility/myPageDona";
+	}
+	@GetMapping("facilityMyPage/volJoin")
+	public String getFacilityMyPageVol(Model model) {
 		
-		return "facility/facilityMyPage";
+		return "facility/myPageVolJoin";
 	}
 	
 	

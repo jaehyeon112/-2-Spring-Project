@@ -99,6 +99,20 @@ SELECT  T1.VOL_ACT_ID,
   LEFT  JOIN VOL_ACT T2 ON T1.VOL_ACT_ID = T2.VOL_ACT_ID
  WHERE  FAC_ID=#{facId}
 </select>
+
+<select id="getDonaInfo" resultType="DonaVO">
+   SELECT D.TITLE,
+  		  D.REC_PERIOD, 
+  		  D.END_PERIOD, 
+  		  D.GOAL_AMT,
+  		  D.DON_REG_APP, 
+  		  NVL(SUM(CASE WHEN DL.PAY_STAT = 0 THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
+  		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
+     FROM DONATION D
+LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+ GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
+
+</select>
 </mapper>
 
 

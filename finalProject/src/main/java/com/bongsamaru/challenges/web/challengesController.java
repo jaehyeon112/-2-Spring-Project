@@ -1,6 +1,7 @@
 package com.bongsamaru.challenges.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,13 +51,22 @@ public class challengesController {
 	
 	
 	@GetMapping("/challenge/challengesList")
-	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Integer chalDetId, Model model) {
+	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Model model) {
 		List<ChallengesVO> dList = challengeService.getChallengesList(chalId);
-		//System.out.println(dList);
-		model.addAttribute("challengesList", dList);
-		 List<ChallengesVO> file = challengeService.getFileList(chalId,"p04",chalId,chalDetId);
-		 model.addAttribute("FileList", file); System.out.println("파일이 뭐가 들어오나"+file);
-		return "challenge/challengesList";
+	    
+	    for (ChallengesVO challengesVO : dList) {
+	        challengesVO.getChalDetId();
+	        System.out.println("for문 돌린 vo"+challengesVO);
+	        System.out.println( "챌린지도전 잘 들어오나?"+ challengesVO.getChalDetId());
+	        System.out.println(chalId);
+	        List<ChallengesVO> files = challengeService.getFileList(challengesVO.getChalDetId(), "p04",  null, challengesVO.getChalDetId());
+	        challengesVO.setFilePath(files.get(0).getFilePath());
+	        System.out.println(challengesVO);
+	        
+	    }
+	    model.addAttribute("challengesList", dList);
+		System.out.println("총결론"+dList);
+		 return "challenge/challengesList";
 	}
 	//등록페이지 열기
 	@GetMapping("/challengeInsert")

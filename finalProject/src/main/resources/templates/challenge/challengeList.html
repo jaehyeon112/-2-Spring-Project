@@ -11,9 +11,12 @@
 		<h1>함께 할 수 있는 챌린지,</h1>
 		<p th:text="${challengeList[0].allParticipants}+'명 참여중'"></p>
 		<a th:href="@{/challengeInsert}">함께하고싶은 챌린지가 있으신가요?</a>
-		<p th:text=${challengeList}></p>
+		<br>
+		<br>
+		<br>
+		
 		<th:block th:each="challenge:${challengeList}">
-		<p th:text=${challenge}></p>
+		
 			<div class="row imageGallery1" id="gallery"
 				style="position: relative; height: 679.112px;">
 				<div class="col-md-4 gallery_item"

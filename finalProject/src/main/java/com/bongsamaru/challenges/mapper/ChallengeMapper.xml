@@ -48,22 +48,37 @@ SELECT  CHAL_ID,
 <!--파일첨부 리스트-->
 <select id="getFileList" resultType="ChallengesVO">
         
- SELECT F.FILE_PATH, 
-		F.FILE_ORDER, 
-		F.FILE_NAME, 
-		F.EXTENSION, 
-		F.FILE_SIZE,
-        F.CODE,
-		F.CODE_NO
-  FROM  CHALLENGE C LEFT JOIN FILES F ON C.CHAL_ID = F.CODE_NO 
-  WHERE CODE_NO=#{codeNo} 
-  AND   CODE=#{code}
-         <if test="chalId != null">
-           and CHAL_ID = #{chalId}
-         </if>
-         <if test="chalDetId != null">
-         	and CHAL_DET_ID=#{chalDetId}
-         </if>
+<choose>
+        <when test="chalDetId != null">
+            SELECT F.FILE_PATH, 
+                   F.FILE_ORDER, 
+                   F.FILE_NAME, 
+                   F.EXTENSION, 
+                   F.FILE_SIZE,
+                   F.CODE,
+                   F.CODE_NO
+            FROM FILES F 
+            LEFT JOIN CHAL_DETAIL CD ON CD.CHAL_DET_ID = F.CODE_NO
+            WHERE F.CODE_NO = #{codeNo}
+              AND F.CODE = #{code}
+              AND CD.CHAL_DET_ID = #{chalDetId}
+        </when>
+        <otherwise>
+            SELECT F.FILE_PATH, 
+                   F.FILE_ORDER, 
+                   F.FILE_NAME, 
+                   F.EXTENSION, 
+                   F.FILE_SIZE,
+                   F.CODE,
+                   F.CODE_NO
+            FROM FILES F 
+            LEFT JOIN CHALLENGE C ON C.CHAL_ID = F.CODE_NO
+            WHERE F.CODE_NO = #{codeNo}
+              AND F.CODE = #{code}
+              AND C.CHAL_ID = #{chalId}
+        </otherwise>
+    </choose>
+        
   
 </select>
 
