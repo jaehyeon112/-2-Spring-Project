@@ -16,19 +16,21 @@ public class CenterServiceImpl implements CenterService{
 	@Autowired
 	CenterMapper centerMapper;
 	
-    public CenterServiceImpl(CenterMapper centerMapper) {
-        this.centerMapper = centerMapper;
-    }
-
     @Override
     public List<FaqVO> getFaqList(PageVO vo) {
     	// TODO Auto-generated method stub
-    	return this.centerMapper.getFaqList(vo);
+    	return centerMapper.getFaqList(vo);
     }
     
     @Override
     public int getFaqCount() {
     	// TODO Auto-generated method stub
     	return centerMapper.getFaqCount();
+    }
+    
+    @Override
+    public int getFaqCategoryCount(String category) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getFaqCategoryCount(category);
     }
 }

@@ -6,49 +6,59 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PageVO {
-	
-		private int nowPage; // 현재 페이지 
-		private int startPage;
-		private int endPage;
-		private int total; // 전체페이지
-		private int cntPerPage; // 한 페이지당 보여줄 갯수
-		private int lastPage;
-		private int start; 
-		private int end;
-		private int cntPage;
-		private int PreviousPage = nowPage - 1; // 이전페이지
-		private int NextPage = nowPage + 1; // 다음페이지
-		private String category;
-		
-		public PageVO(int total, int nowPage, int cntPerPage, String category) {
-			setNowPage(nowPage);
-			setCntPerPage(cntPerPage);
-			setTotal(total);
-			calcLastPage(getTotal(), getCntPerPage());
-			calcStartEndPage(getNowPage(), cntPage);
-			calcStartEnd(getNowPage(), getCntPerPage());
-			setPreviousPage(getNowPage() - 1);
-	        setNextPage(getNowPage() + 1);
-	        setCategory(category);
-		}
-		// 제일 마지막 페이지 계산
-		public void calcLastPage(int total, int cntPerPage) {
-			setLastPage((int) Math.ceil((double)total / (double)cntPerPage));
-		}
-		// 시작, 끝 페이지 계산
-		public void calcStartEndPage(int nowPage, int cntPage) {
-			setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
-			if (getLastPage() < getEndPage()) {
-				setEndPage(getLastPage());
-			}
-			setStartPage(getEndPage() - cntPage + 1);
-			if (getStartPage() < 1) {
-				setStartPage(1);
-			}
-		}
-		// DB 쿼리에서 사용할 start, end값 계산
-		public void calcStartEnd(int nowPage, int cntPerPage) {
-			setEnd(nowPage * cntPerPage);
-			setStart(getEnd() - cntPerPage + 1);
-		}
+    private int start; // 게시글 화면에 보여질 첫번째 번호
+    private int end; // 게시글 화면에 보여질 마지막 번호 
+    private boolean prev, next; // 이전버튼, 다음버튼 활성화여부
+    private int total; // 전체게시글 수
+    private String category;
+    private int cntPerPage; // 한페이지보여줄 게시글 수
+    private int totalPage;
+    private int	currentPage;
+    private int pageSize = 5; // 한페이지보여줄 버튼수
+    
+    private int startPage;
+    private int endPage;
+
+    public PageVO(int total, int start, int end, String category) {
+        this.total = total;
+        this.category = category;
+
+        // 1. end 결정
+        this.end = Math.min(end, total);
+
+        // 2. startPage, endPage 결정
+     
+        this.cntPerPage = 10; // 1페이지에 10개씩 보여줍니다
+        this.totalPage = (int) Math.ceil((double) this.total / this.cntPerPage); // 전체 페이지 수
+        this.currentPage = (int) Math.ceil((double) start / this.cntPerPage); // 현재 페이지
+
+        this.start = (this.currentPage - 1) * this.cntPerPage + 1;
+        this.end = Math.min(this.start + this.cntPerPage - 1, this.total);  // 시작부터 페이지에 표시할 수 있는 최대 개수까지의 범위로 설정합니다.
+        
+        System.out.println(start + "시작");
+        System.out.println(end + "끝");
+        // 3. prev 결정
+        this.prev = this.currentPage > 1;
+
+        // 4. next 결정
+        this.next = this.currentPage < this.totalPage;
+
+        // 데이터가 없는 경우, end 값을 조정하여 보여줄 수 있는 범위 내에서 설정합니다.
+        if (this.start > this.total) {
+            this.start = this.total - (this.total % this.cntPerPage) + 1;
+            this.end = this.total;
+        }
+        
+        
+        // 시작페이지
+        this.startPage = (this.currentPage - 1) / this.pageSize * pageSize + 1;
+        System.out.println(this.startPage + "스타트");
+        
+        // 끝 페이지
+        
+        this.endPage = (this.currentPage-1)/this.pageSize  * this.pageSize  + this.pageSize ;
+		if ( this.endPage > this.totalPage )
+			this.endPage = this.totalPage;
+        System.out.println(this.endPage + "스타트");
+    }
 }

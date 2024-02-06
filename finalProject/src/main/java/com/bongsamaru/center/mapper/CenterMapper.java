@@ -8,5 +8,6 @@ import com.bongsamaru.common.PageVO;
 public interface CenterMapper {
 
 	public List<FaqVO> getFaqList(PageVO vo);
+	public int getFaqCategoryCount(String category);
 	public int getFaqCount();
 }

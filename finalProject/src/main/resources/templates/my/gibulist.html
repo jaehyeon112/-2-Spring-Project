@@ -23,7 +23,7 @@ th {
 thead {
   font-weight: bold;
   color: #fff;
-  background: #73685d;
+  background: #007bff;
 }
   
  td, th {
@@ -92,7 +92,7 @@ a {
 <section layout:fragment="content">
 <!-- 마이페이지 사이드바 -->
 <div class="row" style="color: black;">
-	<div class="side" th:insert="~{my/sidebar::side}"></div>
+	<div class="side col-sm-2" th:insert="~{my/sidebar::side}"></div>
   	<div class="col-sm-10">
 	  	<div class="container">
 		  <h2>기부내역</h2>
@@ -114,9 +114,9 @@ a {
 				</tr>
 			</thead>
 			   <tbody>
-			       <tr th:each="item : ${list}" onclick="redirectToDonationDetail()">
+			       <tr th:each="item : ${list}">
 			           <td class="yearCheck" th:text="${#dates.format(item.payDate, 'yyyy.MM.dd')}" style="width:100px;"></td>
-			           <td class="yearCheck">[[${item.title}]]</td>
+			           <td class="yearCheck" onclick="redirectToDonationDetail(`[[${item.donId}]`]" th:text="${item.title}">[[${item.title}]]</td>
 			           <td class="yearCheck" style="width:150px;">[[${#numbers.formatInteger(item.donAmt, 3, 'COMMA')}]]원<br>
 					   </td>
 					   <td style="width:30px; text-align:center;">
@@ -161,11 +161,13 @@ a {
 	</div>
 </div>
 
-	<script  th:inline="javascript">
+<script  th:inline="javascript">
     function redirectToDonationDetail(donId) {
-        var url = "/"
-        window.location.href = url;
+		console.log(parseInt(donId));
     }
+/*         var url = "/"
+        window.location.href = url;
+    } */
     
     $('#gibuSelect').on('change', function(e) {
         let selectOption = $(this).val();
