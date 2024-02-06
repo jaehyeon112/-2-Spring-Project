@@ -15,5 +15,6 @@ public class RemittanceVO {
 	private String checking;
 	private String facName;
 	private String title;
+	private String email;
 	private Date deadlineDate;
 }

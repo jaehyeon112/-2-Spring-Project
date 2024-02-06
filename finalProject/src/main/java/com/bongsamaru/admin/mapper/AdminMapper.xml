@@ -388,9 +388,10 @@
 	<select id="remittanceList" resultType="RemittanceVO">
 		select rem_total
 				,rem_date
-				,(select fac_id from donation where don_id=remittance.don_id) facName
+				,fac_name
 				,(select title from donation where don_id=remittance.don_id) title
 				,(select file_name from files where code='p06' and code_no=remittance.don_id) checking
+				,(select fac_email from facility where fac_name = remittance.fac_name) email
 				,deadline_date 
 		from remittance
 	</select>
@@ -398,7 +399,15 @@
 		update donation set paid_code=1 where don_id=#{donId}
 	</update>
 	<insert id="insertRemittance" parameterType="RemittanceVO">
-		insert into remittance values(rem_seq.NEXTVAL,#{donId},#{remTotal},sysdate,#{remBank},#{remAcct},TO_CHAR(SYSDATE+7, 'YYYY-MM-DD'))
+		insert into remittance 
+		values(rem_seq.NEXTVAL
+				,#{donId}
+				,#{remTotal}
+				,sysdate
+				,#{remBank}
+				,#{remAcct}
+				,TO_CHAR(SYSDATE+7, 'YYYY-MM-DD')
+				,#{facName})
 	</insert>
 	<select id="alertList" resultType="AlertVO">
 		select ALERT_ID

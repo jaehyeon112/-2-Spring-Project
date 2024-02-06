@@ -51,11 +51,22 @@ public class UserController {
 		model.addAttribute("tag", tags);
 		List<VolunteerVO> facVol = userService.facVolunteerList();
 		model.addAttribute("facVol", facVol);
-		List<AlertVO> alert = userService.alertList();
-		model.addAttribute("alert", alert);
+//		List<AlertVO> alert = userService.alertList();
+//		model.addAttribute("alert", alert);
 		return "admin/adminMain";
 	}
 	
+	@GetMapping("adminHeader")
+	@ResponseBody
+	public List<AlertVO> alert(Model model) {
+		return userService.alertList();
+	}
+
+	@GetMapping("moreInfo")
+	public String moreInfo() {
+		return "admin/moreInfo";
+	}
+
 	@GetMapping("donationList")
 	public String donationList(Model model) {
 		List<DonaVO> donaList = donaService.getDonaList();
@@ -257,7 +268,6 @@ public class UserController {
 	@ResponseBody
 	public DonaVO checkFacDonation(@RequestParam(name="donId") Integer donId) {
 		DonaVO vo = userService.checkFacDonation(donId);
-		System.out.println(vo);
 		return vo;
 	}
 	

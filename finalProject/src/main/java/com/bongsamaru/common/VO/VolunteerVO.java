@@ -28,6 +28,7 @@ public class VolunteerVO {
 	private String meetPurp;
 	private String meetDesc;
 	private String region;
+	private String oneLiner;
 	private Integer roomStat;
 	private Integer meetingCnt;
 	private Date recPeriod;

@@ -50,7 +50,7 @@ table th {
 					</tr>
 				</thead>
 				<tbody class="body">
-				 	<th:block th:each="fac,st : ${facilityList}">
+				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp==0}">
 						<tr>
 							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])">시설명</td>
 							 <td th:text="${fac.facType}" >시설유형</td>

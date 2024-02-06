@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자페이지</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
 </head>
 <body>
 <section layout:fragment="content">
@@ -91,12 +96,12 @@
        	<h3>현재 진행중인 기부 프로젝트</h3>
        	<br>
         <div class="row">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:20%" th:each="dona : ${dona}" th:if="${dona.recStat}==0">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}" th:if="${dona.recStat}==0">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
+                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="image/초록개구리.png" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
-              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 			    <span>모금중</span><br>
 				</div>
                <div class="d-flex align-items-center justify-content-between">
@@ -123,12 +128,12 @@
        	<h3>현재 진행중인 모임봉사 프로젝트</h3>
        	<br>
         <div class="row">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:20%" th:each="meet : ${meet}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="meet : ${meet}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
+                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
-              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px;left: 10px;background-color:#ffb524">
 			    <span>모집중</span><br>
 				</div>
                <div class="d-flex align-items-center justify-content-between">
@@ -153,12 +158,12 @@
        	<h3>현재 진행중인 시설봉사 프로젝트</h3>
        	<br>
         <div class="row">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:20%" th:each="facVol : ${facVol}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="facVol : ${facVol}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
+                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
-              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 			    <span>모집중</span><br>
 				</div>
                <div class="d-flex align-items-center justify-content-between">

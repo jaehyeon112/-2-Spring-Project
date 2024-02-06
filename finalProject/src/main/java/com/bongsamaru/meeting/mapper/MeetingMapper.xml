@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bongsamaru.meeting.mapper.MeetingMapper">
+	<select id="meetingInfo" resultType="VolunteerVO">
+		select VOL_ID
+			,MEET_NAME
+			,MEET_TYPE
+			,CAP
+			,MEET_PURP
+			,MEET_DESC
+			,REGION
+			,ROOM_STAT
+			,REC_PERIOD
+			,END_PERIOD
+			,MEM_ID
+			,ONE_LINER
+		from volunteer
+		where VOL_ID = #{volId}
+	</select>
+	<select id="meetingVolActList" resultType="VolActVO">
+		select VOL_ACT_ID
+			,VOL_ID
+			,CATEGORY
+			,TITLE
+			,CONTENT
+			,LOCATION
+			,CAP
+			,VOL_DATE 
+		from vol_act where vol_id = #{volId}
+	</select>
+</mapper>

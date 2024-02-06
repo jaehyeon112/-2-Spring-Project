@@ -115,6 +115,7 @@
 				let ranNo = (Math.floor((Math.random())*100000));
 			    let apiNm = "";
 			    let donIds = "";
+			    let facName = "";
 				
 				function dateFormat(value, format) {
 				    let date = value == "" ? new Date() : new Date(value);
@@ -150,6 +151,7 @@
 			           bankAcct = result.donAcct;
 			           donIds = result.donId;
 			           total = result.total;
+			           facName = result.facName;
 				    	 if(result.facBank==090){
 				    		result.facBank = "카카오뱅크";
 				    		apiNm = "ReceivedTransferOtherBank"
@@ -197,9 +199,10 @@
 				        "remTotal" : total,
 				        "remBank" : bankName,
 				        "remAcct" : bankAcct,
+				        "facName" : facName
 			       }
 					
-					$.ajax('https://developers.nonghyup.com/ReceivedTransferOtherBank.nh', {
+					$.ajax('https://developers.nonghyup.com/'+apiNm+'.nh', {
 						type:'post',
 						contentType: 'application/json',
 						data : JSON.stringify(obj),
