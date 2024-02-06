@@ -19,11 +19,13 @@ public class DonaVO {
 	    private Date extDate; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
-	    private String intro; //소개 (v2000)
+	    private String intro; //소개 (v2000) : 젤 위에표시되는 애
 	    private String introTitle;// 소개글제목
 	    private String recStat; //모집현황(c3)
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
+	    private String category; // 유형
+
 	    //전체리스트에 필요한 애들
 	    private Integer donationCount; //기부인원수
 	    private Integer donationRatio; //목표금액대비 기부금비율
@@ -43,6 +45,8 @@ public class DonaVO {
 	    private String usePlanAmt; // 기부금 사용계획 - 구체적사업비
 	    private String usePlanAmt2;
 	    private String usePlanAmt3;
+	    private String add_intro_title; //추가 소개글 제목
+	    private String add_intro; //추가소개글
     
     
     //don_ledger(기부장부) 테이블
