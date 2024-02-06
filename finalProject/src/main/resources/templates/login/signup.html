@@ -138,6 +138,7 @@
 
 		.hidden {
 			display: none;
+			margin-bottom: 0 !important;
 		}
 
 		.radio-group {
@@ -393,8 +394,11 @@
 					<div class="subheading">
 						<em class="highlight">*</em>대표자명
 					</div>
-					<input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="대표자명을 입력해주세요">
-
+					<input id="facUserName" style="display: inline;" type="text" class="form-control plus-bnt"
+						placeholder="대표자명을 입력해주세요">
+					<div class="error-message" id="facNameCheckError"></div>
+					<div id="facNameSuccess" class="hidden success-message">사용할 수
+						있습니다.</div>
 				</div>
 
 
@@ -471,17 +475,24 @@
 					<div class="subheading">
 						<em class="highlight">*</em>시설 주소
 					</div>
-					<input id="facAddr1" style="display: inline;" type="text" class="form-control" placeholder="우편번호" maxlength="5" readonly> <input
-						id="facAddr" type="button" class="btn btncolor" value="검색"> <input id="facAddr2" readonly
-						style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt" placeholder="주소"> <input
-						id="facAddr3" style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt"
+					<input id="facAddr1" style="display: inline;" type="text" class="form-control" placeholder="우편번호"
+						maxlength="5" readonly>
+					<input id="facAddr" type="button" class="btn btncolor" value="검색">
+					<div class="error-message" id="facZipCheckError"></div>
+					<input id="facAddr2" readonly style="display: inline; margin-top: 10px" type="text"
+						class="form-control plus-bnt" placeholder="주소">
+					<div class="error-message" id="facAddrCheckError"></div>
+					<input id="facAddr3" style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt"
 						placeholder="상세주소">
+
 				</div>
 				<div class="write_item facility hidden">
 					<div class="subheading">
 						<em class="highlight">*</em>설립연월
 					</div>
-					<input style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
+					<input id="facBirth" style="display: inline;" type="date" class="form-control" placeholder="연락처를 입력해주세요">
+					<div class="error-message" id="facBirthError"></div>
+
 				</div>
 			</div>
 
@@ -494,6 +505,7 @@
 					</div>
 					<input style="display: inline;" id="facName" type="text" class="form-control  plus-bnt"
 						placeholder="시설명을 입력해주세요">
+					<div class="error-message" id="facNameError"></div>
 				</div>
 				<div class="write_item facility hidden">
 					<div class="subheading">
@@ -505,6 +517,20 @@
 					<div class="error-message" id="facAuthError"></div>
 					<div id="facAuthSuccess" class="hidden success-message">인증번호가 확인되었습니다.</div>
 				</div>
+			</div>
+
+			<div class="write_item facility hidden">
+				<div class="subheading">
+					<em class="highlight">*</em>시설 유형
+				</div>
+				<select id="facType" class="form-control" required>
+					<option value="">시설 유형을 선택하세요</option>
+					<option th:each="facilityType : ${category}" th:value="${facilityType.id}" th:text="${facilityType.name}"
+						th:if="${facilityType.id.startsWith('f')}">
+						시설 유형
+					</option>
+				</select>
+				<div class="error-message" id="facTypeError"></div>
 			</div>
 
 			<div class="write_item_row">
@@ -558,13 +584,14 @@
 
 			<div class="write_item facility hidden">
 				<div class="subheading">시설 홈페이지 주소</div>
-				<input style="display: inline;" type="text" class="form-control plus-bnt" placeholder="example@gmail.com">
+				<input id="facHomePage" style="display: inline;" type="text" class="form-control plus-bnt"
+					placeholder="example@gmail.com">
 
 			</div>
 			<div class="facility hidden">
 
 				<div class="subheading">시설 소개</div>
-				<textarea style="display: inline; width: 100%;" class="form-control plus-bnt" rows="5"></textarea>
+				<textarea id="facIntro" style="display: inline; width: 100%;" class="form-control plus-bnt" rows="5"></textarea>
 			</div>
 
 			<div class="d-flex justify-content-center ">
@@ -654,8 +681,8 @@
 						onclick="toggleAllChecks(this.checked)"> <label class="check-btn" for="serviceAllChk">서비스
 						항목에 모두 동의합니다</label></li>
 
-				<li class="checkbox-option"><input id="individualChk1" name="individualChk" type="checkbox"
-						onclick="checkIndividual()"> <label class="check-btn" for="individualChk1">14세
+				<li class="checkbox-option user"><input class="user" id="individualChk1" name="individualChk" type="checkbox"
+						onclick="checkIndividual()"> <label class="check-btn user" for="individualChk1">14세
 						이상입니다.(필수)</label></li>
 				<li class="checkbox-option"><input id="individualChk2" name="individualChk" type="checkbox"
 						onclick="checkIndividual()"> <label class="check-btn" for="individualChk2">봉사마루
@@ -684,19 +711,21 @@
 			let receiptNO = true;
 			let receiptYes = false;
 			let isDenYes = false;
-			let vaildFac = {
+			let facValid = {
 				isUserId: false,
-				isName: false,
-				isPhone: false,
-				isEmail: false,
-				isFacBirth: false,
+				//isPhone: false,
+				//isEmail: false,
+				isfacAuthBnt: false,
+				isCheckBox2: false,
+				isCheckBox3: false,
+				isfacType: false
 			}
 
 			let valid = {
 				isUserId: false,
 				isNick: false,
 				//isPhone: false,
-				isEmail: false,
+				//isEmail: false,
 				isbirth: false,
 				isCheckBox1: false,
 				isCheckBox2: false,
@@ -778,27 +807,27 @@
 			$('#idCheck').on('click', function () {
 				let memId = $('#userId').val();
 				if (validateUserId()) {
-					if (userCheck) {
-						$.ajax({
-							url: '/idCheck/' + memId,
-							type: 'get',
-							success: function (result) {
-								console.log(result)
-								if (result) {
-									alert('사용할 수 있는 아이디입니다.')
-									valid.isUserId = true;
-									$('#userIdSuccess').removeClass('hidden');
-								} else {
-									alert('이미 존재하는 아이디입니다.')
-									$('#userIdError').text('이미 존재하는 아이디입니다.').show();
-								}
-							},
-							error: function (reject) {
-								alert('먼가 오류임!')
-								console.log(reject);
+					$.ajax({
+						url: '/idCheck/' + memId,
+						type: 'get',
+						success: function (result) {
+							console.log(result)
+							if (result) {
+								alert('사용할 수 있는 아이디입니다.')
+								console.log(result);
+								valid.isUserId = true;
+								facValid.isUserId = true;
+								$('#userIdSuccess').removeClass('hidden');
+							} else {
+								alert('이미 존재하는 아이디입니다.')
+								$('#userIdError').text('이미 존재하는 아이디입니다.').show();
 							}
-						});
-					}
+						},
+						error: function (reject) {
+							alert('먼가 오류임!')
+							console.log(reject);
+						}
+					});
 				}
 			})
 
@@ -878,9 +907,14 @@
 				// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
 				checkboxes.forEach(function (checkbox) {
 					checkbox.checked = isChecked;
-					valid.isCheckBox1 = isChecked;
-					valid.isCheckBox2 = isChecked;
-					valid.isCheckBox3 = isChecked;
+					if (userCheck) {
+						valid.isCheckBox1 = isChecked;
+						valid.isCheckBox2 = isChecked;
+						valid.isCheckBox3 = isChecked;
+					} else {
+						facValid.isCheckBox2 = isChecked;
+						facValid.isCheckBox3 = isChecked;
+					}
 				});
 			}
 
@@ -899,7 +933,6 @@
 				} else {
 					valid.isCheckBox1 = false;
 				}
-				console.log(valid.isCheckBox1);
 			})
 			$('#individualChk2').on('click', function () {
 				if (valid.isCheckBox2 == false) {
@@ -907,7 +940,12 @@
 				} else {
 					valid.isCheckBox2 = false;
 				}
-				console.log(valid.isCheckBox2);
+
+				if (facValid.isCheckBox2 == false) {
+					facValid.isCheckBox2 = true;
+				} else {
+					facValid.isCheckBox2 = false;
+				}
 			})
 			$('#individualChk3').on('click', function () {
 				if (valid.isCheckBox3 == false) {
@@ -915,7 +953,12 @@
 				} else {
 					valid.isCheckBox3 = false;
 				}
-				console.log(valid.isCheckBox3);
+
+				if (facValid.isCheckBox3 == false) {
+					facValid.isCheckBox3 = true;
+				} else {
+					facValid.isCheckBox3 = false;
+				}
 			})
 
 			$('#receiptYes').on('click', function () {
@@ -938,6 +981,22 @@
 				userCheck = false;
 				facilityCheck = true;
 				$('.error-message').hide();
+				// 여기
+				const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+				document.querySelector('input[name="serviceAllChk"]').checked = false;
+				// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
+				checkboxes.forEach(function (checkbox) {
+					checkbox.checked = false;
+					if (userCheck) {
+						valid.isCheckBox1 = false;
+						valid.isCheckBox2 = false;
+						valid.isCheckBox3 = false;
+					} else {
+						facValid.isCheckBox2 = false;
+						facValid.isCheckBox3 = false;
+					}
+
+				})
 			})
 			$('#member').on('click', function () {
 				$('.user').removeClass('hidden');
@@ -945,6 +1004,25 @@
 				userCheck = true;
 				facilityCheck = false;
 				$('.error-message').hide();
+				// 여기
+				const checkboxes = document.querySelectorAll('input[name="individualChk"]');
+				document.querySelector('input[name="serviceAllChk"]').checked = false;
+				// 각 체크박스의 체크 상태를 '모두 선택' 체크박스의 상태와 동일하게 설정합니다.
+				checkboxes.forEach(function (checkbox) {
+					checkbox.checked = false;
+					if (userCheck) {
+						valid.isCheckBox1 = false;
+						valid.isCheckBox2 = false;
+						valid.isCheckBox3 = false;
+					} else {
+						facValid.isCheckBox2 = false;
+						facValid.isCheckBox3 = false;
+					}
+
+				})
+
+
+
 			})
 
 			$('#idenYes').on('click', function () {
@@ -1062,14 +1140,10 @@
 					// 아이디 유효성 검사
 
 					if (valid.isUserId == false) {
-						console.log('체크는?' + isUserId);
 						$('#userIdError').text('아이디 중복체크를 해주세요.').show();
 						isValid = false;
-						alert('1');
 					} else if (!validateUserId()) {
 						isValid = false;
-						alert('2');
-
 					}
 					// 닉네임 유효성 검사
 					if (valid.isNick == false) {
@@ -1159,13 +1233,11 @@
 					if (!zipCheckValue) {
 						$('#zipCheckError').text('우편번호를 입력해주세요.').show();
 						isValid = false;
-						alert('14');
 					} else {
 						zipCheckValue = zipCheckValue.replace(/\s+/g, ''); // 공백 제거
 						if (zipCheckValue === '') {
 							$('#zipCheckError').text('우편번호에 공백을 포함할 수 없습니다.').show();
 							isValid = false;
-							alert('15');
 						}
 					}
 
@@ -1174,13 +1246,11 @@
 					if (!addrCheckValue) {
 						$('#addrCheckError').text('주소를 입력해주세요.').show();
 						isValid = false;
-						alert('16');
 					} else {
 						addrCheckValue = addrCheckValue.replace(/\s+/g, ''); // 공백 제거
 						if (addrCheckValue === '') {
 							$('#addrCheckError').text('주소에 공백을 포함할 수 없습니다.').show();
 							isValid = false;
-							alert('17');
 						}
 					}
 
@@ -1242,6 +1312,8 @@
 						}, 'slow');
 						return;
 					}
+
+
 					const falseKeys = [];
 					// 객체의 키-값 쌍을 반복하면서 false 값을 찾음
 					Object.entries(valid).forEach(([key, value]) => {
@@ -1312,6 +1384,28 @@
 
 				});
 			})
+
+			function validateFacType() {
+				let facType = $('#facType').val(); // 선택된 시설 유형의 value 값을 가져옵니다.
+				let isValid = true; // 유효성 플래그 설정
+				$('#facTypeError').hide(); // 초기화: 이전에 표시된 오류 메시지 숨기기
+
+				// 시설 유형이 선택되었는지 확인
+				if (facType == "") {
+					$('#facTypeError').text('시설 유형을 선택해주세요.').show();
+					isValid = false;
+					facValid.isfacType = false;
+				}
+				facValid.isfacType = true;
+
+				return isValid; // 유효성 결과 반환
+			}
+
+			// 시설 유형 선택 드롭다운에서 변경 이벤트 발생 시 유효성 검사 수행
+			$('#facType').on('change', validateFacType);
+
+
+
 			document.getElementById('imageInput').addEventListener('change', function (event) {
 				var label = document.querySelector('.custom-file-label');
 				var fileChosen = document.getElementById('file-chosen');
@@ -1396,29 +1490,229 @@
 							$('#emailCheck').attr("readonly", true);
 							$('#emailAuthCheck').attr("readonly", true);
 							valid.isEmail = true;
+							facValid.isEmail = true;
 						} else {
 							alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
 						}
 					},
 				});
 			})
+			// 시설 회원가입
+			$('#signUpFacility').on('click', function () {
+				let isValid = true;
+				$('.error-message').hide();
+				$('.success-message').addClass('hidden')
+				if (facValid.isUserId == false) {
+					$('#userIdError').text('아이디 중복체크를 해주세요.').show();
+					isValid = false;
+				} else if (!validateUserId()) {
+					isValid = false;
+				}
+
+				// 비밀번호 유효성 검사
+				let passCheckValue = $('#passCheck').val();
+				const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+				if (!passCheckValue) {
+					$('#passCheckError').text('비밀번호를 입력해주세요.').show();
+					isValid = false;
+				} else {
+					passCheckValue = passCheckValue.replace(/\s+/g, ''); // 공백 제거
+					if (passCheckValue === '') {
+						$('#passCheckError').text('비밀번호에 공백을 포함할 수 없습니다.').show();
+						isValid = false;
+					} else if (!passwordRegex.test(passCheckValue)) {
+						$('#passCheckError').text('비밀번호는 8자 이상이며, 숫자와 특수문자를 포함해야 합니다.').show();
+						isValid = false;
+					}
+				}
+
+				// 비밀번호 확인 유효성 검사
+				let passCheck2Value = $('#passCheck2').val();
+				if (!passCheck2Value) {
+					$('#passCheck2Error').text('비밀번호 확인을 입력해주세요.').show();
+					isValid = false;
+				} else {
+					passCheck2Value = passCheck2Value.replace(/\s+/g, ''); // 공백 제거
+					if (passCheck2Value === '') {
+						$('#passCheck2Error').text('비밀번호 확인에 공백을 포함할 수 없습니다.').show();
+						isValid = false;
+					} else if (passCheck2Value !== passCheckValue) {
+						$('#passCheck2Error').text('비밀번호가 서로 일치하지 않습니다.').show();
+						$('#passCheck1Error').text('비밀번호가 서로 일치하지 않습니다.').show();
+						isValid = false;
+					}
+				}
+
+				// 휴대폰 본인인증 유효성 검사
+				let phoneCheckValue = $('#phoneCheck').val();
+				phoneCheckValue = phoneCheckValue.replace(/[^0-9]/g, '');
+				if (!phoneCheckValue) {
+					$('#phoneCheckError').text('휴대폰 번호를 입력해주세요.').show();
+					isValid = false;
+					alert('10');
+				} else {
+					phoneCheckValue = phoneCheckValue.replace(/\s+/g, ''); // 공백 제거
+					if (phoneCheckValue === '') {
+						$('#phoneCheckError').text('휴대폰 번호에 공백을 포함할 수 없습니다.').show();
+						isValid = false;
+						alert('11');
+					}
+				}
+
+				// 이메일 유효성 검사
+
+				if (facValid.isEmail == false) {
+					$('#emailError').text('이메일을 인증검사 받아야합니다.').show();
+					isValid = false;
+				} else if (!validateEmail()) {
+					isValid = false;
+				}
+
+				// 대표자명 유효성 검사
+				if (!validateRealName()) {
+					isValid = false;
+				}
+				// 시설 주소 유효성 검사
+				let zipCheckValue = $('#facAddr1').val();
+				if (!zipCheckValue) {
+					$('#facZipCheckError').text('우편번호를 입력해주세요.').show();
+					isValid = false;
+				} else {
+					zipCheckValue = zipCheckValue.replace(/\s+/g, ''); // 공백 제거
+					if (zipCheckValue === '') {
+						$('#facZipCheckError').text('우편번호에 공백을 포함할 수 없습니다.').show();
+						isValid = false;
+					}
+				}
+
+				let addrCheckValue = $('#facAddr2').val();
+				if (!addrCheckValue) {
+					$('#facAddrCheckError').text('주소를 입력해주세요.').show();
+					isValid = false;
+				} else {
+					addrCheckValue = addrCheckValue.replace(/\s+/g, ''); // 공백 제거
+					if (addrCheckValue === '') {
+						$('#facAddrCheckError').text('주소에 공백을 포함할 수 없습니다.').show();
+						isValid = false;
+					}
+				}
+
+				// 설립 연월 유효성 검사
+				let facBirthValue = $('#facBirth').val();
+				if (!facBirthValue) {
+					$('#facBirthError').text('설립 연월을 입력해주세요.').show();
+					isValid = false;
+				}
+
+				// 시설명 유효성 검사
+				let facNameValue = $('#facName').val();
+				if (!facNameValue) {
+					$('#facNameError').text('시설명을 입력해주세요.').show();
+					isValid = false;
+				}
+
+				// 사업자 등록번호 유효성 검사
+				let facAuthValue = $('#facAuth').val();
+				if (!facAuthValue) {
+					$('#facAuthError').text('사업자등록번호를 입력해주세요.').show();
+					isValid = false;
+				} else if (facAuthValue.replace(/\s+/g, '') === '') {
+					$('#facAuthError').text('사업자등록번호에 공백을 포함할 수 없습니다.').show();
+					isValid = false;
+				}
+
+
+
+
+
+				if (!isValid) {
+					$('html, body').animate({
+						scrollTop: $('.error-message:visible:first').offset().top
+					}, 'slow');
+					return;
+				}
+
+				const areAllTrue = Object.values(facValid).every(value => value === true);
+				console.log(areAllTrue)
+
+				if (areAllTrue) {
+
+
+					let facObj = {
+						facId: $('#userId').val(),
+						bizNum: $('#facAuth').val(),
+						facPwd: $('#passCheck').val(),
+						facName: $('#facName').val(),
+						facType: $('#facType').val(), // 사용자 입력을 받거나 다른 로직에 따라 채워야 할 수 있음
+						facZip: $('#facAddr1').val(),
+						facAddr: $('#facAddr2').val(),
+						facAddrDetail: $('#facAddr3').val(),
+						facEstDate: $('#facBirth').val(),
+						facEmail: $('#emailCheck').val(),
+						facWeb: $('#facHomePage').val(),
+						facIntro: $('#facIntro').val(),
+						repName: $('#facUserName').val(),
+						repPhone: $('#phoneCheck').val(),
+					};
+
+					console.log(facObj)
+
+					let formData = new FormData();
+					formData.append("facilityVO", JSON.stringify(facObj));
+					var inputFile = $("input[type='file']");
+					var files = inputFile[0].files;
+					for (var i = 0; i < files.length; i++) {
+						formData.append("files", files[i]);
+					}
+
+						$.ajax({
+							type: "POST",
+							url: "/facilitySignUp",
+							data: formData, // Convert your object to a JSON string
+							processData: false, // 데이터를 쿼리 문자열로 변환하지 않도록 설정
+							contentType: false, // 기본값인 application/x-www-form-urlencoded로 설정하지 않도록 설정
+							success: function (res) {
+								console.log(res); // Handle the response from the server here
+								window.location.href = '/'
+							},
+							error: function (xhr, status, error) {
+								// Handle errors here
+								console.error("Error occurred: ", status, error);
+							}
+						});
+
+					
+
+				} else {
+					alert('머ㅏ임;')
+				}
+			})
 
 			// 실명 유효성 검사 함수
 			function validateRealName() {
-				let realName = $('#nameCheck').val();
+				let realName = "";
+				let errorMsg = "";
+				if (userCheck) {
+					realName = $('#nameCheck').val();
+					errorMsg = $('#nameCheckError')
+				} else {
+					realName = $('#facUserName').val();
+					errorMsg = $('#facNameCheckError')
+				}
+
 				let isRealNameValid = true;
 
-				$('#nameCheckError').hide(); // 에러 메시지 초기화
+				errorMsg.hide(); // 에러 메시지 초기화
 
 				// 실명 입력 여부 확인
 				if (!realName) {
-					$('#nameCheckError').text('실명을 입력해주세요.').show();
+					errorMsg.text('이름을 입력해주세요.').show();
 					isRealNameValid = false;
 				} else {
 					// 한글만 포함되어 있는지 확인
 					const koreanRegex = /^[가-힣]+$/;
 					if (!koreanRegex.test(realName)) {
-						$('#nameCheckError').text('실명은 한글만 가능합니다.').show();
+						errorMsg.text('이름은 한글만 가능합니다.').show();
 						isRealNameValid = false;
 					}
 				}
@@ -1485,6 +1779,9 @@
 									if (result) {
 										$('#facAuthError').hide();
 										$('#facAuthSuccess').removeClass('hidden');
+										facValid.isfacAuthBnt = true;
+										$('#facAuth').attr('readonly', true)
+
 									} else {
 										$('#facAuthError').text('이미 등록된 사업자 등록번호 입니다.').show();
 										$('#facAuthSuccess').addClass('hidden');

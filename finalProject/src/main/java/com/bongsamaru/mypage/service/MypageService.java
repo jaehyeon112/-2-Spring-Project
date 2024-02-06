@@ -12,4 +12,5 @@ public interface MypageService {
 	public Integer getSumAmt(String memId);
 	public Integer getGibuCount(String memId);
 	public List<DonledgerVO> getGibuList(String memId);
+	public boolean insertHeart(HeartVO vo);
 }

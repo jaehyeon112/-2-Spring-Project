@@ -110,6 +110,7 @@ or main_code_id = 'f'
 						,fac_intro 
 						,rep_name 
 						,rep_phone
+						,fac_type
 				)values(
 						#{facId}
 					   ,#{facPwd}
@@ -124,6 +125,7 @@ or main_code_id = 'f'
 					   ,#{facIntro}
 					   ,#{repName}
 					   ,#{repPhone}
+					   ,#{facType}
 									)
 	</insert>
 	

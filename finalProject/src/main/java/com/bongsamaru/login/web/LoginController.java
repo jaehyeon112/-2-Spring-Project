@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.file.service.FileService;
+import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.user.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,6 +31,9 @@ public class LoginController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MypageMapper mypageMapper;
 	
 	@Autowired
 	private FileService fileService;
@@ -50,6 +55,35 @@ public class LoginController {
 	public Boolean idNick(@PathVariable String memNick) {
 		return userService.countMemId(memNick);
 	}
+	
+	@PostMapping("/facilitySignUp")
+	@ResponseBody
+	public ResponseEntity<String> facilitySignUp(@RequestParam(value = "files", required = false) MultipartFile[] files 
+											   , @RequestParam("facilityVO") String facilityVO){
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		FacilityVO vo = new FacilityVO();
+		try {
+			vo = objectMapper.readValue(facilityVO, FacilityVO.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		if(userService.insertFac(vo)) {
+			if(files != null && files.length > 0 ) {
+				try {
+					fileService.uploadFiles(files,"p02",1,vo.getFacId());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return ResponseEntity.ok("회원가입 성공!");
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패");
+			}
+	}
+			
+	
 	
 	@PostMapping("/userSignUp")
 	@ResponseBody
@@ -75,7 +109,7 @@ public class LoginController {
 		if( userService.userInsert(vo, categories ) ) {
 			if(files != null && files.length > 0 ) {
 				try {
-					fileService.uploadFiles(files,"p01",vo.getMemId());
+					fileService.uploadFiles(files,"p01",0,vo.getMemId());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

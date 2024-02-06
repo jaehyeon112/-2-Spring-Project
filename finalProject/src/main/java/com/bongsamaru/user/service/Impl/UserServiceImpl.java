@@ -14,6 +14,8 @@ import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.mypage.mapper.MypageMapper;
+import com.bongsamaru.mypage.service.HeartVO;
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.user.service.UserDetailVO;
 import com.bongsamaru.user.service.UserService;
@@ -23,6 +25,8 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Autowired
 	UserMapper userMapper;
 	
+	@Autowired
+	MypageMapper mypageMapper;
 	
 	
 	@Override
@@ -51,9 +55,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Override
 	public Boolean countMemId(String memId) {
 		if(userMapper.countMemId(memId) == 1){
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -66,7 +70,12 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Override
 	public Boolean insertFac(FacilityVO vo) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+		String result = encoder.encode(vo.getFacPwd());
+		vo.setFacPwd(result);
+		
 		if(userMapper.facilitySignUp(vo)==1) {
+			
 			return true;
 		}
 		return false;	
@@ -93,6 +102,11 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		String result = encoder.encode(vo.getMemPwd());
 		vo.setMemPwd(result);
 		if(insertUser(vo)) {
+			HeartVO heart = new HeartVO();
+			heart.setMemId(vo.getMemId());
+			heart.setTempCode("j01");
+			heart.setTempChange(36.5);
+			mypageMapper.insertHeart(heart);
 			 if (cate != null && !cate.isEmpty()) {
 				 for(String one : cate) {
 					 insertCate(vo.getMemId(),one);

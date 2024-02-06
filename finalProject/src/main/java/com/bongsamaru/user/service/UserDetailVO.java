@@ -34,6 +34,9 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list = new ArrayList<>();
+		if(userVO.getMemStat()==null){
+			userVO.setMemStat("M03");
+		}
 		list.add(new SimpleGrantedAuthority("ROLE_" +  userVO.getMemStat().toUpperCase()));
 		System.out.println(list);
 		return list;
@@ -52,7 +55,7 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	}
 	
 	public String getUserNickname() {
-		return userVO.getNick();
+		return userVO.getMemName();
 	}
 	
 	public UserFacilityVO getUserVO() {

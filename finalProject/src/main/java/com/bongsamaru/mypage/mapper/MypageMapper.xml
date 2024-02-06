@@ -44,4 +44,17 @@
 		UPDATE MEMBER SET mem_Email = #{memEmail}
 		WHERE mem_Id = #{memId}
 	</update>
+	
+	<insert id="insertHeart" parameterType="HeartVO">
+	insert into heart 
+					( heart_temp_id
+					  ,Mem_id
+					  ,temp_code
+					  ,temp_change
+					  )values(
+						HEARTTEMP_SEQ.nextVal, 
+						#{memId}
+						,#{tempCode}
+						,#{tempChange});
+	</insert>
 </mapper>

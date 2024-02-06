@@ -27,7 +27,7 @@ public class FileService {
     @Value("${file.upload.path}")
     private String uploadPath;
 
-    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, String codeNo) throws IOException {
+    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user) throws IOException {
         List<String> imageList = new ArrayList<>();
 
         for(MultipartFile uploadFile : uploadFiles) {
@@ -36,7 +36,7 @@ public class FileService {
                 return null;
             }
 
-            String uploadFileName = handleFileUpload(uploadFile, code, codeNo);
+            String uploadFileName = handleFileUpload(uploadFile, code, codeNo, user);
             imageList.add("/upload/" + uploadFileName); // 이미지 URL 형식으로 변환하여 추가
         }
 
@@ -47,10 +47,10 @@ public class FileService {
         return file.getContentType() != null && file.getContentType().startsWith("image");
     }
 
-    private String handleFileUpload(MultipartFile uploadFile, String code, String codeNo) throws IOException {
+    private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user) throws IOException {
         printFileInfo(uploadFile);
         String uploadFileName = prepareFilePath(uploadFile);
-        saveFileMetadata(uploadFile, uploadFileName, code, codeNo);
+        saveFileMetadata(uploadFile, uploadFileName, code, codeNo, user);
         return uploadFileName;
     }
 
@@ -82,7 +82,7 @@ public class FileService {
     }
 
 
-    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, String codeNo) {
+    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String user) {
         String originalName = uploadFile.getOriginalFilename();
         long fileSize = uploadFile.getSize();
         String contentType = uploadFile.getContentType();
@@ -94,6 +94,7 @@ public class FileService {
         fileVO.setExtension(contentType);
         fileVO.setCode(code);
         fileVO.setCodeNo(codeNo);
+        fileVO.setCodeUser(user);
         fileMapper.insertFile(fileVO);
     }
 
