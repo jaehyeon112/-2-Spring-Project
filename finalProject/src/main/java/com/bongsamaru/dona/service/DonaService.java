@@ -20,7 +20,7 @@ public interface DonaService {
 	
 	
 	//댓글 리스트
-	public List<DonaVO> getCommentList(Integer donId);
+	public List<DonaVO> getCommentList(Integer detailCode);
 	
 	//댓글 등록하기
 	public int insertComment(DonaVO donaVO);

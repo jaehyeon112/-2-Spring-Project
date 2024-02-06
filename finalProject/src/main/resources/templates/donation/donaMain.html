@@ -31,11 +31,21 @@
 
         <!-- Template Stylesheet -->
         <link href="donation/board/css/style.css" rel="stylesheet">
+		<style>
+.bg-secondary{
+background-color: #ccc !important; 
+}
+</style>
+
+
     </head>
+
+
 
     <body>
 	
 	<section layout:fragment="content">
+
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -123,7 +133,7 @@
                                <div class="col-md-6 col-lg-6 col-xl-4 "  id="result-container" th:each="dona : ${list}">
 								  <div class="rounded position-relative fruite-item" style="filter: grayscale(${dona.recStat} != '0' ? 1 : 0)">
 								     <div class="fruite-img">
-								        <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
+								        <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" style="height:250px" alt="">
 								      </div>
 								        
 								        

@@ -7,7 +7,8 @@
 */ -->
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+	 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,7 +38,9 @@
 
 	<body>
 	 <section layout:fragment="content">
-
+ 
+        사용자 아이디: <span sec:authentication="name"></span>
+    
 
 		<!-- Start Hero Section -->
 			<div class="hero">
@@ -66,8 +69,7 @@
 		          <h2 class="h3 mb-3 text-black">기부하기</h2>
 		          <div class="p-3 p-lg-5 border bg-white">
 
-
-
+		
 		            <div class="form-group row">
 		              <div class="col-md-12">
 		                <label for="c_address" class="text-black">기부할 금액 <span class="text-danger">*</span></label>
@@ -99,7 +101,7 @@
 			                    <button type="button" class="btn btn-info btn-block " id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-warning btn-block " id="kakaoPayBtn" onclick="selectPaymentMethod('kakaoPay')">카카오페이</button>
+			                    <button type="button" class="btn btn-warning btn-block " id="kakaoPayBtn" onclick="selectPaymentMethod('kakao')">카카오페이</button>
 			                </div>
 			                <div class="col-md-3 mb-3">
 			                    <button type="button" class="btn btn-success btn-block " id="tossPayBtn" onclick="selectPaymentMethod('toss')">토스페이</button>
@@ -142,21 +144,33 @@
 		
 
 		
-		<script>
+
+		
+		
+		<script th:inline="javascript">
+		
+			//DonId 가져오기
+			function getParam(param){
+				let urlParam = new URLSearchParams(window.location.search);
+				console.log("유알엘파람"+ urlParam);
+				
+				return urlParam.get(param);
+			}
+				let donId = getParam("donId");
+				console.log("앞에서 가져온 돈아이디"+ donId);
+			
+		
 		    //입력 -> 표
 		    document.getElementById('c_address').addEventListener('input', function() {
 		        let amountInput = this.value;
 		        // 표 업데이트
 		    	document.getElementById('displayAmount').textContent = amountInput + '원';
 		    });
+		
 		    
-
-		</script>	
+		 
+		//결제결제결제
 		
-		
-		<script>
-		
-			
 			let selectedPaymentMethod = '';  //결제수단 
 			
 			function selectPaymentMethod(paymentMethod){
@@ -165,11 +179,14 @@
 			}
 		
 			function getPg(paymentMethod){
+				console.log(paymentMethod, "asdfasdf")
 				switch(paymentMethod){
 					case 'deposit':
 						return '무통장';
 					case 'kakao':
-						return 'kakaopay.TC0ONETIME';	
+						console.log('넌 카카오');
+						return 'kakaopay.TC0ONETIME';
+						
 					case 'toss':
 						return 'tosspay';	
 					case 'card':
@@ -179,12 +196,13 @@
 				} 
 			}
 			
-
+	
+			 
+			 function requestPay() {
+			        	
 			 var IMP = window.IMP;
 			 IMP.init("imp48428178");
 			
-			 function requestPay() {
-			        	
 				    let amountInput = document.getElementById('c_address').value;
 				    let agreementCheckbox = document.getElementById('c_ship_different_address');
 				    
@@ -202,18 +220,18 @@
 				        return;
 				    }
 
-				    // 오늘 날짜 구하기
+				    // 날짜
 				    let today = new Date();
 				    let year = today.getFullYear();
 				    let month = today.getMonth() + 1;
 				    let day = today.getDate();
 
-				    // 시간 구하기
+				    // 시간 
 				    let hours = today.getHours();
 				    let minutes = today.getMinutes();
 				    let seconds = today.getSeconds();
 
-				    // 10보다 작은 경우 앞에 0 추가
+				    
 				    month = month < 10 ? '0' + month : month;
 				    day = day < 10 ? '0' + day : day;
 				    hours = hours < 10 ? '0' + hours : hours;
@@ -223,53 +241,60 @@
 				    let currentDate = year + '-' + month + '-' + day;
 				    let currentTime = hours + ':' + minutes + ':' + seconds;
 
-				    // 결제 일자 및 결제 번호 생성
-				    let payDate = currentDate + ' ' + currentTime;
-				    let payId = 'merchant' + currentDate.replace(/-/g, '') + '-' + currentTime.replace(/:/g, '');
+				    // 결제 일자 , 결제 번호 
+				    let payDate = currentDate 
+				    	console.log("페이데이트")
+				    	console.log(payDate);
+				    let payId = currentDate.replace(/-/g, '') + currentTime.replace(/:/g, '');
 
-				    // 세션에서 회원 아이디를 가져오는 부분
-				    let memId = "${list.memId}";
+				    // **세션에서 회원 아이디를 가져오는 부분
+				  
+				    let memId =  [[${#authentication.name}]];
 
-				    // 여기서 익명 체크 여부를 어떻게 가져오는지에 따라 수정이 필요할 수 있습니다.
-				    let anonCheck = document.getElementById('c_create_account').checked; // 익명 체크 여부
+				    // 익명 체크 여부
+				    let anonCheck = document.getElementById('c_create_account').checked; 
+				    console.log(anonCheck);
 
-				    // 여기서 donId의 title 값을 가져오는 코드를 작성해주세요.
-				    // 아래는 예시로 "노르웨이 회전 의자"로 임시로 지정한 것입니다.
-				    let donTitle = "노르웨이 회전 의자";
+				   
 
-				    // 나머지 코드는 변경하지 않고 유지
+				 
 				    IMP.request_pay({
 				        pg: getPg(selectedPaymentMethod),
 				        pay_method: selectedPaymentMethod,
 				        merchant_uid: "ORD" + currentDate.replace(/-/g, '') + '-' + currentTime.replace(/:/g, ''),
-				        name: donTitle,
+				        name: donId,
 				        amount: parseInt(amountInput),
-				    }, function (rsp) {
+				    }, function (rsp ){
+				    	console.log(rsp)
+				    	if(rsp.success){
 				        $.ajax({
 				            type: 'POST',
 				            url: '/paymentProcess',
 				            contentType: 'application/json', 
 				            data: 
 				            	JSON.stringify({
-				                donLedId: 'DONLEDGER_SEQ.NEXTVAL', // 이 부분은 사용하는 DBMS에 따라 시퀀스를 어떻게 다루는지에 따라 수정이 필요합니다.
+				                //donLedId: 'DONLEDGER_SEQ.NEXTVAL', 
 				                donAmt: parseInt(amountInput),
 				                payMethod: selectedPaymentMethod,
 				                payDate: payDate,
 				                payStat: 'g01',
 				                payId: payId,
 				                anonCheck: anonCheck,
-				                memId: memId
+				                memId: memId,
+				                donId: donId
 				            	})
 				            
 			         }).done(function(data) {
-			             if(rsp.paid_amount === data.response.amount){
-			                alert("결제 성공");
-			              } else {
-			                alert("결제 실패");
-			              }
+			        	 console.log(data);
+			        	 window.location.href = "/paymentComplete";
 			          });
+				    	}else{
+				    		alert("실패실패실패!")
+				    	}
 			       });
 			     }
+			 
+			 
    		 </script>
    	</section>
 	</body>

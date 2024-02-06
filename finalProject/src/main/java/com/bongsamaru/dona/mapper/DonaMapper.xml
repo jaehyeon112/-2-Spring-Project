@@ -80,18 +80,20 @@
 		INSERT INTO comments
 			(
 			comm_id
+			, mem_id
 			, content
 			, comm_date
 			, code
-			 , parent_id
+			 , detail_code
 			)
 		VALUES
 			(
 			#{commId}
+			,#{memId}
 			, #{content}
 			, sysdate
 			,'c01'
-			, #{donId}
+			, #{detailCode}
 			)	
 	</insert>
  	
@@ -99,15 +101,13 @@
  <!--  댓글 리스트 -->
  	<select id = "getCommentsList" resultType="DonaVO">
 	 	SELECT 
-	 		c.comm_id 
-	        , c.mem_id
-	        , c.content
-	        , c.comm_date
-	        , c.parent_id
-		FROM comments c 
-		JOIN donation d ON c.parent_id = d.don_id
-		JOIN member m  ON c.mem_id = m.mem_id
-		WHERE d.don_id = #{donId}
+	 		mem_id
+	        , content
+	        ,  comm_date
+	    
+		FROM comments
+		WHERE detail_code = #{detailCode}
+		
  	</select>
  	
  	

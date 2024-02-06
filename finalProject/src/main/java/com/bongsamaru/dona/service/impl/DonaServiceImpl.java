@@ -40,10 +40,11 @@ public class DonaServiceImpl implements DonaService {
 	
 //댓글 리스트
 	@Override
-	public List<DonaVO> getCommentList(Integer donId) {
-		return donaMapper.getCommentsList(donId);
+	public List<DonaVO> getCommentList(Integer detailCode) {
+		return donaMapper.getCommentsList(detailCode);
 	}
-
+	
+//댓글달기
 	@Override
 	public int insertComment(DonaVO donaVO) {
 		int result = donaMapper.insertComment(donaVO);
@@ -53,8 +54,6 @@ public class DonaServiceImpl implements DonaService {
 			return -1; 
 		}
 	}
-	
-
 	
 	
 	@Override

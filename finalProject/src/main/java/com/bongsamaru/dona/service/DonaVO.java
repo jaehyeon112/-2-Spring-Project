@@ -50,9 +50,10 @@ public class DonaVO {
 	    //private Integer donId; 
 	    private Integer donAmt; // 기부금액
 	    private String payMethod; //결제수단 (notnull)
+	    @DateTimeFormat(pattern="yyyy-MM-dd")
 	    private Date payDate; // 결제일자
 	    private String payStat; //결제상태 (c3)
-	    private Integer payId; // 결제번호
+	    private String payId; // 결제번호
 	    private String anonCheck; // 익명체크 (c3)
 	    private String memId; // 회원아이디 
     
@@ -94,7 +95,7 @@ public class DonaVO {
 	    //private String memId;
 	    //private String content;
 	    private Date commDate;
-	    private Integer parentId;
+	    private Integer detailCode;
 	    private String code;
 	    private String codeName; 
 	
