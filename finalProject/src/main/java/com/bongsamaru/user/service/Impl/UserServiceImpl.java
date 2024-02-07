@@ -23,7 +23,7 @@ import com.bongsamaru.user.service.UserService;
 public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Autowired
-	UserFacility userMapper;
+	UserMapper userMapper;
 	
 	@Autowired
 	MypageMapper mypageMapper;
