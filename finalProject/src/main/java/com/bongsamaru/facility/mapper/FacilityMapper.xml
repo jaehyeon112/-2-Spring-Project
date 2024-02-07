@@ -7,6 +7,7 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
+
 	SELECT 			FAC_ID,
 					FAC_NAME,
 					FAC_ADDR,
@@ -23,6 +24,16 @@
         	AND 	FAC_TYPE = #{facType}
         </if>
     </where>
+
+    	<if test="limit != null">
+          LIMIT #{limit}
+        </if>
+        <if test="offset != null">
+          OFFSET #{offset}
+        </if>
+    
+    
+
 </select>
 
 
@@ -110,6 +121,7 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 
 </select>
 <!-- volunteer정보 -->
+
 
 
 </mapper>

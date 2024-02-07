@@ -1,36 +1,38 @@
 package com.bongsamaru.user.web;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.bongsamaru.user.service.UserDetailVO;
 
 @Controller
 public class CommonUserController {
-
-	@GetMapping("/")
-    public String someMethod(Model model) {
-		
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userNickname = null;
-        
-        if (authentication != null && authentication.isAuthenticated() &&
-            authentication.getPrincipal() instanceof UserDetailVO) {
-            UserDetailVO userDetails = (UserDetailVO) authentication.getPrincipal();
-            userNickname = userDetails.getUserNickname(); // 닉네임 가져오기
-        }
-        
-        model.addAttribute("userNickname", userNickname); // 모델에 닉네임 추가
-        return "layout"; // 뷰 이름 반환
-    }
 	
-	@GetMapping("/signup")
-	public String signup() {
-		
-		return "  ";	
-	}
+	@Value("${kakao.client.id}")
+	private String kakaoClientId;
+
+	@Value("${kakao.redirect.url}")
+	private String kakaoRedirectUrl;
+	
+	@Value("${kakao.client.secret}")
+	private String secret_code;
+	
+	 @GetMapping("/login")
+	    public String loginForm(Model model){
+		 model.addAttribute("kakaoUrl", "https://kauth.kakao.com/oauth/authorize?client_id=" 
+		            + kakaoClientId + "&redirect_uri=" + kakaoRedirectUrl + "&response_type=code");
+		 
+		 
+	        return "login/FacilityLogin";
+	    }
+	
+
+	
 	
 }
+
+

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.bongsamaru.file.service.FilesVO;
+
 import lombok.Data;
 
 @Data
@@ -26,15 +28,14 @@ public class ChallengesVO {
 	  @DateTimeFormat(pattern="yyyy-MM-dd")
 	  private Date  partDate;
 	  
-	  
-	  private int fileId;
-	  private String filePath;
-	  private int fileOrder;
-	  @DateTimeFormat(pattern="yyyy-MM-dd")
-	  private Date uploadDate;
-	  private String fileName;
-	  private String extension;
-	  private int fileSize;
-	  private String code;
-	  private Integer codeNo;
+
+	  private FilesVO file;
+		/*
+		 * private int fileId; private String filePath; private int fileOrder;
+		 * 
+		 * @DateTimeFormat(pattern="yyyy-MM-dd") private Date uploadDate; private String
+		 * fileName; private String extension; private int fileSize; private String
+		 * code; private Integer codeNo;
+		 */
+
 }

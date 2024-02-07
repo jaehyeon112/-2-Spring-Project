@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자페이지</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
 </head>
 <body>
 <section layout:fragment="content">
@@ -17,6 +22,34 @@
       <div class="container-fluid">
         <div class="row justify-content-between">
           <div class="col-lg-8 d-flex align-items-stretch">
+          <!-- ???? -->
+	      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:200px">
+			  <div class="carousel-indicators">
+			    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			  </div>
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="../admin/images/products/s4.jpg" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="../admin/images/products/s4.jpg" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="../admin/images/products/s4.jpg" class="d-block w-100" alt="...">
+			    </div>
+			  </div>
+			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Previous</span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Next</span>
+			  </button>
+			</div>
+			
             <div class="card w-70">
               <div class="card-body p-4">
                 <h5 class="card-title fw-semibold mb-4">이달의 기부왕</h5>
@@ -63,12 +96,12 @@
        	<h3>현재 진행중인 기부 프로젝트</h3>
        	<br>
         <div class="row">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:20%" th:each="dona : ${dona}" th:if="${dona.recStat}==0">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}" th:if="${dona.recStat}==0">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
+                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="image/초록개구리.png" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
-              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 			    <span>모금중</span><br>
 				</div>
                <div class="d-flex align-items-center justify-content-between">
@@ -92,15 +125,15 @@
             </div>
           </div>
         </div>
-       	<h3>현재 진행중인 봉사 프로젝트</h3>
+       	<h3>현재 진행중인 모임봉사 프로젝트</h3>
        	<br>
         <div class="row">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:20%" th:each="meet : ${meet}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="meet : ${meet}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..."></a>
+                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
-              <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px;left: 10px;background-color:#ffb524">
 			    <span>모집중</span><br>
 				</div>
                <div class="d-flex align-items-center justify-content-between">
@@ -116,6 +149,35 @@
                     <span th:text="${#dates.format(meet.recPeriod, 'yy.MM.dd')}+' ~ '+${#dates.format(meet.endPeriod, 'yy.MM.dd')}">2024-02-04 ~ 2024-09-04</span>
                     <br>
                     <span th:text="'정원 : '+${meet.meetingCnt}+'/'+${meet.cap}+'명'">정원 : 3/10명</span>
+					 <br>
+	            </div>
+               </div>
+            </div>
+          </div>
+        </div>
+       	<h3>현재 진행중인 시설봉사 프로젝트</h3>
+       	<br>
+        <div class="row">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="facVol : ${facVol}">
+            <div class="card overflow-hidden rounded-2">
+              <div class="position-relative">
+                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+              </div>
+              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
+			    <span>모집중</span><br>
+				</div>
+               <div class="d-flex align-items-center justify-content-between">
+	            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
+	                <h4><a th:text="${facVol.title}"> 제목</a></h4>
+	                <a href="#" style="color:gray">
+					   <span th:text="${facVol.facName}"></span>
+					</a>
+					<br>
+                    <span th:text="'장소 : '+${facVol.location}">2024-02-04</span>
+					<br>
+                    <span th:text="'봉사날짜 : '+${#dates.format(facVol.volDate, 'yy.MM.dd')}">2024-02-04</span>
+                    <br>
+                    <span th:text="'정원 : '+${facVol.capCnt}+'/'+${facVol.cap}+'명'">정원 : 3/10명</span>
 					 <br>
 	            </div>
                </div>

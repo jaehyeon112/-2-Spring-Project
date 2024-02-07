@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.UserCategoryVO;
+import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
-
-import com.bongsamaru.common.CategoryLikeVO;
-
+import com.bongsamaru.mypage.mapper.MypageMapper;
+import com.bongsamaru.mypage.service.HeartVO;
 import com.bongsamaru.user.mapper.UserMapper;
 import com.bongsamaru.user.service.UserDetailVO;
 import com.bongsamaru.user.service.UserService;
@@ -20,16 +23,33 @@ import com.bongsamaru.user.service.UserService;
 public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Autowired
-	UserMapper userMapper;
+	UserFacility userMapper;
+	
+	@Autowired
+	MypageMapper mypageMapper;
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserVO vo = userMapper.userList(username);
+		UserFacilityVO vo = userMapper.login(username);
 		System.out.println("vo 는!" + vo);
 		if(vo == null) {
 			throw new UsernameNotFoundException("no name");
 		}
 		return new UserDetailVO(vo);
+	}
+	
+	@Override
+	public Boolean insertCate(String cate, String name) {
+		if(userMapper.insertCate(cate , name)==1) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public List<UserCategoryVO> userCategoty() {
+		return userMapper.categoryList();
 	}
 
 	@Override
@@ -47,21 +67,62 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		}
 		return true;
 	}
+	
+	@Override
+	public Boolean insertFac(FacilityVO vo) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+		String result = encoder.encode(vo.getFacPwd());
+		vo.setFacPwd(result);
+		
+		if(userMapper.facilitySignUp(vo)==1) {
+			
+			return true;
+		}
+		return false;	
+	}
+	
 	@Override
 	public Boolean insertUser(UserVO vo) {
 		if(userMapper.userSignUp(vo) == 1){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
+	
 	@Override
 	public UserVO userList(String mem) {
 		return userMapper.userList(mem);
 	}
 	
 	@Override
-	public List<CategoryLikeVO> selectCategory() {
-		return userMapper.cateList();
+	@Transactional
+	public Boolean userInsert(UserVO vo, List<String> cate) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+		String result = encoder.encode(vo.getMemPwd());
+		vo.setMemPwd(result);
+		if(insertUser(vo)) {
+			HeartVO heart = new HeartVO();
+			heart.setMemId(vo.getMemId());
+			heart.setTempCode("j01");
+			heart.setTempChange(36.5);
+			mypageMapper.insertHeart(heart);
+			 if (cate != null && !cate.isEmpty()) {
+				 for(String one : cate) {
+					 insertCate(vo.getMemId(),one);
+				 }
+			 } 
+			 return true;
+		};
+		return false;
+	}
+	
+	@Override
+	public Boolean countBizNum(String num) {
+		if(userMapper.checkBizNum(num) == 1) {
+			return false;
+		}
+		return true;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package com.bongsamaru.challenges.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +59,7 @@ public class challengesController {
 	        System.out.println( "챌린지도전 잘 들어오나?"+ challengesVO.getChalDetId());
 	        System.out.println(chalId);
 	        List<ChallengesVO> files = challengeService.getFileList(challengesVO.getChalDetId(), "p04",  null, challengesVO.getChalDetId());
-	        challengesVO.setFilePath(files.get(0).getFilePath());
+	        challengesVO.getFile().setFilePath(files.get(0).getFile().getFilePath());
 	        System.out.println(challengesVO);
 	        
 	    }
@@ -75,15 +74,15 @@ public class challengesController {
 	}
 	
 	//게시글등록
-	@PostMapping("/challengeInsert")
-	//@ResponseBody
+
+	@PostMapping("/challenge/challengeInsert")
+	@ResponseBody
 	public String getChallengeInsert(@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
-		challengeVO.setMemId("maru0505");
 		challengeService.getChallengeInsert(challengeVO);
-		System.out.println("챌린지 등록" +challengeVO);
-		Integer chalId = challengeVO.getChalId();
+		int chalId = challengeVO.getFile().getCodeNo();
 		try {
-			fileService.uploadFiles(uploadFiles,"p03", chalId.toString());
+			fileService.uploadFiles(uploadFiles,"p03", chalId,challengeVO.getMemId());
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -101,7 +100,7 @@ public class challengesController {
 		Integer chalDetId = challengeVO.getChalDetId();
 		
 		try {
-			fileService.uploadFiles(uploadFiles,"p04", chalDetId.toString());
+			fileService.uploadFiles(uploadFiles,"p04", chalDetId, challengeVO.getMemId());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

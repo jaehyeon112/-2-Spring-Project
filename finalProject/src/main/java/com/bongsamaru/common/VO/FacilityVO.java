@@ -2,6 +2,8 @@ package com.bongsamaru.common.VO;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 
@@ -17,6 +19,7 @@ public class FacilityVO {
 	private String facAddr;
 	private String facAddrDetail;
 	private String region;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date facEstDate;
 	private String facEmail;
 	private String facWeb;

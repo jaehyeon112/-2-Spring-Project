@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
+import com.bongsamaru.mypage.service.HeartVO;
 
 public interface MypageMapper {
 	
@@ -21,5 +22,8 @@ public interface MypageMapper {
 	
 	// 이메일 변경
 	public int updateEmail(UserVO userVO);
+	
+	// insert Heart
+	public int insertHeart(HeartVO vo);
 
 }

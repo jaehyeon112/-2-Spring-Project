@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	
-	final UserVO userVO;
-	
+	final UserFacilityVO userVO;
 	/*
 	 * public void setMemberVO(MemberVO memberVO) { this.memberVO = memberVO; }
 	 * 
@@ -34,7 +34,10 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority("ROLE_" + userVO.getMemStat()));
+		if(userVO.getMemStat()==null){
+			userVO.setMemStat("M03");
+		}
+		list.add(new SimpleGrantedAuthority("ROLE_" +  userVO.getMemStat().toUpperCase()));
 		System.out.println(list);
 		return list;
 	}
@@ -42,20 +45,20 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return userVO.getMemPwd();
+		return userVO.getPwd();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return userVO.getMemId();
+		return userVO.getId();
 	}
 	
 	public String getUserNickname() {
-		return userVO.getMemNick();
+		return userVO.getMemName();
 	}
 	
-	public UserVO getUserVO() {
+	public UserFacilityVO getUserVO() {
 		return userVO;
 	}
 	@Override

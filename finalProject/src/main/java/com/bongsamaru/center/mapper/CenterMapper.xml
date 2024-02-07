@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.bongsamaru.center.mapper.CenterMapper">
+   	<!-- Notice -->
+    <select id="getNoticeList" resultType="BoardVO">
+        SELECT *
+        FROM (
+        	SELECT ROWNUM RN, A.*
+        	FROM (
+        	SELECT        	
+	        	board_id,
+	        	category,
+	        	title,
+	        	content,
+	        	write_date,
+	        	views,
+	        	priority,
+	        	mem_id,
+	        	mod_date,
+	        	detail_cate
+	        FROM board
+	        WHERE category = 'b01'
+	        AND (title LIKE '%' || #{searchKeyword} || '%') 
+	        ORDER BY priority DESC, write_date DESC) A
+	    )
+	  	WHERE RN BETWEEN #{start} AND #{end}
+    </select>
+    <select id="getNoticeCount" resultType="int">
+		SELECT count(*) 
+		FROM board 
+		WHERE category = 'b01'
+		AND (title LIKE '%' || #{searchKeyword} || '%') 
+	</select>
+   	<!-- FAQList -->
+    <select id="getFaqList" resultType="FaqVO">
+        SELECT *
+        FROM (
+            SELECT ROWNUM RN, A.*
+            FROM (
+                SELECT
+                    faq_id,
+                    category,
+                    title,
+                    content 
+                FROM faq
+                WHERE category = #{category} <!-- 카테고리 값 적용 -->
+                ORDER BY faq_id DESC
+            ) A
+        )
+        WHERE RN BETWEEN #{start} AND #{end}
+    </select>
+	<select id="getFaqCount" resultType="int">
+	SELECT count(*) FROM faq
+	</select>
+	<select id="getFaqCategoryCount" resultType="int">
+	SELECT count(*) 
+	FROM faq 
+	WHERE category = #{category}
+	</select>
+  </mapper>
