@@ -94,7 +94,7 @@
 								<img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
 					               
 								<label for="file-image" class="input-file-button" >이미지첨부 
-								<input type="file" name="uploadFiles" id="file-image" style="display: none" multiple>
+								<input type="file" name="uploadFiles" id="file-image" style="display: none">
 								</label> 
 								<br> 
 								<!-- <label for="file-video" class="input-file-button">영상첨부
@@ -172,13 +172,16 @@
 						success: function (result) {
 							console.log(result)
 							alert('성공!')
-
+							 $("#myModal").modal("hidden.bs.modal");
 						},
 						error: function (reject) {
 							alert('실풰!')
 							console.log(reject);
 						}
 					});
+				
+					 
+				
 				});
 			
 			});
