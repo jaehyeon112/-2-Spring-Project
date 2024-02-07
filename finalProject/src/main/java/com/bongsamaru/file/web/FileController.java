@@ -1,14 +1,15 @@
 package com.bongsamaru.file.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,9 +25,9 @@ public class FileController {
     
     @PostMapping("/uploadsAjax")
     @ResponseBody
-    public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, int codeNo, String user) {
+    public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, @RequestParam(required = false, defaultValue = "0") int codeNo, String codeUser) {
         try {
-            return fileService.uploadFiles(uploadFiles, code, codeNo, user);
+            return fileService.uploadFiles(uploadFiles, code, codeNo, codeUser);
         } catch (IOException e) {
             e.printStackTrace();
             return null; // 혹은 적절한 에러 메시지와 함께 응답을 반환
