@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.center.mapper.CenterMapper;
 import com.bongsamaru.center.service.CenterService;
-import com.bongsamaru.common.BoardVO;
-import com.bongsamaru.common.FaqVO;
-import com.bongsamaru.common.PageVO;
+import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 
 @Service
 public class CenterServiceImpl implements CenterService{

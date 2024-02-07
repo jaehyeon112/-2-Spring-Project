@@ -74,5 +74,11 @@
        WHERE mem_nick = #{memNick}
    </select>
 
-
+	<select id="cateList" resultType="CategoryLikeVO">
+		select sub_code_id as id ,
+			   sub_code_name as name 
+	    from sub_code 
+	    where main_code_id = 'd' 
+	    or main_code_id = 'f';
+	</select>
 </mapper>

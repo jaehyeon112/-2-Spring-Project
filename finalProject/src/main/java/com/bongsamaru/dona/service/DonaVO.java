@@ -16,17 +16,21 @@ public class DonaVO {
 		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date recPeriod; // 모집기간
 	    private Date endPeriod; // 종료기간
-	    private Date extDate; // 연장기간
+	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
 	    private String intro; //소개 (v2000)
 	    private String recStat; //모집현황(c3)
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
+	    private String paidCode;
+	    private String backName;
+	    private String bankAcct;
 	    //전체리스트에 필요한 애들
 	    private Integer donationCount; //기부인원수
 	    private Integer donationRatio; //목표금액대비 기부금비율
 	    private String facilityName; //시설명
+	    private Integer total;
 	    //상세페이지
 	    private String dday; //디데이
 	    
@@ -78,6 +82,9 @@ public class DonaVO {
 	    private String facName;
 	    private String facIntro;
 	    private Date facEstDate;
+	    private String bizNum;
+	    private String facBank;
+	    private String donAcct;
 	    
 
 	// 기부- 카테고리(유형구분)

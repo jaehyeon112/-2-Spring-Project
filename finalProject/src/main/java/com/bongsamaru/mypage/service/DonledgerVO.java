@@ -20,4 +20,6 @@ public class DonledgerVO {
 	private String anonCheck;
 	private String memId;
 	private String title;
+	private String mName;
+	private Integer total;
 }

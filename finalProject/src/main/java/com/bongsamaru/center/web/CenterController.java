@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.center.service.CenterService;
-import com.bongsamaru.common.BoardVO;
-import com.bongsamaru.common.FaqVO;
-import com.bongsamaru.common.PageVO;
+import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 
 @Controller
 public class CenterController {
