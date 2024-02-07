@@ -14,5 +14,6 @@ public class VolActVO {
 	private String content;
 	private String location;
 	private Integer cap;
+	private Integer cnt;
 	private Date volDate;
 }

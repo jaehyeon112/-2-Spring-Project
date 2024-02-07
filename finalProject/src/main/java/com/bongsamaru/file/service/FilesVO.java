@@ -22,6 +22,7 @@ public class FilesVO implements Serializable{
 	private int fileSize;
 	private String code;
 	private String codeNo;
+	private String codeUser;
 	
 	
 	

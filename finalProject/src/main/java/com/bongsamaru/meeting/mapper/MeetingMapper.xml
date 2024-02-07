@@ -28,6 +28,44 @@
 			,LOCATION
 			,CAP
 			,VOL_DATE 
-		from vol_act where vol_id = #{volId}
+		from vol_act
+		where vol_id = #{volId}
+		order by vol_date
+	</select>
+	<select id="meetingMemList" resultType="VolMemVO">
+		select VOL_MEM_ID
+			,VOL_ID
+			,APP_DATE
+			,APP_REASON
+			,MEM_ID 
+		from vol_mem 
+		where app_code=1 and vol_id = #{volId}
+	</select>
+	<select id="MemVolActList" resultType="VolMemVO">
+		select m.vol_act_id
+		from vol_Act_mem m join vol_act a 
+		on m.VOL_ACT_ID=a.VOL_ACT_ID
+		where a.vol_id = #{volId}
+		and mem_id = #{memId}
+	</select>
+	<!-- 유저별 봉사활동 횟수 -->
+	<select id="volCnt" resultType="VolMemVO">
+		select m.mem_id
+				,count(m.mem_id) cnt
+				,(select file_path 
+				from files 
+				where code='p01' 
+				and code_user=m.mem_id) path
+		from vol_Act_mem m join vol_act a 
+		on m.VOL_ACT_ID=a.VOL_ACT_ID
+		where a.vol_id = #{volId}
+		group by m.mem_id
+		order by cnt desc
+	</select>
+	<!-- 봉사활동별 참여 인원 -->
+	<select id="volActMemCnt" resultType="VolActVO">
+		select count(mem_id) cnt 
+		from vol_act_mem 
+		where vol_act_id=#{volActId}
 	</select>
 </mapper>
