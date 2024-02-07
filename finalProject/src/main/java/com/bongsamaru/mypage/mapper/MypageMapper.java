@@ -10,6 +10,9 @@ public interface MypageMapper {
 	// 마음온도 조회
 	public Double getHeart(String memId);
 	
+	// 프로필 조회
+	public List<UserVO> getProfile(String memId);
+	
 	// 기부내역 조회
 	public List<DonledgerVO> getGibuList(String memId);
 	

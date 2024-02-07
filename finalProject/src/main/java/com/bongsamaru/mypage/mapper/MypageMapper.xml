@@ -9,6 +9,31 @@
 		    FROM heart
 		    WHERE mem_id = #{memId}
 	</select>
+	<!-- 프로필 조회 -->
+	<select id="getProfile" resultType="UserVO">
+			SELECT 
+			       file_path as mem_profile,
+			       mem_id,
+			       mem_pwd,
+			       mem_nick,
+			       mem_phone
+			       mem_zip,
+			       mem_addr,
+			       mem_bdate,
+			       mem_dept,
+			       mem_email,
+			       don_receipt,
+			       mem_ssn,
+			       email_agree,
+			       sms_agree,
+			       acct_num,
+			       bank_name,
+			       mem_stat
+			 FROM  member a right join files b
+			 ON    a.mem_id = b.code_user
+			 WHERE a.mem_id = #{memId}
+			 AND b.code = 'p01'
+	</select>
 	<!-- 기부 내역 조회 -->
 	<select id="getGibuList" resultType="DonledgerVO">
 			SELECT 

@@ -85,15 +85,31 @@ public class FileService {
         String originalName = uploadFile.getOriginalFilename();
         long fileSize = uploadFile.getSize();
         String contentType = uploadFile.getContentType();
-
-        FilesVO fileVO = new FilesVO();
-        fileVO.setFilePath("/upload/" + filePath); // 웹 URL 형식으로 변환하여 저장
-        fileVO.setFileName(originalName);
-        fileVO.setFileSize((int) fileSize);
-        fileVO.setExtension(contentType);
-        fileVO.setCode(code);
-        fileVO.setCodeNo(codeNo);
-        fileMapper.insertFile(fileVO);
+        
+        
+        FilesVO fileVO = fileMapper.getFileCheck(codeNo);
+        System.out.println(code + "파일체크");
+        System.out.println(codeNo + "이름");
+        System.out.println(fileVO);
+        
+        if (fileVO != null) {
+            // 파일사이즈가 똑같은게 이미 존재하는 경우 업데이트 수행
+            fileVO.setFilePath("/upload/" + filePath);
+            fileVO.setFileName(originalName);
+            fileVO.setFileSize((int) fileSize);
+            fileVO.setExtension(contentType);
+            fileMapper.updateFile(fileVO);
+        } else {
+            // 파일이 존재하지 않는 경우 인서트 수행
+            fileVO = new FilesVO();
+            fileVO.setFilePath("/upload/" + filePath);
+            fileVO.setFileName(originalName);
+            fileVO.setFileSize((int) fileSize);
+            fileVO.setExtension(contentType);
+            fileVO.setCode(code);
+            fileVO.setCodeNo(codeNo);
+            fileMapper.insertFile(fileVO);
+        }
     }
 
     private String makeFolder(String contentType) {

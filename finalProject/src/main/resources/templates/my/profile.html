@@ -55,7 +55,7 @@
 					<div class="area_thumb">
 						<h1>프로필</h1>
 						  <span class="profile_thumb">
-						    <img id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 사진" class="img_thumb" src="https://t1.kakaocdn.net/together_image/common/avatar/avatar04.png">
+						    <img id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 사진" class="img_thumb" th:src="@{${item.memProfile}}">
 						  	<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
 							<button class="uploadBtn">Upload</button>
 						  </span>
@@ -300,7 +300,8 @@ $('.uploadBtn').click(function () {
 		formData.append("uploadFiles", files[i]); //키,값으로 append 
 	}
 	formData.append("code", "p01")
-	formData.append("codeNo", $('#userId').val());
+	formData.append("codeNo", $('#id').val());
+	console.log($('#id').val(),'밸류')
 
 	//jQuery.ajax
 	$.ajax({

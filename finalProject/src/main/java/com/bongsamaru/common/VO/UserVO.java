@@ -31,6 +31,9 @@ public class UserVO implements Serializable {
 	private String bankName;
 	private String memStat;
 	private String memName;
+	// 파일테이블의 프로필 정보 때문에 넣음
+	private String memProfile;
+	
 	
 	@Builder
 	public UserVO(String memEmail, String memId,String memPhone, String memPwd) { // 응답, 요청 다됨

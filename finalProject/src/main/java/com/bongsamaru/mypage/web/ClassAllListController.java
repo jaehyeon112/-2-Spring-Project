@@ -56,7 +56,7 @@ public class ClassAllListController {
 		 return "my/clubList"; 
 	 }
 	 
-	 @GetMapping("/facilityList")
+	 @GetMapping("/facility")
 	 public String clubListPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		 

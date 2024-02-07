@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +21,7 @@ public class FilesVO implements Serializable{
 	private int fileSize;
 	private String code;
 	private String codeNo;
+	private String codeUser;
 	
 	
 	

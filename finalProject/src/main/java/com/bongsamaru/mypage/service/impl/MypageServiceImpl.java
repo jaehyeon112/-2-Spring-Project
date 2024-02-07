@@ -45,4 +45,10 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return mypageMapper.getGibuList(memId);
 	}
+	
+	@Override
+	public List<UserVO> getProfile(String memId) {
+		// TODO Auto-generated method stub
+		return mypageMapper.getProfile(memId);
+	}
 }
