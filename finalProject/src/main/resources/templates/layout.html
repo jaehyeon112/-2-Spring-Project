@@ -64,8 +64,10 @@
                                     <li class="nav-item"><a class="nav-link" th:href="@{/}">시설봉사</a></li>
                                 </ul>
                             </li> 
-                            <li class="nav-item"><a class="nav-link" th:href="@{/}">기부</a></li>
+
+                            <li class="nav-item"><a class="nav-link" th:href="@{/donaMain}">기부</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
+
                     		<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">로그인</a></li>
 						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/signup}">회원가입</a></li>

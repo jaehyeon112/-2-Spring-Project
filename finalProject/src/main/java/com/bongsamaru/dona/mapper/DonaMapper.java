@@ -9,6 +9,9 @@ public interface DonaMapper {
 	
 	// 메인페이지 전체리스트
 		List<DonaVO> getDonaList();
+	
+	// 모금중.모금완료
+	//	List<DonaVO> getRecStat(String recStat);
 		
 	// 상세페이지1 (don_id)
 		public DonaVO getDonaDetail(Integer donId, String facId);
@@ -17,7 +20,7 @@ public interface DonaMapper {
 		public List<DonaVO> getDonerList(Integer donId);
 		
 	//댓글 - 전체리스트 
-		public List<DonaVO> getCommentsList(Integer donId);
+		public List<DonaVO> getCommentsList(Integer detailCode);
 		
 	//댓글 insert
 		public int insertComment(DonaVO donaVO);
@@ -26,9 +29,16 @@ public interface DonaMapper {
 		List<DonaVO> getCategoryList(String h);
 
 	
-	//기부등록폼 
+	//기부등록폼 - donation
 		public int insertDonation(DonaVO donaVO);
 		
+	//기부등록폼2  - donation 상세
+		public int insertDonDetail(DonaVO donaVO);
+		
+	
+	
+	//결제프로세스
+	 public int paymentProcess(DonaVO donaVO);
 		
 		
 }
