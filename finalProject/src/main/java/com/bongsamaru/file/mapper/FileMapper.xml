@@ -24,14 +24,8 @@
         ,#{fileSize}
         ,#{code}
         ,#{codeNo}
-<<<<<<< HEAD
-    )	
-=======
         ,#{codeUser}
     )
-  		
-  			
->>>>>>> develop
   	</insert>
   	<update id="updateFile" parameterType="FilesVO">
 	  	UPDATE
@@ -59,9 +53,4 @@
         	WHERE code = 'p01'
         	AND code_user = #{codeUser}
   	</select>
-  	
-  	
-  	
-  	
-  	
   </mapper>

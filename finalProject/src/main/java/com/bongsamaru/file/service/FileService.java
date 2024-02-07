@@ -81,13 +81,15 @@ public class FileService {
     }
 
 
-    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String user) {
+    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String codeUser) {
         String originalName = uploadFile.getOriginalFilename();
         long fileSize = uploadFile.getSize();
         String contentType = uploadFile.getContentType();
-        FilesVO fileVO = fileMapper.getFileCheck(codeNo);
+        
+        
+        FilesVO fileVO = fileMapper.getFileCheck(codeUser);
         System.out.println(code + "파일체크");
-        System.out.println(codeNo + "이름");
+        System.out.println(codeUser + "이름");
         System.out.println(fileVO);
         
         if (fileVO != null) {
@@ -106,10 +108,12 @@ public class FileService {
             fileVO.setExtension(contentType);
             fileVO.setCode(code);
             fileVO.setCodeNo(codeNo);
+            fileVO.setCodeUser(codeUser);
             fileMapper.insertFile(fileVO);
         }
     }
-
+        
+        
     private String makeFolder(String contentType) {
         // 기본 경로에 연/월/일 폴더 생성
         String dateFolderPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
