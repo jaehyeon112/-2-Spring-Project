@@ -126,9 +126,9 @@ public class DonaController {
 			donaService.insertDonation(donaVO);
 			
 			
-			String codeNo = Integer.toString(donaVO.getDonId());
+			int codeNo = donaVO.getDonId();
 			String code = "p08";
-			fileService.uploadFiles(uploadfiles, code, codeNo);
+			fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
 			  
 			return "redirect:my/mapage";
 	   }
