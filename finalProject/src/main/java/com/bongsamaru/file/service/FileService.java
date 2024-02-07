@@ -26,7 +26,7 @@ public class FileService {
     @Value("${file.upload.path}")
     private String uploadPath;
 
-    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, String codeNo) throws IOException {
+    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user) throws IOException {
         List<String> imageList = new ArrayList<>();
 
         for(MultipartFile uploadFile : uploadFiles) {
@@ -35,7 +35,7 @@ public class FileService {
                 return null;
             }
 
-            String uploadFileName = handleFileUpload(uploadFile, code, codeNo);
+            String uploadFileName = handleFileUpload(uploadFile, code, codeNo, user);
             imageList.add("/upload/" + uploadFileName); // 이미지 URL 형식으로 변환하여 추가
         }
 
@@ -46,10 +46,10 @@ public class FileService {
         return file.getContentType() != null && file.getContentType().startsWith("image");
     }
 
-    private String handleFileUpload(MultipartFile uploadFile, String code, String codeNo) throws IOException {
+    private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user) throws IOException {
         printFileInfo(uploadFile);
         String uploadFileName = prepareFilePath(uploadFile);
-        saveFileMetadata(uploadFile, uploadFileName, code, codeNo);
+        saveFileMetadata(uploadFile, uploadFileName, code, codeNo, user);
         return uploadFileName;
     }
 
@@ -81,10 +81,11 @@ public class FileService {
     }
 
 
-    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, String codeNo) {
+    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String user) {
         String originalName = uploadFile.getOriginalFilename();
         long fileSize = uploadFile.getSize();
         String contentType = uploadFile.getContentType();
+<<<<<<< HEAD
         
         
         FilesVO fileVO = fileMapper.getFileCheck(codeNo);
@@ -110,6 +111,18 @@ public class FileService {
             fileVO.setCodeNo(codeNo);
             fileMapper.insertFile(fileVO);
         }
+=======
+
+        FilesVO fileVO = new FilesVO();
+        fileVO.setFilePath("/upload/" + filePath); // 웹 URL 형식으로 변환하여 저장
+        fileVO.setFileName(originalName);
+        fileVO.setFileSize((int) fileSize);
+        fileVO.setExtension(contentType);
+        fileVO.setCode(code);
+        fileVO.setCodeNo(codeNo);
+        fileVO.setCodeUser(user);
+        fileMapper.insertFile(fileVO);
+>>>>>>> develop
     }
 
     private String makeFolder(String contentType) {
@@ -148,6 +161,17 @@ public class FileService {
     private boolean isAllowedFileType(MultipartFile file) {
         String allowedFileTypes = "image,video,audio,application/pdf"; // 허용된 파일 유형
         return file.getContentType() != null && allowedFileTypes.contains(file.getContentType().split("/")[0]);
+    }
+    
+    //파일 삭제
+    public boolean deleteFile(String filePath) {
+        File file = new File(filePath);	//넘어오는 값이 이미 upload를 붙이고 넘어오기 때문에 경로는 그냥 이대로 저장해도 될까..?
+        
+        if (file.exists()) { // 파일이 존재하는지 확인
+            return file.delete(); // 파일이 존재하면 삭제하고 결과를 반환
+        }
+        
+        return false; // 파일이 존재하지 않으면 false 반환
     }
     
 }

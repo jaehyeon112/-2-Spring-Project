@@ -13,6 +13,7 @@
         ,FILE_SIZE
         ,CODE
         ,CODE_NO
+        ,CODE_user
     ) values (
         FILES_SEQ.nextval
         ,#{filePath}
@@ -22,7 +23,14 @@
         ,#{fileSize}
         ,#{code}
         ,#{codeNo}
+<<<<<<< HEAD
     )	
+=======
+        ,#{codeUser}
+    )
+  		
+  			
+>>>>>>> develop
   	</insert>
   	<update id="updateFile" parameterType="FilesVO">
 	  	UPDATE

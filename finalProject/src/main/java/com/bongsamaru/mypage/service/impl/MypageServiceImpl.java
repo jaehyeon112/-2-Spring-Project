@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.DonledgerVO;
+import com.bongsamaru.mypage.service.HeartVO;
 import com.bongsamaru.mypage.service.MypageService;
 
 @Service
@@ -45,10 +46,21 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return mypageMapper.getGibuList(memId);
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public List<UserVO> getProfile(String memId) {
 		// TODO Auto-generated method stub
 		return mypageMapper.getProfile(memId);
 	}
+=======
+	@Override
+	public boolean insertHeart(HeartVO vo) {
+		if(mypageMapper.insertHeart(vo)==1) {
+			return true;
+		}
+		return false; 
+	}	
+	
+>>>>>>> develop
 }
