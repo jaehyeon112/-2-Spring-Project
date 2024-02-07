@@ -3,7 +3,7 @@ package com.bongsamaru.mypage.service;
 
 import java.util.List;
 
-import com.bongsamaru.common.UserVO;
+import com.bongsamaru.common.VO.UserVO;
 
 public interface MypageService {
 	
@@ -12,4 +12,5 @@ public interface MypageService {
 	public Integer getSumAmt(String memId);
 	public Integer getGibuCount(String memId);
 	public List<DonledgerVO> getGibuList(String memId);
+	public boolean insertHeart(HeartVO vo);
 }

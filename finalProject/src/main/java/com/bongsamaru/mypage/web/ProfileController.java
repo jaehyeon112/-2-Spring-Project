@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bongsamaru.common.UserVO;
+import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
 import com.bongsamaru.user.service.UserDetailVO;

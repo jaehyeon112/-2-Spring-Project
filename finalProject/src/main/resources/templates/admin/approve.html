@@ -50,7 +50,7 @@ table th {
 					</tr>
 				</thead>
 				<tbody class="body">
-				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp}==0">
+				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp==0}">
 						<tr>
 							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])">시설명</td>
 							 <td th:text="${fac.facType}" >시설유형</td>
@@ -238,10 +238,10 @@ table th {
 					$('#tableData').load("../approve #bas");
 				}
 				function show1(){
-					$('#tableData').load("../facilityApprove #fac");
+					$('#tableData').load("../facilityApprove?donRegApp=0 #fac");
 				}
 				function show2(){
-					$('#tableData').load("../facilityApprove #don");
+					$('#tableData').load("../facilityApprove?donRegApp=0 #don");
 				}
 				function show3(){
 					alert('아직 고민중ㅇ');
@@ -345,6 +345,7 @@ table th {
 			        $("#start").empty();
 			        $("#end").empty();
 			        $("#goal").empty();
+			        $("#page").prop('href','')
 			        
 			    	$.ajax('../donInfo?donId='+id)
 			       .done(result => {
@@ -364,6 +365,7 @@ table th {
 			           $("#start").append(result.recPeriod)
 			           $("#end").append(result.endPeriod)
 			           $("#goal").append(result.goalAmt+'원')
+			           $("#page").prop('href',`../donaDetail?id=${result.donId}&facId=${result.facId}`)
 			          })
 			       .fail(err => console.log(err));
 			    	
@@ -373,7 +375,6 @@ table th {
 			    function approveCk(){
 			    	$.ajax('../updateFacApp?facName='+facN)
 			        .done(result => {
-			           alert('수정완료');
 			           $("#myModal").modal("hide");
 			           $('#tableData').load("../approve #bas");
 			        })
@@ -383,7 +384,6 @@ table th {
 			    function approveCk2(){
 			    	$.ajax('../updateDonApp?facId='+facI)
 			        .done(result => {
-			           alert('두번째 수정완료');
 			           $("#myModal2").modal("hide");
 			           $('#tableData').load("../facilityApprove #fac");
 			        })
@@ -393,7 +393,6 @@ table th {
 			    function approveCk3(){
 			    	$.ajax('../updateDonRegApp?donId='+facI)
 			        .done(result => {
-			           alert('세번째 수정완료');
 			           $("#mys").modal("hide");
 			           $('#tableData').load("../facilityApprove #don");
 			        })

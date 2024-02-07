@@ -1,8 +1,8 @@
 package com.bongsamaru.admin.web;
 
 
-import java.util.List;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,20 +13,131 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.AdminService;
-import com.bongsamaru.common.BoardVO;
-import com.bongsamaru.common.CommentsVO;
-import com.bongsamaru.common.DonationLedgerVO;
-import com.bongsamaru.common.DonationVO;
-import com.bongsamaru.common.FacilityVO;
-import com.bongsamaru.common.FaqVO;
-import com.bongsamaru.common.ReportVO;
-import com.bongsamaru.common.UserVO;
-import com.bongsamaru.common.VolunteerVO;
+import com.bongsamaru.common.VO.AlertVO;
+import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CommentsVO;
+import com.bongsamaru.common.VO.DonationLedgerVO;
+import com.bongsamaru.common.VO.DonationVO;
+import com.bongsamaru.common.VO.FacilityVO;
+import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.RemittanceVO;
+import com.bongsamaru.common.VO.ReportVO;
+import com.bongsamaru.common.VO.TagVO;
+import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaService;
+import com.bongsamaru.dona.service.DonaVO;
+import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.DonledgerVO;
+
 
 @Controller
 public class UserController {
 	@Autowired
 	AdminService userService;
+	
+	@Autowired
+	DonaService donaService;
+	
+	@GetMapping("AdminMain")
+	public String AdminMain(Model model) {
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("dona", donaList);
+		List<DonledgerVO> king = userService.DonationKing();
+		model.addAttribute("king", king);
+		List<FacilityVO> list = userService.meetingList();
+		model.addAttribute("meet", list);
+		List<TagVO> tags = userService.tagList();
+		model.addAttribute("tag", tags);
+		List<VolunteerVO> facVol = userService.facVolunteerList();
+		model.addAttribute("facVol", facVol);
+//		List<AlertVO> alert = userService.alertList();
+//		model.addAttribute("alert", alert);
+		return "admin/adminMain";
+	}
+	
+	@GetMapping("adminHeader")
+	@ResponseBody
+	public List<AlertVO> alert(Model model) {
+		return userService.alertList();
+	}
+
+	@GetMapping("moreInfo")
+	public String moreInfo() {
+		return "admin/moreInfo";
+	}
+
+	@GetMapping("donationList")
+	public String donationList(Model model) {
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("dona", donaList);
+		return "admin/donationList";
+	}
+	
+	@GetMapping("donationMain")
+	public String donationMain(@RequestParam(name="recStat") String recStat,Model model) {
+		List<DonaVO> ledger = userService.donationLedgerList(recStat);
+		model.addAttribute("dona", ledger);
+		model.addAttribute("recStat",recStat);
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("facDona", donaList);
+		return "admin/donationMain";
+	}
+	
+	@GetMapping("facDonationLedgerList")
+	public String facDonationLedgerList(@RequestParam(name="donId") Integer donId,Model model) {
+		List<DonaVO> list = userService.facDonLedgerList(donId);
+		model.addAttribute("fac", list);
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("facDona", donaList);
+		return "admin/facDonationLedgerList";
+	}
+	
+	//기부금 정산
+	@GetMapping("donationSettlementList")
+	public String donationSettlementList(Model model) {
+		List<DonaVO> list = userService.donationSettlement();
+		model.addAttribute("donSel", list);
+		return "admin/donationSettlementList";
+	}
+	
+	@PostMapping("insertRemittance")
+	@ResponseBody
+	public int insertRemittance(RemittanceVO remittanceVO) {
+		System.out.println(remittanceVO);
+		return userService.insertRemittance(remittanceVO);
+	}
+	
+	
+	@GetMapping("donationDone")
+	public String donationDone(Model model) {
+		List<DonaVO> donaList = donaService.getDonaList();
+		model.addAttribute("dona", donaList);
+		return "admin/donationDone";
+	}
+	
+	@GetMapping("volunteerList")
+	public String volunteerList(Model model) {
+		List<FacilityVO> list = userService.meetingList();
+		model.addAttribute("meet", list);
+		List<TagVO> tags = userService.tagList();
+		model.addAttribute("tag", tags);
+		return "admin/volunteerList";
+	}
+	
+	@GetMapping("facVolList")
+	public String facVolList(Model model) {
+		List<VolunteerVO> facVol = userService.facVolunteerList();
+		model.addAttribute("facVol", facVol);
+		return "admin/facVolList";
+	}
+	
+	@GetMapping("donationReceiptList")
+	public String donationReceiptList(Model model) {
+		List<RemittanceVO> remList = userService.remittanceList();
+		model.addAttribute("remList", remList);
+		return "admin/donationReceiptList";
+	}
 	
 	@GetMapping("userList")
 	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
@@ -40,6 +151,13 @@ public class UserController {
 	public UserVO getUserlOne(@RequestParam(name="memId") String memId,Model model) {
 		UserVO vo = userService.getUserOne(memId);
 		return vo;
+	}
+	
+	@GetMapping("userMeet")
+	@ResponseBody
+	public List<VolunteerVO> userMeet(@RequestParam(name="memId") String memId,Model model) {
+		List<VolunteerVO> list = userService.memMeetList(memId);
+		return list;
 	}
 	
 	@GetMapping("facInfo")
@@ -58,24 +176,22 @@ public class UserController {
 	
 	@GetMapping("volCount")
 	@ResponseBody
-	public VolunteerVO getFacVol(@RequestParam(name="memId") String memId,@RequestParam(name="mId") String mId,Model model) {
+	public VolunteerVO getFacVol(@RequestParam(name="memId") String memId,@RequestParam(name="mId") String mId) {
 		VolunteerVO vo = userService.volCount(memId,mId);
-		System.out.println("현재 받아온 것"+vo);
-		System.out.println(memId);
 		return vo;
 	}
 	
 	@GetMapping("donCount")
 	@ResponseBody
-	public DonationLedgerVO getDonCount(@RequestParam(name="memId") String memId,Model model) {
+	public DonationLedgerVO getDonCount(@RequestParam(name="memId") String memId) {
 		DonationLedgerVO vo = userService.donCount(memId);
 		return vo;
 	}
-	
+
 	@GetMapping("facilityApprove")
-	public String getFacilityList(Model model) {
+	public String getFacilityList(@RequestParam(name="donRegApp") String donRegApp,Model model) {
 		List<FacilityVO> list = userService.getFacilityList();
-		List<DonationVO> list2 = userService.getDonationList();
+		List<DonationVO> list2 = userService.getDonationList(donRegApp);
 		model.addAttribute("facilityList",list);
 		model.addAttribute("donationList",list2);
 		return "admin/facilityApprove";
@@ -140,6 +256,21 @@ public class UserController {
 		userService.insertNotice(boardVO);
 		return "redirect:boardList?category=b01";
 	}
+	
+	@GetMapping("maxNotice")
+	@ResponseBody
+	public int maxNotice() {
+		var cnt = userService.maxNotice();
+		return cnt;
+	}
+	
+	@GetMapping("checkFacDonation")
+	@ResponseBody
+	public DonaVO checkFacDonation(@RequestParam(name="donId") Integer donId) {
+		DonaVO vo = userService.checkFacDonation(donId);
+		return vo;
+	}
+	
 	//자주하는 질문 등록
 	@GetMapping("faqInsert")
 	public String faqInsert() {
@@ -177,8 +308,11 @@ public class UserController {
 	}
 	
 	@GetMapping("noticeInfo")
-	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
+	public String getNoticeOne(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,@RequestParam(name="codeNo") String codeNo,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
+		List<FilesVO> files = userService.selectFile(codeNo);
+		model.addAttribute("files",files);
+		System.out.println(files);
 		model.addAttribute("info",vo);
 		return "admin/noticeInfo";
 	}
@@ -227,7 +361,6 @@ public class UserController {
 		CommentsVO comm = userService.inquireCommentOne(detailCate);
 		model.addAttribute("info",vo);
 		model.addAttribute("comm",comm);
-		System.out.println(comm);
 		return "admin/inquireComment";
 	}
 
@@ -237,4 +370,11 @@ public class UserController {
 		userService.updateReport(reqCode,repId);
 		return "redirect:getReportList?category=r01";
 	}
+	
+	@GetMapping("delFile")
+	@ResponseBody
+	public int delFile(@RequestParam(name="filePath") String filePath) {
+		return userService.delFile(filePath);
+	}
+	
 }

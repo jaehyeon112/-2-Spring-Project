@@ -7,6 +7,7 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
+
 	SELECT 			FAC_ID,
 					FAC_NAME,
 					FAC_ADDR,
@@ -102,6 +103,7 @@ SELECT  T1.VOL_ACT_ID,
  WHERE  FAC_ID=#{facId}
 </select>
 
+
 <!-- MyPage쪽 -->
 <!-- dona정보 -->
 <select id="getDonaInfo" resultType="DonaVO">
@@ -118,6 +120,7 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 
 </select>
 <!-- volunteer정보 -->
+
 
 
 </mapper>
