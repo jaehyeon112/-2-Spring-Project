@@ -61,7 +61,7 @@
  <!-- 카테고리 -->
  	<select id="getCategoryList" parameterType="DonaVO">
  		SELECT
- 		 		sub_code_name
+ 		 		sub_code_name, sub_code_id
 		FROM 	sub_code 
 		WHERE	sub_code_id 
 		LIKE CONCAT(#{h}, '%')
@@ -137,7 +137,7 @@
 	 			) 
  			VALUES 
  			(
-	 			donation_seq.nextval
+	 			#{donId}
 	 			, #{facId}
 	 			, #{title}
 	 			, #{recPeriod}
@@ -163,9 +163,9 @@
 	</selectKey>
  	  INSERT INTO Don_Detail 
 	 	  (
-		 	  don_id
+		 	 don_id
 		 	  , don_det_id
-		 	  , usePlan
+		 	  , use_plan
 		 	  , link
 		 	  , link2
 		 	  , use_plan2
