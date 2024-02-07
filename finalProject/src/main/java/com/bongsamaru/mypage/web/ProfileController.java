@@ -1,5 +1,7 @@
 package com.bongsamaru.mypage.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,7 +45,12 @@ public class ProfileController<userVO> {
 	                
 	                // 예시: 사용자 이름을 모델에 추가
 	                System.out.println(userDetailVO.getUserVO() + "확인로그인로그인");
-	                model.addAttribute("list", userDetailVO.getUserVO());
+	                List<UserVO> list = mypageService.getProfile(userDetailVO.getUsername());
+	                
+	                
+	                model.addAttribute("list", list);
+	                System.out.println(list+ "리스트");
+	                
 	                // 필요한 경우, 여기에서 userDetailVO의 다른 정보를 모델에 추가할 수 있습니다.
 	            }
 	        }

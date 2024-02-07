@@ -14,7 +14,6 @@ public class HeartVO {
 	private Date tempDate;
 	private String tempCode;
 	private Double tempChange;
-	private Double tempStat;
 	
 	
 }
