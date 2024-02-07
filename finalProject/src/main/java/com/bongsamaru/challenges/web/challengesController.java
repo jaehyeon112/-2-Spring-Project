@@ -33,6 +33,7 @@ public class challengesController {
 	public String getChallengeList(Model model) {
 		List<ChallengesVO> list = challengeService.getChallengeList();
 		model.addAttribute("challengeList", list);
+		System.out.println("목록에서 count가 나오느냐" +list);
 		return "challenge/challengeList";
 	}
 	
@@ -40,37 +41,53 @@ public class challengesController {
 	public String getChallengeInfo(@RequestParam(name="chalId") Integer chalId, Model model,HttpServletRequest request) {
 		ChallengesVO vo = challengeService.getChallengeInfo(chalId);
 		request.getSession().setAttribute("challengeInfo",vo);
-		//model.addAttribute("challengeInfo", vo);
-		List<ChallengesVO> file = challengeService.getChallengeFile(chalId);
-		model.addAttribute("challengeFile", file);
-		return "challenge/challengeInfo";
+		System.out.println("session"+ vo);
+		 List<ChallengesVO> file = challengeService.getFileList(vo.getChalId(),"p03", vo.getChalId(),null);
+		 model.addAttribute("FileList", file); System.out.println("파일이 뭐가 들어오나"+file);
+		  return "challenge/challengeInfo";
+		 
 	}
 	
 	
 	@GetMapping("/challenge/challengesList")
 	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Model model) {
 		List<ChallengesVO> dList = challengeService.getChallengesList(chalId);
-		//System.out.println(dList);
-		model.addAttribute("challengesList", dList);
-		return "challenge/challengesList";
+	    
+	    for (ChallengesVO challengesVO : dList) {
+	        challengesVO.getChalDetId();
+	        System.out.println("for문 돌린 vo"+challengesVO);
+	        System.out.println( "챌린지도전 잘 들어오나?"+ challengesVO.getChalDetId());
+	        System.out.println(chalId);
+	        List<ChallengesVO> files = challengeService.getFileList(challengesVO.getChalDetId(), "p04",  null, challengesVO.getChalDetId());
+	        challengesVO.getFile().setFilePath(files.get(0).getFile().getFilePath());
+	        System.out.println(challengesVO);
+	        
+	    }
+	    model.addAttribute("challengesList", dList);
+		System.out.println("총결론"+dList);
+		 return "challenge/challengesList";
 	}
-	@GetMapping("/challenge/challengeInsertForm")
+	//등록페이지 열기
+	@GetMapping("/challengeInsert")
 	public String insertChallengeForm() {
-		return "/challenge/challengeInsert";
+		return "challenge/challengeInsert";
 	}
 	
 	//게시글등록
+
 	@PostMapping("/challenge/challengeInsert")
 	@ResponseBody
 	public String getChallengeInsert(@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO) {
 		challengeService.getChallengeInsert(challengeVO);
-		String chalId = challengeVO.getCodeNo();
+		int chalId = challengeVO.getFile().getCodeNo();
 		try {
-			fileService.uploadFiles(uploadFiles,"p03", chalId);
+			fileService.uploadFiles(uploadFiles,"p03", chalId,challengeVO.getMemId());
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			return chalId;
+			//return chalId;
+			return "redirect:challengeList";
 	}
 	
 	//게시글 참여
@@ -81,8 +98,9 @@ public class challengesController {
 		challengeService.getChallengesInsert(challengeVO);
 		System.out.println("챌린지참여"+challengeVO);
 		Integer chalDetId = challengeVO.getChalDetId();
+		
 		try {
-			fileService.uploadFiles(uploadFiles,"p04", chalDetId.toString());
+			fileService.uploadFiles(uploadFiles,"p04", chalDetId, challengeVO.getMemId());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

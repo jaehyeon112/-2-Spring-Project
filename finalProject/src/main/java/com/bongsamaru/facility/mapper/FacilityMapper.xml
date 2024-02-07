@@ -7,30 +7,35 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
-	SELECT FAC_ID,
-			FAC_NAME,
-			FAC_ADDR,
-			SUBSTR(FAC_ADDR,1,INSTR(FAC_ADDR, ' ')-1) AS region,
-			FAC_TYPE
-			FROM FACILITY
+
+	SELECT 			FAC_ID,
+					FAC_NAME,
+					FAC_ADDR,
+					select_sub(FAC_ZIP2) AS region,
+					FAC_ZIP2,
+					FAC_ZIP,
+					FAC_TYPE
+					FROM FACILITY
+	<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+        <if test="facZip2 != null and facZip2 !=''">
+            AND 	FAC_ZIP2=#{facZip2}
+        </if>
+        <if test="facType != null and facType != ''">
+        	AND 	FAC_TYPE = #{facType}
+        </if>
+    </where>
+
+    	<if test="limit != null">
+          LIMIT #{limit}
+        </if>
+        <if test="offset != null">
+          OFFSET #{offset}
+        </if>
+    
+    
+
 </select>
-<!-- 시설리스트에서 필터 -->
-<select id="getFacilityFilter" resultType="FacilityVO">
-	SELECT FAC_ID,
-			FAC_NAME,
-			FAC_ADDR,
-			SUBSTR(FAC_ADDR,1,INSTR(FAC_ADDR, ' ')-1) AS region,
-			FAC_TYPE
-			FROM FACILITY
-			<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
-            	<if test="region != null">
-            		region = #{region}
-         		</if>
-         		<if test="facType != null">
-            		AND FAC_TYPE = #{facType}
-         		</if>
-      		</where>
-</select>
+
 
 <!-- 시설정보 -->
 <select id="getFacilityInfo" resultType="FacilityVO">
@@ -99,6 +104,26 @@ SELECT  T1.VOL_ACT_ID,
   LEFT  JOIN VOL_ACT T2 ON T1.VOL_ACT_ID = T2.VOL_ACT_ID
  WHERE  FAC_ID=#{facId}
 </select>
+
+<!-- MyPage쪽 -->
+<!-- dona정보 -->
+<select id="getDonaInfo" resultType="DonaVO">
+   SELECT D.TITLE,
+  		  D.REC_PERIOD, 
+  		  D.END_PERIOD, 
+  		  D.GOAL_AMT,
+  		  D.DON_REG_APP, 
+  		  NVL(SUM(CASE WHEN DL.PAY_STAT = 0 THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
+  		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
+     FROM DONATION D
+LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+ GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
+
+</select>
+<!-- volunteer정보 -->
+
+
+
 </mapper>
 
 

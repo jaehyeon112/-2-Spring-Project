@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{facility/facilitylayout}">
+ layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>기부 후기</title>
@@ -9,6 +9,7 @@
 .facilities_item{
 display:inline-block;
 }
+
 
 </style>
 
@@ -39,8 +40,9 @@ display:inline-block;
 								                <strong></strong><span th:text="${funding.donationRatio}"></span> %
 								            </div>
                                 <h6 class="date title_color" data-th-text="${#numbers.formatInteger(funding.goalAmt,3,'COMMA')+'원'}"></h6>
-                                
-                                
+                              <div class="bg-secondary">
+                              zsadf
+                                </div>
                             </div>	
                         </div>
                     </div>

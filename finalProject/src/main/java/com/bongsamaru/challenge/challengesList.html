@@ -31,14 +31,14 @@
 				<div class="container">
 					<div class="row">
 					<th:block th:each="list:${challengesList}">
+					
 						<div class="col-lg-8">
 							<div class="blog_left_sidebar">
 								
-								<div class="row imageGallery1" id="gallery"
-									style="position: relative; height: 679.112px;">
+								
 									<div class="col-md-4 gallery_item">
 										<div class="gallery_img">
-											<img src="/image/초록개구리.png" alt="post">
+											<img th:src="${list.filePath}" alt="post">
 											<div class="hover">
 												<a class="light"><i class="fa fa-expand"></i></a>
 											</div>
@@ -46,11 +46,12 @@
 										<p th:text="${list.memId}"></p>
 									</div>
 
-								</div>
+								
 
 
 							</div>
 						</div>
+						
 						</th:block>
 						<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
 					
@@ -59,7 +60,7 @@
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
 										<div class="media post_item">
-											<img src="/image/초록개구리.png" alt="post">
+											<img th:if="${list != null and !list.isEmpty()}" th:src="${list[0].filePath}" alt="post">
 
 											<div class="media-body">
 												<h3>How to</h3>
@@ -93,7 +94,7 @@
 								<img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
 					               
 								<label for="file-image" class="input-file-button" >이미지첨부 
-								<input type="file" name="uploadFiles" id="file-image" style="display: none" multiple>
+								<input type="file" name="uploadFiles" id="file-image" style="display: none">
 								</label> 
 								<br> 
 								<!-- <label for="file-video" class="input-file-button">영상첨부
@@ -171,13 +172,16 @@
 						success: function (result) {
 							console.log(result)
 							alert('성공!')
-
+							 $("#myModal").modal("hidden.bs.modal");
 						},
 						error: function (reject) {
 							alert('실풰!')
 							console.log(reject);
 						}
 					});
+				
+					 
+				
 				});
 			
 			});

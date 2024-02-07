@@ -21,26 +21,17 @@
 			</div>
 		</section>
 		<div>
-			<!-- <select th:field="*{ResionVO}" class="form-select">
-<option value="">==지역==</option>
-<option th:each="ResionVO : ${resions}" th:value="${ResionVO.code}" th:text="${ResionVO.displayName}"/>
-</select>
-</div>
-<div>
-<select th:field="*{ServiceType}" class="form-select">
-<option value="">==봉사유형==</option>
-<option th:each="ServiceType : ${ServiceTypes}" th:value="${ServiceType.code}" th:text="${ServiceType.displayName}"/>
-</select> -->
+
 
 
 <div>
-<select th:field="*{facilityList}" id="selectre" style="weight:100; height:200;" onchange="filterFacilities()">
+<select id="selRegion" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
 <option value="">==지역==</option>
-<option th:each="facility:${facilityList}" th:value="${facility.region}" th:text="${facility.region}"/>
+    <option th:each="region : ${facilityList}"  th:value="${region.facZip2}" th:text="${region.region}"></option>
 </select>
-<select th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
+<select id= "selFacType" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
 <option value="">==봉사유형==</option>
-<option th:each="facility : ${facilityList}" th:value="${facility.facType}" th:text="${facility.facType}"/>
+<option th:each="facility : ${uniqueFacTypes}" th:value="${facility}" th:text="${facility}"></option>
 </select>
 </div>
 
@@ -98,30 +89,39 @@
 
 <script th:inline="javascript">
     function filterFacilities() {
-    	alert('실행중')
-        var selectedRegion = $('#selectre').val();
-
+    	
+        let selectedRegion = $('#selRegion').val();
+		let selectedFacType = $('#selFacType').val();
+		location.href=`facilityList?facZip2=${selectedRegion}&facType=${selectedFacType}`
+		
+		/* alert('실행')
         $.ajax({
             type:'GET',
-            url:'facilityList',
-            data: {region: selectedRegion},
+            url:'/facilityFilter',
+            data: { facZip2: selectedRegion, facType: selectedFacType },
             success: function (data) {
-                displayFilteredFacilities(data);
-            },
+            	
+            	console.log("data",data)
+               alert('성공');
+				
+            }, 
+       
             error: function () {
                 console.error('Error fetching filtered facilities');
             }
-        });
+        }) */
+        /* .done(result=>{
+        	
+        	console.log("결과" ,result)
+        	
+        }) */
+			
+		
+		
+		
     }
 
-    function displayFilteredFacilities(facilities) {
-        var filteredFacilitiesDiv = $('#filteredFacilities');
-        filteredFacilitiesDiv.empty();
-
-        $.each(facilities, function (index, facility) {
-            filteredFacilitiesDiv.append('<p>' + facility.facName + '</p>');
-        });
-    }
+  
     
     
     
