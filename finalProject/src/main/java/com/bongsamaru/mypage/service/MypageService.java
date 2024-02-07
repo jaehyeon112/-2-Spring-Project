@@ -1,19 +1,17 @@
-/*
- * package com.bongsamaru.mypage.service;
- * 
- * import org.springframework.stereotype.Service; import
- * org.springframework.transaction.annotation.Transactional;
- * 
- * import com.bongsamaru.admin.service.UserVO; import
- * com.bongsamaru.mypage.domain.Member; import
- * com.bongsamaru.mypage.domain.MemberRepository;
- * 
- * @Service public class MypageService { MemberRepository memberRepository;
- * 
- * @Transactional public void updateEmail(UserVO userVO) { Member member =
- * memberRepository.findById(userVO.getMemId()) .orElseThrow(() -> new
- * IllegalArgumentException("해당하는 회원을 찾을 수 없습니다."));
- * memberRepository.save(member.getMemEmail()); }
- * 
- * }
- */
+package com.bongsamaru.mypage.service;
+
+
+import java.util.List;
+
+import com.bongsamaru.common.VO.UserVO;
+
+public interface MypageService {
+	
+	public Double getHeart(String memId);
+	public int updateEmail(UserVO userVO);
+	public Integer getSumAmt(String memId);
+	public Integer getGibuCount(String memId);
+	public List<DonledgerVO> getGibuList(String memId);
+	public List<UserVO> getProfile(String memId);
+	public boolean insertHeart(HeartVO vo);
+}

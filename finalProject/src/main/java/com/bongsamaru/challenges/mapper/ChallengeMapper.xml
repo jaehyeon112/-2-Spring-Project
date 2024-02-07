@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.bongsamaru.challenges.mapper.ChallengeMapper">
+<!-- 챌린지리스트 -->
+<select id="getChallengeList" resultType="ChallengesVO">
+
+SELECT  C.CHAL_ID, 
+		C.MEM_ID,
+		C.TITLE, 
+		C.CONTENT,
+        C.REG_DATE,
+		F.FILE_PATH, 
+		F.FILE_ORDER, 
+		F.FILE_NAME, 
+		F.EXTENSION, 
+		F.FILE_SIZE,  
+		F.CODE_NO,
+        (SELECT F.FILE_PATH FROM FILES F RIGHT JOIN CHALLENGE C ON C.MEM_ID = F.CODE_USER GROUP BY F.FILE_PATH) AS PROFIL,
+        (SELECT COUNT(MEM_ID) FROM CHAL_DETAIL WHERE CHAL_ID=C.CHAL_ID)                                         AS PARTICIPANTS,
+        (SELECT COUNT(MEM_ID) FROM CHAL_DETAIL)                                                                 AS ALLPARTICIPANTS
+  FROM  CHALLENGE C 
+  LEFT  JOIN FILES F ON CAST(C.CHAL_ID AS VARCHAR2(100)) = F.CODE_NO
+   AND  F.CODE ='p03'
+ WHERE  FILE_ORDER = 1
+ 
+ 
+  
+</select>
+<!-- 챌린지인포 -->
+<select id="getChallengeInfo" resultType="ChallengesVO">
+
+SELECT  CHAL_ID, 
+		MEM_ID,
+		TITLE, 
+		CONTENT, 
+        EXP_IMPACT,
+        ACTION_REASON,
+        REG_DATE,
+        PART_METHOD1,
+        PART_METHOD2
+  FROM  CHALLENGE
+  WHERE  CHAL_ID=#{chalId}
+</select>
+
+<!--파일첨부 리스트-->
+<select id="getFileList" resultType="ChallengesVO">
+        
+<choose>
+        <when test="chalDetId != null">
+            SELECT F.FILE_PATH, 
+                   F.FILE_ORDER, 
+                   F.FILE_NAME, 
+                   F.EXTENSION, 
+                   F.FILE_SIZE,
+                   F.CODE,
+                   F.CODE_NO
+            FROM FILES F 
+            LEFT JOIN CHAL_DETAIL CD ON CD.CHAL_DET_ID = F.CODE_NO
+            WHERE F.CODE_NO = #{codeNo}
+              AND F.CODE = #{code}
+              AND CD.CHAL_DET_ID = #{chalDetId}
+        </when>
+        <otherwise>
+            SELECT F.FILE_PATH, 
+                   F.FILE_ORDER, 
+                   F.FILE_NAME, 
+                   F.EXTENSION, 
+                   F.FILE_SIZE,
+                   F.CODE,
+                   F.CODE_NO
+            FROM FILES F 
+            LEFT JOIN CHALLENGE C ON C.CHAL_ID = F.CODE_NO
+            WHERE F.CODE_NO = #{codeNo}
+              AND F.CODE = #{code}
+              AND C.CHAL_ID = #{chalId}
+        </otherwise>
+    </choose>
+        
+  
+</select>
+
+<!-- 한 챌린지 내 참여리스트  -->
+<select id="getChallengesList" resultType="ChallengesVO">
+ 	
+SELECT  C.CHAL_DET_ID,
+		C.CHAL_ID, 
+		C.MEM_ID,
+		C.CONTENT, 
+		C.PART_DATE, 
+		F.FILE_PATH, 
+		F.FILE_ORDER, 
+		F.FILE_NAME, 
+		F.EXTENSION, 
+		F.FILE_SIZE,  
+		F.CODE_NO 
+   FROM CHAL_DETAIL C 
+   LEFT JOIN FILES F ON CAST(C.CHAL_DET_ID AS VARCHAR2(100)) = F.CODE_NO
+    AND F.CODE ='p04'
+  WHERE C.CHAL_ID=#{chalId}
+   
+  
+</select>
+
+<!-- 챌린지 등록-->
+<insert id="getChallengeInsert" parameterType="ChallengesVO">
+	<selectKey keyProperty="chalId" resultType="int"	order="BEFORE">
+			SELECT NVL(MAX(CHAL_ID),0)+1 FROM CHALLENGE
+	</selectKey>
+		INSERT
+		
+		INTO CHALLENGE
+			(CHAL_ID,
+			 MEM_ID,
+			 TITLE,
+			 CONTENT,
+			 EXP_IMPACT,
+			 ACTION_REASON,
+			 REG_DATE,
+			 PART_METHOD1,
+			 PART_METHOD2)
+		 VALUES
+			(#{chalId},
+			 #{memId},
+			 #{title},
+			 #{content},
+			 #{expImpact},
+			 #{actionReason},
+			 #{regDate},
+			 #{partMethod1},
+			 #{partMethod2})
+ 
+    	
+
+</insert>
+
+<!-- 한 챌린지  참여 등록-->
+<insert id="getChallengesInsert" parameterType="ChallengesVO">
+	<selectKey keyProperty="chalDetId" resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHAL_DETAIL</selectKey> 
+		INSERT ALL 
+		
+		INTO CHAL_DETAIL
+			(CHAL_DET_ID,
+			 CHAL_ID,
+			 CONTENT,                 
+			 PART_DATE,
+			 MEM_ID)
+		 VALUES
+			(#{chalDetId},
+			#{chalId},
+			#{dContent},
+			sysdate,
+			#{memId})
+ 
+ SELECT * FROM DUAL		
+</insert>
+
+
+<!-- 챌린지 수정 -->
+<update id="getChallengeUpdate" parameterType="ChallengesVO">
+
+</update>
+<!-- 한 챌린지 참여 수정-->
+<update id="getChallengesUpdate" parameterType="ChallengesVO">
+
+</update>
+
+<!-- 한 챌린지 참여 삭제-->
+<delete id="getChallengesDel" parameterType="int">
+
+</delete>
+</mapper>

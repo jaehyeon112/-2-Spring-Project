@@ -3,7 +3,83 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bongsamaru.mypage.mapper.MypageMapper">
-<!-- 	<update id="updateDonApp" parameterType="FacilityVO">
-		UPDATE MEMBER SET mem_phone = #{memPhone}
-	</update> -->
+	<!-- 마음온도 조회 -->
+	<select id="getHeart" resultType="Double">
+		    SELECT sum(temp_change) as tempChange
+		    FROM heart
+		    WHERE mem_id = #{memId}
+	</select>
+	<!-- 프로필 조회 -->
+	<select id="getProfile" resultType="UserVO">
+			SELECT 
+			       file_path as mem_profile,
+			       mem_id,
+			       mem_pwd,
+			       mem_nick,
+			       mem_phone
+			       mem_zip,
+			       mem_addr,
+			       mem_bdate,
+			       mem_dept,
+			       mem_email,
+			       don_receipt,
+			       mem_ssn,
+			       email_agree,
+			       sms_agree,
+			       acct_num,
+			       bank_name,
+			       mem_stat
+			 FROM  member a right join files b
+			 ON    a.mem_id = b.code_user
+			 WHERE a.mem_id = #{memId}
+			 AND b.code = 'p01'
+	</select>
+	<!-- 기부 내역 조회 -->
+	<select id="getGibuList" resultType="DonledgerVO">
+			SELECT 
+					don_led_id,
+					a.don_id,
+					don_amt,
+					pay_method,
+					pay_date,
+					pay_stat,
+					pay_id,
+					anon_check,
+					mem_id,
+					title
+			FROM don_ledger a LEFT JOIN donation b
+			ON a.don_id = b.don_id
+			WHERE mem_id = #{memId}
+			ORDER BY don_led_id
+	</select>
+	<!-- 기부 횟수 조회 -->
+	<select id="getGibuCount" resultType="Integer">
+			SELECT count(*)
+			FROM don_ledger
+			WHERE mem_id = #{memId}
+	</select>	
+	<!-- 기부 총금액 조회 -->
+	<select id="getSumAmt" resultType="Integer">
+			SELECT sum(don_amt) as sum
+			FROM don_ledger
+			WHERE mem_id = #{memId}
+	</select>
+ 	<!-- 이메일 변경 -->
+	<update id="updateEmail" parameterType="UserVO">
+		UPDATE MEMBER SET mem_Email = #{memEmail}
+		WHERE mem_Id = #{memId}
+	</update>
+	
+	<insert id="insertHeart" parameterType="HeartVO">
+	insert into heart 
+					( heart_temp_id
+					  ,Mem_id
+					  ,temp_code
+					  ,temp_change
+					  )values(
+						HEARTTEMP_SEQ.nextVal, 
+						#{memId}
+						,#{tempCode}
+						,#{tempChange})
+	</insert>
 </mapper>

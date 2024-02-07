@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ 
+<mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
+<!-- 시설리스트 -->
+<select id="getFacilityList" resultType="FacilityVO">
+
+	SELECT 			FAC_ID,
+					FAC_NAME,
+					FAC_ADDR,
+					select_sub(FAC_ZIP2) AS region,
+					FAC_ZIP2,
+					FAC_ZIP,
+					FAC_TYPE
+					FROM FACILITY
+	<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+        <if test="facZip2 != null and facZip2 !=''">
+            AND 	FAC_ZIP2=#{facZip2}
+        </if>
+        <if test="facType != null and facType != ''">
+        	AND 	FAC_TYPE = #{facType}
+        </if>
+    </where>
+
+    	<if test="limit != null">
+          LIMIT #{limit}
+        </if>
+        <if test="offset != null">
+          OFFSET #{offset}
+        </if>
+    
+    
+
+</select>
+
+
+<!-- 시설정보 -->
+<select id="getFacilityInfo" resultType="FacilityVO">
+ Select Fac_ID,
+ 		Fac_Name,
+ 		BIZ_NUM,
+ 		Fac_Type, 
+ 		FAC_ADDR,
+ 		FAC_ADDR_DETAIL,
+ 		Fac_Web,
+ 		FAC_INTRO,
+ 		REP_NAME,
+ 		REP_PHONE,
+		(Select Sum(T1.Don_Amt) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donaitonAmt,
+		(Select Count(Distinct(T1.Mem_Id)) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donors
+		From Facility Where Fac_Id=#{facId}
+</select>
+<!-- 시설에서 진행중인 모금정보 List-->
+<select id="getfundingList" resultType="FundingVO">
+	SELECT D1.DON_ID                       		  AS donId,           
+	       D1.TITLE                        		  AS title, 
+	       D1.GOAL_AMT                     		  AS goalAmt, 
+		   D1.REC_STAT                     		  AS state,
+		   SUM(NVL(D2.DON_AMT,0))          		  AS donationAmt, 
+		   COUNT(DISTINCT D2.MEM_ID)     		  AS donors,
+		   (SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio
+		   
+	  FROM DONATION D1 
+	  LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+	  
+	 WHERE D1.REC_STAT ='0' 
+	   AND D1.DON_REG_APP='1'
+	   AND D1.FAC_ID=#{facId}
+	 GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
+</select>
+
+<!-- 시설에서 진행마감인 모금정보 List-->
+<select id="getfundedList" resultType="FundingVO">
+	SELECT  D1.DON_ID,
+		 	D1.TITLE    , 
+			D1.GOAL_AMT , 
+			D1.REC_STAT ,
+			SUM(NVL(D2.DON_AMT,0)) AS donationAmt, 
+			COUNT(DISTINCT D2.MEM_ID) AS donors,
+			(SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio 
+			
+	  FROM  DONATION D1 
+	  LEFT  JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+	 WHERE  D1.REC_STAT ='1' 
+	   AND  D1.DON_REG_APP='1' 
+	   AND  D1.FAC_ID=#{facId}
+	 GROUP  BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
+</select>
+
+<select id="getVolList" resultType="VolunteerVO">
+SELECT  T1.VOL_ACT_ID, 
+		T1.REV_TITLE,
+		T1.CONTENT, 
+		T1.WRITE_DATE, 
+		T2.FAC_ID, 
+		T2.CATEGORY, 
+		T2.TITLE, 
+		T2.LOCATION, 
+		T2.VOL_DATE 
+  FROM  FAC_VOL_REV T1 
+  LEFT  JOIN VOL_ACT T2 ON T1.VOL_ACT_ID = T2.VOL_ACT_ID
+ WHERE  FAC_ID=#{facId}
+</select>
+
+<!-- MyPage쪽 -->
+<!-- dona정보 -->
+<select id="getDonaInfo" resultType="DonaVO">
+   SELECT D.TITLE,
+  		  D.REC_PERIOD, 
+  		  D.END_PERIOD, 
+  		  D.GOAL_AMT,
+  		  D.DON_REG_APP, 
+  		  NVL(SUM(CASE WHEN DL.PAY_STAT = 0 THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
+  		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
+     FROM DONATION D
+LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+ GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
+
+</select>
+<!-- volunteer정보 -->
+
+
+
+</mapper>
+
+
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/adminLayout}"
+>
+<head>
+<meta charset="UTF-8">
+<title>기부 프로젝트</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+
+
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+		<div class="divFooter" th:insert="~{admin/adminHeader :: head}"></div>
+      <!--  Header End -->
+      <div class="container-fluid">
+		<h2>기부 프로젝트</h2>
+		<div style="float:right;color:black" class="cur">
+			<a style="color:black;font-size:14px" onclick="show1()">진행 중인 프로젝트 |</a>
+			<a style="color:black;font-size:14px" onclick="show2()"> 종료된 프로젝트</a>
+		</div>
+		<script>
+		function show1(){
+			$('#tableData').load("../donationList #donationing");
+		};
+		function show2(){
+			$('#tableData').load("../donationDone #donationDone");
+		};
+		</script>
+		<br>
+		<div id="tableData">
+			<div id="donationing">
+		        <div class="row">
+		          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}" th:if="${dona.recStat}==0">
+		            <div class="card overflow-hidden rounded-2">
+		              <div class="position-relative">
+		                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" target='_blank'><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..."></a>
+		              </div>
+		              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
+					    <span>모금중</span><br>
+					</div>
+		               <div class="d-flex align-items-center justify-content-between">
+			            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
+			                <h3><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" target='_blank' th:text="${dona.title}" style="color:black;font:bolder"> 제목</a></h3>
+			                <a href="#" style="color:gray">
+							   <span th:text="${dona.facilityName}"></span>
+							</a>
+							<br>
+			                <div class="progress">
+			                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+			                </div><br>
+			                <h5>
+			                    <span th:text="${dona.donationRatio}"></span> %
+			                    
+			                    <span style="float:right" data-th-text="${#numbers.formatInteger(dona.total, 1, 'COMMA') + '원'}"></span>
+			                </h5>
+							 <br>
+			            </div>
+		               </div>
+		            </div>
+		          </div>
+		        </div>
+	        </div>
+      	</div>
+      </div>
+    </div>
+</section>
+</body>
+
+</html>

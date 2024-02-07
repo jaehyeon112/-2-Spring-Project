@@ -81,7 +81,6 @@ public class GoogleMailController {
     @PostMapping("/send")
     public String sendEmail(Model model, @RequestParam("recipientEmail") String recipientEmail, HttpServletRequest request) {
         try {
-        	
             
             // 이메일 설정 및 인증
             Properties props = new Properties();
@@ -114,7 +113,7 @@ public class GoogleMailController {
             // 이메일 내용
             String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
                     + "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일 인증번호입니다.</h1>"
-                    + "<p style=\"padding: 50px;\">안녕하세요. " + "hi" + "님^^ 이메일 인증번호를 보내드려요.<br>"
+                    + "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다" + "이메일 인증번호를 보내드려요.<br>"
                     + "아래 4자리 인증번호를 복사하셔서 입력하시면, 이메일 인증이 완료됩니다.</p>"
                     + "<p style=\"padding: 100px; font-weight: bold; font-size: 40px; color: black;\">인증번호: <span style=\"color: white;\">" + numStr + "</span></p>"
                     + "</div>";
@@ -123,11 +122,57 @@ public class GoogleMailController {
 
             // 이메일 전송
             Transport.send(message);
-
+            
+            System.err.println(numStr + "이메일 인증번호");
+            
         } catch (Exception e) {
         	
         }
-        return "profile";
+        return "my/profile";
+    }
+    
+    // 이메일 전송
+    @PostMapping("/sendAdminMail")
+    public String sendAdminMail(Model model, @RequestParam("recipientEmail") String recipientEmail, HttpServletRequest request) {
+    	try {
+    		
+    		// 이메일 설정 및 인증
+    		Properties props = new Properties();
+    		props.put("mail.smtp.auth", mailSmtpAuth);
+    		props.put("mail.smtp.starttls.enable", mailSmtpStarttlsEnable);
+    		props.put("mail.smtp.host", mailHost);
+    		props.put("mail.smtp.port", mailPort);
+    		props.put("mail.smtp.timeout", mailSmtpTimeout);
+    		props.put("mail.smtp.socketFactory.class", mailSmtpSocketFactoryClass);
+    		props.put("mail.smtp.socketFactory.fallback", mailSmtpSocketFactoryFallback);
+    		
+    		Session session = Session.getInstance(props, new Authenticator() {
+    			protected PasswordAuthentication getPasswordAuthentication() {
+    				return new PasswordAuthentication(senderEmail, senderPassword);
+    			}
+    		});
+    		// 이메일 작성
+    		Message message = new MimeMessage(session);
+    		message.setFrom(new InternetAddress(senderEmail));
+    		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+    		message.setSubject("행복마루에서 보내드리는 이메일입니다.");
+    		
+    		// 이메일 내용
+    		String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
+    				+ "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
+    				+ "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
+    				+ "빠른 시일 내에 영수증 첨부 부탁드립니다. 감사합니다.</p>"
+    				+ "</div>";
+    		
+    		message.setContent(emailContent, "text/html; charset=utf-8");
+    		
+    		// 이메일 전송
+    		Transport.send(message);
+    		
+    	} catch (Exception e) {
+    		
+    	}
+    	return "admin/donationReceiptList";
     }
     
 

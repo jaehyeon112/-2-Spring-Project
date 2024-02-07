@@ -17,8 +17,8 @@
         <link rel="stylesheet" href="/userresources/vendors/nice-select/css/nice-select.css">
         <link rel="stylesheet" href="/userresources/vendors/owl-carousel/owl.carousel.min.css">
         <!-- main css -->
-        <link rel="stylesheet" href="userresources/css/style.css">
-        <link rel="stylesheet" href="userresources/css/responsive.css">
+        <link rel="stylesheet" href="/userresources/css/style.css">
+        <link rel="stylesheet" href="/userresources/css/responsive.css">
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <!-- font -->
@@ -26,8 +26,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap" rel="stylesheet">
+		<!-- Bootstrap JS (Popper.js 포함) -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 		<style>
 		  @import url('https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap');
+		  
 		</style>
     </head>
 <body>
@@ -50,7 +53,7 @@
                                 <a style="cursor: pointer" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <ul class="dropdown-menu" >
                                     <li class="nav-item"><a class="nav-link" th:href="@{/intro}">봉사마루</a></li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/intro2}">시설소개</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/facilityList}">시설소개</a></li>
                                 </ul>
                             </li> 
                            <li class="nav-item submenu dropdown">
@@ -61,10 +64,12 @@
                                     <li class="nav-item"><a class="nav-link" th:href="@{/}">시설봉사</a></li>
                                 </ul>
                             </li> 
+
                             <li class="nav-item"><a class="nav-link" th:href="@{/donaMain}">기부</a></li>
-                            <li class="nav-item"><a class="nav-link" th:href="@{/}">챌린지</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
+
                     		<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">로그인</a></li>
-						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/my}" th:text="|${userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
@@ -81,11 +86,12 @@
         <!--================Header Area =================-->
           <section class="accomodation_area section_gap">
          	 <div class="container">
+         	 
 				<section layout:fragment="content"></section>
        		 </div>
 		</section>
 		<div sec:authorize="isAuthenticated()">
-   			zz
+   		
 		</div>
 	<div class="divfooter" th:insert="~{footer::copy}">
 			

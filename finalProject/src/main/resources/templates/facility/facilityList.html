@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>시설리스트</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<section class="breadcrumb_area blog_banner_two">
+			<div class="overlay bg-parallax" data-stellar-ratio="0.8"
+				data-stellar-vertical-offset="0" data-background=""
+				style="transform: translateY(0px);"></div>
+			<div class="container">
+				<div class="page-cover text-center">
+					<h2 class="page-cover-tittle f_48">봉사마루와 함께하는 시설들</h2>
+
+				</div>
+			</div>
+		</section>
+		<div>
+
+
+
+<div>
+<select id="selRegion" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
+<option value="">==지역==</option>
+    <option th:each="region : ${facilityList}"  th:value="${region.facZip2}" th:text="${region.region}"></option>
+</select>
+<select id= "selFacType" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
+<option value="">==봉사유형==</option>
+<option th:each="facility : ${uniqueFacTypes}" th:value="${facility}" th:text="${facility}"></option>
+</select>
+</div>
+
+			<div class="row mb_30">
+				<th:block th:each="facility:${facilityList}" id="filteredFacilities">
+					<div class="col-lg-4 col-md-6">
+						<div class="single-recent-blog-post">
+							<div class="thumb">
+								<img class="img-fluid" src="../image/초록개구리.png" alt="post">
+							<!-- 	 <a class="btn theme_btn button_hover" th:href="@{/facilityInfo/{facId}(facId=${facility.facId})}"></a> -->
+								<a class="btn theme_btn button_hover" th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
+										th:text="${facility.facName}"></a>
+							</div>
+							<div class="details">
+								<div class="tags">
+									<!-- 								<a href="#" class="button_hover tag_btn">Travel</a> <a href="#"
+									class="button_hover tag_btn">Life Style</a> -->
+									
+								</div>
+								<h3  style="display:none" th:text="${facility.facId}"></h3>
+								<h4 class="sec_h4" th:text="${facility.facName}"></h4>
+								<p th:text="${facility.facAddr}"></p>
+								<p style="display:none" th:text="${facility.region}" id="regions"></p>
+								<h6 class="date title_color" th:text="${facility.facType}"></h6>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+
+
+<button type="button" th:onclick="pagingReq()"></button>
+
+<nav class="blog-pagination justify-content-center d-flex">
+				<ul class="pagination">
+					<li class="page-item"><a href="#" class="page-link"
+						aria-label="Previous"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-left"></span>
+						</span>
+					</a></li>
+					<li class="page-item"><a href="#" class="page-link">01</a></li>
+					<li class="page-item active"><a href="#" class="page-link">02</a></li>
+					<li class="page-item"><a href="#" class="page-link">03</a></li>
+					<li class="page-item"><a href="#" class="page-link">04</a></li>
+					<li class="page-item"><a href="#" class="page-link">05</a></li>
+					<li class="page-item"><a href="#" class="page-link"
+						aria-label="Next"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-right"></span>
+						</span>
+					</a></li>
+				</ul>
+			</nav>
+
+		</div>
+
+<script th:inline="javascript">
+    function filterFacilities() {
+    	
+        let selectedRegion = $('#selRegion').val();
+		let selectedFacType = $('#selFacType').val();
+		location.href=`facilityList?facZip2=${selectedRegion}&facType=${selectedFacType}`
+		
+		/* alert('실행')
+        $.ajax({
+            type:'GET',
+            url:'/facilityFilter',
+            data: { facZip2: selectedRegion, facType: selectedFacType },
+            success: function (data) {
+            	
+            	console.log("data",data)
+               alert('성공');
+				
+            }, 
+       
+            error: function () {
+                console.error('Error fetching filtered facilities');
+            }
+        }) */
+        /* .done(result=>{
+        	
+        	console.log("결과" ,result)
+        	
+        }) */
+			
+		
+		
+		
+    }
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+    
+    
+    
+    
+</script>
+
+
+
+	</section>
+</body>
+</html>
+

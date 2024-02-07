@@ -38,7 +38,8 @@
     #{memName}
 )
    </insert>
-
+	
+	
 
    <select id="userList" resultType="UserVO">
       select MEM_ID,
@@ -64,8 +65,8 @@
 
    <select id="countMemId" resultType="int">
        SELECT COUNT(*)
-       FROM member
-       WHERE mem_id = #{memId}
+       FROM UserFacilityView
+       WHERE id = #{id}
    </select>
    
    <select id="countMemNick" resultType="int">
@@ -74,5 +75,58 @@
        WHERE mem_nick = #{memNick}
    </select>
 
+	<select id="categoryList" resultType="UserCategoryVO">
+		select sub_code_id as id , sub_code_name as name from sub_code
+		where main_code_id = 'd'
+		or main_code_id = 'f'
 
+	</select>
+	
+	<insert id="insertCate" parameterType="String">
+		insert into interest (interest_id,interest_code, mem_id) values
+		(interest_seq.nextVal,#{name},#{id})
+	</insert>	
+	
+	<select id="login" resultType="UserFacilityVO">
+		select * from userfacilityView where id = #{id}
+	</select>
+	
+	<select id="checkBizNum" resultType="int">
+		select count(*) from facility where biz_num = #{biz_num}
+	</select>
+	
+	<insert id="facilitySignUp" parameterType="FacilityVO">
+	insert into facility(
+						fac_id
+						,fac_pwd 
+						,biz_num
+						,fac_name
+						,fac_zip
+						,fac_addr 
+						,fac_addr_detail 
+						,fac_est_date 
+						,fac_email 
+						,fac_web 
+						,fac_intro 
+						,rep_name 
+						,rep_phone
+						,fac_type
+				)values(
+						#{facId}
+					   ,#{facPwd}
+					   ,#{bizNum}
+					   ,#{facName}
+					   ,#{facZip}
+					   ,#{facAddr}
+					   ,#{facAddrDetail}
+					   ,#{facEstDate}
+					   ,#{facEmail}
+					   ,#{facWeb}
+					   ,#{facIntro}
+					   ,#{repName}
+					   ,#{repPhone}
+					   ,#{facType}
+									)
+	</insert>
+	
 </mapper>

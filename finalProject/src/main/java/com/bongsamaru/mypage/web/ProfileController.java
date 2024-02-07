@@ -1,18 +1,22 @@
 package com.bongsamaru.mypage.web;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
+import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
 import com.bongsamaru.user.service.UserDetailVO;
 
@@ -20,10 +24,12 @@ import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RequiredArgsConstructor
-@RestController
-public class ProfileController {
+@Controller
+public class ProfileController<userVO> {
 	
-
+	@Autowired
+	MypageService mypageService;
+	
 	 @GetMapping("/profile")
 	    public String profile(Model model) {
 	        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,12 +45,17 @@ public class ProfileController {
 	                
 	                // 예시: 사용자 이름을 모델에 추가
 	                System.out.println(userDetailVO.getUserVO() + "확인로그인로그인");
-	                model.addAttribute("list", userDetailVO.getUserVO());
+	                List<UserVO> list = mypageService.getProfile(userDetailVO.getUsername());
+	                
+	                
+	                model.addAttribute("list", list);
+	                System.out.println(list+ "리스트");
+	                
 	                // 필요한 경우, 여기에서 userDetailVO의 다른 정보를 모델에 추가할 수 있습니다.
 	            }
 	        }
 
-	        return "profile";
+	        return "my/profile";
 	    }
 	
     // coolSMS 구현 로직 연결  
@@ -54,5 +65,10 @@ public class ProfileController {
         return smsService.PhoneNumberCheck(to);
     }
     
-	
+    // 수정
+    @PostMapping("/profile")
+	public void updateEmail(@RequestBody UserVO userVO) {
+		mypageService.updateEmail(userVO);
+		
+	}
 }
