@@ -11,13 +11,13 @@
 </head>
 <body>
 
- <section layout:fragment="content">
+ <section layout:fragment="content" >
  
  사용자 아이디: <span sec:authentication="name"></span>
 
 
 
-<form name="donaForm">
+<form name="donaForm" enctype="multipart/form-data">
   <fieldset>
     <legend> Donation Regit Form </legend>
 
@@ -180,6 +180,7 @@
 
 	// 폼제출하기
 	function submitForm(){
+			
 		validation();
 
 		
@@ -204,16 +205,14 @@
 		}
 		console.log(fdata);
 		
-		let formData = new FormData(donaForm);
-		
-		console.log(formData);
-		
+		let formData = new FormData();
 		formData.append("DonaVO", JSON.stringify(fdata));
+		console.log(formData);
 		
 		var inputFile = $("input[type='file']");
 		var files = inputFile[0].files;
 		for (var i = 0; i < files.length; i++) {
-			formData.append("uploadfiles", files[i]);
+		formData.append("uploadfiles", files[i]);
 		}
 		
 		
@@ -224,12 +223,12 @@
 			processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
 			contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.'
 			//contentType : 'application/json',
-			data : fdata,
+			data : formData,
 			success :function (result) {
 						console.log("ajax 안에 result " + result);
-						fileSub()
+						
 						alert("등록성공!");
-						//locatihref="donaMain"
+						location.href="donaMain"
 						return;
 					},
 			
@@ -243,40 +242,9 @@
 		}// end Submit Form
   
 		
-	//파일첨부처리하기.
-	function fileSub(cnt) {
-			var formData = new FormData(); //FormData 객체 생성
-			var inputFile = $("input[type='file']");
-			
-			//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
-			var files = inputFile[0].files;
-			if(files.length==0){
-				return;
-			}
-			
-			//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
-			//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
-			for (var i = 0; i < files.length; i++) {
-				formData.append("uploadfiles", files[i]); //키,값으로 append 
-			}
-			formData.append("code", "p08")
-			formData.append("codeNo", cnt);
+	
 		
-			//jQuery.ajax
-			$.ajax({
-				url: '/uploadsAjax',
-				type: 'POST',
-				processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-				contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
-				data: formData,
-				success: function (result) {
-					location.href="donaMain"
-				},
-				error: function (reject) {
-					console.log(reject);
-				}
-			});
-		};
+	
 	
 	
 	
