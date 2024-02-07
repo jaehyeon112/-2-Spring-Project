@@ -55,6 +55,6 @@
 						HEARTTEMP_SEQ.nextVal, 
 						#{memId}
 						,#{tempCode}
-						,#{tempChange});
+						,#{tempChange})
 	</insert>
 </mapper>

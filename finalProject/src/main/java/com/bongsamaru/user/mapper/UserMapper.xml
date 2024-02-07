@@ -77,8 +77,8 @@
 
 	<select id="categoryList" resultType="UserCategoryVO">
 		select sub_code_id as id , sub_code_name as name from sub_code
-where main_code_id = 'd'
-or main_code_id = 'f'
+		where main_code_id = 'd'
+		or main_code_id = 'f'
 
 	</select>
 	

@@ -654,7 +654,7 @@
 				<div class="subheading">관련학과</div>
 				<div class="radio-group">
 					<div th:each="userCategory : ${category}" th:if="${userCategory.id.startsWith('d')}" class="radio-option">
-						<input type="radio" th:id="${userCategory.id}" th:name="major" th:value="${userCategory.name}">
+						<input type="radio" th:id="${userCategory.id}" th:name="major" th:value="${userCategory.id}">
 						<label th:for="${userCategory.id}" class="input-label" th:text="${userCategory.name}"></label>
 					</div>
 				</div>
@@ -1341,7 +1341,7 @@
 						memStat: 'm02', // 이 값은 예시로 넣은 것이며, 실제 상황에 맞게 조정해야 합니다.
 						memName: $('#nameCheck').val()
 					};
-
+					console.log(obj)
 
 
 					const areAllTrue = Object.values(valid).every(value => value === true);

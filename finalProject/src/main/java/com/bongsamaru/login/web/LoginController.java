@@ -124,8 +124,6 @@ public class LoginController {
 	@GetMapping("signup")
 	public String goToUserSignUp(Model model) {
 		List<UserCategoryVO> vo = userService.userCategoty();
-		System.out.println("이것이 카테고리VO");
-		System.out.println(vo);
 		model.addAttribute("category",vo);
 		
 		return "login/signup";
