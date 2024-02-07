@@ -1,6 +1,12 @@
 package com.bongsamaru.facility.web;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+import java.util.HashSet;
+>>>>>>> develop
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,50 +14,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 @Controller
 public class facilityController {
 	@Autowired
 	FacilityService facilityService;
 	
-	/*
-	 * @ModelAttribute("regions") public List<RegionVO> selectBox() {
-	 * 
-	 * List<RegionVO> regions = new ArrayList<>(); regions.add(new RegionVO("SEOUL",
-	 * "서울특별시")); regions.add(new RegionVO("INCHEON", "인천광역시")); regions.add(new
-	 * RegionVO("DEJEON", "대전광역시")); regions.add(new RegionVO("Gwangju", "광주광역시"));
-	 * regions.add(new RegionVO("DAEGU", "대구광역시")); regions.add(new
-	 * RegionVO("BUSAN", "부산광역시")); regions.add(new RegionVO("ULSAN", "울산광역시"));
-	 * regions.add(new RegionVO("gyeonggi-do", "경기도")); regions.add(new
-	 * RegionVO("Gangwon-do", "강원도")); regions.add(new RegionVO("chungcheongbugdo",
-	 * "충청북도")); regions.add(new RegionVO("chungcheongnamdo", "충청남도"));
-	 * regions.add(new RegionVO("jeonlabugdo", "전라북도")); regions.add(new
-	 * RegionVO("jeonlanamdo", "전라남도")); regions.add(new RegionVO("gyeongsangbugdo",
-	 * "경상북도")); regions.add(new RegionVO("gyeongsangnamdo", "경상남도"));
-	 * regions.add(new RegionVO("JEJUDO", "제주도"));
-	 * 
-	 * return regions; }
-	 */
-	@GetMapping("facilityList")
-	public String getFacilityList(String region, String facId, Model model) {
-		List<FacilityVO> list = facilityService.getFacilityList(region, facId);
+	
+	
+	
+	@GetMapping("/facilityList")
+	public String getFacilityList(String facZip2, String facType, Model model) {
+		List<FacilityVO> list = facilityService.getFacilityList(facZip2, facType);
 		model.addAttribute("facilityList", list);
 		System.out.println(list);
+		/*
+		 * // 중복을 제거한 Set을 생성 Set<String> uniqueFacTypes = new HashSet<>(); for
+		 * (FacilityVO facility : list) { uniqueFacTypes.add(facility.getFacType()); }
+		 * List<String> uniqueFacTypesList = new ArrayList<>(uniqueFacTypes);
+		 * model.addAttribute("uniqueFacTypes", uniqueFacTypesList);
+		 */
 		return "facility/facilityList";
 	}
 	
-	/*
-	 * @GetMapping("facilityList/{region}/{facType}") public String
-	 * getFacilityFilter(@RequestParam region, @RequestParam facType, Model model) {
-	 * List<FacilityVO> list = facilityService.getFacilityList();
-	 * model.addAttribute("facilityList", list); System.out.println(list); return
-	 * "facility/facilityList"; }
-	 */
+	
+	@GetMapping("/facilityFilter")
+	@ResponseBody
+	public List<FacilityVO> getFilterList(String facZip2, String facType){
+		List<FacilityVO> filter = facilityService.getFacilityList(facZip2, facType);
+		System.out.println(facType);
+		return filter;
+	}
+	
 	// /list/paging?page=1
 	/*
 	 * @GetMapping("/paging") public String paging(@PageableDefault(page=1) Pageable
@@ -89,5 +98,24 @@ public class facilityController {
 		System.out.println(list);
 		return "facility/facilityVolunteer";
 	}
+	
+	
+	
+	//시설 마이페이지
+	
+	@GetMapping("facilityMyPage")
+	public String getFacilityMyPage(Model model) {
+		List<DonaVO> list = facilityService.getDonaList();
+		model.addAttribute("donaList", list);
+		return "facility/myPageDona";
+	}
+	@GetMapping("facilityMyPage/volJoin")
+	public String getFacilityMyPageVol(Model model) {
+		
+		return "facility/myPageVolJoin";
+	}
+	
+	
+	
 	
 }

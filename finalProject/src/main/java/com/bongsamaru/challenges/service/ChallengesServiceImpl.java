@@ -24,8 +24,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	}
 
 	@Override
-	public List<ChallengesVO> getChallengeFile(Integer chalId) {
-		return challengeMapper.getChallengeFile(chalId);
+	public List<ChallengesVO> getFileList(Integer codeNo, String code, Integer chalId, Integer chalDetId) {
+		return challengeMapper.getFileList(codeNo, code,chalId, chalDetId);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.bongsamaru.common.VO;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -112,3 +113,4 @@ public class PageVO {
         
     }
 }
+

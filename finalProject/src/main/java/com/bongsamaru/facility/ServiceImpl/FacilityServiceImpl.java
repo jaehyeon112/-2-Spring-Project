@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.mapper.FacilityMapper;
 @Service
@@ -22,8 +23,8 @@ public class FacilityServiceImpl implements FacilityService {
 	FacilityMapper mapper;
 
 	@Override
-	public List<FacilityVO> getFacilityList(String region, String facId) {
-		return mapper.getFacilityList(region,facId);
+	public List<FacilityVO> getFacilityList(String facZip2, String facType) {
+		return mapper.getFacilityList(facZip2,facType);
 	}
 	
 	/*
@@ -52,6 +53,12 @@ public class FacilityServiceImpl implements FacilityService {
 	public List<VolunteerVO> getVolunteerList(String facId) {
 		
 		return mapper.getVolList(facId);
+	}
+
+	@Override
+	public List<DonaVO> getDonaList() {
+		
+		return mapper.getDonaInfo();
 	}
 
 	

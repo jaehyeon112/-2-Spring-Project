@@ -31,6 +31,7 @@ public class DonaVO {
 	    private Integer donationRatio; //목표금액대비 기부금비율
 	    private String facilityName; //시설명
 	    private Integer total;
+	    
 	    //상세페이지
 	    private String dday; //디데이
 	    
@@ -61,7 +62,7 @@ public class DonaVO {
 	    private Date startPeriod; //사업시작기간
 	    //private Date endPeriod; //사업종료기간
 	    private String revApp; //후기승인여부 
-	    
+	    private Integer targetOk;//기부장부에서 총합
     
     //don_review(기부후기사업비) 테이블
 	    private Integer donRevExpId; //기부후기사업비상세등록번호 (c18) not null
