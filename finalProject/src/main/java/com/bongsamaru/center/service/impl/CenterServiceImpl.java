@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.center.mapper.CenterMapper;
 import com.bongsamaru.center.service.CenterService;
+import com.bongsamaru.common.BoardVO;
 import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.PageVO;
 
@@ -32,5 +33,11 @@ public class CenterServiceImpl implements CenterService{
     public int getFaqCategoryCount(String category) {
     	// TODO Auto-generated method stub
     	return centerMapper.getFaqCategoryCount(category);
+    }
+    
+    @Override
+    public List<BoardVO> getNoticeList(BoardVO vo) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getNoticeList(vo);
     }
 }

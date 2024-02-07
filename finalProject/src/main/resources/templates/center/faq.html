@@ -29,10 +29,9 @@ div[th:if] {
 }
 .title_cont {
     font-size: 17px;
-    margin: 47px 0 45px;
+    margin: 0 auto;
     text-align: center;
     padding-bottom: 10px;
-    width: 100px;
 }
 .wrap_cont {
 	padding-bottom: 30px;
@@ -89,6 +88,9 @@ div[th:if] {
 			      </div>
 			    </div>
 			  </div>
+				<div style="text-align:right;">
+					<input type="button" class="btn btn-secondary btn-lg" id="receipt" value="문의하기">
+				</div>
 			</div>
 			<nav aria-label="Page navigation example">
 			    <ul class="pagination justify-content-center">
@@ -125,6 +127,10 @@ function select(category) {
         }	
     });
 }
+
+$('#receipt').on('click',function(){
+	window.location.replace("/receipt");
+})
 </script>
 </section>
 

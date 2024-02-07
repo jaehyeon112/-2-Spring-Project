@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.center.service.CenterService;
+import com.bongsamaru.common.BoardVO;
 import com.bongsamaru.common.FaqVO;
 import com.bongsamaru.common.PageVO;
 
@@ -18,6 +19,7 @@ public class CenterController {
 	 @Autowired
 	 CenterService centerService;
 
+	 // FAQ 페이지
 	 @GetMapping("/faq")
 	 public String faqList(PageVO vo, Model model
 			 	, @RequestParam(value="category", required = false, defaultValue = "a01")String category
@@ -46,11 +48,28 @@ public class CenterController {
 	         	System.out.println("확인: " + category);
 	     return "center/faq"; // 해당 페이지의 뷰 이름을 반환합니다. 필요에 따라 수정해주세요.
 	 }
-	 
+	
+	 // 공지사항
 	 @GetMapping("notice")
-	 public String noticeList() {
+	 public String noticeList(BoardVO vo, Model model) {
 		 
+		 List<BoardVO> list = centerService.getNoticeList(vo);
+		 model.addAttribute("list",list);
 		 return "center/notice";
+	 }
+	 
+	 // 1:1문의 내역 
+	 @GetMapping("inquiry")
+	 public String inquiryList() {
+		 
+		 return "center/inquiry";
+	 }
+	 
+	 // 문의하기 페이지
+	 @GetMapping("receipt")
+	 public String receiptPage() {
+		 
+		 return "center/receipt";
 	 }
 	 
 }
