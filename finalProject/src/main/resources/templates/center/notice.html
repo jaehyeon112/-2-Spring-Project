@@ -77,23 +77,55 @@ div[th:if] {
 	<div class="col-10">
 		<div class="container">
 			<div>
-			  	<form class="d-flex">
-					<h2>공지사항</h2>
-			        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			        <button class="btn btn-outline-success" type="submit">검색</button>
-		      	</form>
+				<h2>공지사항</h2>
+			    <input class="form-control-sm me-2" id="search" type="search" placeholder="Search" aria-label="Search">
+			    <button class="btn btn-outline-success" id="searchBtn" type="button">검색</button>
 			</div>
 				<th:block th:each="item : ${list}">
-					<div class="content">
+					<div class="content" th:if="${list.size} != 0">
 						<span class="ico_pin" th:if="${item.priority == 1}"></span>
 						<a class="a-tag" th:text="${item.title}" href="/my"></a>
 						<p style="font-size:14px;">작성일 [[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</p>
 					</div>
 				</th:block>
+				<div class="content" th:if="${list.size} == 0">
+					<p>검색결과가 존재하지 않습니다<p>
+				</div>
+				
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/notice(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, category=${category})}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:if="${list.size} != 0" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/notice(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage}, category=${category})}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/notice(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage}, category=${category})}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
 		</div>
 	</div>
 </div>
 <script>
+$('#search').on('change',function(){
+	let keyword = $('#search').val();
+	window.location.href = `/notice?searchKeyword=${keyword}`;		
+	
+	
+});
+
+$('#searchBtn').on('click',function(){
+	let keyword = $('#search').val();
+	if(keyword == '') {
+		alert('검색하실 내용을 입력하세요');
+	}
+});
 </script>
 </section>
 </body>

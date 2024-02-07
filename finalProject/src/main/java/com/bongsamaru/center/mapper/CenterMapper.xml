@@ -5,21 +5,34 @@
   <mapper namespace="com.bongsamaru.center.mapper.CenterMapper">
    	<!-- Notice -->
     <select id="getNoticeList" resultType="BoardVO">
-        SELECT 
-        	board_id,
-        	category,
-        	title,
-        	content,
-        	write_date,
-        	views,
-        	priority,
-        	mem_id,
-        	mod_date,
-        	detail_cate
-        FROM board
-        WHERE category = 'b01'
-        ORDER BY priority DESC
+        SELECT *
+        FROM (
+        	SELECT ROWNUM RN, A.*
+        	FROM (
+        	SELECT        	
+	        	board_id,
+	        	category,
+	        	title,
+	        	content,
+	        	write_date,
+	        	views,
+	        	priority,
+	        	mem_id,
+	        	mod_date,
+	        	detail_cate
+	        FROM board
+	        WHERE category = 'b01'
+	        AND (title LIKE '%' || #{searchKeyword} || '%') 
+	        ORDER BY priority DESC, write_date DESC) A
+	    )
+	  	WHERE RN BETWEEN #{start} AND #{end}
     </select>
+    <select id="getNoticeCount" resultType="int">
+		SELECT count(*) 
+		FROM board 
+		WHERE category = 'b01'
+		AND (title LIKE '%' || #{searchKeyword} || '%') 
+	</select>
    	<!-- FAQList -->
     <select id="getFaqList" resultType="FaqVO">
         SELECT *

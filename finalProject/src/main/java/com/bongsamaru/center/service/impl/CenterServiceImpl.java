@@ -24,20 +24,22 @@ public class CenterServiceImpl implements CenterService{
     }
     
     @Override
-    public int getFaqCount() {
-    	// TODO Auto-generated method stub
-    	return centerMapper.getFaqCount();
-    }
-    
-    @Override
     public int getFaqCategoryCount(String category) {
     	// TODO Auto-generated method stub
     	return centerMapper.getFaqCategoryCount(category);
     }
     
     @Override
-    public List<BoardVO> getNoticeList(BoardVO vo) {
+    public List<BoardVO> getNoticeList(PageVO vo) {
     	// TODO Auto-generated method stub
     	return centerMapper.getNoticeList(vo);
     }
+    
+    @Override
+    public int getNoticeCount(PageVO vo) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getNoticeCount(vo);
+    }
+    
+    
 }

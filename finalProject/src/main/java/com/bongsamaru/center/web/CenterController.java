@@ -22,6 +22,7 @@ public class CenterController {
 	 // FAQ 페이지
 	 @GetMapping("/faq")
 	 public String faqList(PageVO vo, Model model
+			 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
 			 	, @RequestParam(value="category", required = false, defaultValue = "a01")String category
 				, @RequestParam(value="start", required = false)String start
 				, @RequestParam(value="end", required = false)String end) {
@@ -33,12 +34,17 @@ public class CenterController {
 	            int endPage = (end == null) ? 10 : Integer.parseInt(end);
 	            
 	            
-	            vo = new PageVO(total, startPage, endPage, category);
+	            if(searchKeyword == null) {
+	            	vo = new PageVO(total, startPage, endPage, category);	            	
+	            }else {
+	            	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+	            }
 	            System.out.println(startPage);
 	            System.out.println(endPage);
 	         	System.out.println(start);
 	         	System.out.println(end);
 	         	List<FaqVO> list = centerService.getFaqList(vo);
+	         	model.addAttribute("searchKeyword",searchKeyword);
 	         	model.addAttribute("vo",vo);
 	         	model.addAttribute("category",category);
 	         	model.addAttribute("list", list);
@@ -51,10 +57,30 @@ public class CenterController {
 	
 	 // 공지사항
 	 @GetMapping("notice")
-	 public String noticeList(BoardVO vo, Model model) {
+	 public String noticeList(PageVO vo, Model model
+			 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+			 	, @RequestParam(value="start", required = false)String start
+				, @RequestParam(value="end", required = false)String end) {
 		 
+		 int total = centerService.getNoticeCount(vo);
+		 System.out.println(total + "검색어토탈");
+		 // start와 end가 null일 경우 기본값으로 1과 10을 사용
+         int startPage = (start == null) ? 1 : Integer.parseInt(start);
+         int endPage = (end == null) ? 10 : Integer.parseInt(end);
+         String category = "b01";
+         
+         
+         if(searchKeyword == null) {
+         	vo = new PageVO(total, startPage, endPage, category);	            	
+         }else {
+         	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+         }
+         System.out.println(searchKeyword + "검색어");
 		 List<BoardVO> list = centerService.getNoticeList(vo);
+		 model.addAttribute("searchKeyword",searchKeyword);
 		 model.addAttribute("list",list);
+		 model.addAttribute("category",category);
+		 model.addAttribute("vo",vo);
 		 return "center/notice";
 	 }
 	 

@@ -10,6 +10,6 @@ public interface CenterMapper {
 
 	public List<FaqVO> getFaqList(PageVO vo);
 	public int getFaqCategoryCount(String category);
-	public int getFaqCount();
-	public List<BoardVO> getNoticeList(BoardVO vo);
+	public List<BoardVO> getNoticeList(PageVO vo);
+	public int getNoticeCount(PageVO vo);
 }
