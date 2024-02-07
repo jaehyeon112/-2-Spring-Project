@@ -12,7 +12,7 @@ public class DonaVO {
 	// Donation  테이블
 		private Integer donId; // 기부번호  - notnull 
 		private String facId; // 시설아이디 - 이하 모두 null
-		private String title; // 제목 (v500)
+		private String title; // 메인제목 (v500) - 
 		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date recPeriod; // 모집기간
 	    private Date endPeriod; // 종료기간
@@ -45,8 +45,8 @@ public class DonaVO {
 	    private String usePlanAmt; // 기부금 사용계획 - 구체적사업비
 	    private String usePlanAmt2;
 	    private String usePlanAmt3;
-	    private String add_intro_title; //추가 소개글 제목
-	    private String add_intro; //추가소개글
+	    private String addIntroTitle; //추가 소개글 제목
+	    private String addIntro; //추가소개글
     
     
     //don_ledger(기부장부) 테이블

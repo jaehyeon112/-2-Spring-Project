@@ -1,6 +1,7 @@
 package com.bongsamaru.dona.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -101,8 +102,9 @@ public class DonaController {
 	    public String openPaymentCompletePage() {
 	        return "donation/paymentComplete";
 	    } 
+	   
 	
-	//등록폼
+	//등록폼 이동
 	   @GetMapping("/form")
 	    public String openRegitform(Model model) {
 		   String h = "h";
@@ -113,23 +115,22 @@ public class DonaController {
 	    }   
 	   
 	   
-	   @PostMapping("/form")
-	   public String registerDona(@ModelAttribute DonaVO donaVO) {
-		  
-			   donaService.insertDonation(donaVO);
-			   donaService.insertDonDetail(donaVO);
-			   
-			   return "redirect:/donation/donaMain";
-		   
+	  //등록폼 INSERT
+	   @PostMapping("/regitForm")
+	   @ResponseBody
+	   public String registerDona(@RequestBody DonaVO donaVO, Model model) {
+			donaService.insertDonation(donaVO);
+			return "redirect:my/mapage";
 	   }
 	   
 	
-	//후기폼
+	//후기폼으로 GO
 	   @GetMapping("/reviewform")
 	    public String openRevform(Model model) {
 		   return "donation/reviewform";
 	   }
 
+	   
 	// 기부신청폼
 	   @GetMapping("/applyform")
 	    public String openapplyform(Model model) {

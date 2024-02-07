@@ -113,6 +113,13 @@
  	
  <!-- 기부등록폼 -->
  	<insert id="insertDonation" parameterType="DonaVO">
+ 	<selectKey keyProperty="donId" resultType="int" order="BEFORE">
+
+		SELECT 
+			DONATION_SEQ.nextval 
+		FROM DUAL
+	
+	</selectKey>
  		INSERT INTO donation 
 	 			(
 	 			don_id
@@ -126,6 +133,7 @@
 	 			, intro_title
 	 			, rec_stat
 	 			, exp_effect
+	 			, category
 	 			) 
  			VALUES 
  			(
@@ -137,16 +145,26 @@
 	 			, #{goalAmt}
 	 			, #{projTarget}
 	 			, #{intro}
-	 			,#{introTitle}
+	 			, #{introTitle}
 	 			, #{recStat}
 	 			, #{expEffect}
+	 			, #{category}
  			)
  	</insert>
  	
+ 	
  	<insert id="insertDonDetail" parameterType="DonaVO">
+ 	<selectKey keyProperty="donDetId" resultType="int" order="BEFORE">
+
+		SELECT 
+			DONDETAIL_SEQ.nextval 
+		FROM DUAL
+	
+	</selectKey>
  	  INSERT INTO Don_Detail 
 	 	  (
-		 	  donId
+		 	  don_id
+		 	  , don_det_id
 		 	  , usePlan
 		 	  , link
 		 	  , link2
@@ -155,10 +173,13 @@
 		 	  , use_plan_amt
 		 	  , use_plan_amt2
 		 	  , use_plan_amt3
+		 	  , add_intro_title
+		 	  , add_intro
 	 	  )
 	        VALUES 
 	        (
 		        #{donId}
+		        , #{donDetId}
 		        , #{usePlan}
 		        , #{link}
 		        , #{link2}
@@ -167,6 +188,8 @@
 		        , #{usePlanAmt}
 		        , #{usePlanAmt2}
 		        , #{usePlanAmt3}
+		        , #{addIntroTitle}
+		        , #{addIntro}
 	        )
  	</insert>
  	

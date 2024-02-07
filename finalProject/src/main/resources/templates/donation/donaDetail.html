@@ -423,15 +423,14 @@
     	$.ajax({
     		type : "POST",
     		url : "/donaDetail/",
-    		 data: JSON.stringify(commData),
-    		 contentType: 'application/json', 
+    		data: JSON.stringify(commData),
+    		contentType: 'application/json', 
     		success : function(response){
     			
  				$('#showComments').load("../donaDetail #commentList");
  				document.getElementById('comment').value = '';
     		},
     		error : function(error){
-
     			console.error('댓글등록 실패ㅠㅠ ', error);
     		}
     	});

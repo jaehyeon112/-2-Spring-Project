@@ -29,13 +29,13 @@ public interface DonaMapper {
 		List<DonaVO> getCategoryList(String h);
 
 	
-	//기부등록폼 
+	//기부등록폼 - donation
 		public int insertDonation(DonaVO donaVO);
-	
+		
+	//기부등록폼2  - donation 상세
 		public int insertDonDetail(DonaVO donaVO);
-		//public int insertFiles(DonaVO donaVO);
 		
-		
+	
 	
 	//결제프로세스
 	 public int paymentProcess(DonaVO donaVO);
