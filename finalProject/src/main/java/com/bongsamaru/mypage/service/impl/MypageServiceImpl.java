@@ -46,14 +46,12 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return mypageMapper.getGibuList(memId);
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public List<UserVO> getProfile(String memId) {
 		// TODO Auto-generated method stub
 		return mypageMapper.getProfile(memId);
 	}
-=======
 	@Override
 	public boolean insertHeart(HeartVO vo) {
 		if(mypageMapper.insertHeart(vo)==1) {
@@ -62,5 +60,4 @@ public class MypageServiceImpl implements MypageService{
 		return false; 
 	}	
 	
->>>>>>> develop
 }

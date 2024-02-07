@@ -35,11 +35,10 @@ public class FileController {
     }
     
     @GetMapping("/files/delete/{fileName}")
-    public String deleteFile(@PathVariable String fileName) {
-        String uploadDir = "/path/to/uploaded/files"; // 실제 파일이 저장된 디렉터리 경로
-        String fullPath = uploadDir + File.separator + fileName;
+    public String deleteFile(@PathVariable String filePath) {
+        String uploadDir = filePath; // 실제 파일이 저장된 디렉터리 경로
 
-        boolean isDeleted = fileService.deleteFile(fullPath);
+        boolean isDeleted = fileService.deleteFile(uploadDir);
 
         if (isDeleted) {
             return "파일이 성공적으로 삭제되었습니다.";
