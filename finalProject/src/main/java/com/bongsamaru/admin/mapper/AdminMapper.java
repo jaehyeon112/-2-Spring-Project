@@ -3,16 +3,19 @@ package com.bongsamaru.admin.mapper;
 
 import java.util.List;
 
-import com.bongsamaru.common.TagVO;
+import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
@@ -28,6 +31,7 @@ public interface AdminMapper {
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
 	public List<DonledgerVO> DonationKing();
+	public List<VolunteerVO> facVolunteerList();
 	public UserVO getUserOne(String memId);
 	public int insertNotice(BoardVO boardVO);
 	public int faqInsert(FaqVO faqVO);
@@ -50,4 +54,13 @@ public interface AdminMapper {
 	public List<FilesVO> selectFile(String codeNo);
 	public int maxNotice();
 	public int delFile(String filePath);
+	public List<VolunteerVO> memMeetList(String memId);
+	public List<DonaVO> donationLedgerList(String recStat);
+	public List<DonaVO> facDonLedgerList(Integer donId);
+	public List<DonaVO> donationSettlement();
+	public DonaVO checkFacDonation(Integer donId);
+	public List<RemittanceVO> remittanceList();
+	public int updatePaidCode(Integer donId);
+	public int insertRemittance(RemittanceVO remittanceVO);
+	public List<AlertVO> alertList();
 }

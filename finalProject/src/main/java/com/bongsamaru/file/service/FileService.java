@@ -1,22 +1,21 @@
 package com.bongsamaru.file.service;
 
-import java.io.File; 
-import java.io.IOException; 
-import java.nio.file.Path; 
-import java.nio.file.Paths; 
-import java.time.LocalDate; 
-import java.time.format.DateTimeFormatter; 
-import java.util.ArrayList; 
-import java.util.List; 
-import java.util.UUID; 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-import org.springframework.beans.factory.annotation.Value; 
-import org.springframework.stereotype.Service; 
-import org.springframework.web.multipart.MultipartFile; 
+import org.springframework.beans.factory.annotation.Autowired; // @Autowired 어노테이션 사용
+import org.springframework.beans.factory.annotation.Value; // @Value 어노테이션 사용
+import org.springframework.stereotype.Service; // @Service 어노테이션 사용
+import org.springframework.web.multipart.MultipartFile; // MultipartFile 인터페이스 사용
 
-import com.bongsamaru.file.mapper.FileMapper;
-import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.file.mapper.FileMapper; // FileMapper 사용
 
 @Service
 public class FileService {

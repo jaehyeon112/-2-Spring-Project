@@ -23,7 +23,7 @@ th {
 thead {
   font-weight: bold;
   color: #fff;
-  background: #73685d;
+  background: #007bff;
 }
   
  td, th {
@@ -90,48 +90,42 @@ a {
 </head>
 <body>
 <section layout:fragment="content">
-	<div class="row">
-  		<div class="col-sm-2">
-  			<div>
-  				<a href="/my">
-  				<h1>마이페이지</h1>
-  				</a>
-  				<h1>기부</h1>
-  				<a href="/my">
-  					<span>기부</span>
-  				</a>
-  			</div>
-  		</div>
-  		<div class="col-sm-10">
-	  		<div class="container">
-		  	<h2>기부내역</h2>
-		  	<div style="padding-bottom: 10px; width:100px;">
-			  	<select id="gibuSelect" class="form-control" style="text-align: center;">
-			  		<option value="all">전체</option>
-			  		<option value="2024">2024년</option>
-			  		<option value="2023">2023년</option>
-			  		<option value="2022">2022년</option>
-			  	</select>	  	
-		  	</div>
-			<table>
-				<thead>
-					<tr>
-						<th>기부일</th>
-						<th>기부 프로젝트 명</th>
-						<th>기부금액</th>
-					</tr>
-				</thead>
-			    <tbody>
-			        <tr th:each="item : ${list}" onclick="redirectToDonationDetail()">
-			            <td class="yearCheck" th:text="${#dates.format(item.payDate, 'yyyy.MM.dd')}"></td>
-			            <td class="yearCheck">[[${item.title}]]</td>
-			            <td class="yearCheck">[[${#numbers.formatInteger(item.donAmt, 3, 'COMMA')}]]원
-			            	<input type="button" id="cancelBtn" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#staticBackdrop" value="취소하기" style="text-align: right;" />		            					
-						</td>
-			        </tr>
-					<tr>
-					</tr>
-			    </tbody>
+<!-- 마이페이지 사이드바 -->
+<div class="row" style="color: black;">
+	<div class="side col-sm-2" th:insert="~{my/sidebar::side}"></div>
+  	<div class="col-sm-10">
+	  	<div class="container">
+		  <h2>기부내역</h2>
+		  <div style="padding-bottom: 10px; width:100px;">
+			  <select id="gibuSelect" class="form-control" style="text-align: center;">
+			  	<option value="all">전체</option>
+			  	<option value="2024">2024년</option>
+			  	<option value="2023">2023년</option>
+			  	<option value="2022">2022년</option>
+			  </select>	  	
+		  </div>
+		  <table>
+			<thead>
+				<tr>
+					<th style="width:100px;">기부일</th>
+					<th>기부 프로젝트 명</th>
+					<th style="width: 150px;">기부금액</th>
+					<th></th>
+				</tr>
+			</thead>
+			   <tbody>
+			       <tr th:each="item : ${list}">
+			           <td class="yearCheck" th:text="${#dates.format(item.payDate, 'yyyy.MM.dd')}" style="width:100px;"></td>
+			           <td class="yearCheck" onclick="redirectToDonationDetail(`[[${item.donId}]`]" th:text="${item.title}">[[${item.title}]]</td>
+			           <td class="yearCheck" style="width:150px;">[[${#numbers.formatInteger(item.donAmt, 3, 'COMMA')}]]원<br>
+					   </td>
+					   <td style="width:30px; text-align:center;">
+			             <input type="button" id="cancelBtn" class="btn btn-danger btn-sm btn-sm" data-toggle="modal" data-target="#staticBackdrop" value="취소" style="text-align: right;" />		            					
+					   </td>
+			       </tr>
+				   <tr>
+				   </tr>
+			   </tbody>
 			</table>
 		    <table th:class="${list.size == 0 ? 'hidden' : ''}" id="noList" style="display: none;">
 		    	<tbody>
@@ -140,6 +134,9 @@ a {
 		    		</tr>
 		    	</tbody>
 		    </table>
+		    <div style="text-align:center;">
+		    </div>
+		    
 			<!-- Modal -->
 			<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog">
@@ -164,12 +161,13 @@ a {
 	</div>
 </div>
 
-	<script  th:inline="javascript">
-		
+<script  th:inline="javascript">
     function redirectToDonationDetail(donId) {
-        var url = "/"
-        window.location.href = url;
+		console.log(parseInt(donId));
     }
+/*         var url = "/"
+        window.location.href = url;
+    } */
     
     $('#gibuSelect').on('change', function(e) {
         let selectOption = $(this).val();

@@ -7,8 +7,6 @@ import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
 
 
-
-
 public interface UserService {
 	public UserVO userList(String mem);
 	public Boolean countMemId(String memId);
