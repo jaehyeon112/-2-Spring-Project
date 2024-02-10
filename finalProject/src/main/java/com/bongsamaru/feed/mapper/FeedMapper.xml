@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.bongsamaru.feed.mapper.FeedMapper">
+ 
+	<!-- 상대방 피드 조회 -->
+ 	<select id="getFeedList" resultType="FeedVO">
+		SELECT DISTINCT b.mem_id, b.mem_nick, temp_change, c.file_path as mem_profile
+		FROM HEART A LEFT JOIN MEMBER B LEFT JOIN files C 
+		ON b.mem_id = c.code_user
+		ON A.MEM_ID = B.MEM_ID
+		WHERE B.MEM_ID = #{memId}
+ 	</select>
+ </mapper>
