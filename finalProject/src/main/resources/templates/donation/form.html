@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
+  <!-- jQuery 라이브러리 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- jQuery Form Plugin 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
   
 </head>
 <body>
@@ -17,7 +22,7 @@
 
 
 
-<form name="donaForm" enctype="multipart/form-data">
+<form name="donaForm" >
   <fieldset>
     <legend> Donation Regit Form </legend>
 
@@ -178,71 +183,52 @@
 	
 
 
-	// 폼제출하기
-	function submitForm(){
-			
-		validation();
-
-		
-		var userId = [[${#authentication.name}]];
-		console.log("userId");
-		console.log(userId);
-		
-		let fdata = {
-				facId : userId,
-				category : document.querySelector('#category').value,
-				recPeriod : document.querySelector('#recPeriod').value,
-				endPeriod : document.querySelector('#endPeriod').value,
-				goalAmt : document.querySelector('#goalAmt').value,
-				usePlan : document.querySelector('#usePlan').value,
-				usePlanAmt : document.querySelector('#usePlanAmt').value,
-				projTarget : document.querySelector('#projTarget').value,
-				expEffect :document.querySelector('#expEffect').value,
-				intro :document.querySelector('#intro').value,
-				introTitle :document.querySelector('#introTitle').value,
-				link :document.querySelector('#link').value,
-				expEffect :document.querySelector('#expEffect').value,
-		}
-		console.log(fdata);
-		
-		let formData = new FormData();
-		formData.append("DonaVO", JSON.stringify(fdata));
-		console.log(formData);
-		
-		var inputFile = $("input[type='file']");
-		var files = inputFile[0].files;
-		for (var i = 0; i < files.length; i++) {
-		formData.append("uploadfiles", files[i]);
-		}
-		
-		
-		
-		$.ajax({
-			type : 'POST',
-			url : "/regitForm",
-			processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-			contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.'
-			//contentType : 'application/json',
-			data : formData,
-			success :function (result) {
-						console.log("ajax 안에 result " + result);
-						
-						alert("등록성공!");
-						location.href="donaMain"
-						return;
-					},
-			
-			error : function(error){
-				console.error('등록 폼 : 등록 실패! ')
-			}
-
-	    //document.forms[0].submit(); // 폼 제출
-		    
-			})
-		}// end Submit Form
-  
-		
 	
+		
+	    // 등록 버튼 클릭 시 처리
+	    function submitForm() {
+			console.log('등록버튼 눌렸다! ');
+			
+	        // 유효성 검사 수행
+	        //if (!validation()) {
+	          //  return;
+	        //}
+
+	        // 사용자 아이디 수집
+	        var userId = [[${#authentication.name}]];
+	        console.log("userId");
+	        console.log(userId);
+
+	        // 폼 데이터 수집
+	        let formData = collectFormData();
+	        console.log(collectFormData());
+	        console.log("폼데이터 : " + formData);
+
+	        // Ajax를 이용한 데이터 전송
+	        //$.ajax({
+	        	$('#donaForm').ajaxForm({
+	            type: 'POST',
+	            url: "/regitForm",
+	          //  processData: false,
+	           // contentType:"multipart/form-data",
+	            //contentType: false,
+
+	            data: formData,
+	            success: function (result) {
+	                console.log("ajax 안에 result " + result);
+
+	           
+	            },
+	            error: function (error) {
+	                console.error('등록 폼 : 등록 실패! ')
+	                console.error('Ajax error: ', error);
+	                console.log('Error status: ', error.status);
+	                console.log('Error response: ', error.responseText);
+	            }
+	        }).submit();
+	    } //end submitForm
+
+	  
 		
 	
 	
@@ -339,7 +325,6 @@
     }
 
 
-
     function removeInputs(button, type) {
         //해당 컨테이너 모든 자식 삭제
         let container = button.parentNode.parentNode;
@@ -347,7 +332,77 @@
     }
     
     
+    //데이터 수집하기 함수
+   	function collectFormData(){
+    	
+    	let formData = new FormData();
+    	
+    	//정적 data - 카테고리, 제목, 기간, 목표모금액, 
+    	formData.append('category', $('#category').val());
+    	formData.append('recPeriod', $('#recPeriod').val());
+    	formData.append('endPeriod', $('#endPeriod').val());
+    	formData.append('goalAmt', $('#goalAmt').val());
+    	formData.append('title', $('#title').val());
+    	formData.append('projTarget', $('#projTarget').val());
+    	formData.append('expEffect', $('#expEffect').val());
+    	
+    	//동적 data
+    	collectDynamicData(formData, 'usePlan');
+    	collectDynamicData(formData, 'intro');
+    	collectDynamicData(formData, 'link');
+    	collectDynamicData(formData, 'formFile2');
+    	
+    	//file처리
+    	/*
+    	let inputFile = $("input[type='file']");
+    	let files = inputFile[0].files;
+    	for(let i=0; i<files.length; i++){
+    		formData.append("uploadfiles", files[i]);
+    	}
+    	*/
+    	
+    	// DonaVO 객체를 JSON 문자열로 변환하여 추가
+        let donaVOObject = {
+            // 적절한 속성들을 추가
+     		category: $('#category').val(),
+  		    recPeriod: $('#recPeriod').val(),
+   		    endPeriod: $('#endPeriod').val(),
+   		    goalAmt: $('#goalAmt').val(),
+   		    title: $('#title').val(),
+   		    projTarget: $('#projTarget').val(),
+   		    expEffect: $('#expEffect').val()
+        };
+    	
+        formData.append('donaVO', JSON.stringify(donaVOObject));
+
+    	
+    	return formData;
     
+    } //end collectFormData
+    
+    
+    //동젝 데이터 수집
+    function collectDynamicData(formData, type){
+    	let dynamicData = [];
+    	
+    	// 동적 폼 추가되면 값 갖고오기
+    	let container = document.getElementById(type + 'Container');
+    	if(container){
+    		let dynamicFields = container.querySelectorAll('input[type="text"]');
+    		dynamicFields.forEach((field, index)=>{
+    			let data={
+    					[type + 'Title'] : field.value
+    			};
+    			dynamicData.push(data);
+    		})
+    		
+    	}
+    	
+    	// 동적데이터 FormData에 넣기
+    	dynamicData.forEach((data, idx)=>{
+    		formData.append(`${type}Data[$(idx)]`, JSON.stringify(data));
+    	})
+    }
     
 </script>
 
