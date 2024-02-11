@@ -23,6 +23,21 @@ public class DonaServiceImpl implements DonaService {
 		return donaMapper.getDonaList();
 	}
 	
+	 @Override
+	public List<DonaVO> selectRecruitingItems() {
+		
+		 return donaMapper.selectRecruitingItems();
+	}
+	 
+	 @Override
+	public List<DonaVO> selectCompletedItems() {
+		 return donaMapper.selectCompletedItems();
+	}
+	@Override
+	public List<DonaVO> getDonaListByCategory(String category) {
+		  return donaMapper.getDonaListByCategory(category);
+	}
+	
 //상세페이지	
 	@Override
 	public DonaVO getDonaDetail(Integer donId, String facId) {

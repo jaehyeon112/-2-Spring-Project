@@ -2,6 +2,8 @@ package com.bongsamaru.dona.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.bongsamaru.dona.service.DonaVO;
 
 
@@ -9,6 +11,12 @@ public interface DonaMapper {
 	
 	// 메인페이지 전체리스트
 		List<DonaVO> getDonaList();
+		//모금중
+		List<DonaVO> selectRecruitingItems();
+		//모금완료
+		List<DonaVO> selectCompletedItems();
+		//카테고리별
+		List<DonaVO> getDonaListByCategory(@Param("category") String category);
 	
 	// 모금중.모금완료
 	//	List<DonaVO> getRecStat(String recStat);

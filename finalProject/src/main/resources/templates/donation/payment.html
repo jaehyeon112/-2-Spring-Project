@@ -250,10 +250,13 @@
 				    // **세션에서 회원 아이디를 가져오는 부분
 				  
 				    let memId =  [[${#authentication.name}]];
+				    console.log(memId);
 
 				    // 익명 체크 여부
 				    let anonCheck = document.getElementById('c_create_account').checked; 
+				    let anonCheckVal = anonCheck ? '1' : '0';
 				    console.log(anonCheck);
+				    console.log(anonCheckVal);
 
 				   
 
@@ -279,7 +282,7 @@
 				                payDate: payDate,
 				                payStat: 'g01',
 				                payId: payId,
-				                anonCheck: anonCheck,
+				                anonCheck: anonCheckVal,
 				                memId: memId,
 				                donId: donId
 				            	})

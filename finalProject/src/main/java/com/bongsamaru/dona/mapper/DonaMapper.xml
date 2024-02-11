@@ -10,20 +10,87 @@
  			d.title,
  			d.goal_amt,
  			COUNT(f.don_id) AS donationCount,
- 			nvl(SUM(f.don_amt),0) total,
+ 			nvl(SUM(f.don_amt),0) AS total,
  			nvl((SUM(f.don_amt) / d.goal_amt) * 100,0) AS donationRatio,
  			c.fac_name AS facilityName,
  			d.rec_stat,
  			d.don_id,
- 			c.fac_id
+ 			c.fac_id,
+ 			d.category		
  		FROM donation d
  			LEFT JOIN don_ledger f ON d.don_id = f.don_id
  			LEFT JOIN facility c ON d.fac_id = c.fac_id
  		where d.DON_REG_APP = 1
- 		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id
+ 		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category
  	
  	</select>
+<!--  메인페이지 전체조회 : 모금중 -->
+<select id="selectRecruitingItems" resultType="DonaVO">
+    SELECT 
+        d.title,
+        d.goal_amt,
+        COUNT(f.don_id) AS donationCount,
+        NVL(SUM(f.don_amt), 0) AS total,
+        NVL((SUM(f.don_amt) / d.goal_amt) * 100, 0) AS donationRatio,
+        c.fac_name AS facilityName,
+        d.rec_stat,
+        d.don_id,
+        c.fac_id,
+        d.category
+    FROM donation d
+        LEFT JOIN don_ledger f ON d.don_id = f.don_id
+        LEFT JOIN facility c ON d.fac_id = c.fac_id
+    WHERE d.DON_REG_APP = 1
+    		AND d.rec_stat = 1
+    GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category
+</select>
 
+<!--  카테고리별 리스트-->
+<select id="getDonaListByCategory" resultType="DonaVO">
+  SELECT 
+    d.title,
+    d.goal_amt,
+    COUNT(f.don_id) AS donationCount,
+    NVL(SUM(f.don_amt), 0) AS total,
+    NVL((SUM(f.don_amt) / d.goal_amt) * 100, 0) AS donationRatio,
+    c.fac_name AS facilityName,
+    d.rec_stat,
+    d.don_id,
+    c.fac_id,
+    d.category
+FROM donation d
+LEFT JOIN don_ledger f ON d.don_id = f.don_id
+LEFT JOIN facility c ON d.fac_id = c.fac_id
+INNER JOIN sub_code l ON d.category = l.sub_code_id
+WHERE d.DON_REG_APP = 1 AND d.rec_stat = 1
+<if test="category != null and category != ''">
+    AND l.sub_code_id = #{category}
+</if>
+GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category
+
+</select>
+
+
+<!--  메인페이지 전체조회 : 모금완료 (recStat = 0)-->
+ <select id="selectCompletedItems" resultType="DonaVO">
+    SELECT 
+        d.title,
+        d.goal_amt,
+        COUNT(f.don_id) AS donationCount,
+        NVL(SUM(f.don_amt), 0) AS total,
+        NVL((SUM(f.don_amt) / d.goal_amt) * 100, 0) AS donationRatio,
+        c.fac_name AS facilityName,
+        d.rec_stat,
+        d.don_id,
+        c.fac_id,
+        d.category
+    FROM donation d
+        LEFT JOIN don_ledger f ON d.don_id = f.don_id
+        LEFT JOIN facility c ON d.fac_id = c.fac_id
+    WHERE d.DON_REG_APP = 1
+    	AND d.rec_stat = 0
+    GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category
+</select>
  
 <!-- 상세페이지 조회1 (don_id) -->
  	<select id="getDonaDetail" resultType="DonaVO">

@@ -29,7 +29,20 @@
 
         <!-- Template Stylesheet -->
         <link href="donation/board/css/style.css" rel="stylesheet">
-        
+       
+       <style>
+       
+    .vesitable-item {
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* 100% 높이를 설정하여 부모(vesitable-item)의 높이에 따라 늘어납니다. */
+    }
+
+    .vesitable-img {
+        flex-grow: 1; /* 이미지가 차지하는 공간을 최대로 확장합니다. */
+    }
+
+       </style> 
     
     </head>
 
@@ -230,11 +243,12 @@
                                             <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 댓글 입력하기 </a>
                                         </div>
                                         
-                                        
+                                   <div id="commentSection">   
                                     <div id="commentList" th:each="com : ${comment}">
                                      <!-- <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td> -->
                                       <p><span th:text="${com.memId} + ' : ' + ${com.content} + '(' + ${#dates.format(com.commDate, 'yyyy년 MM월 dd일')} +')'">댓글나와랑</span></p>
                                     </div>
+                                   </div>
                                     </div>
                                 </div>
                             </form>
@@ -243,7 +257,7 @@
                    
                     <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
-							<div class="col-lg-12" th:if="${dona.recStat == '0'}">
+							<div class="col-lg-12" th:if="${dona.recStat == '1'}">
 							    <p class="mb-3">Category: 유형</p>
 							    <div class="info-item"><strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원 </div>
 							    <div class="progress">           
@@ -256,9 +270,9 @@
 							</div>
 							<!-- 버튼 부분 유지 -->
 							<button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
-							        th:if="${dona.recStat == '0'}" onclick="redirectToPayment()">
+							        th:if="${dona.recStat == '1'}" onclick="redirectToPayment()">
 							    <i class="fa fa-shopping-bag me-2 text-primary"></i> 
-							    <span th:text="${dona.recStat == '0' ? '기부하기' : '모금완료'}"></span>
+							    <span th:text="${dona.recStat == '1' ? '기부하기' : '모금완료'}"></span>
 							</button>
 
 
@@ -283,32 +297,37 @@
                     </div>
                 </div>
                 <h3 class="fw-bold mb-0"> Randomly show</h3>
-				<div class="vesitable">
-				    <div class="owl-carousel vegetable-carousel justify-content-center">
-				        <div class="border border-primary rounded position-relative vesitable-item" th:each="dona : ${randomlist}">
+				<div class="vesitable" >
+				    <div class="owl-carousel vegetable-carousel justify-content-center" >
+				        <div th:if="${dona.donId} != ${currentDonId}" class="border border-primary rounded position-relative vesitable-item" th:each="dona : ${randomlist}"  style="border: none !important;">
 				            <div class="vesitable-img">
 				                <img src="donation/board/img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
 				            </div>
-				            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
-				                <span th:text="${dona.recStat} == '0' ? '모금중' : '모금완료'"></span>
+				            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+				                <span th:text="${dona.recStat} == '1' ? '모금중' : '모금완료'"></span>
 				            </div>
-				            <div class="p-4 pb-0 rounded-bottom">
-				                <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}"> 제목</a></h4>
+				            <div class="p-4 pb-0 rounded-bottom" >
+				                <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
 				                <div class="info-item">
-				                    <strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원
-				                </div>
-				                <div class="info-item">
-				                    <strong>n명 참여:</strong><span th:text="${dona.donationCount}"></span>명
-				                </div>
-				                <div class="progress">
-				                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+				                    목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
 				                </div>
 				                <div class="info-item">
-				                    <strong></strong><span th:text="${dona.donationRatio}"></span> %
+				                    <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
 				                </div>
-				                <div class="d-flex justify-content-between flex-lg-wrap">
+				               	<div class="progress">
+											    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<div class="info-item" style="display: flex; justify-content: space-between;">
+											    <div style="text-align: left;">
+											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
+											    </div>
+											    <div style="text-align: right;">
+											        <strong><span th:text="${dona.total}"></span></strong>원
+											    </div>
+											</div>
+				                <div class="d-flex justify-content-center flex-lg-wrap">
 				                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
-				                        <span th:text="${dona.facilityName}">명 참여</span>
+				                        <span th:text="${dona.facilityName}" style="color: black;"></span>
 				                    </a>
 				                </div>
 				            </div>
@@ -345,7 +364,7 @@
     
     <script th:inline="javascript">
     
-    
+    var currentDonId = [[${dona.donId}]];
     
     //redirect
     function redirectToPayment(){
@@ -407,13 +426,15 @@
     	let memId = [[${#authentication.name}]];
     	
     	let commDate = dateFormat(new Date());
-    	let donId = [[${dona.donId}]]
+    	let donId = [[${dona.donId}]];
     	console.log("e돈아이디" , donId);
-    		
+    
+    	
     	let commData = {
     			content : comm,
     			memId : memId,
-    			detailCode : donId
+    			donId : donId,
+    			
     		}
 
     		
@@ -422,12 +443,12 @@
     	
     	$.ajax({
     		type : "POST",
-    		url : "/donaDetail/",
+    		url : "/donaDetail",
     		data: JSON.stringify(commData),
     		contentType: 'application/json', 
     		success : function(response){
     			
- 				$('#showComments').load("../donaDetail #commentList");
+    			 $('#commentSection').load("../donaDetail #commentList");
  				document.getElementById('comment').value = '';
     		},
     		error : function(error){

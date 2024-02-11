@@ -33,14 +33,33 @@ public class DonaController {
 	   @GetMapping("/donaMain")
 	    public String openDonaMainPage( Model model) {
 		   List<DonaVO> donaList = donaService.getDonaList();
+		   List<DonaVO> recruitList = donaService.selectRecruitingItems();
+		   List<DonaVO> completedList = donaService.selectCompletedItems();
+		  
+		   
 		   model.addAttribute("list", donaList);
-		      
+		   model.addAttribute("recruitList", recruitList);
+		   model.addAttribute("completedList", completedList);
+		   
+		   
 		   String h = "h";
 		   List<DonaVO> categoryList = donaService.getCategoryList(h);
 		   model.addAttribute("categoryList", categoryList);
 		   
 	        return "donation/donaMain";
 	    }
+	   
+	// 카테고리에 따른 리스트 가져오기
+	   @GetMapping("/donaMain/category/{category}")
+	   public String openDonaMainPageByCategory(@PathVariable String category, Model model) {
+	      
+		   List<DonaVO> donaListByCategory = donaService.getDonaListByCategory(category);
+		   	System.out.println("카테고리출력" + donaListByCategory);
+	       model.addAttribute("clist", donaListByCategory);
+	       	
+
+	       return "donation/donaMain";
+	   }
 
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
@@ -58,7 +77,7 @@ public class DonaController {
 		    model.addAttribute("comment", commentList);
 		    
 		    //랜덤
-		    List<DonaVO> random = donaService.getDonaList();
+		    List<DonaVO> random = donaService.selectRecruitingItems();
 			   model.addAttribute("randomlist", random);
 
 		    return "donation/donaDetail";
@@ -69,7 +88,7 @@ public class DonaController {
 	   @ResponseBody
 	   public String insertComment(@RequestBody DonaVO donaVO, Model model) {
 		   donaService.insertComment(donaVO);
-	       return "redirect:/donaDetail";
+	       return "댓글 등록 완료!";
 	   }
 	
 	   
