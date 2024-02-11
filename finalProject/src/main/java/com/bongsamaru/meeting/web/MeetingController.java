@@ -79,5 +79,12 @@ public class MeetingController {
 		return "meeting/meeting";
 	}
 	
+	@GetMapping("meetingInfoPage")
+	public String meetingInfo(@RequestParam(name="volId") Integer volId,Model model) {
+		VolunteerVO vo = service.meetingInfo(volId);
+		model.addAttribute("info",vo);
+		return "meeting/meetingInfo";
+	}
+	
 	
 }

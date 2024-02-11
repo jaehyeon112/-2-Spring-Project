@@ -10,11 +10,13 @@ import com.bongsamaru.admin.mapper.AdminMapper;
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CodeVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
@@ -30,13 +32,18 @@ public class AdminServiceImpl implements AdminService{
 	AdminMapper userMapper;
 
 	@Override
+	public List<CodeVO> subCodeList(String mainCodeId) {
+		return userMapper.subCodeList(mainCodeId);
+	}
+	
+	@Override
 	public List<UserVO> getUserList(String memStat) {
 		return userMapper.getUserList(memStat);
 	}
 	
 	@Override
-	public List<BoardVO> getBoardList(String category) {
-		return userMapper.getBoardList(category);
+	public List<BoardVO> getBoardList(PageVO pageVO) {
+		return userMapper.getBoardList(pageVO);
 	}
 	
 	@Override
@@ -50,8 +57,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<FaqVO> getFaqList() {
-		return userMapper.getFaqList();
+	public List<FaqVO> getFaqList(PageVO pageVO) {
+		return userMapper.getFaqList(pageVO);
 	}
 
 	@Override
@@ -232,5 +239,16 @@ public class AdminServiceImpl implements AdminService{
 	public List<AlertVO> alertList() {
 		return userMapper.alertList();
 	}
+
+	@Override
+	public int getBoardCnt(PageVO pageVO) {
+		return userMapper.getBoardCnt(pageVO);
+	}
+
+	@Override
+	public int getFaqCnt(PageVO pageVO) {
+		return userMapper.getFaqCnt(pageVO);
+	}
+
 
 }

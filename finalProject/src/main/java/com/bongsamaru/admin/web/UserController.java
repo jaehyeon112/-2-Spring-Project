@@ -1,10 +1,21 @@
 package com.bongsamaru.admin.web;
 
-
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,22 +26,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CodeVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
-
+@Component
 @Controller
 public class UserController {
 	@Autowired
@@ -39,10 +53,105 @@ public class UserController {
 	@Autowired
 	DonaService donaService;
 	
+	@Value("${spring.mail.username}")
+    private String senderEmail;
+
+    @Value("${spring.mail.password}")
+    private String senderPassword;
+
+    @Value("${spring.mail.host}")
+    private String mailHost;
+
+    @Value("${spring.mail.port}")
+    private String mailPort;
+
+    @Value("${spring.mail.properties.mail.smtp.auth}")
+    private String mailSmtpAuth;
+
+    @Value("${spring.mail.properties.mail.smtp.starttls.required}")
+    private String mailSmtpStarttlsRequired;
+
+    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+    private String mailSmtpStarttlsEnable;
+
+    @Value("${spring.mail.properties.mail.smtp.socketFactory.class}")
+    private String mailSmtpSocketFactoryClass;
+
+    @Value("${spring.mail.properties.mail.smtp.socketFactory.fallback}")
+    private String mailSmtpSocketFactoryFallback;
+    
+    
+    @Value("${spring.mail.properties.mail.smtp.timeout}")
+    private String mailSmtpTimeout;
+	
+	@Scheduled(cron = "0 0 0 * * *")
+	public void sendMailing() {
+		List<RemittanceVO> remList = userService.remittanceList();
+		System.out.println();
+		for(RemittanceVO vo : remList) {
+			if(vo.getChecking()==null) {
+				try {
+		    		// 이메일 설정 및 인증
+		    		Properties props = new Properties();
+		    		props.put("mail.smtp.auth", mailSmtpAuth);
+		    		props.put("mail.smtp.starttls.enable", mailSmtpStarttlsEnable);
+		    		props.put("mail.smtp.host", mailHost);
+		    		props.put("mail.smtp.port", mailPort);
+		    		props.put("mail.smtp.timeout", mailSmtpTimeout);
+		    		props.put("mail.smtp.socketFactory.class", mailSmtpSocketFactoryClass);
+		    		props.put("mail.smtp.socketFactory.fallback", mailSmtpSocketFactoryFallback);
+		    		
+		    		Session session = Session.getInstance(props, new Authenticator() {
+		    			protected PasswordAuthentication getPasswordAuthentication() {
+		    				return new PasswordAuthentication(senderEmail, senderPassword);
+		    			}
+		    		});
+		    		// 이메일 작성
+		    		Message message = new MimeMessage(session);
+		    		message.setFrom(new InternetAddress(senderEmail));
+		    		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(vo.getEmail()));
+		    		message.setSubject("행복마루에서 보내드리는 이메일입니다.");
+		    		
+		    		// 이메일 내용
+		    		String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
+		    				+ "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
+		    				+ "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
+		    				+ "빠른 시일 내에 영수증 첨부 부탁드립니다. 감사합니다.</p>"
+		    				+ "</div>";
+		    		
+		    		message.setContent(emailContent, "text/html; charset=utf-8");
+		    		
+		    		// 이메일 전송
+		    		Transport.send(message);
+		    		System.out.println("메일 성공");
+		    		
+		    	} catch (Exception e) {
+		    		System.err.print("이메일 전송 중 에러 발생: {}");
+		    	}
+			}
+		}
+	}
+	
+	//@Scheduled(cron = "*/10 * * * * *")
+	public void facs() {
+		List<FacilityVO> vo = userService.getFacilityList();
+		System.out.println("스케줄러 실행?"+vo);
+	}
+	
 	@GetMapping("AdminMain")
 	public String AdminMain(Model model) {
 		List<DonaVO> donaList = donaService.getDonaList();
 		model.addAttribute("dona", donaList);
+		
+		List<DonaVO> before = new ArrayList<>();
+		
+		for(DonaVO vo : donaList) {
+			if(vo.getRecStat()==0) {
+				before.add(vo);
+			}
+		}
+		model.addAttribute("before", before);
+		System.out.println(before);
 		List<DonledgerVO> king = userService.DonationKing();
 		model.addAttribute("king", king);
 		List<FacilityVO> list = userService.meetingList();
@@ -212,23 +321,56 @@ public class UserController {
 	}
 	
 	@GetMapping("boardList")
-	public String getBoardList(@RequestParam(name="category") String category,Model model) {
-		List<BoardVO> list = userService.getBoardList(category);
+	public String getBoardList(PageVO vo, Model model
+						 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+						 	, @RequestParam(value="category", required = false)String category
+							, @RequestParam(value="start", required = false)String start
+							, @RequestParam(value="end", required = false)String end) {
+		int total = userService.getBoardCnt(vo);
+		int startPage = (start == null) ? 1 : Integer.parseInt(start);
+        int endPage = (end == null) ? 10 : Integer.parseInt(end);
+        
+        if(searchKeyword == null) {
+        	vo = new PageVO(total, startPage, endPage, category);	            	
+        }else {
+        	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+        }
+		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("boardList",list);
+		model.addAttribute("searchKeyword",searchKeyword);
+     	model.addAttribute("vo",vo);
+     	model.addAttribute("category",category);
+     	
 		return "admin/boardList";
 	}
 	
 	@GetMapping("inquireList")
-	public String getinquireList(@RequestParam(name="category") String category,Model model) {
-		List<BoardVO> list = userService.getBoardList(category);
+	public String getinquireList(PageVO vo,@RequestParam(name="category") String category,Model model) {
+		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("inquireList",list);
 		return "admin/inquireList";
 	}
 	
 	@GetMapping("faqList")
-	public String getFaqList(Model model) {
-		List<FaqVO> list = userService.getFaqList();
+	public String getFaqList(PageVO vo, Model model
+						 	, @RequestParam(value="category", required = false) String category
+						 	, @RequestParam(value="mainCodeId", required = false, defaultValue = "a") String mainCodeId
+							, @RequestParam(value="start", required = false) String start
+							, @RequestParam(value="end", required = false) String end) {
+		
+		int total = userService.getFaqCnt(vo);
+		int startPage = (start == null) ? 1 : Integer.parseInt(start);
+        int endPage = (end == null) ? 10 : Integer.parseInt(end);
+        
+        vo = new PageVO(total, startPage, endPage, category);	            	
+     	
+		List<FaqVO> list = userService.getFaqList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("faqList",list);
+		model.addAttribute("category",category);
+		List<CodeVO> code = userService.subCodeList(mainCodeId);
+		model.addAttribute("code",code);
+		System.out.println("전체크기"+total);
 		return "admin/faqList";
 	}
 	

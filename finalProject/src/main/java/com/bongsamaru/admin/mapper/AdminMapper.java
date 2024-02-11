@@ -5,11 +5,13 @@ import java.util.List;
 
 import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CodeVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
@@ -22,9 +24,12 @@ import com.bongsamaru.mypage.service.DonledgerVO;
 
 
 public interface AdminMapper {
+	public List<CodeVO> subCodeList(String mainCodeId);
 	public List<UserVO> getUserList(String memStat);
-	public List<FaqVO> getFaqList();
-	public List<BoardVO> getBoardList(String category);
+	public List<FaqVO> getFaqList(PageVO pageVO);
+	public List<BoardVO> getBoardList(PageVO pageVO);
+	public int getBoardCnt(PageVO pageVO);
+	public int getFaqCnt(PageVO pageVO);
 	public List<FacilityVO> getFacilityList();
 	public List<FacilityVO> meetingList();
 	public List<TagVO> tagList();

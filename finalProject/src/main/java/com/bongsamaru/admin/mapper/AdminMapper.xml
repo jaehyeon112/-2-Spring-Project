@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bongsamaru.admin.mapper.AdminMapper">
+	<select id="subCodeList" resultType="CodeVO">
+		select sub_code_id
+				,sub_code_name
+		from sub_code
+		where main_code_id=#{mainCodeId}
+	</select>
 	<select id="getUserList" resultType="UserVO">
 		select MEM_ID,
 				MEM_PWD,
@@ -149,19 +155,32 @@
 		where DON_ID = #{donId}
 	</select>
 	<select id="getBoardList" resultType="BoardVO">
-		select BOARD_ID,
-			TITLE,
-			category,
-			CONTENT,
-			WRITE_DATE,
-			VIEWS,
-			PRIORITY,
-			MEM_ID,
-			MOD_DATE,
-			DETAIL_CATE
+		SELECT * 
+		from(
+			SELECT ROWNUM RN 
+			,A.* 
+		from(  
+        	select BOARD_ID
+        	,TITLE
+        	,category
+        	,CONTENT
+        	,WRITE_DATE
+        	,VIEWS
+        	,PRIORITY
+        	,MEM_ID
+        	,MOD_DATE
+        	,DETAIL_CATE
 		from board
 		where CATEGORY = #{category}
-		order by BOARD_ID
+		AND (title LIKE '%' || #{searchKeyword} || '%')
+		order by BOARD_ID) A)
+        where RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getBoardCnt" resultType="int">
+		select count(*)
+		from board
+		where CATEGORY = #{category}
+		AND (title LIKE '%' || #{searchKeyword} || '%')
 	</select>
 	<select id="maxNotice" resultType="int">
 		select 
@@ -247,12 +266,32 @@
 				,'c02')
 	</insert>
 	<select id="getFaqList" resultType="FaqVO">
+		SELECT * 
+		from(
+			SELECT ROWNUM RN 
+			,A.* 
+            from(
 		select FAQ_ID,
 			CATEGORY,
 			TITLE,
 			CONTENT
 		from FAQ
-		order by FAQ_ID
+		<where>
+			<if test="category!=null">
+				CATEGORY = #{category}
+			</if>
+		</where>
+		order by FAQ_ID) A)
+        where RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getFaqCnt" resultType="int">
+		select count(*)
+		from FAQ
+		<where>
+			<if test="category!=null">
+				CATEGORY = #{category}
+			</if>
+		</where>
 	</select>
 	<select id="getFaqOne" resultType="FaqVO">
 		select FAQ_ID,
@@ -327,6 +366,7 @@
 				,cap
 				,vol_Date
 		from vol_Act
+		where fac_id is not null
 		order by vol_act_id
 	</select>
 	<select id="memMeetList" resultType="VolunteerVO">
