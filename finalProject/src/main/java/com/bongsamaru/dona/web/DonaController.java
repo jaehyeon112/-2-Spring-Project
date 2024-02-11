@@ -180,4 +180,9 @@ public class DonaController {
 		   return "donation/forDonaform";
 	   }
 	   
+		// 기부신청폼22
+	   @GetMapping("/applyform2")
+	    public String openapplyform2(Model model) {
+		   return "donation/applyDona";
+	   }   
 }
