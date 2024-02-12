@@ -51,20 +51,7 @@
       <label for="formFile" class="form-label mt-4"> <span style="color:red">*</span>이미지 첨부파일 </label>
       <input name="file" class="form-control" type="file" id="formFile" >
     </div>
-    
-    
-				    <!-- 영희꺼 
-				    	<div class="form-group">
-							<div class="subheading">
-								<em class="highlight"></em>파일첨부
-							</div>
-							<input class="form-control" id="imageInput"
-								name="uploadFiles" type="file" multiple><br>
-								<img id="imagePreview" src="/donation/board/img/avatar.jpg"
-							style="width: 100px; height: 100px;">
-						</div>
-				   end 영희꺼 -->
-    
+
     
     
     <div class="form-group">
@@ -172,32 +159,33 @@ function submitForm() {
     var facId = [[${#authentication.name}]];
     console.log("facId는 ? :  " + facId);
 
-    // userId 값을 FormData에 추가
+    
     formData.append('facId', facId);
     
     
- // 파일 input 엘리먼트를 찾아서 파일을 추가
-let fileInputs = document.querySelectorAll('input[type="file"]');
-    fileInputs.forEach(function(fileInput) {
-        for (let i = 0; i < fileInput.files.length; i++) {
-            formData.append('uploadfiles', fileInput.files[i]);
-        }
-    });
+	 //파일 추가
+	let fileInputs = document.querySelectorAll('input[type="file"]');
+	    fileInputs.forEach(function(fileInput) {
+	        for (let i = 0; i < fileInput.files.length; i++) {
+	            formData.append('uploadfiles', fileInput.files[i]);
+	        }
+	    });
   
     
     console.log("formData는? : " + formData);
+    
  // FormData 객체에 포함된 값들 콘솔로 출력
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
     }
  
- // 각 input 요소의 값 콘솔로 출력
+ //input값 
     document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
         console.log(input.name + ': ' + input.value);
     });
  
-    // FormData를 서버로 전송하거나 원하는 대로 활용
-    // 예를 들어, Ajax를 사용하여 서버로 데이터 전송
+ 
+    // FormData 서버로
     $.ajax({
         type: 'POST',
         url: 'regitForm',
@@ -205,7 +193,7 @@ let fileInputs = document.querySelectorAll('input[type="file"]');
         processData: false,
         contentType: false,
         success: function(response) {
-            // 성공 시 동작
+            
             console.log("ajax 안에 success response " + response);
 
             alert("등록성공!");
