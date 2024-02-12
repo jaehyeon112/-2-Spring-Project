@@ -182,8 +182,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<FacilityVO> meetingList() {
-		return userMapper.meetingList();
+	public List<VolunteerVO> meetingList(Integer volId) {
+		return userMapper.meetingList(volId);
 	}
 
 	@Override

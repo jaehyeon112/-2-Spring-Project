@@ -54,7 +54,7 @@ public interface AdminService {
 	public List<FilesVO> selectFile(String codeNo);
 	public int maxNotice();
 	public int delFile(String filePath);
-	public List<FacilityVO> meetingList();
+	public List<VolunteerVO> meetingList(Integer volId);
 	public List<TagVO> tagList();
 	public List<VolunteerVO> facVolunteerList();
 	public List<VolunteerVO> memMeetList(String memId);

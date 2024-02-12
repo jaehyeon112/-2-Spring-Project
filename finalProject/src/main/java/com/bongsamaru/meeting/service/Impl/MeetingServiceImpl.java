@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
@@ -41,6 +42,41 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
 	public VolActVO volActMemCnt(Integer volActId) {
 		return mapper.volActMemCnt(volActId);
+	}
+
+	@Override
+	public List<VolActVO> meetingVolActListPaging(PageVO pageVO) {
+		return mapper.meetingVolActListPaging(pageVO);
+	}
+
+	@Override
+	public int meetingVolActListCnt(Integer volId) {
+		return mapper.meetingVolActListCnt(volId);
+	}
+
+	@Override
+	public List<VolActVO> volActReviewListPaging(PageVO pageVO) {
+		return mapper.volActReviewListPaging(pageVO);
+	}
+
+	@Override
+	public int volActReviewListCnt(Integer volId) {
+		return mapper.volActReviewListCnt(volId);
+	}
+
+	@Override
+	public int findMember(Integer volId, String memId) {
+		return mapper.findMember(volId, memId);
+	}
+
+	@Override
+	public List<VolActVO> volActReviewList(Integer volId) {
+		return mapper.volActReviewList(volId);
+	}
+
+	@Override
+	public String findFile(String code,Integer codeNo) {
+		return mapper.findFile(code,codeNo);
 	}
 
 }

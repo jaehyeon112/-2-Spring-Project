@@ -31,7 +31,7 @@ public interface AdminMapper {
 	public int getBoardCnt(PageVO pageVO);
 	public int getFaqCnt(PageVO pageVO);
 	public List<FacilityVO> getFacilityList();
-	public List<FacilityVO> meetingList();
+	public List<VolunteerVO> meetingList(Integer volId);
 	public List<TagVO> tagList();
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);

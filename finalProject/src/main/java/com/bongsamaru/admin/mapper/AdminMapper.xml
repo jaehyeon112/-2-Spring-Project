@@ -348,7 +348,12 @@
 				,end_period
 				,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code=1) as meetingCnt
         from volunteer
-        where room_stat=1
+        <where>
+        	room_stat=1
+        	<if test="volId!=null">
+        		and vol_id != #{volId}
+        	</if>
+        </where>
 	</select>
 	<select id="tagList" resultType="TagVO">
 		select tag_content,

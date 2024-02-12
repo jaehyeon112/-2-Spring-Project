@@ -84,7 +84,7 @@ public class UserController {
     @Value("${spring.mail.properties.mail.smtp.timeout}")
     private String mailSmtpTimeout;
 	
-	@Scheduled(cron = "0 0 0 * * *")
+	//@Scheduled(cron = "0 0 0 * * *")
 	public void sendMailing() {
 		List<RemittanceVO> remList = userService.remittanceList();
 		System.out.println();
@@ -132,14 +132,8 @@ public class UserController {
 		}
 	}
 	
-	//@Scheduled(cron = "*/10 * * * * *")
-	public void facs() {
-		List<FacilityVO> vo = userService.getFacilityList();
-		System.out.println("스케줄러 실행?"+vo);
-	}
-	
 	@GetMapping("AdminMain")
-	public String AdminMain(Model model) {
+	public String AdminMain(Model model,@RequestParam(value="volId", required = false)Integer volId) {
 		List<DonaVO> donaList = donaService.getDonaList();
 		model.addAttribute("dona", donaList);
 		
@@ -154,7 +148,7 @@ public class UserController {
 		System.out.println(before);
 		List<DonledgerVO> king = userService.DonationKing();
 		model.addAttribute("king", king);
-		List<FacilityVO> list = userService.meetingList();
+		List<VolunteerVO> list = userService.meetingList(volId);
 		model.addAttribute("meet", list);
 		List<TagVO> tags = userService.tagList();
 		model.addAttribute("tag", tags);
@@ -213,7 +207,6 @@ public class UserController {
 	@PostMapping("insertRemittance")
 	@ResponseBody
 	public int insertRemittance(RemittanceVO remittanceVO) {
-		System.out.println(remittanceVO);
 		return userService.insertRemittance(remittanceVO);
 	}
 	
@@ -226,8 +219,8 @@ public class UserController {
 	}
 	
 	@GetMapping("volunteerList")
-	public String volunteerList(Model model) {
-		List<FacilityVO> list = userService.meetingList();
+	public String volunteerList(Model model,@RequestParam(value="volId", required = false)Integer volId) {
+		List<VolunteerVO> list = userService.meetingList(volId);
 		model.addAttribute("meet", list);
 		List<TagVO> tags = userService.tagList();
 		model.addAttribute("tag", tags);
