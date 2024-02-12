@@ -100,75 +100,71 @@
                                 
                                 <div>
 	                               	<h5 >관련 콘텐츠 (link)</h5>
-	                                <p>link주소</p>
+	                                <p th:text="${dona.link}">link주소</p>
                                 </div>
                                 
                                <div>
 	                              <h3> 추가이미지</h3>
 	                               <p>link주소</p>
-                               </div>
+                               </div>          
                                
+ 
+						  <div class="table-responsive">
+						    <table class="table">
+						        <!-- Thead -->
+						        <thead>
+						            <tr>
+						                <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">총집행금액</th>
+						                <th scope="col" colspan="2"  style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;" th:text="${dona.goalAmt} + '원 (목표금액)'">총 집행금액</th>
+						            </tr>
+						        </thead>
+						
+						        <!-- Tbody - Use Thymeleaf Loop for Dynamic Data -->
+						        <tbody>
+						            <!-- Thymeleaf Loop -->
+						            <tr th:each="row : ${dona}">
+						                <!-- 첫 번째 열: 데이터0 -->
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+						                </td>
+						                
+						                <td>
+						                    <p class="mb-0 mt-4" th:text="${row.usePlan}" style="text-align: center;"></p>
+						                </td>
+						
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt} + '원'"></p>
+						                </td>
+						            </tr>
+						        </tbody>
+						    </table>
+						</div>
                                
-                                <div>
-	                              <h3> 기부금사용계획</h3>
-	                               <table border="1">
-		                               	<thead>
-		                               	<tr>
-		                               		<th>총집행금액</th>
-		                               		<th th:colspan="2">헤더2</th>
-		                               	</tr>
-		                               	</thead>
-		                               	
-		                               	<tbody>
-							            
-							            <tr th:each="row : ${data}">
-							                
-							                <td>사업비</td>
-							                <!-- 두 번째 열: 데이터1 -->
-							                <td th:text="${row.data1}"></td>
-							                <!-- 세 번째 열: 데이터2 -->
-							                <td th:text="${row.data2}"></td>
-							            </tr>
-							        </tbody>
-	                               </table>
-                               </div>
-                               
-                                <div>
-	                              <h3> 사업대상 및 기대효과 </h3>
-									<table border="1">
-									    <thead>
-									        <tr>
-									            <th>사업기간</th>
-									        </tr>
-									        <tr>
-									            <th>사업대상</th>
-									        </tr>
-									        <tr>
-									            <th>기대효과</th>
-									        </tr>
-									    </thead>
-									    <tbody>
-									        <tr>
-									            <td></td>
-									            <td></td>
-									            <td></td>
-									        </tr>
-									        <tr>
-									            <td colspan="2"></td>
-									            <td colspan="2"></td>
-									            <td colspan="2"></td>
-									        </tr>
-									    </tbody>
-									</table>
 
-                               </div>
+						<div class="table-responsive">
+							<h3> 사업대상 및 기대효과 </h3>
+							<table class="table">
+							    <tr>
+							        <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">사업기간</th>
+							        <td colspan="2" th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd') + ' ~ ' + #dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></td>
+							    </tr>
+							    <tr>
+							        <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">사업대상</th>
+							        <td colspan="2" th:text="${dona.projTarget}"></td>
+							    </tr>
+							    <tr>
+							        <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">기대효과</th>
+							        <td colspan="2" th:text="${dona.expEffect}"></td>
+							    </tr>
+							</table>
+						</div>
+
+
                                
                                     </div>
                                     
                                     <!-- Reviews 안의 영역 -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-                     
-                                        
                                         <div class="d-flex" th:each="donor : ${list}">
                                             <img src="donation/board/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
@@ -239,7 +235,10 @@
                                    <div id="commentSection">   
                                     <div id="commentList" th:each="com : ${comment}">
                                      <!-- <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td> -->
-                                      <p><span th:text="${com.memId} + ' : ' + ${com.content} + '(' + ${#dates.format(com.commDate, 'yyyy년 MM월 dd일')} +')'">댓글나와랑</span></p>
+                                      <p>
+									    <span th:utext="${com.memId} + '님' +  '<br> <span style=\'color: #333; font-size: 1.2em;\'>❝ ' + ${com.content} + ' ❞</span>' +  '<br>' + ${#dates.format(com.commDate, 'yyyy/MM/dd')} ">댓글나와랑</span>
+									</p>
+
                                     </div>
                                    </div>
                                     </div>
@@ -251,15 +250,29 @@
                     <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
 							<div class="col-lg-12" th:if="${dona.recStat == '1'}">
-							    <p class="mb-3">Category: 유형</p>
-							    <div class="info-item"><strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원 </div>
-							    <div class="progress">           
-							        <div class="progress-bar-striped bg-success" th:text="${dona.donationRatio}" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"> </div>
-							    </div>
-							    <div class="mb-3"><strong><span th:text="${dona.donationRatio}"></span> %</strong> </div>
+							    
+							    <div class="info-item">목표금액 : <strong><span th:text="${dona.goalAmt}"></span> 원 </strong></div>
+							    
+							    	<div class="progress">
+											    <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<div class="info-item" style="display: flex; justify-content: space-between;">
+											    <div style="text-align: left;">
+											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
+											    </div>
+											    <div style="text-align: right;">
+											        <strong><span th:text="${dona.total}"></span></strong>원
+											    </div>
+											</div>
+							    
+							    
+						
 							    <p class="mb-4"><span th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd')} + '~' + ${#dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></span></p>
-							    <p class="mb-4">D-Day : <span th:text="${dona.dday}"></span></p>
-							    <p class="mb-4">목표기부금액미달시 계획변경가능합니다.</p>
+							    <p class="mb-4"><span th:text="${dona.dday} + '일 남았습니다.' "></span></p>
+							    
+							    
+							    
+							    <p class="mb-4"><span style="background-color: #FFFF00; ">&#9888;</span> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
 							</div>
 							<!-- 버튼 부분 유지 -->
 							<button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"

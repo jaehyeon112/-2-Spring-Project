@@ -15,7 +15,9 @@ public class DonaVO {
 		private String title; // 메인제목 (v500) - 
 		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date recPeriod; // 모집기간
+		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date endPeriod; // 종료기간
+		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상

@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -139,24 +139,22 @@ public class DonaController {
 	    }   
 	   
 	   
-	  //등록폼 INSERT
-	   //@PostMapping("/regitForm")
-//	   @PostMapping(value = "/regitForm", consumes = "multipart/form-data")
-//	   @ResponseBody
-//	   public String registerDona(@RequestPart("donaVO") DonaVO donaVO,  @RequestPart("uploadFiles") MultipartFile[] uploadfiles, Model model) throws IOException {
-//		   System.out.println("등록폼제발좀좀좀좀좀!!!! ");  // 디버깅 메시지 추가
-//		   donaService.insertDonation(donaVO);
-//			
-//			
-//			int codeNo = donaVO.getDonId();
-//			String code = "p08";
-//			fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
-//			  
-//			return "redirect:donation/donaMain";
-//	   }
+	   //등록폼 INSERT
+	   @PostMapping(value = "/regitForm", consumes = "multipart/form-data")
+	   @ResponseBody
+	   public String registerDona(@ModelAttribute DonaVO donaVO,  @RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
+			donaService.insertDonation(donaVO);
+			
+			
+			int codeNo = donaVO.getDonId();
+			String code = "p08";
+			fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+			  
+			return "redirect:my/mapage";
+	   }
 	   
 	   //등록폼 INSERT - 일단은..
-	   @PostMapping("/regitForm")
+	   @PostMapping("/regitForm2")
 	   @ResponseBody
 	   public String registerDona(@RequestBody DonaVO donaVO,  Model model){
 		   System.out.println("등록폼제발좀좀좀좀좀!!!! ");  // 디버깅 메시지 추가

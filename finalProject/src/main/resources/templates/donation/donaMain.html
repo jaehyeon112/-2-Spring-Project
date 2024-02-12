@@ -121,9 +121,12 @@
 
 
 <!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
+<div class="container-fluid page-header py-5" style="background-color: #859d5c; background-image: none;">
     <h1 class="text-center text-white display-6">Donation</h1>
 </div>
+
+
+
 <!-- Single Page Header End -->
 
 <!-- Fruits Shop Start-->
@@ -154,9 +157,9 @@
                     <!-- 모집중, 모금완료 섹션 -->
                     <div class="col-lg-12 d-flex justify-content-center"> 
                         <div class="mb-4">
-                            <h4>진행 상태</h4>
+                            
                             <div class="btn-group" role="group">
-                                <a href="#" id="btnRecruiting" class="btn btn-primary  mr-2 rounded"  onclick="toggleList('recruit')">모집중</a>
+                                <a href="#" id="btnRecruiting" class="btn btn-primary  mr-2 rounded"  onclick="toggleList('recruit')">모금중</a>
                                 <a href="#" id="btnCompleted" class="btn btn-primary rounded" onclick="toggleList('completed')">모금완료</a>
                             </div>
                         </div>
@@ -168,7 +171,7 @@
                             <div th:each="dona : ${recruitList}">
                                 <div class="col-md-3 col-lg-3 col-xl-3 recruit-list"  style="display: none;">
                                     <!-- 리스트 아이템 표시 -->
-                                    <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
+                                    <div class="rounded position-relative fruite-item" >
                                         <div class="fruite-img">
                                             <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" style="height:250px" alt="">
                                         </div>
@@ -179,9 +182,9 @@
 
                                         <!-- 테두리 없애부분 -->
                                         <div class="p-4 border-top-0 rounded-bottom" style="color: black;">
-                                            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
+                                            <h6 style="margin-bottom: 10px;"><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h6>
 
-                                            <div class="info-item">
+                                            <div class="info-item" style="margin-bottom: 5px;">
                                                 목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
                                             </div>
                                             <div class="info-item">
@@ -190,7 +193,7 @@
 											
                                    
                                             
-											<div class="progress">
+											<div class="progress" style="margin-bottom: 15px;">
 											    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
 											<div class="info-item" style="display: flex; justify-content: space-between;">
@@ -204,7 +207,7 @@
 
 
 
-                                            <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
+                                            <div class="d-flex justify-content-center align-items-center flex-lg-wrap" style="margin-bottom: 5px;">
                                                 <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
                                             </div>
                                         </div>
@@ -216,9 +219,9 @@
                         <!-- 모집완료 리스트를 표시할 부분 -->
                         <div th:if="${completedList != null}">
                             <div th:each="dona : ${completedList}">
-                                <div class="col-md-3 col-lg-3 col-xl-3 completed-list"  style="display: none;">
+                                <div class="col-md-3 col-lg-3 col-xl-3 completed-list"  style="display: none; ">
                                     <!-- 리스트 아이템 표시 -->
-                                    <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
+                                    <div class="rounded position-relative fruite-item" style="border: 1px solid #d2d2d2;">
                                         <div class="fruite-img">
                                             <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" style="height:250px" alt="">
                                         </div>
@@ -229,7 +232,7 @@
 
                                         <!-- 테두리 없애부분 -->
                                         <div class="p-4 border-top-0 rounded-bottom" style="color: black;">
-                                            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
+                                            <h5><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h5>
 
                                             <div class="info-item">
                                                 <strong>목표금액 :</strong><span th:text="${dona.goalAmt}"></span> 원

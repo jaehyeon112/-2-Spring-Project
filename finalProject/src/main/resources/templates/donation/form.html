@@ -30,8 +30,8 @@
     
     <div class="form-group">
       <label for="categories" class="form-label mt-4"><span style="color:red">*</span> 유형</label>
-      <select class="form-select" id="category" >
-        <option th:each="category : ${categoryList}" th:value="${category.subCodeId}" th:text="${category.subCodeName}">1</option>
+      <select class="form-select" id="category" name="category">
+        <option th:each="category : ${categoryList}" th:value="${category.subCodeId}" th:text="${category.subCodeName}"></option>
       </select>
     </div>
     
@@ -43,8 +43,8 @@
     
     <div class="form-group">
       <label for="recPeriod" class="form-label mt-4"><span style="color:red">*</span>기부모금기간 (DATE)</label>
-      <input type="date" name="recPeriod"class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" name="endPeriod" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
+      <input type="date" name="recPeriod" th:datetime="${#dates.format(recPeriod, 'yyyy-MM-dd')}" class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
+      <input type="date" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
     </div>
 
     <div class="form-group">
@@ -124,7 +124,7 @@
     <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
     <div id="formFile2Container" class="mb-3">
         <div class="input-group">
-            <input class="form-control" type="file" id="formFile2">
+            <input class="form-control" type="file" id="formFile2" name="file">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
         </div>
     </div>
@@ -157,79 +157,72 @@
 
 
 <script th:inline="javascript">
-	function validation(){
-		
-		//	let requiredFields = [  'category', 'recPeriod', 'goalAmt',  'usePlan', 'projTarget', 'expEffect', 'intro' ];
-		//	for(let fields of requiredFields){
-		//		let values = document.getElementById(fields).value.trim();
-		//		if(values == ''){
-		//			alert('필수 항목을 모두 입력해주세요.');
-		//			return false; //폼 제출 안되도록! 
-		//			}
-		//			}//for
-					
-			let checkBoxChecked = document.getElementById("flexCheckDefault").checked;
-			let checkBoxChecked2 = document.getElementById("flexCheckDefault2").checked;
-			
-			
-			//체크여부
-			if(!checkBoxChecked || !checkBoxChecked2){
-				alert("모두 동의해주세요.")
-				}
-			
-		
-				
-		}//func
+
+
+// submitForm 함수 정의
+function submitForm() {
 	
+	console.log("버튼눌렀다!");
+    // 기본 제출 동작 방지
+    event.preventDefault();
+
+    // FormData 생성
+    let formData = new FormData(document.querySelector('form[name="donaForm"]'));
+
+    var facId = [[${#authentication.name}]];
+    console.log("facId는 ? :  " + facId);
+
+    // userId 값을 FormData에 추가
+    formData.append('facId', facId);
+    
+    
+ // 파일 input 엘리먼트를 찾아서 파일을 추가
+let fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(function(fileInput) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append('uploadfiles', fileInput.files[i]);
+        }
+    });
+  
+    
+    console.log("formData는? : " + formData);
+ // FormData 객체에 포함된 값들 콘솔로 출력
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+ 
+ // 각 input 요소의 값 콘솔로 출력
+    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+        console.log(input.name + ': ' + input.value);
+    });
+ 
+    // FormData를 서버로 전송하거나 원하는 대로 활용
+    // 예를 들어, Ajax를 사용하여 서버로 데이터 전송
+    $.ajax({
+        type: 'POST',
+        url: 'regitForm',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            // 성공 시 동작
+            console.log("ajax 안에 success response " + response);
+
+            alert("등록성공!");
+            location.href = "donaMain";
+            return;
+        },
+        error: function(error) {
+            // 에러 시 동작
+            console.error(error);
+        }
+    });
+}
 
 
 	
-		
-	    // 등록 버튼 클릭 시 처리
-	    function submitForm() {
-			console.log('등록버튼 눌렸다! ');
-			
-	        // 유효성 검사 수행
-	        //if (!validation()) {
-	          //  return;
-	        //}
-
-	        // 사용자 아이디 수집
-	        var userId = [[${#authentication.name}]];
-	        console.log("userId");
-	        console.log(userId);
-
-	        // 폼 데이터 수집
-	        let formData = collectFormData();
-	        console.log(collectFormData());
-	        console.log("폼데이터 : " + formData);
-
-	        // Ajax를 이용한 데이터 전송
-	        //$.ajax({
-	        	$('#donaForm').ajaxForm({
-	            type: 'POST',
-	            url: "/regitForm",
-	          //  processData: false,
-	           // contentType:"multipart/form-data",
-	            //contentType: false,
-
-	            data: formData,
-	            success: function (result) {
-	                console.log("ajax 안에 result " + result);
-
-	           
-	            },
-	            error: function (error) {
-	                console.error('등록 폼 : 등록 실패! ')
-	                console.error('Ajax error: ', error);
-	                console.log('Error status: ', error.status);
-	                console.log('Error response: ', error.responseText);
-	            }
-	        }).submit();
-	    } //end submitForm
-
-	  
-		
+	
+	
 	
 	
 	
@@ -294,32 +287,33 @@
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="usePlan${count}" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" id="usePlanAmt${count}" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlan" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlanAmt" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "articleContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="introTitle${count}" placeholder="제목" autocomplete="off">` +
+                `<input type="text" class="form-control" name="introTitles[${count}]" placeholder="제목" autocomplete="off">` +
                 `</div>` +
                 `<div class="input-group">` +
-                `<textarea class="form-control" id="intro${count}" rows="3"></textarea>` +
+                `<textarea class="form-control" name="intros[${count}]" rows="3"></textarea>` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "relatedLinkContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="link${count}" placeholder="null 가능" autocomplete="off">` +
+                `<input type="text" class="form-control" name="links[${count}]" placeholder="null 가능" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input class="form-control" type="file" id="formFile2${count}">` +
+                `<input class="form-control" type="file" name="formFiles[${count}]" id="formFile2${count}">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         }
+
 
         container.appendChild(newFields);
     }
@@ -331,79 +325,7 @@
         container.parentNode.removeChild(container);
     }
     
-    
-    //데이터 수집하기 함수
-   	function collectFormData(){
-    	
-    	let formData = new FormData();
-    	
-    	//정적 data - 카테고리, 제목, 기간, 목표모금액, 
-    	formData.append('category', $('#category').val());
-    	formData.append('recPeriod', $('#recPeriod').val());
-    	formData.append('endPeriod', $('#endPeriod').val());
-    	formData.append('goalAmt', $('#goalAmt').val());
-    	formData.append('title', $('#title').val());
-    	formData.append('projTarget', $('#projTarget').val());
-    	formData.append('expEffect', $('#expEffect').val());
-    	
-    	//동적 data
-    	collectDynamicData(formData, 'usePlan');
-    	collectDynamicData(formData, 'intro');
-    	collectDynamicData(formData, 'link');
-    	collectDynamicData(formData, 'formFile2');
-    	
-    	//file처리
-    	/*
-    	let inputFile = $("input[type='file']");
-    	let files = inputFile[0].files;
-    	for(let i=0; i<files.length; i++){
-    		formData.append("uploadfiles", files[i]);
-    	}
-    	*/
-    	
-    	// DonaVO 객체를 JSON 문자열로 변환하여 추가
-        let donaVOObject = {
-            // 적절한 속성들을 추가
-     		category: $('#category').val(),
-  		    recPeriod: $('#recPeriod').val(),
-   		    endPeriod: $('#endPeriod').val(),
-   		    goalAmt: $('#goalAmt').val(),
-   		    title: $('#title').val(),
-   		    projTarget: $('#projTarget').val(),
-   		    expEffect: $('#expEffect').val()
-        };
-    	
-        formData.append('donaVO', JSON.stringify(donaVOObject));
-
-    	
-    	return formData;
-    
-    } //end collectFormData
-    
-    
-    //동젝 데이터 수집
-    function collectDynamicData(formData, type){
-    	let dynamicData = [];
-    	
-    	// 동적 폼 추가되면 값 갖고오기
-    	let container = document.getElementById(type + 'Container');
-    	if(container){
-    		let dynamicFields = container.querySelectorAll('input[type="text"]');
-    		dynamicFields.forEach((field, index)=>{
-    			let data={
-    					[type + 'Title'] : field.value
-    			};
-    			dynamicData.push(data);
-    		})
-    		
-    	}
-    	
-    	// 동적데이터 FormData에 넣기
-    	dynamicData.forEach((data, idx)=>{
-    		formData.append(`${type}Data[$(idx)]`, JSON.stringify(data));
-    	})
-    }
-    
+   
 </script>
 
 
