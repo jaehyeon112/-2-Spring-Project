@@ -21,7 +21,7 @@
 									<div class="col-lg-12">
 										<div class="feature-img">
 
-											<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].filePath}" alt=""><br>
+											<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].file.filePath}" alt=""><br>
 											
 										</div>
 									</div>
@@ -40,12 +40,12 @@
 									<h3>챌린지 하는 이유</h3>
 											<div class="col-6">
 												<div class="form-group">
-													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].filePath}" alt="">
+													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].file.filePath}" alt="">
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-group">
-													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[2] != null}" th:src="${FileList[2].filePath}" alt="">
+													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[2] != null}" th:src="${FileList[2].file.filePath}" alt="">
 												</div>
 											</div>
 
@@ -61,11 +61,11 @@
 									<h3>기대효과</h3>
 											<div class="col-6">
 												<div class="form-group">
-													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].filePath}" alt="">
+													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].file.filePath}" alt="">
 												</div>
 											</div>
 											<div class="col-6">
-												<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[4] != null}" th:src="${FileList[4].filePath}" alt="">
+												<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[4] != null}" th:src="${FileList[4].file.filePath}" alt="">
 											</div>
 
 
@@ -143,7 +143,7 @@
 								<h3 class="widget_title"
 									th:text="${session.challengeInfo.title}"></h3>
 								<div class="media post_item">
-									<img th:src="${FileList[0].filePath}" alt="post">
+									<img th:src="${FileList[0].file.filePath}" alt="post">
 
 									<div class="media-body">
 										<h3>How to</h3>

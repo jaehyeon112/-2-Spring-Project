@@ -1,18 +1,27 @@
 package com.bongsamaru.facility.web;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.common.VO.ChallengesVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
@@ -20,7 +29,7 @@ import com.bongsamaru.facility.Service.FacilityService;
 public class facilityController {
 	@Autowired
 	FacilityService facilityService;
-	
+
 	
 	
 	
@@ -88,19 +97,40 @@ public class facilityController {
 	
 	
 	//시설 마이페이지
-	
-	@GetMapping("facilityMyPage")
+	 //마이페이지 (기부)
+	@GetMapping("/facilityMyPage")
 	public String getFacilityMyPage(Model model) {
 		List<DonaVO> list = facilityService.getDonaList();
 		model.addAttribute("donaList", list);
 		return "facility/myPageDona";
 	}
-	@GetMapping("facilityMyPage/volJoin")
-	public String getFacilityMyPageVol(Model model) {
-		
+	 //마이페이지(시설봉사신청, 신청진행상황)
+	@GetMapping("/facilityMyPage/volJoin")
+	public String getFacilityMyPageVol(Model model,String facId) {
+		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		// String facId = userDetails.getUsername();
+		List<VolActVO> list = facilityService.getVolunteerJoinList(facId);
+		model.addAttribute("volList", list);
 		return "facility/myPageVolJoin";
 	}
+
+	//시설봉사등록
+	@PostMapping("InvolJoin")
+	@ResponseBody
+	public int facVolInsert (VolActVO volActVO) {
+		volActVO.setFacId("greenFrog");
+		
+		return facilityService.InsertFacVol(volActVO);
+	}
+		
 	
+	//마이페이지
+	@GetMapping("facilityMyPage/volFinish")
+	public String getFacilityMyPageVolFinish(Model model) {
+		
+		return "facility/myPageVolFinish";
+	}
 	
 	
 	

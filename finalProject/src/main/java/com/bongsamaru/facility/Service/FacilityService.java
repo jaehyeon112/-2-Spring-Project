@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 
@@ -20,4 +21,6 @@ public interface FacilityService {
 	public List<FundingVO> getFundedList(String facId);//모금마감 List
 	public List<VolunteerVO> getVolunteerList(String facId);
 	public List<DonaVO> getDonaList();
+	public int InsertFacVol(VolActVO volActVO);//시설이 봉사등록
+	public List<VolActVO> getVolunteerJoinList(String facId);
 }

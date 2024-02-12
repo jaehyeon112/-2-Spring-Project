@@ -59,7 +59,9 @@ public class challengesController {
 	        System.out.println( "챌린지도전 잘 들어오나?"+ challengesVO.getChalDetId());
 	        System.out.println(chalId);
 	        List<ChallengesVO> files = challengeService.getFileList(challengesVO.getChalDetId(), "p04",  null, challengesVO.getChalDetId());
-	        challengesVO.getFile().setFilePath(files.get(0).getFile().getFilePath());
+	        //challengesVO.getFile().setFilePath(files.get(0).getFile().getFilePath());
+	       System.out.println(files);
+	        //challengesVO.setFilePath(files.get(0).getFilePath());
 	        System.out.println(challengesVO);
 	        
 	    }

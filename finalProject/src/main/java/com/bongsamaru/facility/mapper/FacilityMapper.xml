@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- 
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
@@ -107,13 +106,13 @@ SELECT  T1.VOL_ACT_ID,
 
 <!-- MyPage쪽 -->
 <!-- dona정보 -->
-<select id="getDonaInfo" resultType="DonaVO">
+<select id="getDonaList" resultType="DonaVO">
    SELECT D.TITLE,
   		  D.REC_PERIOD, 
   		  D.END_PERIOD, 
   		  D.GOAL_AMT,
   		  D.DON_REG_APP, 
-  		  NVL(SUM(CASE WHEN DL.PAY_STAT = 0 THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
+  		  NVL(SUM(CASE WHEN DL.PAY_STAT ='g01' THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
   		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
@@ -121,6 +120,44 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 
 </select>
 <!-- volunteer정보 -->
+<insert id="InsertFacVol" parameterType="VolActVO">
+ INSERT INTO VOL_ACT 
+                    (VOL_ACT_ID,
+                     FAC_ID,
+                     CATEGORY,
+                     TITLE,
+                     CONTENT,
+                     LOCATION,
+                     CAP,
+                     VOL_DATE,
+                     START_DATE,
+                     EXPIRE_DATE)
+             VALUES (volact_seq.nextval,
+             		 #{facId},
+             		 'i06',
+             		 #{title},
+             		 #{content},
+                     #{location},
+                     #{cap},
+                     #{volDate},
+                     #{startDate},
+                     #{expireDate})
+
+</insert>
+<select id="getVolunteerJoinList" resultType="VolActVO">
+   SELECT  FAC_ID, 
+   		   CATEGORY,
+   		   TITLE, 
+   		   CONTENT, 
+   		   LOCATION, 
+   		   CAP, 
+   		   VOL_DATE 
+     FROM  VOL_ACT
+    WHERE  FAC_ID=#{facId}
+</select>
+<select id="getVolunFinishList" resultType="VolunteerVO">
+ 	SELECT 
+</select>
 
 
 

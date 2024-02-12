@@ -16,4 +16,6 @@ public class VolActVO {
 	private Integer cap;
 	private Integer cnt;
 	private Date volDate;
+	private Date startDate;
+	private Date expireDate;
 }
