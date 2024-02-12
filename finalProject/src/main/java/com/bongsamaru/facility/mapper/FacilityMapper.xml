@@ -24,12 +24,12 @@
         </if>
     </where>
 
-    	<if test="limit != null">
+    	<!-- <if test="limit != null">
           LIMIT #{limit}
         </if>
         <if test="offset != null">
           OFFSET #{offset}
-        </if>
+        </if> -->
     
     
 
@@ -155,12 +155,28 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
      FROM  VOL_ACT
     WHERE  FAC_ID=#{facId}
 </select>
-<select id="getVolunFinishList" resultType="VolunteerVO">
- 	SELECT 
+<insert id="volAppList" parameterType="volActMemVO">
+INSERT INTO VOL_ACT_MEM 
+					   (VOL_ACT_MEM_ID, 
+					    VOL_ACT_ID, 
+					    MEM_ID)
+			     VALUES(vol_act_mem_seq.nextval,
+			            #{volActId},
+			            #{memId})
+</insert>
+
+<update id= volAppUpdate resultType="volMemVO">
+UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
+</update>
+<select id="getVolunFinishList" resultType="VolMemVO">
+ 	SELECT FAC_ID, 
+ 		   APP_CODE, 
+ 		   APP_DATE, 
+ 		   APP_REASON, 
+ 		   MEM_ID 
+      FROM VOL_MEM WHERE VOL_ACT_ID=#{volActId}
 </select>
-
-
-
+<!-- 시설봉사완료후 참여자 확인해주면 마음온도 변화 -->
 </mapper>
 
 

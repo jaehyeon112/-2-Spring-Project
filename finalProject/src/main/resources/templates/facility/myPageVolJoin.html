@@ -147,13 +147,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 					//	formData.append("uploadFiles", files[i]); //키,값으로 append 
 					//}
 					
-					formData.append("title" $("input[name=title]"))
-					formData.append("content" $("input[name=content]"))
-					formData.append("location" $("input[name=location]"))
-					formData.append("cap" $("input[name=cap]"))
-					formData.append("volDate" $("input[name=volDate]"))
-					formData.append("startDate" $("input[name=startDate]"))
-					formData.append("expireDate" $("input[name=expireDate]"))
+					formData.append("title", $("input[name=title]").val());
+    				formData.append("content", $("input[name=content]").val());
+				    formData.append("location", $("input[name=location]").val());
+				    formData.append("cap", $("input[name=cap]").val());
+				    formData.append("volDate", $("input[name=volDate]").val());
+				    formData.append("startDate", $("input[name=startDate]").val());
+				    formData.append("expireDate", $("input[name=expireDate]").val());
 					//formData.append("dContent", $('#content').val());
 				//	formData.append("code", "p04")
 				//	formData.append("codeNo", $('#chalDetId').val());
