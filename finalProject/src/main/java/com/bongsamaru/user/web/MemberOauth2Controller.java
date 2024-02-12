@@ -101,6 +101,7 @@ public class MemberOauth2Controller {
         }{
         	//headers.add("Location", "/login2");
         }
+        System.out.println(userInfoResponse.getBody());
         
         return userInfoResponse.getBody();
         
