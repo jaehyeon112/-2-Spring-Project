@@ -2,7 +2,8 @@ package com.bongsamaru.user.web;
 
 import java.io.IOException;
 
-import org.apache.http.HttpStatus;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bongsamaru.user.mapper.UserMapper;
+import com.bongsamaru.user.service.UserRepository;
 import com.bongsamaru.user.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +32,8 @@ public class MemberOauth2Controller {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	UserRepository user;
 	
 	
     @Value("${kakao.client.id}")
@@ -42,7 +46,7 @@ public class MemberOauth2Controller {
     private String secret_code;
 
     @GetMapping(value = "/login2")
-    public String kakaoOauthRedirect(@RequestParam String code, Model model) {
+    public String kakaoOauthRedirect(@RequestParam String code, Model model, HttpServletResponse response,  RedirectAttributes redirectAttributes) {
         RestTemplate rt = new RestTemplate();
 
         // HttpHeader 오브젝트 생성
@@ -57,6 +61,7 @@ public class MemberOauth2Controller {
         params.add("code", code);
         params.add("client_secret", secret_code); 
         
+        System.out.println(params);
         // HttpHeader와 HttpBody를 HttpEntity에 담기
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
@@ -88,7 +93,7 @@ public class MemberOauth2Controller {
         // HTTP 요청 - POST방식 - 사용자 정보 응답 받기
         ResponseEntity<String> userInfoResponse = rt.exchange(
             "https://kapi.kakao.com/v2/user/me",
-            HttpMethod.POST,
+            HttpMethod.GET,
             kakaoUserInfoRequest,
             String.class
         );
@@ -97,9 +102,10 @@ public class MemberOauth2Controller {
         // 사용자 정보 응답 반환
         model.addAttribute("kakao",userInfoResponse.getBody());
         if(userService.countMemId(kakaoClientId)) {
-        	//headers.add("Location", "/login2");
-        }{
-        	//headers.add("Location", "/login2");
+        	System.out.println("회원가입진행!");
+        	
+        }else{
+        	System.out.println("로그인진행!");
         }
         
         return userInfoResponse.getBody();

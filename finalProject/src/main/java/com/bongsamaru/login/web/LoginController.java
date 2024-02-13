@@ -2,6 +2,7 @@ package com.bongsamaru.login.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,16 @@ import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.mypage.mapper.MypageMapper;
+import com.bongsamaru.securing.EncryptService;
 import com.bongsamaru.user.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+/**
+ * 회원 가입과 관련된 요청을 처리하는 Controller
+ * @author 김재현
+ *
+ */
 @Controller
 public class LoginController {
 	
@@ -33,29 +39,53 @@ public class LoginController {
 	UserService userService;
 	
 	@Autowired
+	EncryptService encrypt;
+	
+	@Autowired
 	MypageMapper mypageMapper;
 	
 	@Autowired
 	private FileService fileService;
 	
+	/**
+	 * 
+	 * @param memId
+	 * @return Boolean
+	 */
 	@GetMapping("/idCheck/{memId}")
 	@ResponseBody
 	public Boolean idCheck(@PathVariable String memId) {
 		return userService.countMemId(memId);
 	}
 	
+	/**
+	 * 
+	 * @param bizNum
+	 * @return Boolean
+	 */
 	@GetMapping("/biznum/{bizNum}")
 	@ResponseBody
 	public Boolean facBizCheck(@PathVariable String bizNum) {
 		return userService.countBizNum(bizNum);
 	}
 	
+	/**
+	 * 
+	 * @param memNick
+	 * @return Boolean
+	 */
 	@GetMapping("/nickCheck/{memNick}")
 	@ResponseBody
 	public Boolean idNick(@PathVariable String memNick) {
 		return userService.countMemId(memNick);
 	}
 	
+	/**
+	 * 
+	 * @param files
+	 * @param facilityVO
+	 * @return ResponseEntity
+	 */
 	@PostMapping("/facilitySignUp")
 	@ResponseBody
 	public ResponseEntity<String> facilitySignUp(@RequestParam(value = "files", required = false) MultipartFile[] files 
@@ -84,7 +114,13 @@ public class LoginController {
 	}
 			
 	
-	
+	/**
+	 * 
+	 * @param files
+	 * @param userVO
+	 * @param category
+	 * @return ResponseEntity
+	 */
 	@PostMapping("/userSignUp")
 	@ResponseBody
 	public ResponseEntity<String> userSignUp(@RequestParam(value = "files", required = false) MultipartFile[] files 
@@ -97,6 +133,16 @@ public class LoginController {
 			vo = objectMapper.readValue(userVO, UserVO.class);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
+		}
+		
+		System.out.println(vo.getMemSsn() + "주민번호는?");
+		String ssn = vo.getMemSsn();
+		if(vo.getMemSsn() != null && vo.getMemSsn() != "") {
+			String encSsn = encrypt.encryptSsn(ssn);
+			byte[] encSsn2 = encrypt.stringToByteArray(encSsn);
+			//암호화 된 주민번호
+			System.out.println(encSsn2);
+			vo.setMemSsn(Arrays.toString(encSsn2));
 		}
 		
 		List<String> categories = new ArrayList<>();
@@ -121,11 +167,21 @@ public class LoginController {
 		}
 	}
 	
-	@GetMapping("signup")
+	/**
+	 * 
+	 * @param model
+	 * @return String
+	 */
+	@GetMapping("/signup")
 	public String goToUserSignUp(Model model) {
 		List<UserCategoryVO> vo = userService.userCategoty();
 		model.addAttribute("category",vo);
-		
+		if (model.containsAttribute("kakao")) {
+	        // Flash attribute로부터 "kakao" 속성 사용
+	        String kakaoUserInfo = (String) model.asMap().get("kakao");
+	        // kakaoUserInfo를 사용하여 필요한 작업 수행
+	    }
+		System.out.println("확인해보자");
 		return "login/signup";
 	}
 	
