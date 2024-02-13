@@ -443,6 +443,7 @@
     	
     	
     	let donaVO = {
+    			id: donId,
     			content : comm,
     			memId : memId,
     			detailCode : donId
@@ -454,12 +455,13 @@
     	
     	$.ajax({
     		type : "POST",
-    		url : "/donaDetail",
+    		url : "/donaDetail?id=" + donId + "&facId=" + memId,
     		data: JSON.stringify(donaVO),
     		contentType: 'application/json', 
     		success : function(response){
     			
-    			 $('#commentSection').load("../donaDetail #commentList");
+    			$('#commentSection').load("../donaDetail?id=" + donId + "&facId=" + memId + " #commentList");
+
  				document.getElementById('comment').value = '';
     		},
     		error : function(error){

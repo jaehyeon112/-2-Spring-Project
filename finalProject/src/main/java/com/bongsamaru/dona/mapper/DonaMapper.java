@@ -37,8 +37,15 @@ public interface DonaMapper {
 		List<DonaVO> getCategoryList(String h);
 
 	
-	
+	// 연장여부이메일대상자(시설)
+		List<DonaVO> selectExtensionTargetList();
 		
+	//모금종료시 update	
+		 void updateRecStat(DonaVO donaVO);
+	
+	//기한 연장 update	 
+		 void extendDonationPeriod(DonaVO donaVO);
+		 
 	//기부등록폼 - donation
 		public int insertDonation(DonaVO donaVO);
 		

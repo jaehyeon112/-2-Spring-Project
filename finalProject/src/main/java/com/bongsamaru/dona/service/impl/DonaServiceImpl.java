@@ -71,7 +71,25 @@ public class DonaServiceImpl implements DonaService {
 		}
 	}
 	
+//연장대상자
+	@Override
+	public List<DonaVO> selectExtensionTargetList() {
+		 return donaMapper.selectExtensionTargetList();
+	}
 
+//모금종료 업뎃
+	@Override
+	public void updateRecStat(DonaVO donaVO) {
+		 donaMapper.updateRecStat(donaVO);
+		
+	}
+	
+// 모금기한 연장하기
+	@Override
+	public void extendDonationPeriod(DonaVO donaVO) {
+		donaMapper.extendDonationPeriod(donaVO);
+		
+	}
 	
 	//기부등록폼
 	@Transactional

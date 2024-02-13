@@ -4,17 +4,21 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.common.service.MailUtil;
+import com.bongsamaru.common.service.MailVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FileService;
@@ -40,7 +44,8 @@ public class DonaController {
 	@Autowired
 	FileService fileService;
 	
-	
+	@Autowired
+	MailUtil mail;
 	
 	
 	/**
@@ -152,6 +157,52 @@ public class DonaController {
 		  return donaService.getDonerList(id);
 	  }
 	   
+	  
+	  //연장 이메일보내기
+	  //@Scheduled(cron = "0 0 0 * * *")  // 매일 0시 0분에 실행
+	  public void sendExtensionEmails() {
+	      List<DonaVO> extensionTargetList = donaService.selectExtensionTargetList();
+	      for (DonaVO vo : extensionTargetList) {
+	          MailVO mailvo = new MailVO();
+	          // 이메일 내용 설정
+	          String emailContent = String.format(
+	        		    "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
+	        		    + "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
+	        		    + "<p style=\"padding: 50px;\">안녕하세요. %s님,<br>" 
+	        		    + "%s 기부 게시글의 마감기한이 1일 남았습니다.<br>"
+	        		    + "현재 목표금액 미달로 1회 한정 2주 이내로 기간 연장이 가능합니다.<br>"
+	        		    + "연장은 홈페이지의 마이페이지 안에서 가능합니다. 감사합니다.</p>"
+	        		    + "</div>", 
+	        		    vo.getFacId(), 
+	        		    vo.getDonId()
+	        		);
+
+	          mailvo.setEmailContent(emailContent);
+	          mailvo.setRecipientEmail(vo.getFacEmail());  
+	          mail.sendMail(mailvo);
+	      }
+	  }
+
+	  
+	  
+	  
+	  
+	  //모금종료 업데이트
+	  @Scheduled(cron = "0 0 0 * * *")  // 매일 0시 0분에 실행
+	  public void updateRecStat() {
+	      DonaVO donaVO = new DonaVO(); 
+	      donaService.updateRecStat(donaVO);
+	  }
+
+	  //기한연장하기
+	  @PutMapping(value = "/extendDonationPeriod")
+	    public String extendDonationPeriod(DonaVO donaVO) {
+	        donaService.extendDonationPeriod(donaVO);
+	        return "redirect:/";  //마이페이지주소찾기
+	    }
+	
+	  
+	  
 	   
 	 /**
 	  *  
@@ -251,7 +302,10 @@ public class DonaController {
 	 */
 	//후기폼으로 GO
 	   @GetMapping("/reviewform")
-	    public String openRevform(Model model) {
+	    public String openRevform(@RequestParam Integer donId, @RequestParam String facId,Model model) {
+		   
+		   model.addAttribute("donId", donId);
+		   model.addAttribute("facId", facId);
 		   return "donation/reviewform";
 	   }
 	   

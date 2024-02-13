@@ -13,6 +13,10 @@
  <section layout:fragment="content" >
 
 <form name="reviewForm">
+<!-- 나중에 버튼에 
+<h5><a th:href="@{/reviewform(donId=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a> -->
+<input type="hidden" name="donId" th:value="${donId}">
+<input type="hidden" name="facId" th:value="${facId}">
   <fieldset>
     <legend> Donation Review Form </legend>
 
@@ -116,8 +120,17 @@
     
     let formData = new FormData(document.querySelector('form[name="reviewForm"]'));
     							
-  
-	//let donId = urlParams.get('donId');  지금은 페이지 엇ㅂ으니까 일단 나중에! 
+ 		
+    //let donId = document.querySelector('input[name="donId"]').value;
+    //let facId = document.querySelector('input[name="facId"]').value;
+
+   
+    //formData.append('donId', donId);
+    //formData.append('facId', facId);
+    
+    
+    
+	
 	let donId = 1; //임시방편임
 	formData.append('donId', donId);
 	
@@ -212,7 +225,7 @@
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input class="form-control" type="file" id="formFile2${count}">` +
+                `<input class="form-control" type="file" name="uploadfiles${count}" id="formFile2">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         }

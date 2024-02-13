@@ -108,7 +108,7 @@ public class DonaVO {
 	    private String bizNum;
 	    private String facBank;
 	    private String donAcct;
-	    
+	    private String facEmail;
 
 
 	    

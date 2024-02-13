@@ -30,6 +30,15 @@ public interface DonaService {
 	//댓글 등록하기
 	public int insertComment(DonaVO donaVO);
 	
+	//연장 이메일 대상자
+	List<DonaVO> selectExtensionTargetList();
+	//모금종료 update
+	public void updateRecStat(DonaVO donaVO);
+	
+	//모금기한연장-수정
+	public void extendDonationPeriod(DonaVO donaVO);
+	
+	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);
 	public int insertDonDetail(DonaVO donaVO);
