@@ -30,8 +30,8 @@ public class FileService {
         List<String> imageList = new ArrayList<>();
 
         for(MultipartFile uploadFile : uploadFiles) {
-            if (!isImageFile(uploadFile)) {
-                System.err.println("this file is not image type");
+            if (!isAllowedFileType(uploadFile)) {
+                System.err.println("this file is not type");
                 return null;
             }
 
@@ -43,7 +43,7 @@ public class FileService {
     }
 
     private boolean isImageFile(MultipartFile file) {
-        return file.getContentType() != null && file.getContentType().startsWith("image");
+        return file.getContentType() != null && file.getContentType().startsWith("image") && file.getContentType().startsWith("zip");
     }
 
     private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user) throws IOException {
@@ -148,7 +148,7 @@ public class FileService {
         return folderPath.replace(uploadPath + File.separator, ""); // DB에 저장될 경로 반환
     }
     private boolean isAllowedFileType(MultipartFile file) {
-        String allowedFileTypes = "image,video,audio,application/pdf"; // 허용된 파일 유형
+        String allowedFileTypes = "image,video,audio,application/pdf,application/zip"; // 허용된 파일 유형
         return file.getContentType() != null && allowedFileTypes.contains(file.getContentType().split("/")[0]);
     }
     
@@ -162,6 +162,8 @@ public class FileService {
         
         return false; // 파일이 존재하지 않으면 false 반환
     }
+    
+    
     
 }
 
