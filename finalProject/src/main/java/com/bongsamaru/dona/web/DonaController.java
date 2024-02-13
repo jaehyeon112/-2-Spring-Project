@@ -203,8 +203,7 @@ public class DonaController {
 		   return "donation/forDonaform";
 	   }
 	
-	 
-	   
+	
 	   
 	/**
 	 * 
@@ -234,7 +233,7 @@ public class DonaController {
 	   //등록폼 INSERT
 	   @PostMapping(value = "/regitForm", consumes = "multipart/form-data")
 	   @ResponseBody
-	   public String registerDona(@ModelAttribute DonaVO donaVO,  @RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
+	   public String registerDona(@RequestParam("id") Integer donId, @ModelAttribute DonaVO donaVO,  @RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
 			donaService.insertDonation(donaVO);
 			
 			int codeNo = donaVO.getDonId();
@@ -277,6 +276,8 @@ public class DonaController {
 			  
 			return "redirect:my/mapage";
 	   }
+	   
+	   
 	   
 	   
 	   

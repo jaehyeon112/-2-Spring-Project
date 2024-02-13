@@ -143,10 +143,13 @@
 		
 		 var fId = [[${#authentication.name}]];
 		 let facId = parseInt(fId);
+		 console.log(typeof facId);
+		 console.log(typeof fId);
 
 		 
 		    console.log("facId는 ? :  " + facId);
-		    console.log(fId)
+		    console.log(fId);
+		    
 		    formData.append('codeNo', facId);
 		    formData.append("code", "p07")
 		

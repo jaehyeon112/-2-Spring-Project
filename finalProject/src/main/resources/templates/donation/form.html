@@ -162,8 +162,7 @@ function submitForm() {
     
     formData.append('facId', facId);
     
-    
-<<<<<<< HEAD
+
 	 //파일 추가
 	let fileInputs = document.querySelectorAll('input[type="file"]');
 	    fileInputs.forEach(function(fileInput) {
@@ -171,43 +170,26 @@ function submitForm() {
 	            formData.append('uploadfiles', fileInput.files[i]);
 	        }
 	    });
-=======
- // 파일추가
-let fileInputs = document.querySelectorAll('input[type="file"]');
-    fileInputs.forEach(function(fileInput) {
-        for (let i = 0; i < fileInput.files.length; i++) {
-            formData.append('uploadfiles', fileInput.files[i]);
-        }
-    });
->>>>>>> branch 'donation' of https://github.com/hyeon0902/-2-Spring-Project.git
-  
+
     
     console.log("formData는? : " + formData);
-<<<<<<< HEAD
-    
- // FormData 객체에 포함된 값들 콘솔로 출력
-=======
+
  // FormData 
->>>>>>> branch 'donation' of https://github.com/hyeon0902/-2-Spring-Project.git
+
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
     }
  
-<<<<<<< HEAD
- //input값 
-=======
+
+
  // input 입력한거
->>>>>>> branch 'donation' of https://github.com/hyeon0902/-2-Spring-Project.git
     document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
         console.log(input.name + ': ' + input.value);
     });
  
-<<<<<<< HEAD
- 
-    // FormData 서버로
-=======
+
     // FormData 서버전송 
->>>>>>> branch 'donation' of https://github.com/hyeon0902/-2-Spring-Project.git
+
     $.ajax({
         type: 'POST',
         url: 'regitForm',

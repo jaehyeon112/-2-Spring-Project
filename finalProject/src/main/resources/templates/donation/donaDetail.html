@@ -35,11 +35,11 @@
     .vesitable-item {
         display: flex;
         flex-direction: column;
-        height: 100%; /* 100% 높이를 설정하여 부모(vesitable-item)의 높이에 따라 늘어납니다. */
+        height: 100%;
     }
 
     .vesitable-img {
-        flex-grow: 1; /* 이미지가 차지하는 공간을 최대로 확장합니다. */
+        flex-grow: 1; 
     }
 
        </style> 
@@ -135,6 +135,17 @@
 						                <td>
 						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt} + '원'"></p>
 						                </td>
+						                
+						                  <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlan2} + '원'"></p>
+						                </td>
+						                
+						                  <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt2} + '원'"></p>
+						                </td>
+						                
+						                
+						                
 						            </tr>
 						        </tbody>
 						    </table>

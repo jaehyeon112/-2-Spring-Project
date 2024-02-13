@@ -93,13 +93,12 @@ public class DonaVO {
 	    private Integer bizCost; //사업비 not null (실질적 모금액)
 	    private String bizContent; //사업내용 not null
 	    private Integer bizAmt; // 사업금액(구체적) not null
-	    
+	    private Integer bizAmt2;
+	    private Integer bizAmt3;
+	    private String bizContent2;
+	    private String bizContent3;
     
-//    //don_review_table(기부후기제목) 테이블
-//	    private Integer donRevTitleId; //기부후기등록상세번호 notnull
-//	    //private String title; //제목
-//	    private String content; // 내용
-//	    //private Integer donRevId; // 기부후기등록번호
+
 	    
 	//시설테이블
 	   // private String facId;
