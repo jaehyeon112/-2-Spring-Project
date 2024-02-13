@@ -125,7 +125,7 @@
 													<p>"챌린지를 시작하는 날짜는 오늘입니다"</p>
 												</div>
 												<div class="form-group col-lg-6 col-md-6 name">
-													<input type="date" id="regDate" name="regDate">
+													<input type="date" id="endDate" name="endDate">
 													<p>챌린지를 마감할 날짜오늘부터 최소 한달, 최대 6개월까지 참여가능합니다</p>
 
 												</div>
@@ -169,15 +169,13 @@
 
 		</div>
 		<script th:inline="javascript">
-		  var username = [[${#authentication.principal.userVO.memNick}]];
-			console.log(username)
 			
-		//input date 관련
-			document.getElementById('start').value = new Date().toISOString()
-					.substring(0, 10);
-			;
+
+			//시작날짜 오늘로 설정
+			document.getElementById('start').value = new Date().toISOString().substring(0, 10);			
 			$('input[name=start]').attr("readonly", true);
 
+			//종료일자 6개월 제한
 			let minDate = new Date();
 			let maxDate = new Date();
 
@@ -186,8 +184,9 @@
 			maxDate.setMonth(maxDate.getMonth() + 6);
 			let endDate = maxDate.toISOString().substring(0, 10);
 
-			$('input[name=regDate]').prop("min", startDate);
-			$('input[name=regDate]').prop("max", endDate);
+			$('input[name=endDate]').prop("min", startDate);
+			$('input[name=endDate]').prop("max", endDate);
+			
 		//form 등록관련	
 			$('form[name="insertForm"]').on('submit', challengeInsert);
 
@@ -240,40 +239,25 @@
 				
 				
 				//사진
-				var formData = new FormData(); //FormData 객체 생성
-					var inputFile = $("input[type='file']");
-					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
-					var files = inputFile[0].files;
-					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
-					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
-					for (var i = 0; i < files.length; i++) {
-						console.log(files[i]);
-						formData.append("uploadFiles", files[i]); //키,값으로 append 
-					}
-					var formInfo = $("form").serialize();
-					formData.append("formInfo", formInfo);
-						
-					
-						$.ajax({
-						url: '/challengeInsert',
-						type: 'POST',
-						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
-						data: formData,
-						success: function (result) {
-							console.log(result)
-							alert('성공!')
+				var formData = new FormData(document.insertForm); //FormData 객체 생성
 
-						},
-						error: function (reject) {
-							alert('실패입니다!')
-							console.log(reject);
-						}
-					});
-					
-					
-					
-						document.forms.insertForm.submit();
+				$.ajax({
+					url: '/challengeInsert',
+					type: 'POST',
+					processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+					contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+					data: formData,
+					success: function (result) {
+						console.log(result)
+						alert('성공!')
+						location.href="challegneList"
+	
+					},
+					error: function (reject) {
+						alert('실패입니다!')
+						console.log(reject);
+					}
+			    });
 
 			}
 		</script>

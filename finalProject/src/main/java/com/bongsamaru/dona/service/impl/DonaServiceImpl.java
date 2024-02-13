@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.dona.mapper.DonaMapper;
 import com.bongsamaru.dona.service.DonaService;
@@ -40,40 +41,82 @@ public class DonaServiceImpl implements DonaService {
 	
 //댓글 리스트
 	@Override
-	public List<DonaVO> getCommentList(Integer donId) {
-		return donaMapper.getCommentsList(donId);
+	public List<DonaVO> getCommentList(Integer detailCode) {
+		return donaMapper.getCommentsList(detailCode);
 	}
-
-//댓글삽입	
+	
+//댓글달기
 	@Override
-	public int insertComment(Integer donId, DonaVO donaVO) {
-//		int result = donaMapper.insertComments(donaVO);
-//		
-//			if(result == 1) {
-//				return donaVO.getDonId();
-//			}else {
-//				return -1;
-//			}
-		 try {
-		        donaVO.setDonId(donId); // 댓글을 등록할 기부 프로젝트의 ID 설정
-		        return donaMapper.insertComment(donaVO);
-		    } catch (Exception e) {
-		        throw new RuntimeException("댓글 등록 중 오류가 발생했습니다.", e);
-		    }
+	public int insertComment(DonaVO donaVO) {
+		int result = donaMapper.insertComment(donaVO);
+		if(result == 1) {
+			return donaVO.getCommId();
+		}else {
+			return -1; 
+		}
 	}
 	
-
+//기부 등록폼	
+//	@Override
+//	public int insertDonation(DonaVO donaVO) {
+//		int result = donaMapper.insertDonation(donaVO);
+//		
+//		if(result == 1) {
+//			return donaVO.getDonId();
+//		}else {
+//			return -1;
+//		}
+		
+// 기부등록(상세) 폼		
+//	@Override
+//	public int insertDonDetail(DonaVO donaVO) {
+//	int result = donaMapper.insertDonDetail(donaVO);
+//		
+//		if(result == 1) {
+//			return donaVO.getDonId();
+//		}else {
+//			return -1;
+//		}
+//	}
 	
-	
+	//기부등록폼
+	@Transactional
 	@Override
 	public int insertDonation(DonaVO donaVO) {
-		int result = donaMapper.insertDonation(donaVO);
-		
-		if(result == 1) {
-			return donaVO.getDonId();
-		}else {
-			return -1;
-		}
-		
+		donaMapper.insertDonation(donaVO);
+		return donaMapper.insertDonDetail(donaVO);
 	}
+
+	
+			//	@Transactional
+			//	@Override
+			//	public int insertRemittance(RemittanceVO remittanceVO) {
+			//		//송금 확인코드 변경
+			//		userMapper.updatePaidCode(remittanceVO.getDonId());
+			//		//송금 테이블에 삽입
+			//		return userMapper.insertRemittance(remittanceVO);
+			//	}
+	
+	
+//결제프로세스	
+	@Override
+	public int paymentProcess(DonaVO donaVO) {
+		int result = donaMapper.paymentProcess(donaVO);
+		
+		if(result == 1 ) {
+			return donaVO.getDonLedId();
+		}else {
+		return -1;
+		}
+	}
+
+	@Override
+	public int insertDonDetail(DonaVO donaVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	
+	
 }

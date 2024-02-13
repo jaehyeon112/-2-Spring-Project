@@ -20,13 +20,15 @@ public interface DonaService {
 	
 	
 	//댓글 리스트
-	public List<DonaVO> getCommentList(Integer donId);
+	public List<DonaVO> getCommentList(Integer detailCode);
 	
 	//댓글 등록하기
-	public int insertComment(Integer donId, DonaVO donaVO);
+	public int insertComment(DonaVO donaVO);
 	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);
+	public int insertDonDetail(DonaVO donaVO);
 	
-	
+	//결제하기
+	public int paymentProcess(DonaVO donaVO);
 }
