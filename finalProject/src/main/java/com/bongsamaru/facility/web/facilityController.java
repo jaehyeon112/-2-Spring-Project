@@ -60,7 +60,8 @@ public class facilityController {
 			/*
 			 * @RequestParam(value="cntPerPage", required = false, defaultValue = "10")
 			 * Integer cntPerPage,
-			 */
+			 */					
+								  String facId,
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
 								  @RequestParam(value="start", required = false,defaultValue = "1")Integer start,
@@ -75,7 +76,7 @@ public class facilityController {
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);
      	
-     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType);
+     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType,facId);
      	model.addAttribute("facilityList", list);
      	List<SubCodeVO> z =commonMapper.subCodeList("z");
      	List<SubCodeVO> f = commonMapper.subCodeList("f");

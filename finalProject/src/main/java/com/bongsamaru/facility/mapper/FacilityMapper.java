@@ -13,7 +13,7 @@ import com.bongsamaru.dona.service.DonaVO;
 
 public interface FacilityMapper {
 	
-	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType, @Param("facId") String facId);
 	public int getCategoryCount( @Param("facZip2") String facZip2, @Param("facType") String facType);
 	public FacilityVO getFacilityInfo(String facId);
 	public List<FundingVO> getfundingList(String facId);
