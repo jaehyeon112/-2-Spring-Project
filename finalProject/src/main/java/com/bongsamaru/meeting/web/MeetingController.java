@@ -46,20 +46,27 @@ public class MeetingController {
 	public String meetings(@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
 		 if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
-	    } else {
+		 } else {
 	        System.out.println("User is not logged in.");
-	    }
+		 }
+		 
+		req.getSession().setAttribute("id",volId);
 
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
+		
 		List<VolActVO> list = service.meetingVolActList(volId);
 		model.addAttribute("act",list);
+		
 		List<VolMemVO> member = service.meetingMemList(volId);
 		model.addAttribute("member",member);
+		
 		List<VolMemVO> cnt = service.volCnt(volId);
 		model.addAttribute("cnt",cnt);
+		
 		Date today = new Date();
 		model.addAttribute("today",today);
+		
 		List<VolActVO> review = service.volActReviewList(volId);
 		for(VolActVO vo : review) {
 			vo.setFilePath(service.findFile("p12",vo.getVolActId()));
@@ -68,7 +75,6 @@ public class MeetingController {
 		model.addAttribute("review",review);
 		List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
-		req.getSession().setAttribute("id",volId);
 		
 		for(VolActVO vo : list) {
 			vo.setFilePath(service.findFile("p11",vo.getVolActId()));
@@ -115,11 +121,6 @@ public class MeetingController {
 		return service.findMember(volId,memId);
 	}
 	
-	@GetMapping("meeting")
-	public String meeting() {
-		return "meeting/meeting";
-	}
-	
 	@GetMapping("meetingInfoPage")
 	public String meetingInfo(@RequestParam(name="volId") Integer volId,Model model) {
 		VolunteerVO vo = service.meetingInfo(volId);
@@ -163,7 +164,7 @@ public class MeetingController {
 	
 	//자유게시판
 	@GetMapping("freeBoardList")
-	public String freeBoardList(PageVO vo, Model model
+	public String freeBoardList(PageVO vo, Model model,HttpServletRequest req,@RequestParam Integer volId,Principal prin
 							 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
 							 	, @RequestParam(value="category", required = false)String category
 								, @RequestParam(value="start", required = false)String start
@@ -177,18 +178,25 @@ public class MeetingController {
         }else {
         	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
         }
+        req.getSession().setAttribute("id",volId);
         
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("board",list);
 		model.addAttribute("vo",vo);
 		model.addAttribute("category",category);
 		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+	        System.out.println("User is not logged in.");
+		 }
+		
 		return "meeting/freeBoardList";
 	}
 	
 	//봉사후기
 	@GetMapping("reviewBoardList")
-	public String reviewBoardList(PageVO vo, Model model,@RequestParam(name="volId") Integer volId,HttpServletRequest req
+	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req
 								, @RequestParam(value="searchKeyword", required = false)String searchKeyword
 								, @RequestParam(value="category", required = false)String category
 								, @RequestParam(value="start", required = false)String start
@@ -214,12 +222,14 @@ public class MeetingController {
 	
 	//자유게시판 작성폼
 	@GetMapping("freeBoardInsertPage")
-	public String freeBoardInsertPage(Principal prin,Model model) {
+	public String freeBoardInsertPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
 		if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
 	    } else {
 	    	 model.addAttribute("userId","없음");
 	    }
+		req.getSession().setAttribute("id",volId);
+		
 		return "meeting/freeBoardInsert";
 	}
 	
@@ -227,6 +237,38 @@ public class MeetingController {
 	@ResponseBody
 	public int freeBoardInsert(BoardVO vo) {
 		return service.insertBoard(vo);
+	}
+	
+	@GetMapping("findNo")
+	@ResponseBody
+	public int findBoardNo() {
+		return service.findBoardNo();
+	}
+	
+	@GetMapping("updateFreeBoard")
+	public String updateFreeBoard(Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer detailCate) {
+		BoardVO vo = service.freeBoardInfo(detailCate);
+		model.addAttribute("vo",vo);
+		return "meeting/updateFreeBoard";
+	}
+	
+	@GetMapping("freeBoardInfo")
+	public String freeBoardInfo(Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer detailCate) {
+		BoardVO vo = service.freeBoardInfo(detailCate);
+		model.addAttribute("vo",vo);
+		return "meeting/freeBoardInfo";
+	}
+	
+	@PostMapping("updateFreeBoard")
+	@ResponseBody
+	public int updateFreeBoard(BoardVO vo) {
+		return service.updateFreeBoard(vo);
+	}
+	
+	@PostMapping("deleteFreeBoard")
+	@ResponseBody
+	public int deleteFreeBoard(@RequestParam Integer detailCate) {
+		return service.deleteFreeBoard(detailCate);
 	}
 	
 }

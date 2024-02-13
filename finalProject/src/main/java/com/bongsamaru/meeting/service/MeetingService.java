@@ -7,6 +7,7 @@ import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingService {
 	public VolunteerVO meetingInfo(Integer volId);
@@ -22,4 +23,8 @@ public interface MeetingService {
 	public int findMember(Integer volId,String memId);
 	public String findFile(String code,Integer codeNo);
 	public int insertBoard(BoardVO boardVO);
+	public int findBoardNo();
+	public BoardVO freeBoardInfo(Integer detailCate);
+	public int updateFreeBoard(BoardVO vo);
+	public int deleteFreeBoard(Integer detailCate);
 }
