@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>자유게시판</title>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -17,11 +22,11 @@
 		<div style="text-align:center;">
 			<h5>현재 등록된 게시글이 없습니다. 첫글을 등록해보세요!</h5>
 			<br>
-			<button class="btn btn-outline-secondary m-1">등록하기</button>
+			<button class="btn btn-outline-secondary m-1" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button>
 		</div>
 		</th:block >
 		<th:block th:if="${board.size} != 0">
-		<div style="float:right"><button class="btn btn-outline-secondary m-1" onclick="location.href='../freeBoardInsertPage'">등록하기</button></div>
+		<div style="float:right"><button class="btn btn-outline-secondary m-1" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button></div>
 			<table class="table" id="classic">
 				<thead>
 					<tr>
@@ -36,7 +41,8 @@
 				 	<th:block th:each="board,st : ${board}" >
 						<tr>
 							 <td th:text="${st.count}">제목</td>
-							 <td th:text="${board.title}" >제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&detailCate=[[${board.detailCate}]]'" th:if="${userId}==${board.memId}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&detailCate=[[${board.detailCate}]]'" th:if="${userId}!=${board.memId}">제목</td>
 							 <td th:text="${board.memId}" >작성자</td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy/MM/dd')}" >날짜</td>
 							 <td th:text="${board.views}" >조회수</td>

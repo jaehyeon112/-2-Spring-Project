@@ -163,6 +163,37 @@
 				,#{title}
 				,#{content}
 				,#{memId}
-				,FREEBOARD_SEQ.NEXTVAL)
+				,#{detailCate})
 	</insert>
+	<select id="freeBoardInfo" resultType="BoardVO">
+		select TITLE
+				,CONTENT
+				,WRITE_DATE
+				,VIEWS
+				,MEM_ID
+				,DETAIL_CATE
+		from board
+		where category='b03'
+		and detail_cate = #{detailCate}
+	</select>
+	<update id="updateFreeBoard" parameterType="BoardVO">
+		update board
+		set title = #{title},
+			content = #{content},
+			mod_date = sysdate
+		where category = 'b03'
+		and detail_cate = #{detailCate}
+	</update>
+	<delete id="deleteFreeBoard" parameterType="int">
+		delete 
+		from board
+		where category = 'b03'
+		and detail_cate = #{detailCate}
+	</delete>
+	<delete id="delFile" parameterType="FilesVO">
+		delete 
+		from files 
+		where code = #{code}
+		and code_no = #{codeNo}
+	</delete>
 </mapper>

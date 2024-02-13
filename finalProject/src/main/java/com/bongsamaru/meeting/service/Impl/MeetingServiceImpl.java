@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.PageVO;
@@ -89,5 +90,23 @@ public class MeetingServiceImpl implements MeetingService{
 	public int findBoardNo() {
 		return mapper.findBoardNo();
 	}
+
+	@Override
+	public BoardVO freeBoardInfo(Integer detailCate) {
+		return mapper.freeBoardInfo(detailCate);
+	}
+
+	@Override
+	public int updateFreeBoard(BoardVO vo) {
+		return mapper.updateFreeBoard(vo);
+	}
+
+	@Transactional
+	@Override
+	public int deleteFreeBoard(Integer detailCate) {
+		mapper.delFile("p13",detailCate);
+		return mapper.deleteFreeBoard(detailCate);
+	}
+
 
 }
