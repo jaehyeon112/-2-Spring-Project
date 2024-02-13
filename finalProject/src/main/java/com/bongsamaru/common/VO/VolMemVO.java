@@ -16,4 +16,5 @@ public class VolMemVO {
 	private Integer volActId;
 	private Integer cnt;
 	private String path;
+	private String volActMemId;
 }

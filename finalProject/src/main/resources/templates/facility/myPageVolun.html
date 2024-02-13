@@ -4,7 +4,7 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>봉사신청내역</title>
+<title>봉사완료후</title>
 </head>
 <body>
  <section layout:fragment="content">
@@ -16,19 +16,24 @@
                         <div class="boking_table">
                        
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">목표금액</p>
+                                     <p style="color:black; font-size:26px">봉사제목</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">모집기간</p>
+                                      <p style="color:black; font-size:26px">봉사내용</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">승인상태</p>
+                                      <p style="color:black; font-size:26px">참여자승인</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="book_tabel_item">
+                                       <p style="color:black; font-size:26px">후기작성</p>
                                        
                                     </div>
                                 </div>
@@ -44,17 +49,17 @@
                         <div class="boking_table">
                        
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p  th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}" ></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                       <p th:text="${#dates.format(dona.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona.endPeriod,'yyyy-MM-dd')}"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                        <p th:text="${dona.donRegApp}"></p>
                                        

@@ -11,31 +11,32 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
 <div class="row hotel_booking_table">
 					<div class="col-md-3">
-                        
+                        <button type="button" data-toggle="modal"
+											data-target="#myModal">시설봉사 등록</button>
                     </div>
                     <div class="col-md-9">
                         <div class="boking_table">
                        
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p style="color:black; font-size:26px">봉사제목</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                       <p style="color:black; font-size:26px">봉사내용</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                        <p style="color:black; font-size:26px">봉사일시</p>
                                        
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">승인</p>
+                                       <p style="color:black; font-size:26px" >신청자보기</p>
                                        
                                     </div>
                                 </div>
@@ -44,7 +45,47 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                         </div>
                     </div>
                     
-                    <div class="col-md-3">
+                    </div>
+                 <div class="modal" tabindex="-1" id="myModal">
+				<div
+					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">봉사등록하기</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+
+							<div class="form-group">
+							
+								<input type="text" name="title" placeholder="제목을 작성해 주세요">
+								<textarea id="content" name="content" maxlength="500"></textarea>
+								<br>
+								<input type="text" name="location" placeholder="위치를 입력해주세요">
+								정원<input type="number" name="cap">
+								<br>
+								봉사일시<input type="date" id="volDate" name="volDate">
+								모집일시<input type="date" id="startDate" name="startDate"> <input type="date" id="expireDate" name="expireDate">
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							
+							<button type="submit" class="btn btn-primary uploadBtn">등록하기
+								</button>
+						</div>
+					</div>
+
+				</div>
+			</div> 
+			
+	
+                    
+            <!--         <div class="col-md-3">
                         <h2>기부신청<br>진행상황</h2>
                     </div>
                     <div class="col-md-9">
@@ -70,10 +111,77 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                             </div>
                           
                         </div>
-                    </div>
-                </div>
+                    </div> -->
+              
+<script>
+		$(document).ready(function() {
+			// 모달이 표시될 때 이벤트 처리
+			$('#myModal').on('show.bs.modal', function(e) {
+			
+				/* document.getElementById('file-image').addEventListener('change', function (event) {
+					var image = document.getElementById('imagePreview');
+					var file = event.target.files[0];
+					var reader = new FileReader();
+
+					reader.onloadend = function () {
+						image.src = reader.result;
+					}
+
+					if (file) {
+						reader.readAsDataURL(file);
+					} else {
+						image.src = "";
+					}
+				}); */
 
 
+				$('.uploadBtn').click(function () {
+					
+					/* $('input[name=volDate]').prop("min",new Date().toISOString().substring(0, 10));
+					//모집종료기간 제한(봉사일시보다 최소 하루전)
+					let minDate = new Date();
+					let maxDate = document.getElementById('volDate').value;
+					maxDate.setDate(maxDate.getDate() - 1);
+					let endDate = maxDate.toISOString().substring(0, 10);
+
+					$('input[name=expireDate]').prop("min", minDate);
+					$('input[name=expireDate]').prop("max", endDate);
+					 */
+					var formData = new FormData(); //FormData 객체 생성
+				
+					
+					formData.append("title", $("input[name=title]").val());
+    				formData.append("content", $("textarea[name=content]").val());
+				    formData.append("location", $("input[name=location]").val());
+				    formData.append("cap", $("input[name=cap]").val());
+				    formData.append("volDate", $("input[name=volDate]").val());
+				    formData.append("startDate", $("input[name=startDate]").val());
+				    formData.append("expireDate", $("input[name=expireDate]").val());
+				
+
+					//jQuery.ajax
+					$.ajax({
+						url: '/InvolJoin',
+						type: 'POST',
+						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+						data: formData,
+						success: function (result) {
+							console.log(result)
+							alert('성공!')
+
+						},
+						error: function (reject) {
+							alert('실패!')
+							console.log(reject);
+						}
+					});
+				});
+			
+			});
+		});
+                    
+</script>
 
 </section>
 </body>

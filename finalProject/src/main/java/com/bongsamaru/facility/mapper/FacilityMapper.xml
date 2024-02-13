@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- 
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
@@ -15,7 +14,7 @@
 					FAC_ZIP2,
 					FAC_ZIP,
 					FAC_TYPE
-					FROM FACILITY
+    FROM FACILITY
 	<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
         <if test="facZip2 != null and facZip2 !=''">
             AND 	FAC_ZIP2=#{facZip2}
@@ -25,14 +24,7 @@
         </if>
     </where>
 
-    	<if test="limit != null">
-          LIMIT #{limit}
-        </if>
-        <if test="offset != null">
-          OFFSET #{offset}
-        </if>
-    
-    
+
 
 </select>
 
@@ -49,10 +41,20 @@
  		FAC_INTRO,
  		REP_NAME,
  		REP_PHONE,
-		(Select Sum(T1.Don_Amt) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donaitonAmt,
-		(Select Count(Distinct(T1.Mem_Id)) From Don_Ledger T1 Left Join Donation T2 On T1.Don_Id= T2.Don_Id Where T2.Fac_Id=#{facId}) As donors
-		From Facility Where Fac_Id=#{facId}
+		(Select Sum(T1.Don_Amt) 
+		   From Don_Ledger T1 
+		   Left Join Donation T2 
+		     On T1.Don_Id= T2.Don_Id 
+		  Where T2.Fac_Id=#{facId})          As donaitonAmt,
+		(Select Count(Distinct(T1.Mem_Id)) 
+		   From Don_Ledger T1 
+		   Left Join Donation T2 
+		     On T1.Don_Id= T2.Don_Id 
+		  Where T2.Fac_Id=#{facId})          As donors
+	From Facility 
+   Where Fac_Id=#{facId}
 </select>
+
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">
 	SELECT D1.DON_ID                       		  AS donId,           
@@ -69,6 +71,7 @@
 	 WHERE D1.REC_STAT ='0' 
 	   AND D1.DON_REG_APP='1'
 	   AND D1.FAC_ID=#{facId}
+	   
 	 GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
 </select>
 
@@ -84,9 +87,11 @@
 			
 	  FROM  DONATION D1 
 	  LEFT  JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+	  
 	 WHERE  D1.REC_STAT ='1' 
 	   AND  D1.DON_REG_APP='1' 
 	   AND  D1.FAC_ID=#{facId}
+	   
 	 GROUP  BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
 </select>
 
@@ -107,21 +112,81 @@ SELECT  T1.VOL_ACT_ID,
 
 <!-- MyPage쪽 -->
 <!-- dona정보 -->
-<select id="getDonaInfo" resultType="DonaVO">
-   SELECT D.TITLE,
+<select id="getDonaList" resultType="DonaVO">
+   SELECT D.TITLE,  
   		  D.REC_PERIOD, 
   		  D.END_PERIOD, 
   		  D.GOAL_AMT,
   		  D.DON_REG_APP, 
-  		  NVL(SUM(CASE WHEN DL.PAY_STAT = 0 THEN DL.DON_AMT ELSE 0 END), 0)        AS TARGETOK,
+  		  NVL(SUM(CASE WHEN DL.PAY_STAT ='g01' THEN DL.DON_AMT ELSE 0 END), 0)     AS TARGETOK,
   		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+     WHERE FAC_ID=#{facId} 
  GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
 
 </select>
 <!-- volunteer정보 -->
+<insert id="InsertFacVol" parameterType="VolActVO">
+ INSERT INTO VOL_ACT 
+                    (VOL_ACT_ID,
+                     FAC_ID,
+                     CATEGORY,
+                     TITLE,
+                     CONTENT,
+                     LOCATION,
+                     CAP,
+                     VOL_DATE,
+                     START_DATE,
+                     EXPIRE_DATE)
+             VALUES (VOLACT_SEQ.nextval,
+             		 #{facId},
+             		 'i06',
+             		 #{title},
+             		 #{content},
+                     #{location},
+                     #{cap},
+                     #{volDate},
+                     #{startDate},
+                     #{expireDate})
 
+</insert>
+<select id="getVolunteerJoinList" resultType="VolActVO">
+   SELECT  FAC_ID, 
+   		   CATEGORY,
+   		   TITLE, 
+   		   CONTENT, 
+   		   LOCATION, 
+   		   CAP, 
+   		   VOL_DATE 
+     FROM  VOL_ACT
+    WHERE  FAC_ID=#{facId}
+</select>
+
+<insert id="volAppList" parameterType="VolMemVO">
+INSERT INTO VOL_ACT_MEM 
+					   (VOL_ACT_MEM_ID, 
+					    VOL_ACT_ID, 
+					    MEM_ID)
+			     VALUES(vol_act_mem_seq.nextval,
+			            #{volActId},
+			            #{memId})
+</insert>
+
+<update id= "volAppUpdate" parameterType="VolMemVO">
+UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
+</update>
+
+<select id="getVolunFinishList" resultType="VolMemVO">
+ 	SELECT FAC_ID, 
+ 		   APP_CODE, 
+ 		   APP_DATE, 
+ 		   APP_REASON, 
+ 		   MEM_ID 
+      FROM VOL_MEM WHERE VOL_ACT_ID=#{volActId}
+</select>
+
+<!-- 시설봉사완료후 참여자 확인해주면 마음온도 변화 -->
 
 
 </mapper>
