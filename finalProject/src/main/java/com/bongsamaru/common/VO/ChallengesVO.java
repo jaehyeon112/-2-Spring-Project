@@ -31,11 +31,16 @@ public class ChallengesVO {
 
 	  private FilesVO file;
 		/*
-		 * private int fileId; private String filePath; private int fileOrder;
+		 * private int fileId;
+		 *  private String filePath; 
+		 *  private int fileOrder;
 		 * 
-		 * @DateTimeFormat(pattern="yyyy-MM-dd") private Date uploadDate; private String
-		 * fileName; private String extension; private int fileSize; private String
-		 * code; private Integer codeNo;
+		 * @DateTimeFormat(pattern="yyyy-MM-dd") private Date uploadDate; 
+		 * private String fileName;
+		 *  private String extension; 
+		 *  private int fileSize; 
+		 *  private Stringcode; 
+		 *  private Integer codeNo;
 		 */
 
 }

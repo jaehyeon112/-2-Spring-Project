@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.challenges.mapper.ChallengeMapper;
 import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.file.service.FilesVO;
 @Service
 public class ChallengesServiceImpl implements ChallengesService{
 	
@@ -14,8 +15,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	ChallengeMapper challengeMapper;
 	
 	@Override
-	public List<ChallengesVO> getChallengeList() {
-		return challengeMapper.getChallengeList();
+	public List<ChallengesVO> getChallengeList(ChallengesVO challengesVO) {
+		return challengeMapper.getChallengeList( challengesVO);
 	}
 	
 	@Override
@@ -24,8 +25,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	}
 
 	@Override
-	public List<ChallengesVO> getFileList(Integer codeNo, String code, Integer chalId, Integer chalDetId) {
-		return challengeMapper.getFileList(codeNo, code,chalId, chalDetId);
+	public List<FilesVO> getFileList(Integer codeNo, String code) {
+		return challengeMapper.getFileList(codeNo, code);
 	}
 
 	@Override
