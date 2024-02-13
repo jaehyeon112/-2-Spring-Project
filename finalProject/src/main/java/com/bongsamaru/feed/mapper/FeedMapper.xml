@@ -6,10 +6,54 @@
  
 	<!-- 상대방 피드 조회 -->
  	<select id="getFeedList" resultType="FeedVO">
-		SELECT DISTINCT b.mem_id, b.mem_nick, temp_change, c.file_path as mem_profile
-		FROM HEART A LEFT JOIN MEMBER B LEFT JOIN files C 
-		ON b.mem_id = c.code_user
-		ON A.MEM_ID = B.MEM_ID
-		WHERE B.MEM_ID = #{memId}
+        SELECT DISTINCT b.mem_id, b.mem_nick, sum(a.temp_change) as temp_change, c.file_path as mem_profile
+        FROM HEART A 
+        LEFT JOIN MEMBER B ON A.MEM_ID = B.MEM_ID
+        LEFT JOIN files C ON b.mem_id = c.code_user AND c.code = 'p01'
+        WHERE B.MEM_ID = #{memId}
+        GROUP BY b.mem_id, b.mem_nick, c.file_path
  	</select>
+ 	<!-- 피드 첫번째들 불러오기 -->
+ 	<select id="getFeedFirstList" resultType="FeedVO">
+        SELECT  a.board_id, a.title, b.file_path,c.board_id as likes
+		FROM BOARD a LEFT JOIN FILES b
+		ON a.board_id = b.code_no
+        LEFT JOIN likes c
+        ON a.board_id = c.board_id
+		WHERE a.mem_id = #{memId}
+		AND a.category = 'b04'
+		AND b.file_order = 1
+		ORDER BY a.WRITE_DATE DESC
+ 	</select>
+ 	<!-- 회원별 관심사 조회 -->
+	<select id="getInterestList" resultType="InterestVO">
+             SELECT DISTINCT select_sub(interest_code) as interest_code
+             FROM interest
+             WHERE mem_id = #{memId}
+             ORDER BY interest_code
+	</select>
+	<!-- 좋아요 여부확인 -->
+	<select id="getLike" resultType="LikeVO">
+             SELECT mem_id, board_id
+             FROM likes
+             WHERE mem_id = #{memId}
+             AND board_id = #{boardId}
+	</select>
+ 	<insert id="LikeInsert" parameterType="LikeVO">
+		INSERT INTO likes(
+			like_id,
+			mem_id,
+			board_id,
+			created_at)
+		VALUES(likes_SEQ.NEXTVAL
+				,#{memId}
+				,#{boardId}
+				,sysdate)
+	</insert>
+	<!-- 좋아요 되있으면 삭제 -->
+	<delete id="DeleteLike" parameterType="Integer">
+		DELETE
+		FROM likes
+		WHERE board_id = #{boardId}
+	</delete>
  </mapper>

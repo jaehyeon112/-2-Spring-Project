@@ -29,10 +29,10 @@
 			       acct_num,
 			       bank_name,
 			       mem_stat
-			 FROM  member a right join files b
+			 FROM  member a LEFT JOIN files b
 			 ON    a.mem_id = b.code_user
-			 WHERE a.mem_id = #{memId}
 			 AND b.code = 'p01'
+			 WHERE a.mem_id = #{memId}
 	</select>
 	<!-- 기부 내역 조회 -->
 	<select id="getGibuList" resultType="DonledgerVO">

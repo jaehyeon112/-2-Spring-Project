@@ -5,27 +5,75 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
+<style scoped="scoped">
+.feedList {
+	margin : 0 auto;
+	width: 800px;
+	text-align : center;
+	color: black;
+}
+.mainhead{
+	margin-bottom : 50px;
+}
+.image-container {
+	display: flex;
+	justify-content: space-between;
+}
+.circle {
+  display: inline-block;
+  width: 100px;
+  border: 1px solid #000;
+  background-color: #f2f2f2;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
 </style>
 </head>
 <body>
 	<section layout:fragment="content">
-		<th:block th:each="item : ${list}">
-		<div>
-			<div class="contenttext" id="temperature" title="">
-				<div style="font-size:14px; font-weight: bold;">[[${item.tempChange}]]ºC
-					<img alt="마음 온도" src="/userresources/image/banner/heart.jpg" style="width:30px; height: 30px;">
+		<div class="container">
+			<th:block th:each="item : ${list}">
+			<div class="mainhead">
+				<div class="contenttext" id="temperature" title="">
+					<div style="font-size:14px; font-weight: bold;">[[${item.tempChange}]]ºC
+						<img alt="마음 온도" src="/userresources/image/banner/heart.jpg" style="width:30px; height: 30px;">
+					</div>
+				
 				</div>
-			
+				<div class="contenttext">
+						<span class="profile_thumb">
+						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
+						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+						</span>
+				</div>
+				<p style="color: black; font-size: 25px; font-weight: bold;" th:text="${item.memNick + '님'}"></p>
+				<th:block th:each="interest, iterStat : ${InterestList}">
+				  <span th:text="${interest.interestCode}" class="circle"></span>
+				  <span style="display: inline-block; width: 10px;"></span>
+				</th:block>
 			</div>
-			<div class="contenttext">
-					<span class="profile_thumb">
-					<img id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 사진" class="img_thumb" th:src="@{${item.memProfile}}">
-					<span th:text="${item.memNick + '님'}"></span>
-					</span>
+			</th:block>
+			<div class="feedList">
+				<h4>피드</h4>
+				<hr>
+				<div class="image-container" style="display: flex; flex-wrap: wrap;">
+				  <th:block th:each="list, iter : ${feedList}">
+				    <div style="display: flex; flex-direction: column; width: calc(33.33% - 10px); margin-right: 10px; margin-bottom: 10px;">
+				      <span>
+				        <img style="width: 200px; height: 200px;" alt="" class="img_thumb" th:src="@{${list.filePath}}">
+				      </span>
+				      <p th:text="${list.title}"></p>
+				    </div>
+				  </th:block>
+				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
+				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
+				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
+				</div>
+				<h5 th:if="${feedList.size == 0}" style="margin-top: 250px; color: gray;">아직 작성 된 피드가 없어요. 🌱</h5>
 			</div>
 		</div>
-		</th:block>
 	<script>
 $("#temperature").attr( 'title', 
 `마음온도란 무엇인가요?
