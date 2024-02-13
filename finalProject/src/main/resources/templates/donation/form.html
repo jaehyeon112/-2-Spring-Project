@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
+  <!-- jQuery 라이브러리 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- jQuery Form Plugin 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
   
 </head>
 <body>
@@ -17,7 +22,7 @@
 
 
 
-<form name="donaForm" enctype="multipart/form-data">
+<form name="donaForm" >
   <fieldset>
     <legend> Donation Regit Form </legend>
 
@@ -25,8 +30,8 @@
     
     <div class="form-group">
       <label for="categories" class="form-label mt-4"><span style="color:red">*</span> 유형</label>
-      <select class="form-select" id="category" >
-        <option th:each="category : ${categoryList}" th:value="${category.subCodeId}" th:text="${category.subCodeName}">1</option>
+      <select class="form-select" id="category" name="category">
+        <option th:each="category : ${categoryList}" th:value="${category.subCodeId}" th:text="${category.subCodeName}"></option>
       </select>
     </div>
     
@@ -38,28 +43,15 @@
     
     <div class="form-group">
       <label for="recPeriod" class="form-label mt-4"><span style="color:red">*</span>기부모금기간 (DATE)</label>
-      <input type="date" name="recPeriod"class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" name="endPeriod" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
+      <input type="date" name="recPeriod" th:datetime="${#dates.format(recPeriod, 'yyyy-MM-dd')}" class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
+      <input type="date" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
     </div>
 
     <div class="form-group">
       <label for="formFile" class="form-label mt-4"> <span style="color:red">*</span>이미지 첨부파일 </label>
       <input name="file" class="form-control" type="file" id="formFile" >
     </div>
-    
-    
-				    <!-- 영희꺼 
-				    	<div class="form-group">
-							<div class="subheading">
-								<em class="highlight"></em>파일첨부
-							</div>
-							<input class="form-control" id="imageInput"
-								name="uploadFiles" type="file" multiple><br>
-								<img id="imagePreview" src="/donation/board/img/avatar.jpg"
-							style="width: 100px; height: 100px;">
-						</div>
-				   end 영희꺼 -->
-    
+
     
     
     <div class="form-group">
@@ -119,7 +111,7 @@
     <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
     <div id="formFile2Container" class="mb-3">
         <div class="input-group">
-            <input class="form-control" type="file" id="formFile2">
+            <input class="form-control" type="file" id="formFile2" name="file">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
         </div>
     </div>
@@ -152,102 +144,74 @@
 
 
 <script th:inline="javascript">
-	function validation(){
-		
-		//	let requiredFields = [  'category', 'recPeriod', 'goalAmt',  'usePlan', 'projTarget', 'expEffect', 'intro' ];
-		//	for(let fields of requiredFields){
-		//		let values = document.getElementById(fields).value.trim();
-		//		if(values == ''){
-		//			alert('필수 항목을 모두 입력해주세요.');
-		//			return false; //폼 제출 안되도록! 
-		//			}
-		//			}//for
-					
-			let checkBoxChecked = document.getElementById("flexCheckDefault").checked;
-			let checkBoxChecked2 = document.getElementById("flexCheckDefault2").checked;
-			
-			
-			//체크여부
-			if(!checkBoxChecked || !checkBoxChecked2){
-				alert("모두 동의해주세요.")
-				}
-			
-		
-				
-		}//func
-	
 
 
-	// 폼제출하기
-	function submitForm(){
-			
-		validation();
 
-		
-		var userId = [[${#authentication.name}]];
-		console.log("userId");
-		console.log(userId);
-		
-		let fdata = {
-				facId : userId,
-				category : document.querySelector('#category').value,
-				recPeriod : document.querySelector('#recPeriod').value,
-				endPeriod : document.querySelector('#endPeriod').value,
-				goalAmt : document.querySelector('#goalAmt').value,
-				usePlan : document.querySelector('#usePlan').value,
-				usePlanAmt : document.querySelector('#usePlanAmt').value,
-				projTarget : document.querySelector('#projTarget').value,
-				expEffect :document.querySelector('#expEffect').value,
-				intro :document.querySelector('#intro').value,
-				introTitle :document.querySelector('#introTitle').value,
-				link :document.querySelector('#link').value,
-				expEffect :document.querySelector('#expEffect').value,
-		}
-		console.log(fdata);
-		
-		let formData = new FormData();
-		formData.append("DonaVO", JSON.stringify(fdata));
-		console.log(formData);
-		
-		var inputFile = $("input[type='file']");
-		var files = inputFile[0].files;
-		for (var i = 0; i < files.length; i++) {
-		formData.append("uploadfiles", files[i]);
-		}
-		
-		
-		
-		$.ajax({
-			type : 'POST',
-			url : "/regitForm",
-			processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-			contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.'
-			//contentType : 'application/json',
-			data : formData,
-			success :function (result) {
-						console.log("ajax 안에 result " + result);
-						
-						alert("등록성공!");
-						location.href="donaMain"
-						return;
-					},
-			
-			error : function(error){
-				console.error('등록 폼 : 등록 실패! ')
-			}
+function submitForm() {
+	
+	console.log("버튼눌렀다!");
+    // 기본 제출 동작 방지
+    event.preventDefault();
 
-	    //document.forms[0].submit(); // 폼 제출
-		    
-			})
-		}// end Submit Form
-  
-		
-	
-		
-	
-	
-	
-	
+    // FormData 생성
+    let formData = new FormData(document.querySelector('form[name="donaForm"]'));
+
+    var facId = [[${#authentication.name}]];
+    console.log("facId는 ? :  " + facId);
+
+    
+    formData.append('facId', facId);
+    
+
+	 //파일 추가
+	let fileInputs = document.querySelectorAll('input[type="file"]');
+	    fileInputs.forEach(function(fileInput) {
+	        for (let i = 0; i < fileInput.files.length; i++) {
+	            formData.append('uploadfiles', fileInput.files[i]);
+	        }
+	    });
+
+    
+    console.log("formData는? : " + formData);
+
+ // FormData 
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+ 
+
+
+ // input 입력한거
+    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+        console.log(input.name + ': ' + input.value);
+    });
+ 
+
+    // FormData 서버전송 
+
+    $.ajax({
+        type: 'POST',
+        url: 'regitForm',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            
+            console.log("ajax 안에 success response " + response);
+
+            alert("등록성공!");
+            location.href = "donaMain";
+            return;
+        },
+        error: function(error) {
+           
+            console.error(error);
+        }
+    });
+}
+
+
 	//동적 
 	let dynamicFieldsCount = 1;
 	let articleContainerCount = 1;
@@ -308,36 +272,36 @@
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="usePlan${count}" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" id="usePlanAmt${count}" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlan" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlanAmt" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "articleContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="introTitle${count}" placeholder="제목" autocomplete="off">` +
+                `<input type="text" class="form-control" name="introTitles[${count}]" placeholder="제목" autocomplete="off">` +
                 `</div>` +
                 `<div class="input-group">` +
-                `<textarea class="form-control" id="intro${count}" rows="3"></textarea>` +
+                `<textarea class="form-control" name="intros[${count}]" rows="3"></textarea>` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "relatedLinkContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="link${count}" placeholder="null 가능" autocomplete="off">` +
+                `<input type="text" class="form-control" name="links[${count}]" placeholder="null 가능" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input class="form-control" type="file" id="formFile2${count}">` +
+                `<input class="form-control" type="file" name="formFiles[${count}]" id="formFile2${count}">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         }
 
+
         container.appendChild(newFields);
     }
-
 
 
     function removeInputs(button, type) {
@@ -346,9 +310,7 @@
         container.parentNode.removeChild(container);
     }
     
-    
-    
-    
+   
 </script>
 
 

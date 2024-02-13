@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +10,20 @@
     <!-- 다른 필요한 CSS 파일 여기에 추가 -->
 </head>
 <body>
-<form>
+ <section layout:fragment="content" >
+
+<form name="reviewForm">
   <fieldset>
     <legend> Donation Review Form </legend>
 
     <div class="form-group">
       <label for="formFile" class="form-label mt-4">영수증 첨부</label>
-      <input class="form-control" type="file" id="formFile">
+      <input class="form-control" type="file" name="uploadfiles" id="formFile">
     </div>
     
     <div class="form-group">
-      <label for="goalAmt" class="form-label mt-4">총 모금액</label>
-      <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
+      <label for="execAmt" class="form-label mt-4">총 모금액</label>
+      <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off">
     </div>
     
     <div class="form-group">
@@ -27,18 +31,26 @@
       <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
     </div>
     
+    
     <div class="form-group">
-      <label for="sPeriod" class="form-label mt-4"> 사업집행기간 (DATE)</label>
-      <input type="date" class="form-control" id="sPeriod" placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" class="form-control" id="ePeriod" placeholder="기부모금종료기간 " autocomplete="off">
+      <label for="period" class="form-label mt-4"> 사업집행기간 (DATE)</label>
+      <input type="date" class="form-control" name="startPeriod" th:datetime="${#dates.format(startPeriod, 'yyyy-MM-dd')}" id="startPeriod" placeholder="기부모금시작 " autocomplete="off">
+      <input type="date" class="form-control" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" id="endPeriod" placeholder="기부모금종료기간 " autocomplete="off">
     </div>
 
+
     <div class="form-group">
-      <label for="detailBiz" class="form-label mt-4">기부금 사업내역</label>
+      <label for="bizCost" class="form-label mt-4">총사업비</label>
+      <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off">
+    </div>
+    
+    
+    <div class="form-group">
+      <label for="usePlan" class="form-label mt-4">기부금 사업내역(bizcontent, bizAmt)</label>
       <div id = "dynamicFields" class="mb-3">
       	<div class="input-group">
-	      <input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off"> 
-	      <input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">
+	      <input type="text" class="form-control" name="bizContent" id="usePlan" placeholder="구체적사업내용" autocomplete="off"> 
+	      <input type="text" class="form-control" name="bizAmt" placeholder="구체적사업비" autocomplete="off">
 	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
@@ -46,15 +58,15 @@
     
     
     <div class="form-group">
-	  <label for="article" class="form-label mt-4">후기글</label>
+	  <label for="review" class="form-label mt-4">후기글</label>
 	    <div id="articleContainer" class="mb-3">
 	        <div class="input-group">
-	        	<input type="text" class="form-control" id="articleTitle" placeholder="제목" autocomplete="off">
+	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off">
 	        </div>
 	        <div class="input-group">
-	            <textarea class="form-control" id="article" rows="3"></textarea>
+	            <textarea class="form-control" name="content" id="content" rows="3"></textarea>
 	        </div>
-	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs('articleContainer')">+</button>
+	        
 	    </div>
 	</div>
 	
@@ -63,7 +75,7 @@
 	    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
 	    <div id="formFile2Container" class="mb-3">
 	        <div class="input-group">
-	            <input class="form-control" type="file" id="formFile2">
+	            <input class="form-control" type="file" name="uploadfiles" id="formFile2">
 	            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
 	        </div>
 	    </div>
@@ -87,69 +99,114 @@
     </fieldset>
 
     
-    <button type="submit" class="btn btn-primary">등록하기 </button>
+    <button type="button" class="btn btn-primary" onclick="submitForm()">등록하기 </button>
     
   </fieldset>
 </form>
 
 
-<script>
-	let dynamicFieldsCount = 1;
-	let articleContainerCount = 1;
-	let relatedLinkContainerCount = 1;
-	let formFile2ContainerCount = 1;
-	let count;
+<script th:inline="javascript">
+
+//폼 제출하기
+	function submitForm(){
 	
+	console.log('제출하기 클릭!');
+    event.preventDefault();
+    
+    
+    let formData = new FormData(document.querySelector('form[name="reviewForm"]'));
+    							
+  
+	//let donId = urlParams.get('donId');  지금은 페이지 엇ㅂ으니까 일단 나중에! 
+	let donId = 1; //임시방편임
+	formData.append('donId', donId);
+	
+	let fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(function(fileInput) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append('uploadfiles', fileInput.files[i]);
+        }
+    });
+	
+    
+    
+		    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+		        console.log(input.name + ': ' + input.value);
+		    });
+    
+		    
+    $.ajax({
+    	type: 'POST',
+        url: 'reviewForm',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            
+            console.log("ajax 안에 success response " + response);
+
+            alert("등록성공!");
+            location.href = "my/mypage";
+            return;
+        },
+        error: function(error) {
+           
+            console.error(error);
+        }
+    })
+    
+	} //end
+	
+
+
+
+
+//동적 폼 처리하기
+    let dynamicFieldsCount = 1;
+    let formFile2ContainerCount = 1;
+    const maxCount = 3;
+
     function addInputs(type) {
-        
+
         let container = document.getElementById(type);
         if (!container) {
             console.error("찾을 수 없는 CONTAINER: " + type);
             return;
         }
 
+        let count;
+        
+
         switch (type) {
         case "dynamicFields":
-            count = dynamicFieldsCount++;
-            break;
-        case "articleContainer":
-            count = articleContainerCount++;
-            break;
-        case "relatedLinkContainer":
-            count = relatedLinkContainerCount++;
+            count = dynamicFieldsCount;
+            if (count >= maxCount) {
+                alert("더 이상 추가할 수 없습니다.");
+                return;
+            }
+            dynamicFieldsCount++;
             break;
         case "formFile2Container":
-            count = formFile2ContainerCount++;
+            count = formFile2ContainerCount;
+            if (count >= maxCount) {
+                alert("더 이상 추가할 수 없습니다.");
+                return;
+            }
+            formFile2ContainerCount++;
             break;
         default:
             console.error("Invalid type: " + type);
             return;
     }
 
-        
         let newFields = document.createElement("div");
         newFields.className = "mb-3";
 
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="detailBiz${count}" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" id="detailAmt${count}" placeholder="구체적사업비" autocomplete="off">` +
-                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
-                `</div>`;
-        } else if (type === "articleContainer") {
-            newFields.innerHTML =
-                `<div class="input-group">` +
-                `<input type="text" class="form-control" id="articleTitle${count}" placeholder="제목" autocomplete="off">` +
-                `</div>` +
-                `<div class="input-group">` +
-                `<textarea class="form-control" id="article${count}" rows="3"></textarea>` +
-                `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
-                `</div>`;
-        } else if (type === "relatedLinkContainer") {
-            newFields.innerHTML =
-                `<div class="input-group">` +
-                `<input type="text" class="form-control" id="relatedLink${count}" placeholder="null 가능" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].bizContent" id="detailBiz" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control"  name="usePlans[${count}].bizCost" id="detailAmt" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {
@@ -169,5 +226,5 @@
 </script>
 
 
-
+</section>
 </body>
