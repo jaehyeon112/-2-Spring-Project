@@ -146,6 +146,10 @@
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
 	</select>
+	<select id="findBoardNo" resultType="int">
+		select FREEBOARD_SEQ.NEXTVAL 
+		from dual
+	</select>
 	<insert id="insertBoard" parameterType="BoardVO">
 		insert into board(
 			board_id,

@@ -229,4 +229,10 @@ public class MeetingController {
 		return service.insertBoard(vo);
 	}
 	
+	@GetMapping("findNo")
+	@ResponseBody
+	public int findBoardNo() {
+		return service.findBoardNo();
+	}
+	
 }

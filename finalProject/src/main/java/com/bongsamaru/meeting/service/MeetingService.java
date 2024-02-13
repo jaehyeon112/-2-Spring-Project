@@ -22,4 +22,5 @@ public interface MeetingService {
 	public int findMember(Integer volId,String memId);
 	public String findFile(String code,Integer codeNo);
 	public int insertBoard(BoardVO boardVO);
+	public int findBoardNo();
 }

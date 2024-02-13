@@ -75,12 +75,24 @@ hr{
 							placeholder : "내용을 입력하세요",
 							hooks: {
 						    	addImageBlobHook: (blob, callback) => {
+						    		console.log(blob)
 						    		let url = "http://localhost:8585"
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p13")
-									formData.append("codeNo", 2);
-						        	console.log(formData)
+						        	$.ajax({
+						           		url: '/findBoardNo',
+						           		type: 'GET',
+						           		processData: false,
+						           		contentType: false,
+						           		success: function(data) {
+						           			formData.append("codeNo", data);
+						           		},
+						           		error: function(e) {
+						           			console.log('실패');
+						           		}
+						           	});
+						        	
 						   			$.ajax({
 						           		url: '/uploadsAjax',
 						           		type: 'POST',

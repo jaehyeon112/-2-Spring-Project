@@ -85,4 +85,9 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.insertBoard(boardVO);
 	}
 
+	@Override
+	public int findBoardNo() {
+		return mapper.findBoardNo();
+	}
+
 }
