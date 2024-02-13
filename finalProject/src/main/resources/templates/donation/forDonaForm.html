@@ -141,16 +141,15 @@
 		
 		
 		
-		 var fId = [[${#authentication.name}]];
-		 let facId = parseInt(fId);
-		 console.log(typeof facId);
-		 console.log(typeof fId);
+		let facId = [[${#authentication.name}]];
+		let cno = 300; // codeno 시퀀스
+		
 
 		 
 		    console.log("facId는 ? :  " + facId);
-		    console.log(fId);
-		    
-		    formData.append('codeNo', facId);
+		   
+		    formData.append("codeUser", facId);
+		    formData.append('codeNo', cno);
 		    formData.append("code", "p07")
 		
 		    
@@ -158,7 +157,6 @@
 		    console.log(fileInputs);
 		    
 		    for (var i = 0; i < fileInputs.length; i++) {
-		    	
                 formData.append("uploadFiles", fileInputs[i]); 
              }
 

@@ -30,8 +30,8 @@ public class FileService {
         List<String> imageList = new ArrayList<>();
 
         for(MultipartFile uploadFile : uploadFiles) {
-            if (!isImageFile(uploadFile)) {
-                System.err.println("this file is not image type");
+            if (!isAllowedFileType(uploadFile)) {
+                System.err.println("this file is not type");
                 return null;
             }
 
@@ -43,7 +43,7 @@ public class FileService {
     }
 
     private boolean isImageFile(MultipartFile file) {
-        return file.getContentType() != null && file.getContentType().startsWith("image");
+        return file.getContentType() != null && file.getContentType().startsWith("image") && file.getContentType().startsWith("zip");
     }
 
     private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user) throws IOException {
@@ -148,13 +148,13 @@ public class FileService {
         return folderPath.replace(uploadPath + File.separator, ""); // DB에 저장될 경로 반환
     }
     private boolean isAllowedFileType(MultipartFile file) {
-        String allowedFileTypes = "image,video,audio,application/pdf"; // 허용된 파일 유형
+        String allowedFileTypes = "image,video,audio,application/pdf,application/zip"; // 허용된 파일 유형
         return file.getContentType() != null && allowedFileTypes.contains(file.getContentType().split("/")[0]);
     }
     
     //파일 삭제
     public boolean deleteFile(String filePath) {
-        File file = new File("c:\\\\upload" + filePath);	//넘어오는 값이 이미 upload를 붙이고 넘어오기 때문에 경로는 그냥 이대로 저장해도 될까..?
+        File file = new File("c:\\\\upload" + filePath);   //넘어오는 값이 이미 upload를 붙이고 넘어오기 때문에 경로는 그냥 이대로 저장해도 될까..?
         
         if (file.exists()) { // 파일이 존재하는지 확인
             return file.delete(); // 파일이 존재하면 삭제하고 결과를 반환
@@ -163,5 +163,6 @@ public class FileService {
         return false; // 파일이 존재하지 않으면 false 반환
     }
     
+    
+    
 }
-
