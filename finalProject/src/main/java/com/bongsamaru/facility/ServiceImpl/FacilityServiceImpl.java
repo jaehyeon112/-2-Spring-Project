@@ -46,14 +46,15 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	@Override
-	public List<DonaVO> getDonaList() {
-		return mapper.getDonaList();
+	public List<DonaVO> getDonaList(String facId) {
+		return mapper.getDonaList(facId);
 	}
 	
 	
 	@Override
 	public int InsertFacVol(VolActVO volActVO) {
 		int result = mapper.InsertFacVol(volActVO);
+		System.out.println(volActVO);
 		if(result ==1) {
 			return volActVO.getVolActId();
 			

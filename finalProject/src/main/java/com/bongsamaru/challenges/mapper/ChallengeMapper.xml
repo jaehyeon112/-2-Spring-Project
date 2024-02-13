@@ -7,6 +7,7 @@
 <!-- 챌린지리스트 -->
 <resultMap id="challengeWithFileResultMap" type="ChallengesVO">
     <id property="chalId" column="CHAL_ID"/>
+    <result property="chalDetId" column="CHAL_DET_ID"/>
     <result property="memId" column="MEM_ID"/>
     <result property="title" column="TITLE"/>
     <result property="content" column="CONTENT"/>
@@ -32,7 +33,7 @@ SELECT  C.CHAL_ID,
 		F.FILE_PATH, 
 		F.FILE_ORDER, 
 		F.CODE_NO,
-        (SELECT F.FILE_PATH FROM FILES F RIGHT JOIN CHALLENGE C ON C.MEM_ID = F.CODE_USER GROUP BY F.FILE_PATH) AS PROFIL,
+        (SELECT F.FILE_PATH FROM FILES F WHERE C.MEM_ID = F.CODE_USER AND F.CODE='p01')                         AS PROFIL,
         (SELECT COUNT(MEM_ID) FROM CHAL_DETAIL WHERE CHAL_ID=C.CHAL_ID)                                         AS PARTICIPANTS,
         (SELECT COUNT(MEM_ID) FROM CHAL_DETAIL)                                                                 AS ALLPARTICIPANTS
   FROM  CHALLENGE C 
@@ -43,8 +44,8 @@ SELECT  C.CHAL_ID,
  
   
 </select>
-<!-- 챌린지인포 -->
 
+<!-- 챌린지인포 -->
 <select id="getChallengeInfo" resultType="ChallengesVO">
 
 SELECT  CHAL_ID, 
@@ -61,67 +62,35 @@ SELECT  CHAL_ID,
 </select>
 
 <!--파일첨부 리스트-->
-<resultMap id="challengeWithFile" type="ChallengesVO">
-    <id property="chalDetId" column="CHAL_DET_ID"/>
-    <id property="chalId" column="CHAL_ID"/>
-    
-    <collection property="file" javaType="FilesVO" >
-        <result property="filePath" column="FILE_PATH"/>
-        <result property="fileOrder" column="FILE_ORDER"/>
-        <result property="codeNo" column="CODE_NO"/>
-        <result property="code" column="CODE"/>
-    </collection>
-</resultMap> 
 
-<select id="getFileList" resultMap="challengeWithFile">
-        
-<choose>
-        <when test="chalDetId != null">
-            SELECT F.FILE_PATH, 
-                   F.FILE_ORDER, 
-                   F.CODE,
-                   F.CODE_NO
+<select id="getFileList" resultType="FilesVO">
+
+            SELECT FILE_PATH, 
+                   FILE_ORDER, 
+                   CODE,
+                   CODE_NO
             FROM FILES F 
-            LEFT JOIN CHAL_DETAIL CD ON CD.CHAL_DET_ID = F.CODE_NO
-            WHERE F.CODE_NO = #{codeNo}
-              AND F.CODE = #{code}
-              AND CD.CHAL_DET_ID = #{chalDetId}
-        </when>
-        <otherwise>
-            SELECT F.FILE_PATH, 
-                   F.FILE_ORDER, 
-                   F.CODE,
-                   F.CODE_NO
-            FROM FILES F 
-            LEFT JOIN CHALLENGE C ON C.CHAL_ID = F.CODE_NO
-            WHERE F.CODE_NO = #{codeNo}
-              AND F.CODE = #{code}
-              AND C.CHAL_ID = #{chalId}
-        </otherwise>
-    </choose>
-        
-  
+           
+            WHERE CODE_NO = #{codeNo}
+              AND CODE = #{code}
+            
 </select>
 
 <!-- 한 챌린지 내 참여리스트  -->
-<select id="getChallengesList" resultType="ChallengesVO">
+<select id="getChallengesList" resultMap="challengeWithFileResultMap">
  	
 SELECT  C.CHAL_DET_ID,
 		C.CHAL_ID, 
 		C.MEM_ID,
 		C.CONTENT, 
 		C.PART_DATE, 
-		F.FILE_PATH, 
-		F.FILE_ORDER, 
-		F.FILE_NAME, 
-		F.EXTENSION, 
-		F.FILE_SIZE,  
-		F.CODE_NO 
+		F.FILE_PATH 
+		
    FROM CHAL_DETAIL C 
    LEFT JOIN FILES F ON CAST(C.CHAL_DET_ID AS VARCHAR2(100)) = F.CODE_NO
     AND F.CODE ='p04'
   WHERE C.CHAL_ID=#{chalId}
-   
+ 
   
 </select>
 
@@ -149,7 +118,7 @@ SELECT  C.CHAL_DET_ID,
 			 #{content},
 			 #{expImpact},
 			 #{actionReason},
-			 #{regDate},
+			 sysdate,
 			 #{partMethod1},
 			 #{partMethod2})
  
@@ -159,13 +128,11 @@ SELECT  C.CHAL_DET_ID,
 
 <!-- 한 챌린지  참여 등록-->
 <insert id="getChallengesInsert" parameterType="ChallengesVO">
-	<selectKey keyProperty="chalDetId" resultType="int"
-			order="BEFORE">
-			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHAL_DETAIL</selectKey> 
-		INSERT ALL 
-		
-		INTO CHAL_DETAIL
-			(CHAL_DET_ID,
+	<selectKey keyProperty="chalDetId" resultType="int"	order="BEFORE">
+			SELECT NVL(MAX(CHAL_DET_ID),0)+1 FROM CHAL_DETAIL
+	</selectKey> 
+		INSERT	INTO CHAL_DETAIL	(
+		     CHAL_DET_ID,
 			 CHAL_ID,
 			 CONTENT,                 
 			 PART_DATE,
@@ -176,8 +143,7 @@ SELECT  C.CHAL_DET_ID,
 			#{dContent},
 			sysdate,
 			#{memId})
- 
- SELECT * FROM DUAL		
+ 	
 </insert>
 
 

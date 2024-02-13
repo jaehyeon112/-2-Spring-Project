@@ -60,7 +60,7 @@
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
 										<div class="media post_item">
-											<img th:if="${list != null and !list.isEmpty()}" th:src="${list[0].file.filePath}" alt="post">
+											<img th:if="${session.FileList != null and !session.FileList.isEmpty()}"  th:src="${session.FileList[0].filePath}" alt="post">
 
 											<div class="media-body">
 												<h3>How to</h3>
