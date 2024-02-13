@@ -19,6 +19,18 @@
 		from volunteer
 		where VOL_ID = #{volId}
 	</select>
+	<!-- 파일 가져오기 -->
+	<select id="findFile" resultType="String">
+		select file_path 
+		from files 
+		where code=#{code} and code_no=#{codeNo}
+	</select>
+	<!-- 봉사활동게시판 -->
+	<select id="meetingVolActListCnt" resultType="int">
+		select count(*)
+		from vol_act
+		where vol_id = #{volId}
+	</select>
 	<select id="meetingVolActList" resultType="VolActVO">
 		select VOL_ACT_ID
 			,VOL_ID
@@ -32,14 +44,80 @@
 		where vol_id = #{volId}
 		order by vol_date
 	</select>
+	<select id="meetingVolActListPaging" resultType="VolActVO">
+		SELECT * 
+		from(
+			SELECT ROWNUM RN 
+			,A.* 
+		from(  
+        	select VOL_ACT_ID
+				,VOL_ID
+				,CATEGORY
+				,TITLE
+				,CONTENT
+				,LOCATION
+				,CAP
+				,VOL_DATE 
+			from vol_act
+			where vol_id = #{volId}
+			order by vol_date) A)
+        where RN BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 봉사후기게시판 -->
+	<select id="volActReviewListPaging" resultType="VolActVO">
+		SELECT * 
+		from(
+			SELECT ROWNUM RN 
+			,A.* 
+		from(  
+        	select VOL_ID
+			        ,VOL_ACT_ID
+			        ,TITLE
+			        ,CONTENT
+			        ,writer
+			        ,WRITE_DATE 
+			from vol_review
+			where vol_id = #{volId}
+			order by vol_act_id) A)
+        where RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="volActReviewList" resultType="VolActVO">
+       	select VOL_ID
+		        ,VOL_ACT_ID
+		        ,TITLE
+		        ,CONTENT
+		        ,writer
+		        ,WRITE_DATE 
+		from vol_review
+		where vol_id = #{volId}
+		order by vol_act_id
+	</select>
+	<select id="volActReviewListCnt" resultType="int">
+       	select count(*)
+		from vol_review
+		where vol_id = #{volId}
+	</select>
 	<select id="meetingMemList" resultType="VolMemVO">
 		select VOL_MEM_ID
 			,VOL_ID
 			,APP_DATE
 			,APP_REASON
-			,MEM_ID 
+			,MEM_ID
+			,(select file_path 
+			from files 
+			where code='p01' 
+			and code_user=vol_mem.mem_id) path
 		from vol_mem 
-		where app_code=1 and vol_id = #{volId}
+		where app_code=1
+		and vol_id = #{volId}
+		order by app_date
+	</select>
+	<select id="findMember" resultType="int">
+		select count(*) 
+		from vol_mem 
+		where app_code=1
+		and vol_id = #{volId}
+		and mem_id = #{memId}
 	</select>
 	<select id="MemVolActList" resultType="VolMemVO">
 		select m.vol_act_id
@@ -68,4 +146,19 @@
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
 	</select>
+	<insert id="insertBoard" parameterType="BoardVO">
+		insert into board(
+			board_id,
+			CATEGORY,
+			TITLE,
+			CONTENT,
+			MEM_ID,
+			DETAIL_CATE)
+		values(board_id.NEXTVAL
+				,#{category}
+				,#{title}
+				,#{content}
+				,#{memId}
+				,FREEBOARD_SEQ.NEXTVAL)
+	</insert>
 </mapper>

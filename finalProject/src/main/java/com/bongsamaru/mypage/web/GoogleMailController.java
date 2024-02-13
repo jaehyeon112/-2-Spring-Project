@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -170,7 +171,7 @@ public class GoogleMailController {
     		Transport.send(message);
     		
     	} catch (Exception e) {
-    		
+    		System.err.print("이메일 전송 중 에러 발생: {}");
     	}
     	return "admin/donationReceiptList";
     }

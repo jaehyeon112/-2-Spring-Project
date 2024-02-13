@@ -17,6 +17,9 @@
 .modal-content{
 	width : 60%;
 }
+#tableData{
+	margin-top : 50px;
+}
 </style>
 </head>
 <body>
@@ -29,8 +32,8 @@
 		<div class="container">
 		<h2>신고 관리</h2>
 		<div style="float:right;" class="cur">
-			<a style="color:black;font-size:14px" onclick="show1()">게시글 신고건 |</a>
-			<a style="color:black;font-size:14px" onclick="show2()"> 댓글 신고건</a>
+			<a style="color:black;font-size:14px" onclick="show1()">챌린지 신고건 |</a>
+			<a style="color:black;font-size:14px" onclick="show2()"> 모임 신고건</a>
 		</div>
 		<div id=tableData>
 			<div id="notice">
@@ -38,7 +41,7 @@
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th>신고글</th>
+						<th>챌린지 번호</th>
 						<th>신고자</th>
 						<th>신고날짜</th>
 						<th>신고사유</th>
@@ -55,6 +58,7 @@
 						 <td th:if="${report.repReason}=='s02'" >음란물입니다</td>
 						 <td th:if="${report.repReason}=='s03'" >불법정보를 포함하고 있습니다</td>
 						 <td th:if="${report.repReason}=='s04'" >혐오/차별적 표현입니다</td>
+						 <td th:if="${report.repReason}=='s05'" >주제와 상관이 없음</td>
 						 <td th:if="${report.reqCode}==0" class="cur"  onclick="openModal1()">처리하기</td>
 						 <td th:if="${report.reqCode}==1">처리완료</td>
 						 <td th:if="${report.reqCode}==2">반려된 신고건</td>

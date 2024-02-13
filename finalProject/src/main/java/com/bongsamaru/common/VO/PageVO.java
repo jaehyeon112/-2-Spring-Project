@@ -16,6 +16,7 @@ public class PageVO {
     private int totalPage;
     private int	currentPage;
     private int pageSize = 5; // 한페이지보여줄 버튼수
+    private Integer volId;
     
     private int startPage;
     private int endPage;
@@ -80,7 +81,6 @@ public class PageVO {
         this.cntPerPage = 10; // 1페이지에 10개씩 보여줍니다
         this.totalPage = (int) Math.ceil((double) this.total / this.cntPerPage); // 전체 페이지 수
         this.currentPage = (int) Math.ceil((double) start / this.cntPerPage); // 현재 페이지
-
         this.start = (this.currentPage - 1) * this.cntPerPage + 1;
         this.end = Math.min(this.start + this.cntPerPage - 1, this.total);  // 시작부터 페이지에 표시할 수 있는 최대 개수까지의 범위로 설정합니다.
         
@@ -96,9 +96,8 @@ public class PageVO {
         if (this.start > this.total) {
             this.start = this.total - (this.total % this.cntPerPage) + 1;
             this.end = this.total;
+            return;
         }
-        
-        
         // 시작페이지
         this.startPage = (this.currentPage - 1) / this.pageSize * pageSize + 1;
         System.out.println(this.startPage + "스타트");

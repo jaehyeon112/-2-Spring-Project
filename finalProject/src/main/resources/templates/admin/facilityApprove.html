@@ -14,7 +14,13 @@
 				 	<th:block th:each="fac : ${facilityList}" th:if="${fac.donApp}==0">
 						<tr>
 							<td th:text="${fac.facName}" class="facility" th:onclick="info2([[${fac.facId}]])">시설명</td>
-							<td th:text="${fac.facType}" >시설유형</td>
+							<td th:if="${fac.facType}=='f01'" >아동 및 청소년</td>
+							 <td th:if="${fac.facType}=='f02'" >장애인</td>
+							 <td th:if="${fac.facType}=='f03'" >문화,체육</td>
+							 <td th:if="${fac.facType}=='f04'" >캠페인</td>
+							 <td th:if="${fac.facType}=='f05'" >보건의료</td>
+							 <td th:if="${fac.facType}=='f06'" >환경정리</td>
+							 <td th:if="${fac.facType}=='f07'" >기타</td>
 							<td th:text="${fac.facEmail}" >이메일</td>
 							<td><a th:text="${fac.facWeb}" th:href="${fac.facWeb}" target='_blank'>홈페이지</a></td>
 							<td th:text="${fac.repName}" >대표자명</td>
