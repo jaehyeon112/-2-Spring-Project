@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+ <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="image/favicon.png" type="image/png">
+    <title>결제취소</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="userresources/css/bootstrap.css">
+    <link rel="stylesheet" href="userresources/vendors/linericon/style.css">
+    <link rel="stylesheet" href="userresources/css/font-awesome.min.css">
+    <link rel="stylesheet" href="userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="userresources/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="userresources/vendors/owl-carousel/owl.carousel.min.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="userresources/css/style.css">
+    <link rel="stylesheet" href="userresources/css/responsive.css">
+</head>
+
+<body>
+<section layout:fragment="content" >
+<button onclick="cancelPay()">환불하기</button>
+
+
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>	
+<script th:inline="javascript">
+function cancelPay() {
+    jQuery.ajax({
+      // 예: http://www.myservice.com/payments/cancel
+      "url": "{환불정보를 수신할 가맹점 서비스 URL}", 
+      "type": "POST",
+      "contentType": "application/json",
+      "data": JSON.stringify({
+        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+        "cancel_request_amount": 2000, // 환불금액
+        "reason": "테스트 결제 환불" // 환불사유
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+        "refund_holder": "홍길동", 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+        "refund_bank": "88" 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+        "refund_account": "56211105948400" 
+      }),
+      "dataType": "json"
+    });
+  }
+</script>
+</section>
+</body>
+
+</html>
