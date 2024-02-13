@@ -159,7 +159,7 @@
 <script th:inline="javascript">
 
 
-// submitForm 함수 정의
+
 function submitForm() {
 	
 	console.log("버튼눌렀다!");
@@ -172,11 +172,11 @@ function submitForm() {
     var facId = [[${#authentication.name}]];
     console.log("facId는 ? :  " + facId);
 
-    // userId 값을 FormData에 추가
+    
     formData.append('facId', facId);
     
     
- // 파일 input 엘리먼트를 찾아서 파일을 추가
+ // 파일추가
 let fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach(function(fileInput) {
         for (let i = 0; i < fileInput.files.length; i++) {
@@ -186,18 +186,17 @@ let fileInputs = document.querySelectorAll('input[type="file"]');
   
     
     console.log("formData는? : " + formData);
- // FormData 객체에 포함된 값들 콘솔로 출력
+ // FormData 
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
     }
  
- // 각 input 요소의 값 콘솔로 출력
+ // input 입력한거
     document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
         console.log(input.name + ': ' + input.value);
     });
  
-    // FormData를 서버로 전송하거나 원하는 대로 활용
-    // 예를 들어, Ajax를 사용하여 서버로 데이터 전송
+    // FormData 서버전송 
     $.ajax({
         type: 'POST',
         url: 'regitForm',
@@ -205,7 +204,7 @@ let fileInputs = document.querySelectorAll('input[type="file"]');
         processData: false,
         contentType: false,
         success: function(response) {
-            // 성공 시 동작
+            
             console.log("ajax 안에 success response " + response);
 
             alert("등록성공!");
@@ -213,20 +212,13 @@ let fileInputs = document.querySelectorAll('input[type="file"]');
             return;
         },
         error: function(error) {
-            // 에러 시 동작
+           
             console.error(error);
         }
     });
 }
 
 
-	
-	
-	
-	
-	
-	
-	
 	//동적 
 	let dynamicFieldsCount = 1;
 	let articleContainerCount = 1;

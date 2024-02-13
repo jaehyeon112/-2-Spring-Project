@@ -34,6 +34,12 @@ public interface DonaService {
 	public int insertDonation(DonaVO donaVO);
 	public int insertDonDetail(DonaVO donaVO);
 	
+	
+	//등록 후기 insert
+	public int insertReview(DonaVO donaVO);
+	public int insertReviewDetail(DonaVO donaVO);
+	
+	
 	//결제하기
 	public int paymentProcess(DonaVO donaVO);
 }

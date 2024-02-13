@@ -71,28 +71,7 @@ public class DonaServiceImpl implements DonaService {
 		}
 	}
 	
-//기부 등록폼	
-//	@Override
-//	public int insertDonation(DonaVO donaVO) {
-//		int result = donaMapper.insertDonation(donaVO);
-//		
-//		if(result == 1) {
-//			return donaVO.getDonId();
-//		}else {
-//			return -1;
-//		}
-		
-// 기부등록(상세) 폼		
-//	@Override
-//	public int insertDonDetail(DonaVO donaVO) {
-//	int result = donaMapper.insertDonDetail(donaVO);
-//		
-//		if(result == 1) {
-//			return donaVO.getDonId();
-//		}else {
-//			return -1;
-//		}
-//	}
+
 	
 	//기부등록폼
 	@Transactional
@@ -101,32 +80,37 @@ public class DonaServiceImpl implements DonaService {
 		donaMapper.insertDonation(donaVO);
 		return donaMapper.insertDonDetail(donaVO);
 	}
+	
+	
+	//기부후기등록폼
+	@Transactional
+	@Override
+	public int insertReview(DonaVO donaVO) {
+		donaMapper.insertReview(donaVO);
+		return donaMapper.insertReviewDetail(donaVO);
+	}
 
 	
-			//	@Transactional
-			//	@Override
-			//	public int insertRemittance(RemittanceVO remittanceVO) {
-			//		//송금 확인코드 변경
-			//		userMapper.updatePaidCode(remittanceVO.getDonId());
-			//		//송금 테이블에 삽입
-			//		return userMapper.insertRemittance(remittanceVO);
-			//	}
-	
-	
-//결제프로세스	
-	@Override
-	public int paymentProcess(DonaVO donaVO) {
-		int result = donaMapper.paymentProcess(donaVO);
-		
-		if(result == 1 ) {
-			return donaVO.getDonLedId();
-		}else {
-		return -1;
+	//결제프로세스	
+		@Override
+		public int paymentProcess(DonaVO donaVO) {
+			int result = donaMapper.paymentProcess(donaVO);
+			
+			if(result == 1 ) {
+				return donaVO.getDonLedId();
+			}else {
+			return -1;
+			}
 		}
-	}
 
 	@Override
 	public int insertDonDetail(DonaVO donaVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertReviewDetail(DonaVO donaVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
