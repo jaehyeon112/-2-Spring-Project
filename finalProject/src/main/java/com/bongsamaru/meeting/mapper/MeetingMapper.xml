@@ -146,4 +146,19 @@
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
 	</select>
+	<insert id="insertBoard" parameterType="BoardVO">
+		insert into board(
+			board_id,
+			CATEGORY,
+			TITLE,
+			CONTENT,
+			MEM_ID,
+			DETAIL_CATE)
+		values(board_id.NEXTVAL
+				,#{category}
+				,#{title}
+				,#{content}
+				,#{memId}
+				,FREEBOARD_SEQ.NEXTVAL)
+	</insert>
 </mapper>

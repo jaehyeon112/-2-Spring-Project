@@ -31,16 +31,16 @@ public interface AdminMapper {
 	public int getBoardCnt(PageVO pageVO);
 	public int getFaqCnt(PageVO pageVO);
 	public List<FacilityVO> getFacilityList();
-	public List<VolunteerVO> meetingList(Integer volId);
+	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
 	public List<TagVO> tagList();
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
 	public List<DonledgerVO> DonationKing();
 	public List<VolunteerVO> facVolunteerList();
 	public UserVO getUserOne(String memId);
-	public int insertNotice(BoardVO boardVO);
+	public void insertNotice(BoardVO boardVO);
 	public int faqInsert(FaqVO faqVO);
-	public VolunteerVO volCount(String memId,String mId);
+	public VolunteerVO volCount(String memId);
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
 	public DonationVO getDonOne(String donId);
@@ -57,7 +57,6 @@ public interface AdminMapper {
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
-	public int maxNotice();
 	public int delFile(String filePath);
 	public List<VolunteerVO> memMeetList(String memId);
 	public List<DonaVO> donationLedgerList(String recStat);

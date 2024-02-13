@@ -22,7 +22,7 @@
 							<div class="col-4">
 								<div class="rounded-circle position-relative">
 									<div class="overflow-hidden rounded-circle">
-										<img th:if="${cnt.path}!=null" th:src="@{${cnt.path}}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+										<img th:if="${cnt.path}!=null" th:src="@{${cnt.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
 										<img th:if="${cnt.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
 									</div>
 									<span class="rounded-circle border border-2 border-white bg-primary text-white position-absolute"
@@ -123,7 +123,6 @@
 									    	   $('#cnt').text(result.cnt+'명 참여')
 									       })
 									       .fail(err => console.log(err));
-											
 										</script>
 										<div class="col-lg-4" th:each="act,st : ${after}" th:if="${st.count}>1">
 											<div class="row g-4">

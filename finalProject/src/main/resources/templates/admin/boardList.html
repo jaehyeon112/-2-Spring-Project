@@ -32,7 +32,7 @@
 		<div id="notice">
 		<br>
 		<div style="float:right;padding:10px">
-			<input class="form-control-sm me-2" id="search" type="search" placeholder="Search" aria-label="Search">
+			<input class="form-control-sm me-2" id="search" type="search" placeholder="Search" aria-label="Search" th:value="${vo.searchKeyword}">
 			<button class="btn btn-outline-success" id="searchBtn" type="button">검색</button>
 			<button class="btn btn-outline-primary" id="clean" type="button">초기화</button>
 		</div>
@@ -87,9 +87,11 @@
 			function show1(){
 				$('#tableData').load("../boardList?category=b01 #notice");
 			}
+			
 			function show2(){
 				$('#tableData').load("../faqList?start=1&end=10 #faq");
 			}
+			
 			function prev(vo,category){
 				if(category!=null){
 					$('#tableData').load(`../faqList?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&category=${category} #faq`);
@@ -97,6 +99,7 @@
 					$('#tableData').load(`../faqList?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1} #faq`);
 				}
 			}
+			
 			function current(vo,pageNum,category){
 				if(category!=null){
 					$('#tableData').load(`../faqList?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&category=${category} #faq`);
@@ -104,6 +107,7 @@
 					$('#tableData').load(`../faqList?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage} #faq`);
 				}
 			}
+			
 			function next(vo,category){
 				if(category!=null){
 					$('#tableData').load(`../faqList?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&category=${category} #faq`);
@@ -111,9 +115,11 @@
 					$('#tableData').load(`../faqList?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage} #faq`);
 				}
 			}
+			
 			function aler(sub){
 				$('#tableData').load(`../faqList?category=${sub}&start=1&end=10 #faq`);
 			}
+			
 			$('#searchBtn').on('click',function(){
 				let keyword = $('#search').val();
 				if(keyword == '') {

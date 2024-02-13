@@ -141,12 +141,14 @@ public class FileService {
 
         // 전체 경로 조합
         String folderPath = baseFolderPath + File.separator + subFolderPath;
+        System.out.println(folderPath);
         File uploadFolder = new File(folderPath);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();
         }
         return folderPath.replace(uploadPath + File.separator, ""); // DB에 저장될 경로 반환
     }
+    
     private boolean isAllowedFileType(MultipartFile file) {
         String allowedFileTypes = "image,video,audio,application/pdf"; // 허용된 파일 유형
         return file.getContentType() != null && allowedFileTypes.contains(file.getContentType().split("/")[0]);

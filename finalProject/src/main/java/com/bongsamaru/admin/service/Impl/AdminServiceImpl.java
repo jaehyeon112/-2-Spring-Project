@@ -62,8 +62,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int insertNotice(BoardVO boardVO) {
-		return userMapper.insertNotice(boardVO);
+	public void insertNotice(BoardVO boardVO) {
+		userMapper.insertNotice(boardVO);
 	}
 
 	@Override
@@ -72,8 +72,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public VolunteerVO volCount(String memId,String mId) {
-		return userMapper.volCount(memId,mId);
+	public VolunteerVO volCount(String memId) {
+		return userMapper.volCount(memId);
 	}
 
 	@Override
@@ -167,11 +167,6 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int maxNotice() {
-		return userMapper.maxNotice();
-	}
-
-	@Override
 	public int delFile(String filePath) {
 		return userMapper.delFile(filePath);
 	}
@@ -182,8 +177,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<VolunteerVO> meetingList(Integer volId) {
-		return userMapper.meetingList(volId);
+	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO) {
+		return userMapper.meetingList(volunteerVO);
 	}
 
 	@Override

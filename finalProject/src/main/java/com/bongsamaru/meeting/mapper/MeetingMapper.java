@@ -2,11 +2,11 @@ package com.bongsamaru.meeting.mapper;
 
 import java.util.List;
 
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
-import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingMapper {
 	public VolunteerVO meetingInfo(Integer volId);
@@ -21,4 +21,5 @@ public interface MeetingMapper {
 	public int volActReviewListCnt(Integer volId);
 	public int findMember(Integer volId,String memId);
 	public String findFile(String code,Integer codeNo);
+	public int insertBoard(BoardVO boardVO);
 }

@@ -1,5 +1,6 @@
 package com.bongsamaru.meeting.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,8 +34,22 @@ public class MeetingController {
 	AdminService userService;
 	
 	//모임 방 메인
+	/**
+	 * 모임 방 메인
+	 * @param volId
+	 * @param model
+	 * @param req
+	 * @param prin
+	 * @return
+	 */
 	@GetMapping("meetings")
-	public String meetings(@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req) {
+	public String meetings(@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
+		 if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	        System.out.println("User is not logged in.");
+	    }
+
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
 		List<VolActVO> list = service.meetingVolActList(volId);
@@ -65,7 +81,8 @@ public class MeetingController {
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		
-		List<VolunteerVO> randomList = userService.meetingList(volId);
+		volunteerVO.setRoomStat(1);
+		List<VolunteerVO> randomList = userService.meetingList(volunteerVO);
 		model.addAttribute("choose",randomList);
 		
 		return "meeting/meetings";
@@ -196,9 +213,20 @@ public class MeetingController {
 	}
 	
 	//자유게시판 작성폼
-	@GetMapping("freeBoardInsert")
-	public String freeBoardInsert() {
+	@GetMapping("freeBoardInsertPage")
+	public String freeBoardInsertPage(Principal prin,Model model) {
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	    	 model.addAttribute("userId","없음");
+	    }
 		return "meeting/freeBoardInsert";
+	}
+	
+	@PostMapping("freeBoardInsert")
+	@ResponseBody
+	public int freeBoardInsert(BoardVO vo) {
+		return service.insertBoard(vo);
 	}
 	
 }

@@ -116,9 +116,9 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   
   <!-- Navbar End -->
 <section layout:fragment="content"></section>
-<div sec:authorize="isAnonymous()">
-</div>
+<!-- <section sec:authorize = "isAuthenticated()"></section> -->
 <script type="text/javascript">
+
 const API_KEY = "979764b808d33fb79bb7bf2a5d222afc";
 let latitude = "";
 let longitude = "";

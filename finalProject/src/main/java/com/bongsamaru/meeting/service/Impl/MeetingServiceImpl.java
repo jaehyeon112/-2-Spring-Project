@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -77,6 +78,11 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
 	public String findFile(String code,Integer codeNo) {
 		return mapper.findFile(code,codeNo);
+	}
+
+	@Override
+	public int insertBoard(BoardVO boardVO) {
+		return mapper.insertBoard(boardVO);
 	}
 
 }

@@ -30,11 +30,11 @@ public interface AdminService {
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
 	public List<DonledgerVO> DonationKing();
-	public int insertNotice(BoardVO boardVO);
+	public void insertNotice(BoardVO boardVO);
 	public List<FaqVO> getFaqList(PageVO pageVO);
 	public int getFaqCnt(PageVO pageVO);
 	public UserVO getUserOne(String memId);
-	public VolunteerVO volCount(String memId,String mId);
+	public VolunteerVO volCount(String memId);
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
 	public DonationVO getDonOne(String donId);
@@ -52,9 +52,8 @@ public interface AdminService {
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
-	public int maxNotice();
 	public int delFile(String filePath);
-	public List<VolunteerVO> meetingList(Integer volId);
+	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
 	public List<TagVO> tagList();
 	public List<VolunteerVO> facVolunteerList();
 	public List<VolunteerVO> memMeetList(String memId);
