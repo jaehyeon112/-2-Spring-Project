@@ -27,6 +27,9 @@
 .cur{
 	cursor:pointer;
 }
+#tableData{
+	margin-top : 50px;
+}
 </style>
 </head>
 <body>
@@ -60,7 +63,14 @@
 							 <td th:text="${user.memName}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
 							 <td th:text="${user.memId}" >아이디</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
-							 <td th:text="${user.memDept}">학과</td>
+							 <td th:if="${user.memDept}=='d02'">인문계열</td>
+							 <td th:if="${user.memDept}=='d03'">사회계열</td>
+							 <td th:if="${user.memDept}=='d04'">교육계열</td>
+							 <td th:if="${user.memDept}=='d05'">공학계열</td>
+							 <td th:if="${user.memDept}=='d06'">자연계열</td>
+							 <td th:if="${user.memDept}=='d07'">의학계열</td>
+							 <td th:if="${user.memDept}=='d08'">예체능계열</td>
+							 <td th:if="${user.memDept}=='d09'">보건계열</td>
 							 <td th:text="${user.memEmail}">이메일</td>
 							 <td th:if="${user.donReceipt}=='0'">처리</td>
 							 <td th:if="${user.donReceipt}=='1'">비처리</td>
@@ -171,7 +181,7 @@
 		</div>
 		<script th:inline="javascript">
 			function show1(){
-				$('#tableData').load("../userList?memStat=m01 #classic");
+				$('#tableData').load("../userList?memStat=m02 #classic");
 			};
 			function show2(){
 				$('#tableData').load("../userListDetail #facility");

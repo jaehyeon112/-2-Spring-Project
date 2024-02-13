@@ -16,4 +16,5 @@ public class BoardVO {
 	private String memId;
 	private Date modDate;
 	private Integer detailCate;
+	private Integer RN;
 }

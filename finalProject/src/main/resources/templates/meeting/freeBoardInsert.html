@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{meeting/meetingLayout}">
+<head>
+<meta charset="UTF-8">
+<title>자유게시판 작성폼</title>
+
+<!-- TUI 에디터 CSS CDN -->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<style>
+h1 {
+    text-align: center;
+    padding: 10px 10px;
+    padding-bottom: 30px;
+    border-bottom:1px solid #848484;
+}
+
+.form-0 {
+    position: relative;
+}
+
+.board-top {
+    width : 80%;
+    height: 50px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+hr{
+    width: 100%;
+}
+
+.form-1 {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.write-1 {
+    height: 30px;
+    border : none;
+    font-size: 18px;
+    background-color: #f5f6f7;
+    outline: none;
+}
+</style>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="body-wrapper">
+			<div class="container-fluid">
+				<div class="container">
+					<h2 style="text-align: center;">자유게시판 작성</h2>
+					<br>
+					<label>제목</label>
+	                <input class='write-1' type="text" name="title" max="30"  required>
+	                <hr>
+					<!-- 에디터를 적용할 요소 (컨테이너) -->
+					<div id="contents"></div>
+					<br>
+					<button type="button" onClick="handleSave()" style="float: right;width:80px" class="btn btn-success m-1">등록</button>
+	                <button type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</button>
+					<!-- TUI 에디터 JS CDN -->
+					
+					<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+					<script>
+						const editor = new toastui.Editor({
+							el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
+							height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
+							initialEditType : 'wysiwyg', // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+							//initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+							previewStyle : 'vertical', // 마크다운 프리뷰 스타일 (tab || vertical)
+							placeholder : "내용을 입력하세요",
+							hooks: {
+						    	addImageBlobHook: (blob, callback) => {
+						    		let url = "http://localhost:8585"
+						    		const formData = new FormData();
+						        	formData.append('uploadFiles', blob);
+						        	formData.append("code", "p13")
+									formData.append("codeNo", 2);
+						        	console.log(formData)
+						   			$.ajax({
+						           		url: '/uploadsAjax',
+						           		type: 'POST',
+						           		processData: false,
+						           		contentType: false,
+						           		data: formData,
+						           		success: function(data) {
+						           			url = url + data;
+						           			url = url.replace(/\\/g, '/')
+						           			callback(url);
+						           			console.log('성공',data);
+						           		},
+						           		error: function(e) {
+						           			console.log('ajax 이미지 업로드 실패');
+						           			callback('image_load_fail', '사진 대체 텍스트 입력');
+						           		}
+						           	});
+						    	}
+						    }
+						});
+						function handleSave(){
+							const title = $("input[name='title']").val();
+							var formData = new FormData();
+							formData.append("category","b03");
+							formData.append("title",title);
+							formData.append("content",editor.getMarkdown());
+							formData.append("memId",'[[${userId}]]');
+							$.ajax({
+				           		url: '/freeBoardInsert',
+				           		type: 'POST',
+				           		processData: false,
+				           		contentType: false,
+				           		data: formData,
+				           		success: function(data) {
+				           			console.log('성공',data);
+				           		},
+				           		error: function(e) {
+				           			console.log('실패');
+				           		}
+				           	});
+						}
+					</script>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
