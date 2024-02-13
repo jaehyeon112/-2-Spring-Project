@@ -76,24 +76,30 @@ public class DonaVO {
 	    private Integer donRevId; //기부후기등록번호 (not null)
 	    //private Integer donId; 
 	    private Integer execAmt; //집행금액  (not null)
+	    @DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date startPeriod; //사업시작기간
+	    @DateTimeFormat(pattern="yyyy-MM-dd") 
 	    //private Date endPeriod; //사업종료기간
 	    private String revApp; //후기승인여부 
+	    //private String title; //후기 제목
+	    private String content; // 내용
 	    private Integer targetOk;//기부장부에서 총합
+	    
+	    
     
-    //don_review(기부후기사업비) 테이블
+    //don_review_exp(기부후기사업비) 테이블
 	    private Integer donRevExpId; //기부후기사업비상세등록번호 (c18) not null
 	    //private Integer donRevId; //기부후기등록번호 
-	    private Integer bizCost; //사업비 not null
+	    private Integer bizCost; //사업비 not null (실질적 모금액)
 	    private String bizContent; //사업내용 not null
 	    private Integer bizAmt; // 사업금액(구체적) not null
 	    
     
-    //don_review_table(기부후기제목) 테이블
-	    private Integer donRevTitleId; //기부후기등록상세번호 notnull
-	    //private String title; //제목
-	    private String content; // 내용
-	    //private Integer donRevId; // 기부후기등록번호
+//    //don_review_table(기부후기제목) 테이블
+//	    private Integer donRevTitleId; //기부후기등록상세번호 notnull
+//	    //private String title; //제목
+//	    private String content; // 내용
+//	    //private Integer donRevId; // 기부후기등록번호
 	    
 	//시설테이블
 	   // private String facId;

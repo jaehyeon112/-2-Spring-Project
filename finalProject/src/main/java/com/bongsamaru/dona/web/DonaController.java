@@ -20,6 +20,17 @@ import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FileService;
 
 
+/**
+ * '기부' 페이지에서 담당하는 모든 기능(게시글 crud, 결제, 신청폼)
+ * @author 박현아
+ * @since 2023.12.xx
+ * @version 1.0
+ * @see
+ *
+ * 
+ */
+
+
 @Controller
 public class DonaController {
 	
@@ -28,6 +39,15 @@ public class DonaController {
 	
 	@Autowired
 	FileService fileService;
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param model 전체 기부 리스트(모집중, 모집완료), 카테고리 리스트
+	 * @return 기부 메인페이지
+	 */
 	
 	//기부 메인페이지 - 전체리스트
 	   @GetMapping("/donaMain")
@@ -49,6 +69,14 @@ public class DonaController {
 	        return "donation/donaMain";
 	    }
 	   
+	   
+	   
+	   /**
+	    * 
+	    * @param 기부 관련 category 정보 
+	    * @param model 카테고리에 따른 리스트 분류
+	    * @return 메인페이지
+	    */
 	// 카테고리에 따른 리스트 가져오기
 	   @GetMapping("/donaMain/category/{category}")
 	   public String openDonaMainPageByCategory(@PathVariable String category, Model model) {
@@ -61,6 +89,15 @@ public class DonaController {
 	       return "donation/donaMain";
 	   }
 
+	   
+	  /**
+	   *  
+	   * @param donId 게시글 번호
+	   * @param facId 로그인한 시설 아이디
+	   * @param model donId 상세게시글, 기부자목록, 댓글리스트, 랜덤게시글 리스트
+	   * @return 상세페이지
+	   */
+	   
 	 // 기부상세 페이지
 	   @GetMapping("/donaDetail")
 	    public String donaDetailPage2(@RequestParam("id") Integer donId, @RequestParam(name = "facId", required = true) String facId, Model model) { 
@@ -83,15 +120,29 @@ public class DonaController {
 		    return "donation/donaDetail";
 	    }    
 	   
+	   
+	   /**
+	    * 
+	    * @param donaVO 댓글정보가 담긴 VO
+	    * @param model 댓글 리스트 정보
+	    * @return 상세페이지
+	    */
 	  //댓글 삽입1
 	   @PostMapping("/donaDetail")
 	   @ResponseBody
 	   public String insertComment(@RequestBody DonaVO donaVO, Model model) {
+		   System.out.println(donaVO);
 		   donaService.insertComment(donaVO);
 	       return "댓글 등록 완료!";
 	   }
 	
 	   
+	  /**
+	   *  
+	   * @param id 게시글 번호
+	   * @param model 기부자 목록 리스트
+	   * @return 기부자리스트
+	   */
 	 // 기부상세 - 기부자목록 
 	  @GetMapping("/donaDetail/{id}")
 	  @ResponseBody
@@ -102,6 +153,11 @@ public class DonaController {
 	  }
 	   
 	   
+	 /**
+	  *  
+	  * @param 결제를 할 기부 상세페이지
+	  * @return 결제페이지로 이동
+	  */
 	//결제창
 	   @GetMapping("/payment")
 	    public String openPaymentPage(@RequestParam Integer donId) {
@@ -109,7 +165,12 @@ public class DonaController {
 	    } 
 	   
 
-
+/**
+ * 
+ * @param donaVO 결제정보 담긴 곳
+ * @param model 결제후 결제정보 insert
+ * @return 결제완료창으로 이동
+ */
 	//찐 결제하기
 	@PostMapping("/paymentProcess")
 	@ResponseBody
@@ -120,14 +181,36 @@ public class DonaController {
 	}
 	
 	
-	   
+	   /**
+	    * 
+	    * @return 결제완료창으로 이동 
+	    */
 	//결제완료
 	   @GetMapping("/paymentComplete")
 	    public String openPaymentCompletePage() {
 	        return "donation/paymentComplete";
 	    } 
 	   
+
+	   /**
+	    * 
+	    * @param model
+	    * @return 기부신청폼으로 이동 
+	    */
+	// 기부신청폼
+	   @GetMapping("/applyform")
+	    public String openapplyform(Model model) {
+		   return "donation/forDonaform";
+	   }
 	
+	 
+	   
+	   
+	/**
+	 * 
+	 * @param model 카테고리 리스트, 입력값 담을 VO
+	 * @return 기부 게시글 등록폼
+	 */
 	//등록폼 이동
 	   @GetMapping("/form")
 	    public String openRegitform(Model model) {
@@ -139,12 +222,20 @@ public class DonaController {
 	    }   
 	   
 	   
+	   /**
+	    * 
+	    * @param donaVOㅎ ㅐ당 게시글, 시설회원 아이디 정보 있음
+	    * @param uploadfiles 파일업로드
+	    * @param model 데이터
+	    * @return 마이페이지로 이동
+	    * @throws IOException
+	    */
+	   
 	   //등록폼 INSERT
 	   @PostMapping(value = "/regitForm", consumes = "multipart/form-data")
 	   @ResponseBody
 	   public String registerDona(@ModelAttribute DonaVO donaVO,  @RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
 			donaService.insertDonation(donaVO);
-			
 			
 			int codeNo = donaVO.getDonId();
 			String code = "p08";
@@ -153,31 +244,43 @@ public class DonaController {
 			return "redirect:my/mapage";
 	   }
 	   
-	   //등록폼 INSERT - 일단은..
-	   @PostMapping("/regitForm2")
-	   @ResponseBody
-	   public String registerDona(@RequestBody DonaVO donaVO,  Model model){
-		   System.out.println("등록폼제발좀좀좀좀좀!!!! ");  // 디버깅 메시지 추가
-		   donaService.insertDonation(donaVO);
-			
 
-			  
-			return "redirect:donation/donaMain";
-	   }
-	
+	/**
+	 * 
+	 * @param model
+	 * @return 후기작성 폼으로 이동
+	 */
 	//후기폼으로 GO
 	   @GetMapping("/reviewform")
 	    public String openRevform(Model model) {
 		   return "donation/reviewform";
 	   }
-
 	   
-	// 기부신청폼
-	   @GetMapping("/applyform")
-	    public String openapplyform(Model model) {
-		   return "donation/forDonaform";
+
+	  /** 
+	   *  
+	   * @param donaVO donId, facId 정보 담긴 곳
+	   * @param uploadfiles 파일업로드
+	   * @param model 데이터 담아서
+	   * @return 마이페이지로 이동
+	   * @throws IOException
+	   */
+	//후기폼 Insert
+	   @PostMapping(value = "/reviewForm", consumes = "multipart/form-data")
+	   @ResponseBody
+	   public String registerReview(@ModelAttribute DonaVO donaVO,  @RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
+			donaService.insertReview(donaVO);
+			
+			int codeNo = donaVO.getDonId();
+			String code = "p08";
+			fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+			  
+			return "redirect:my/mapage";
 	   }
 	   
+	   
+	   
+	   // 템플릿 놔둔곳... 입니다.. (삭제)
 		// 기부신청폼22
 	   @GetMapping("/applyform2")
 	    public String openapplyform2(Model model) {

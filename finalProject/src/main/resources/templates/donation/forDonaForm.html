@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout}">
-	 <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" href="image/favicon.png" type="image/png">
-        <title>Royal Hotel</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="userresources/css/bootstrap.css">
-        <link rel="stylesheet" href="userresources/vendors/linericon/style.css">
-        <link rel="stylesheet" href="userresources/css/font-awesome.min.css">
-        <link rel="stylesheet" href="userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="userresources/vendors/nice-select/css/nice-select.css">
-        <link rel="stylesheet" href="userresources/vendors/owl-carousel/owl.carousel.min.css">
-        <!-- main css -->
-        <link rel="stylesheet" href="userresources/css/style.css">
-        <link rel="stylesheet" href="userresources/css/responsive.css">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
-<meta charset="UTF-8">
-<title>기부신청폼</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="image/favicon.png" type="image/png">
+    <title>Royal Hotel</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="userresources/css/bootstrap.css">
+    <link rel="stylesheet" href="userresources/vendors/linericon/style.css">
+    <link rel="stylesheet" href="userresources/css/font-awesome.min.css">
+    <link rel="stylesheet" href="userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="userresources/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="userresources/vendors/owl-carousel/owl.carousel.min.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="userresources/css/style.css">
+    <link rel="stylesheet" href="userresources/css/responsive.css">
 <style>
 .sample-text-area {
     display: flex;
@@ -40,11 +35,16 @@
 </style>
 </head>
 
+
+
+
+
+
 <body>
 <section layout:fragment="content" >
 	<div id="container"  class="container">
 	
-		<form >
+		<form name="applyform">
 			<h2>기부 등록 신청폼</h2>
 			
 			
@@ -79,8 +79,9 @@
 						<br> [필수첨부서류]
 						<br> <b>사업자소개서, 사업자등록증(고유번호증), 관리자 재직 증명서, 개인정보동의서</b><br>
 					</p>
-					<div class="button-group-area">
-						<button id="downloadButton" class="genric-btn link">첨부파일 다운로드</button>
+					<div  id="downloadButton">
+						<span class="genric-btn link">첨부파일 다운로드</span>
+						
 					</div>
 				</div>
 				
@@ -93,9 +94,11 @@
 						<br> 인감 증명서, 통장사본의 인감도장, 입금의뢰 신청서 확인자란의 도장은 모두 일치하여야 합니다.
 						<br> 첨부파일은 압축해서 하나의 파일(zip)로 제출해주세요. <br>
 					</p>
-					<div class="file-area">
-						<input type="file">
+					
+					<div  class="file-area">
+						<input type="file" name="uploadFiles">
 					</div>
+					
 				</div>
 			</section>
 			
@@ -109,29 +112,14 @@
 
 					<div class="button-group-area d-flex justify-content-center">
 				
-						<a href="#" class="genric-btn success">제출하기</a>
+						<a href="#" class="genric-btn success" onclick="submitForm()">제출하기</a>
 						
 					</div>
 		</form>
 	</div>
-</section>
-
-    
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="userresources/js/jquery-3.2.1.min.js"></script>
-        <script src="userresources/js/popper.js"></script>
-        <script src="userresources/js/bootstrap.min.js"></script>
-        <script src="userresources/vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="userresources/js/jquery.ajaxchimp.min.js"></script>
-        <script src="userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-        <script src="userresources/vendors/nice-select/js/jquery.nice-select.js"></script>
-        <script src="userresources/js/mail-script.js"></script>
-        <script src="userresources/js/stellar.js"></script>
-        <script src="userresources/vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="userresources/js/custom.js"></script>
-        
-<script>
+	
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>	
+<script th:inline="javascript">
 	var downloadButton = document.getElementById('downloadButton');
 	
 	downloadButton.addEventListener('click', function() {
@@ -143,6 +131,63 @@
 	  link.download = fileName;
 	  link.click();
 	});
+	
+	
+	function submitForm(){
+		
+		console.log('버튼 눌림');
+		
+		let formData = new FormData(document.querySelector('form[name="applyform"]'));
+		
+		
+		
+		 var fId = [[${#authentication.name}]];
+		 let facId = parseInt(fId);
+
+		 
+		    console.log("facId는 ? :  " + facId);
+		    console.log(fId)
+		    formData.append('codeNo', facId);
+		    formData.append("code", "p07")
+		
+		    
+		let fileInputs = document.querySelector('input[type="file"]').files;
+		    console.log(fileInputs);
+		    
+		    for (var i = 0; i < fileInputs.length; i++) {
+		    	
+                formData.append("uploadFiles", fileInputs[i]); 
+             }
+
+		$.ajax({
+			type : 'POST',
+			url : '/uploadsAjax',
+			data : formData,
+		       processData: false,
+		        contentType: false,
+		        success: function(response) {
+		            
+		            console.log("ajax 안에 success response " + response);
+		            alert("등록성공!");
+		            location.href = "donaMain";
+		            return;
+		        },
+		        error: function(error) {
+		            console.error(error);
+		        }
+		});
+	}
+	
+	
+	
+
+	
 </script>
+</section>
+
+    
+     
+
+
 </body>
 </html>

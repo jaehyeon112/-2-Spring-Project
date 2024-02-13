@@ -430,27 +430,26 @@
    
     	let comm = document.getElementById('comment').value;
     	let memId = [[${#authentication.name}]];
-    	
     	let commDate = dateFormat(new Date());
     	let donId = [[${dona.donId}]];
     	console.log("e돈아이디" , donId);
-    
+    	console.log(memId);
     	
-    	let commData = {
+    	
+    	let donaVO = {
     			content : comm,
     			memId : memId,
-    			donId : donId,
-    			
+    			detailCode : donId
     		}
 
     		
-    	console.log(commData);
+    	console.log(donaVO);
     	
     	
     	$.ajax({
     		type : "POST",
     		url : "/donaDetail",
-    		data: JSON.stringify(commData),
+    		data: JSON.stringify(donaVO),
     		contentType: 'application/json', 
     		success : function(response){
     			
