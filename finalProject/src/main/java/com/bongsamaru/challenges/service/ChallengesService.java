@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.file.service.FilesVO;
 
 public interface ChallengesService {
@@ -16,4 +17,8 @@ public interface ChallengesService {
 	public int getChallengeInsert(ChallengesVO challengeVO);
 	public int getChallengesInsert(ChallengesVO challengeVO);
 	public boolean getChallengesDel(Integer chalDetId);
+	
+	public List<LikeVO> getChallengeLike(LikeVO likeVO);
+	public int challengesLikeInsert(LikeVO likeVO);
+	public int deleteChallengeLike(Integer boardId);
 }
