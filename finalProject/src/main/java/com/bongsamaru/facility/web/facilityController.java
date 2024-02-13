@@ -1,10 +1,12 @@
 package com.bongsamaru.facility.web;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,25 +14,37 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.SubCodeVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.common.mapper.CommonMapper;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
+import com.bongsamaru.file.service.FileService;
+
+import lombok.extern.log4j.Log4j2;
 /**
  * 시설소개 관련, crud
  * 시설 마이페이지 - 기부내역조회, 시설봉사 등록 조회 승인...
  * @author 예빈
  * 
  */
+@Log4j2
 @Controller
 public class facilityController {
 	
 	@Autowired
 	FacilityService facilityService;
+	@Autowired
+    private FileService fileService;
 
+	@Autowired
+	CommonMapper commonMapper;
 	
 	/**
 	 * 사이트에 가입한 시설 리스트
@@ -40,10 +54,33 @@ public class facilityController {
 	 * @return
 	 */
 	@GetMapping("/facilityList")
-	public String getFacilityList(String facZip2, String facType, Model model) {
-		List<FacilityVO> list = facilityService.getFacilityList(facZip2, facType);
-		model.addAttribute("facilityList", list);
+	public String getFacilityList(String facZip2, 
+								  String facType,
+								  PageVO vo, 
+			/*
+			 * @RequestParam(value="cntPerPage", required = false, defaultValue = "10")
+			 * Integer cntPerPage,
+			 */
+								  Model model,
+								  @RequestParam(value="category", required = false)String category,
+								  @RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+								  @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = facilityService.getCategoryCount(facZip2, facType);
 		
+        // start와 end가 null일 경우 기본값으로 1과 10을 사용
+		
+        vo = new PageVO(total,start, end, category);
+        //vo.setCntPerPage(6);
+        System.out.println(vo);
+     	model.addAttribute("vo",vo);
+     	model.addAttribute("category",category);
+     	
+     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType);
+     	model.addAttribute("facilityList", list);
+     	List<SubCodeVO> z =commonMapper.subCodeList("z");
+     	List<SubCodeVO> f = commonMapper.subCodeList("f");
+     	model.addAttribute("subZ", z);
+     	model.addAttribute("subF", f);
 		return "facility/facilityList";
 	}
 	
@@ -121,11 +158,17 @@ public class facilityController {
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody
-	public int facVolInsert (VolActVO volActVO, Principal principal) {
+	public int facVolInsert (@RequestParam(value = "files", required = false) MultipartFile[] uploadFiles,VolActVO volActVO, Principal principal) {
 		volActVO.setFacId(principal.getName());
-		System.out.println("값"+volActVO);
-		
-		return facilityService.InsertFacVol(volActVO);
+		int result = facilityService.InsertFacVol(volActVO);
+		log.info("값"+volActVO);
+		log.info("값"+result);
+		  try { 
+			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
+		  }catch (IOException e) {
+			  e.printStackTrace(); 
+		   }
+		return result;
 	}
 		
 	

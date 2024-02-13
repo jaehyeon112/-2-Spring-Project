@@ -2,11 +2,13 @@ package com.bongsamaru.facility.ServiceImpl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
@@ -19,8 +21,8 @@ public class FacilityServiceImpl implements FacilityService {
 	FacilityMapper mapper;
 
 	@Override
-	public List<FacilityVO> getFacilityList(String facZip2, String facType) {
-		return mapper.getFacilityList(facZip2,facType);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType) {
+		return mapper.getFacilityList(pageVO,facZip2,facType);
 	}
 	
 	
@@ -54,10 +56,8 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public int InsertFacVol(VolActVO volActVO) {
 		int result = mapper.InsertFacVol(volActVO);
-		System.out.println(volActVO);
 		if(result ==1) {
 			return volActVO.getVolActId();
-			
 		}else {
 			return -1;
 		}	
@@ -66,6 +66,13 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public List<VolActVO> getVolunteerJoinList(String facId) {
 		return mapper.getVolunteerJoinList(facId);
+	}
+
+
+	@Override
+	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
+		
+		return mapper.getCategoryCount(facZip2, facType);
 	}
 	
 

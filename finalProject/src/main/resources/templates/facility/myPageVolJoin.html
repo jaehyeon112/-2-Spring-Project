@@ -70,6 +70,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 								<br>
 								봉사일시<input type="date" id="volDate" name="volDate">
 								모집일시<input type="date" id="startDate" name="startDate"> <input type="date" id="expireDate" name="expireDate">
+								<label for="file-image" class="input-file-button">이미지첨부
+													<input type="file" name="uploadFiles" id="file-image"
+													style="display: none">
+												</label>
 							</div>
 
 						</div>
@@ -147,9 +151,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 					$('input[name=expireDate]').prop("min", minDate);
 					$('input[name=expireDate]').prop("max", endDate);
 					 */
-					var formData = new FormData(); //FormData 객체 생성
-				
 					
+					 var formData = new FormData(); //FormData 객체 생성
 					formData.append("title", $("input[name=title]").val());
     				formData.append("content", $("textarea[name=content]").val());
 				    formData.append("location", $("input[name=location]").val());
@@ -157,8 +160,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				    formData.append("volDate", $("input[name=volDate]").val());
 				    formData.append("startDate", $("input[name=startDate]").val());
 				    formData.append("expireDate", $("input[name=expireDate]").val());
+				    
+					var inputFile = $("input[type='file']");
+					var files = inputFile[0].files;
+					for (var i = 0; i < files.length; i++) {
+						formData.append("files", files[i]);
+					}
+				     
 				
-
+					
 					//jQuery.ajax
 					$.ajax({
 						url: '/InvolJoin',

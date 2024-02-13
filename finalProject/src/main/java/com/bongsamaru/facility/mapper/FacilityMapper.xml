@@ -6,16 +6,18 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
-
-	SELECT 			FAC_ID,
+	SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
+	
+    SELECT 			FAC_ID,
 					FAC_NAME,
 					FAC_ADDR,
 					select_sub(FAC_ZIP2) AS region,
 					FAC_ZIP2,
 					FAC_ZIP,
 					FAC_TYPE
+					
     FROM FACILITY
-	<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+	       <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
         <if test="facZip2 != null and facZip2 !=''">
             AND 	FAC_ZIP2=#{facZip2}
         </if>
@@ -23,11 +25,23 @@
         	AND 	FAC_TYPE = #{facType}
         </if>
     </where>
-
-
-
+	    ) A )
+	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
+	
 </select>
-
+<!-- 시설리스트 페이지네이션용 -->
+<select id="getCategoryCount" resultType="int">
+	SELECT count(*) 
+	  FROM FACILITY
+	  <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+        <if test="facZip2 != null and facZip2 !=''">
+            AND 	FAC_ZIP2=#{facZip2}
+        </if>
+        <if test="facType != null and facType != ''">
+        	AND 	FAC_TYPE = #{facType}
+        </if>
+    </where>
+</select>
 
 <!-- 시설정보 -->
 <select id="getFacilityInfo" resultType="FacilityVO">
@@ -128,6 +142,9 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 </select>
 <!-- volunteer정보 -->
 <insert id="InsertFacVol" parameterType="VolActVO">
+<selectKey keyProperty="volActId" resultType="int"	order="BEFORE">
+			SELECT VOLACT_SEQ.nextval FROM dual
+	</selectKey> 
  INSERT INTO VOL_ACT 
                     (VOL_ACT_ID,
                      FAC_ID,
@@ -139,7 +156,7 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
                      VOL_DATE,
                      START_DATE,
                      EXPIRE_DATE)
-             VALUES (VOLACT_SEQ.nextval,
+             VALUES (#{volActId},
              		 #{facId},
              		 'i06',
              		 #{title},

@@ -19,6 +19,11 @@ public class PageVO {
     
     private int startPage;
     private int endPage;
+   
+
+    // Getter와 Setter 메서드
+
+    
     
     private String searchKeyword; // 검색이름
 
@@ -66,7 +71,10 @@ public class PageVO {
         
         
     }
-    
+
+	/*
+	 * public void setCntPerPage(int cntPerPage) { this.cntPerPage = cntPerPage; }
+	 */
     public PageVO(int total, int start, int end, String category, String searchKeyword) {
         this.total = total;
         this.category = category;
@@ -76,7 +84,7 @@ public class PageVO {
         this.end = Math.min(end, total);
 
         // 2. startPage, endPage 결정
-     
+        
         this.cntPerPage = 10; // 1페이지에 10개씩 보여줍니다
         this.totalPage = (int) Math.ceil((double) this.total / this.cntPerPage); // 전체 페이지 수
         this.currentPage = (int) Math.ceil((double) start / this.cntPerPage); // 현재 페이지

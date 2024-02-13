@@ -6,13 +6,15 @@ import org.apache.ibatis.annotations.Param;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 
 public interface FacilityMapper {
 	
-	public List<FacilityVO> getFacilityList(@Param("facZip2") String facZip2, @Param("facType") String facType);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType);
+	public int getCategoryCount( @Param("facZip2") String facZip2, @Param("facType") String facType);
 	public FacilityVO getFacilityInfo(String facId);
 	public List<FundingVO> getfundingList(String facId);
 	public List<FundingVO> getfundedList(String facId);
