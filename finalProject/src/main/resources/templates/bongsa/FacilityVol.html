@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <section layout:fragment="content">
+	<div id="tableData">
+		<div id="meetVolList">
+		<br>
+	        <div class="row">
+	          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="fac : ${fac}">
+	            <div class="card overflow-hidden rounded-2">
+	              <div class="position-relative">
+	                <a><img th:src="@{${fac.path}}" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+	              </div>
+	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
+				    <span>모집중[[${fac.volActId}]]</span><br>
+					</div>
+	               <div class="d-flex align-items-center justify-content-between">
+		            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
+		                <h4><a th:text="${fac.title}">동아리명</a></h4>
+		                <a href="#" style="color:gray">
+						   <span >지역할거임</span>
+						   <span >관심분야할거임 </span>
+						</a>
+						<br>
+						<Strong><span>모집기간</span></Strong>
+						<br>
+	                    <span th:text="${#dates.format(fac.startDate, 'yy.MM.dd')}+' ~ '+${#dates.format(fac.expireDate, 'yy.MM.dd')}">2024-02-04 ~ 2024-09-04</span>
+	                    <br>
+	                    <span th:text="'정원 : 해야함'+${fac.cap}+'명'">정원 : 해야함</span>
+						 <br>
+		            </div>
+	               </div>
+	            </div>
+	          </div>
+	        </div>
+        </div>
+      </div>
+  </section>
+</body>
+</html>
