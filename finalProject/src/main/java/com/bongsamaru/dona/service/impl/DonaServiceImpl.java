@@ -34,8 +34,8 @@ public class DonaServiceImpl implements DonaService {
 		 return donaMapper.selectCompletedItems();
 	}
 	@Override
-	public List<DonaVO> getDonaListByCategory(String category) {
-		  return donaMapper.getDonaListByCategory(category);
+	public List<DonaVO> getDonaListByCategory(DonaVO donaVO) {
+		  return donaMapper.getDonaListByCategory(donaVO);
 	}
 	
 //상세페이지	
@@ -43,6 +43,7 @@ public class DonaServiceImpl implements DonaService {
 	public DonaVO getDonaDetail(Integer donId, String facId) {
 		return donaMapper.getDonaDetail(donId, facId);
 	}
+	
 //기부자목록	
 	@Override
 	public List<DonaVO> getDonerList(Integer donId) {

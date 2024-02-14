@@ -11,7 +11,8 @@ public interface DonaService {
 	//모금완료
 	List<DonaVO> selectCompletedItems();
 	//카테고리별리스트
-	List<DonaVO> getDonaListByCategory(String category);
+	List<DonaVO> getDonaListByCategory(DonaVO donaVO);
+	
 	
 	//상세페이지 조회 1
 	public DonaVO getDonaDetail(Integer donId, String facId);

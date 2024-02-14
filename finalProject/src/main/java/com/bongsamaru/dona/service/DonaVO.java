@@ -9,6 +9,11 @@ import lombok.Data;
 @Data
 public class DonaVO {
 
+	// paging
+	 private Integer start =1;
+	 private Integer end = 10;
+	 
+	
 	// Donation  테이블
 		private Integer donId; // 기부번호  - notnull 
 		private String facId; // 시설아이디 - 이하 모두 null
@@ -21,7 +26,7 @@ public class DonaVO {
 	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
-	    private Integer recStat; //모집현황(c3)
+	    private String recStat ="1"; //모집현황(c3)
 	    private String intro; //소개 (v2000) : 젤 위에표시되는 애
 	    private String introTitle;// 소개글제목
 	    private String donRegApp; //기부금등록여부(c1)

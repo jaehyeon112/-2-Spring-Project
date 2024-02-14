@@ -82,10 +82,10 @@
                            </nav>
                                 
                          <div class="tab-content mb-5">
-                          <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" th:each="dona : ${dona}">
+                          <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" th:each="dona : ${dona}" >
                                     
                           		<!-- 메인이미지 -->
-	                            <div class="col-lg-6">
+	                            <div class="col-lg-6" style="padding: 20px 5px 20px 5px;">
 	                                <div class="border rounded">
 	                                    <a href="#">
 	                                        <img src="donation/board/img/single-item.jpg" class="img-fluid rounded" alt="Image">
@@ -93,23 +93,23 @@
 	                                </div>
 	                            </div>
 	                            
-	                        	<div>  
-                                  <h3 th:text="${dona.introTitle}">제목(intro)</h3>
+	                        	<div style="padding: 10px 5px 10px 5px;">  
+                                  <h3  th:text="${dona.introTitle}">제목(intro)</h3>
                                   <p th:text="${dona.intro}">소개글(intro)</p>
                                 </div>     
                                 
                                 <div>
-	                               	<h5 >관련 콘텐츠 (link)</h5>
+	                               	<h6>관련 콘텐츠 (link)</h6>
 	                                <p th:text="${dona.link}">link주소</p>
                                 </div>
                                 
                                <div>
-	                              <h3> 추가이미지</h3>
+	                              <h6> 추가이미지</h6>
 	                               <p>link주소</p>
                                </div>          
                                
  
-						  <div class="table-responsive">
+						  <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
 						    <table class="table">
 						        <!-- Thead -->
 						        <thead>
@@ -133,21 +133,45 @@
 						                </td>
 						
 						                <td>
-						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt} + '원'"></p>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt} "></p>
 						                </td>
 						                
+						            </tr>
+						            <!-- 두번째열 -->
+						            <tr th:each="row : ${dona}" >    
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+						                </td>
 						                
-						              
+						                <td>
+						                    <p class="mb-0 mt-4" th:text="${row.usePlan2}" style="text-align: center;"></p>
+						                </td>
+						
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt2}"></p>
+						                </td>
+						            </tr>
+						            
+						            <!-- 세번째열 -->
+						            <tr th:each="row : ${dona}" >    
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+						                </td>
 						                
-						                
-						                
+						                <td>
+						                    <p class="mb-0 mt-4" th:text="${row.usePlan3}" style="text-align: center;"></p>
+						                </td>
+						
+						                <td>
+						                    <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt3} "></p>
+						                </td>
 						            </tr>
 						        </tbody>
 						    </table>
 						</div>
                                
 
-						<div class="table-responsive">
+						<div class="table-responsive" style="padding: 20px 5px 20px 5px;">
 							<h3> 사업대상 및 기대효과 </h3>
 							<table class="table">
 							    <tr>
@@ -163,11 +187,8 @@
 							        <td colspan="2" th:text="${dona.expEffect}"></td>
 							    </tr>
 							</table>
-						</div>
-
-
-                               
-                                    </div>
+						</div>    
+                  	</div>
                                     
                                     <!-- Reviews 안의 영역 -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
@@ -188,7 +209,9 @@
                                     </div> <!--  end 리뷰안의 영역 -->
                                     
                                     <!--  모금후기  -->
+                              
                                      <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                                    
                                         <div class="d-flex">  
                                             
                                                 <div class="d-flex justify-content-between">

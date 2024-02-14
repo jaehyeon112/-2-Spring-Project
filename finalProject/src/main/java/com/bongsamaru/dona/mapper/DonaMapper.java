@@ -16,7 +16,7 @@ public interface DonaMapper {
 		//모금완료
 		List<DonaVO> selectCompletedItems();
 		//카테고리별
-		List<DonaVO> getDonaListByCategory(@Param("category") String category);
+		List<DonaVO> getDonaListByCategory(DonaVO donaVO);
 	
 	// 모금중.모금완료
 	//	List<DonaVO> getRecStat(String recStat);

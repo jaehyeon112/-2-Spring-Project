@@ -14,9 +14,10 @@
 
 <form name="reviewForm">
 <!-- 나중에 버튼에 
-<h5><a th:href="@{/reviewform(donId=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a> -->
-<input type="hidden" name="donId" th:value="${donId}">
-<input type="hidden" name="facId" th:value="${facId}">
+<h5><a th:href="@{/reviewform(donId=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a> 
+<input type="hidden" name="donId" th:value="${donaVO.donId}">
+<input type="hidden" name="facId" th:value="${donaVOfacId}"> -->
+
   <fieldset>
     <legend> Donation Review Form </legend>
 
@@ -24,7 +25,8 @@
       <label for="formFile" class="form-label mt-4">영수증 첨부</label>
       <input class="form-control" type="file" name="uploadfiles" id="formFile">
     </div>
-    
+ 
+<!--     
     <div class="form-group">
       <label for="execAmt" class="form-label mt-4">총 모금액</label>
       <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off">
@@ -34,7 +36,7 @@
       <label for="goalAmt" class="form-label mt-4">목표모금액</label>
       <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
     </div>
-    
+-->     
     
     <div class="form-group">
       <label for="period" class="form-label mt-4"> 사업집행기간 (DATE)</label>
@@ -54,7 +56,7 @@
       <div id = "dynamicFields" class="mb-3">
       	<div class="input-group">
 	      <input type="text" class="form-control" name="bizContent" id="usePlan" placeholder="구체적사업내용" autocomplete="off"> 
-	      <input type="text" class="form-control" name="bizAmt" placeholder="구체적사업비" autocomplete="off">
+	      <input type="text" class="form-control" name="bizAmt" placeholder="구체적사업비(원)" autocomplete="off">
 	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
@@ -225,7 +227,7 @@
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input class="form-control" type="file" name="uploadfiles${count}" id="formFile2">` +
+                `<input class="form-control" type="file" name="uploadfiles${count+1}" id="formFile2">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         }
