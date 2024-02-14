@@ -136,7 +136,12 @@ SELECT  T1.VOL_ACT_ID,
   		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
-     WHERE FAC_ID=#{facId} 
+  <where>
+          FAC_ID=#{facId}
+     <if test="recStat != null">
+      AND REC_STAT=#{recStat}
+     </if>
+   </where>
  GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
 
 </select>

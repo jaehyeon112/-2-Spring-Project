@@ -49,8 +49,8 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	@Override
-	public List<DonaVO> getDonaList(String facId) {
-		return mapper.getDonaList(facId);
+	public List<DonaVO> getDonaList(String facId,Integer recStat) {
+		return mapper.getDonaList(facId,recStat);
 	}
 	
 	

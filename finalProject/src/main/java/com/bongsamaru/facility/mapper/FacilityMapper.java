@@ -22,7 +22,7 @@ public interface FacilityMapper {
 	public List<VolunteerVO> getVolList(String facId);
 	
 	//시설 마이페이지(기부)
-	public List<DonaVO> getDonaList(String facId);
+	public List<DonaVO> getDonaList(String facId, Integer recStat);
 	
 	//시설 마이페이지(봉사)
 	public  int InsertFacVol(VolActVO volActVO);//시설이 봉사 신청하기위한 등록폼

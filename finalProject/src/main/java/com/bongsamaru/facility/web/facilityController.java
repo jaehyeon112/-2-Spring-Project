@@ -139,15 +139,28 @@ public class facilityController {
 	
 	//시설 마이페이지	
 	//마이페이지 (기부)
-	@GetMapping("facilityMyPage")
-	public String getFacilityMyPage(Model model, String facId) {
-		List<DonaVO> list = facilityService.getDonaList(facId);
-		model.addAttribute("donaList", list);
+	@GetMapping("/facilityMyPage")
+	public String getFacilityMyPage(Model model,Integer recStat,Principal principal) {
+		
+		return "facility/myPageDona2";
+	}
+	
+	
+	@GetMapping("/facilityMyPage/donaInfo")
+	public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
+		
+		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(),1);
+		model.addAttribute("donaList1", list1);
+		log.info(list1);
+		
+		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(),0);
+		model.addAttribute("donaList0", list0);
+		log.info(list0);
 		return "facility/myPageDona";
 	}
 	
 	 //마이페이지(시설봉사신청, 신청진행상황)
-	@GetMapping("facilityMyPage/volJoin")
+	@GetMapping("/facilityMyPage/volJoin")
 	public String getFacilityMyPageVol(Model model,Principal principal) {
 		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -155,7 +168,7 @@ public class facilityController {
 		List<VolActVO> list = facilityService.getVolunteerJoinList( principal.getName());
 		model.addAttribute("volList", list);
 		log.info(list);
-		return "facility/myPageVolJoin";
+		return "facility/myPageVolBefore";
 	}
 	
 	@GetMapping("/VolAppList")
@@ -212,7 +225,7 @@ public class facilityController {
 	@GetMapping("facilityMyPage/volFinish")
 	public String getFacilityMyPageVolFinish(Model model) {
 		
-		return "facility/myPageVolFinish";
+		return "facility/myPageVolAfter";
 	}
 	
 	

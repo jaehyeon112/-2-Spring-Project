@@ -8,7 +8,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 </head>
 <body>
 <section layout:fragment="content">
-
+<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
+<div class="col-md-10 main-content">
 <div class="row hotel_booking_table">
     <div class="col-md-3">
                    <button type="button" data-toggle="modal"
@@ -19,35 +20,35 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         <div class="row">
             <div class="col-md-2">
                 <div class="book_tabel_item">
-                    <p style="color:black; font-size:26px">봉사제목</p>
+                    <p style="color:black; font-size:20px">봉사제목</p>
                 </div>
             </div>
         <div class="col-md-2">
             <div class="book_tabel_item">
-                <p style="color:black; font-size:26px">봉사내용</p>
+                <p style="color:black; font-size:20px">봉사내용</p>
             </div>
           </div>
         <div class="col-md-2">
             <div class="book_tabel_item">
-                <p style="color:black; font-size:26px">봉사일시</p>
+                <p style="color:black; font-size:20px">봉사일시</p>
               
             </div>
         </div>
        <div class="col-md-2">
            <div class="book_tabel_item">
-              <p style="color:black; font-size:26px" >신청자보기</p>
+              <p style="color:black; font-size:20px" >신청자보기</p>
               
            </div>
        </div>
        <div class="col-md-2">
            <div class="book_tabel_item">
-              <p style="color:black; font-size:26px" >모집인원</p>
+              <p style="color:black; font-size:20px" >모집인원</p>
               
            </div>
        </div>
        <div class="col-md-2">
            <div class="book_tabel_item">
-              <p style="color:black; font-size:26px" >모집상태</p>
+              <p style="color:black; font-size:20px" >모집상태</p>
               
            </div>
        </div>
@@ -72,7 +73,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
            <div class="book_tabel_item">
              <!-- 클릭할 링크 -->
 <p style="color:black; font-size:15px">
-    <a id="showTable" th:onclick="showList([[${list.volActId}]])">신청자목록보기</a></p>
+    <a id="showTable" th:onclick="showList([[${list.volActId}]])">신청자목록</a></p>
           </div>
       </div>
       <div class="col-md-2">
@@ -203,7 +204,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		    </div>
 	  </div>
   </div>        
-           
+         </div>  
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
 			// 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
