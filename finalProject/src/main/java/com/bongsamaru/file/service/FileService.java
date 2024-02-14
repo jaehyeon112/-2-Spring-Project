@@ -154,7 +154,7 @@ public class FileService {
     
     //파일 삭제
     public boolean deleteFile(String filePath) {
-        File file = new File("c:\\\\upload" + filePath);	//넘어오는 값이 이미 upload를 붙이고 넘어오기 때문에 경로는 그냥 이대로 저장해도 될까..?
+        File file = new File("c:\\\\upload" + filePath);   //넘어오는 값이 이미 upload를 붙이고 넘어오기 때문에 경로는 그냥 이대로 저장해도 될까..?
         
         if (file.exists()) { // 파일이 존재하는지 확인
             return file.delete(); // 파일이 존재하면 삭제하고 결과를 반환
@@ -166,4 +166,3 @@ public class FileService {
     
     
 }
-

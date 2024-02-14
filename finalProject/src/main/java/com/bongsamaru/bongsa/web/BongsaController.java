@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.bongsa.service.BongsaService;
-import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 
 @Controller
 public class BongsaController {
@@ -27,8 +27,8 @@ public class BongsaController {
 	}
 
 	@GetMapping("/Group")
-	public String goToGroup(Model model) {
-		List<FacilityVO> list = userService.meetingList();
+	public String goToGroup(Model model, VolunteerVO vo) {
+		List<VolunteerVO> list = userService.meetingList(vo);
 		model.addAttribute("meet", list);
 		List<TagVO> tags = userService.tagList();
 		model.addAttribute("tag", tags);
