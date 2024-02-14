@@ -17,6 +17,7 @@ public interface MeetingMapper {
 	public List<VolMemVO> MemVolActList(Integer volId,String memId);
 	public List<VolMemVO> volCnt(Integer volId);
 	public int volActMemCnt(Integer volActId);
+	public int approveMeeting(VolMemVO vo);
 	public List<VolActVO> volActReviewListPaging(PageVO pageVO);
 	public int volActReviewListCnt(Integer volId);
 	public int findMember(Integer volId,String memId);

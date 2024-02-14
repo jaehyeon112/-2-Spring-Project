@@ -97,7 +97,7 @@ public class UserController {
 		List<VolunteerVO> list = userService.meetingList(volunteerVO);
 		model.addAttribute("meet", list);		
 		//모임의 태그
-		List<TagVO> tags = userService.tagList();
+		List<TagVO> tags = userService.tagList(null);
 		model.addAttribute("tag", tags);
 		
 		//진행중인 시설봉사 리스트
@@ -226,7 +226,7 @@ public class UserController {
 		List<VolunteerVO> list = userService.meetingList(vo);
 		model.addAttribute("meet", list);
 		
-		List<TagVO> tags = userService.tagList();
+		List<TagVO> tags = userService.tagList(null);
 		model.addAttribute("tag", tags);
 		
 		return "admin/volunteerList";

@@ -94,7 +94,6 @@ public class MeetingController {
 		volunteerVO.setRoomStat(1);
 		List<VolunteerVO> randomList = userService.meetingList(volunteerVO);
 		model.addAttribute("choose",randomList);
-		System.out.println(randomList);
 		return "meeting/meetings";
 	}
 	
@@ -103,6 +102,12 @@ public class MeetingController {
 //	public VolActVO volActMemCnt(@RequestParam(name="volActId") Integer volActId) {
 //		return service.volActMemCnt(volActId);
 //	}
+	
+	@PostMapping("approveMeeting")
+	@ResponseBody
+	public int approveMeeting(VolMemVO vo) {
+		return service.approveMeeting(vo);
+	}
 	
 	//레이아웃에서 아작스로 받기
 	@GetMapping("meetingInfo")
@@ -114,8 +119,8 @@ public class MeetingController {
 	//레이아웃에서 아작스로 받기
 	@GetMapping("meetingTag")
 	@ResponseBody
-	public List<TagVO> meetingTag() {
-		return userService.tagList();
+	public List<TagVO> meetingTag(TagVO vo) {
+		return userService.tagList(vo);
 	}
 	
 	//레이아웃에서 아작스로 받기

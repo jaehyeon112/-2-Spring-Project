@@ -32,6 +32,25 @@
 		where code = #{code}
 		and code_no = #{codeNo}
 	</delete>
+	<!-- 모임 가입하기 -->
+	<insert id="approveMeeting" parameterType="VolMemVO">
+		insert into vol_mem(
+			VOL_MEM_ID
+			,VOL_ID
+			,APP_CODE
+			,APP_DATE
+			,APP_REASON
+			,MEM_ID
+		)
+		values(
+			VOLMEMBER_SEQ.NEXTVAL
+			,#{volId}
+			,0
+			,sysdate
+			,#{appReason}
+			,#{memId}
+		)
+	</insert>
 	
 	<!-- 봉사활동게시판 -->
 	<select id="meetingVolActListCnt" resultType="int">
@@ -57,7 +76,7 @@
 				,EXPIRE_DATE
 			from vol_act
 			where vol_id = #{volId}
-			order by vol_date desc) A)
+			order by vol_date) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
 	<select id="findVolActNo" resultType="int">
@@ -262,8 +281,7 @@
 	<select id="findMember" resultType="int">
 		select count(*) 
 		from vol_mem 
-		where app_code=1
-		and vol_id = #{volId}
+		where vol_id = #{volId}
 		and mem_id = #{memId}
 	</select>
 	<!-- 회원별 봉사활동한 리스트 -->

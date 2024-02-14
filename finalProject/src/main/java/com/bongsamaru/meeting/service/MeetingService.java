@@ -13,6 +13,7 @@ import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingService {
 	public VolunteerVO meetingInfo(Integer volId);
+	public int approveMeeting(VolMemVO vo);
 	public int meetingVolActListCnt(Integer volId);
 	public List<VolActVO> meetingVolActListPaging(PageVO pageVO);
 	public List<VolMemVO> meetingMemList(Integer volId);

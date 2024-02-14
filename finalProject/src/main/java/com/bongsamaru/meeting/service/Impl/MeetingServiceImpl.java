@@ -160,5 +160,10 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.getBoardListCnt(volId);
 	}
 
+	@Override
+	public int approveMeeting(VolMemVO vo) {
+		return mapper.approveMeeting(vo);
+	}
+
 
 }

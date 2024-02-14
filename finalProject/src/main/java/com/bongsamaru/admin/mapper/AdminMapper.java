@@ -32,7 +32,7 @@ public interface AdminMapper {
 	public int getFaqCnt(PageVO pageVO);
 	public List<FacilityVO> getFacilityList();
 	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
-	public List<TagVO> tagList();
+	public List<TagVO> tagList(TagVO vo);
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
 	public List<DonledgerVO> DonationKing();
