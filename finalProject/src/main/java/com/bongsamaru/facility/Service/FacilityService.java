@@ -10,6 +10,7 @@ import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 
@@ -24,5 +25,9 @@ public interface FacilityService {
 	public List<VolunteerVO> getVolunteerList(String facId);
 	public List<DonaVO> getDonaList(String facId);
 	public int InsertFacVol(VolActVO volActVO);//시설이 봉사등록
+	public List<VolMemVO> getVolunteerAppList(Integer volActId);//봉사참여하겠다고 신청한 참여자리스트
+	public int volAppUpdate(Integer volActId, String memId);//참여 승인되서 업데이트
+	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
+	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	public List<VolActVO> getVolunteerJoinList(String facId);
 }

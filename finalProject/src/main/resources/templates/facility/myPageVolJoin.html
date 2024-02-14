@@ -10,114 +10,347 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <section layout:fragment="content">
 
 <div class="row hotel_booking_table">
-					<div class="col-md-3">
-                        <button type="button" data-toggle="modal"
-											data-target="#myModal">시설봉사 등록</button>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                       
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">봉사제목</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">봉사내용</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">봉사일시</p>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px" >신청자보기</p>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    
-                    </div>
-                 <div class="modal" tabindex="-1" id="myModal">
-				<div
-					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">봉사등록하기</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-
-
-							<div class="form-group">
-							
-								<input type="text" name="title" placeholder="제목을 작성해 주세요">
-								<textarea id="content" name="content" maxlength="500"></textarea>
-								<br>
-								<input type="text" name="location" placeholder="위치를 입력해주세요">
-								정원<input type="number" name="cap">
-								<br>
-								봉사일시<input type="date" id="volDate" name="volDate">
-								모집일시<input type="date" id="startDate" name="startDate"> <input type="date" id="expireDate" name="expireDate">
-								<label for="file-image" class="input-file-button">이미지첨부
-													<input type="file" name="uploadFiles" id="file-image"
-													style="display: none">
-												</label>
-							</div>
-
-						</div>
-						<div class="modal-footer">
-							
-							<button type="submit" class="btn btn-primary uploadBtn">등록하기
-								</button>
-						</div>
-					</div>
-
-				</div>
-			</div> 
-			
-	
-                    
-            <!--         <div class="col-md-3">
-                        <h2>기부신청<br>진행상황</h2>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                       
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                     <p ></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                      <p ></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                       <p ></p>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                          
-                        </div>
-                    </div> -->
+    <div class="col-md-3">
+                   <button type="button" data-toggle="modal"
+						data-target="#myModal">시설봉사 등록</button>
+    </div>
+<div class="col-md-9">
+    <div class="boking_table">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="book_tabel_item">
+                    <p style="color:black; font-size:26px">봉사제목</p>
+                </div>
+            </div>
+        <div class="col-md-2">
+            <div class="book_tabel_item">
+                <p style="color:black; font-size:26px">봉사내용</p>
+            </div>
+          </div>
+        <div class="col-md-2">
+            <div class="book_tabel_item">
+                <p style="color:black; font-size:26px">봉사일시</p>
               
-<script>
+            </div>
+        </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+              <p style="color:black; font-size:26px" >신청자보기</p>
+              
+           </div>
+       </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+              <p style="color:black; font-size:26px" >모집인원</p>
+              
+           </div>
+       </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+              <p style="color:black; font-size:26px" >모집상태</p>
+              
+           </div>
+       </div>
+   <th:block th:each="list: ${volList}">
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+            <p style="color:black; font-size:15px" th:text="${list.title}"></p>
+           </div>
+       </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item box">
+             <p class="content" style="color:black; font-size:15px"th:text="${list.content}"></p>
+           </div>
+       </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+              <p style="color:black; font-size:15px"th:text="${#dates.format(list.volDate, 'yyyy-MM-dd')}"></p>
+              
+           </div>
+       </div>
+       <div class="col-md-2">
+           <div class="book_tabel_item">
+             <!-- 클릭할 링크 -->
+<p style="color:black; font-size:15px">
+    <a id="showTable" th:onclick="showList([[${list.volActId}]])">신청자목록보기</a></p>
+          </div>
+      </div>
+      <div class="col-md-2">
+         <div class="book_tabel_item">
+              <p style="color:black; font-size:15px"th:text="${list.count}+'명/'+${list.cap}+'명'"></p>
+         </div>
+      </div>      
+      <div class="col-md-2">
+           <div class="book_tabel_item">
+              
+              <p style="color:black; font-size:15px" th:text="${list.cap > list.count ? '진행중' : '모집마감'}"></p>
+          </div>
+       </div>        
+                
+                </th:block>
+            </div>
+          
+        </div>
+    </div>
+    
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+                    
+<div class="row hotel_booking_table" id="hiddenTable" style="display:none;">
+  [[${volAppList}]]					
+<table class="table" >
+    <thead>
+     <tr>
+     <th>신청자</th>
+     <th>신청날짜</th>
+     <th>신청서보기</th>
+     <th>수락버튼</th>
+     <th>수락상태</th>
+     </tr>
+    </thead>
+   
+    <tbody id="showTableBody">
+    </tbody>
+   
+</table>
+             
+</div>
+                    
+
+                       
+                    
+ <!-- 시설이 봉사 신청하는 모달 -->                   
+    <div class="modal" tabindex="-1" id="myModal">
+	<div
+		class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">봉사등록하기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<div class="write_item user">
+					<div class="subheading">
+					<input class="form-control plus-bnt" type="text" name="title" placeholder="제목을 작성해 주세요">
+					<br>
+					<textarea class="form-control plus-bnt" id="content" name="content" maxlength="500" placeholder="내용을 작성해 주세요"></textarea>
+					<br>
+					
+					
+					<em class="highlight">*</em>주소
+					
+					<input id="zipCheck" readonly style="display: inline;" type="text" class="form-control" placeholder="우편번호">
+					<input id="addrBnt" type="button" class="btn btncolor" value="검색">
+					<div class="error-message" id="zipCheckError"></div>
+					<input id="addrCheck" readonly style="display: inline; margin-top: 10px" type="text"
+						class="form-control plus-bnt" placeholder="주소">
+					<input id="detailAddrCheck"  style="display: inline; margin-top: 10px" type="text"
+					class="form-control plus-bnt" placeholder="상세주소">
+					<div class="error-message" id="addrCheckError"></div>
+					정원<input class="form-control plus-bnt" type="number" name="cap">
+					<br>
+					봉사일시<input type="date" id="volDate" name="volDate">
+					<br>
+					<br>
+					모집일시<input type="date" id="startDate" name="startDate"> ~ <input type="date" id="expireDate" name="expireDate">
+					<br>
+					<br>
+					<br>
+					<label for="file-image" class="input-file-button">이미지첨부
+										<input type="file" name="uploadFiles" id="file-image"
+										style="display: none">
+									</label>
+				</div>
+				</div>
+				</div>
+			</div> <!-- class="modal-body" -->
+			<div class="modal-footer">
+				
+				<button type="submit" class="btn btn-primary uploadBtn">등록하기
+					</button>
+			</div>
+		</div>
+
+	</div>
+</div> 
+<!-- 시설이 신청자의 등록내용을 보기위한 모달 -->			
+	
+    <div class="modal" tabindex="-1" id="myModal2">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">신청내용보기</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+			    </div>
+			<div class="modal-body">
+				<div class="form-group">
+				[[${info}]]
+				</div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		    </div>
+	  </div>
+  </div>        
+           
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script>
+			// 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+			function addr() {
+				new daum.Postcode({
+					oncomplete: function (data) {
+						// 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소 변수
+						var roadAddr = data.roadAddress;
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있고, "동/로/가"로 끝난다면 추가
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있으면, 괄호까지 추가한 최종 문자열을 만듦
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣음
+						document.getElementById('zipCheck').value = data.zonecode;
+						document.getElementById("addrCheck").value = roadAddr;
+					}
+				}).open(); // 여기에 닫는 괄호를 추가함
+			}
+
+			// 주소 검색 버튼 클릭 이벤트에 addr 함수 연결
+			$('#addrBnt').on('click', addr);
+			            
+
+//봉사에대해 신청자 내역보기 클릭시 show할 부분
+function showList(id) {
+
+    // 이벤트의 기본 동작을 막음
+    // 숨겨진 테이블 요소를 가져와서 보여줌
+    var hiddenTable = document.getElementById("hiddenTable");
+    hiddenTable.style.display = "block"; // display 속성을 변경하여 보임
+    
+	$.ajax({
+		 url: '/VolAppList?volActId='+id,
+		 type: 'GET',
+		 success: function(result) {
+			 
+		       for(let i=0; i<result.length; i++){
+		    	   var date = new Date(result[i].appDate);
+		    	   console.log(result[i]);
+		    	   var appCodeText = result[i].appCode == 0 ? '승인 전' : '승인완료';
+				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+		    	   $("#showTableBody").append( 
+		                   `<tr><td>${result[i].memId}</td>
+		                   <td>${formattedDate}</td>
+		                   <td><button type="button" data-toggle="modal" data-target="#myModal2">신청서보기</button></td>
+						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}')">수락</button></td>
+						   <td> ${appCodeText}</td></tr>`
+		    		);
+		    		    
+		       }
+		 },
+		 error: function(err) {
+		        console.log(err);
+		 }
+	});
+};
+function clickApp(volActId, memId){
+	// 수정
+    $.ajax({
+         url: '/volAppUpdate',
+         type: 'POST',
+         data: {
+             volActId: volActId,
+             memId: memId
+         },
+         success: function(result) {
+             //alert('업데이트 성공');
+         },
+         error: function(err) {
+             console.log(err);
+         }
+    });
+    
+    // 등록
+    let info = {
+        volActId: volActId,
+        memId: memId
+    };
+    
+    $.ajax({
+         url: '/volAppInsert',
+         type: 'POST',
+         data: info,
+         success: function(result) {
+             alert('인서트 성공');
+           
+         },
+         error: function(err) {
+             console.log(err);
+         }
+    });
+		
+    // location.href = 'facilityMyPage/volJoin';
+} 
+
+//content의 내용을 10자만 보여주고 더보기... 하고싶
+$(document).ready(function(){
+
+    $('.box').each(function(){
+        var content = $(this).children('.content');
+        var content_txt = content.text();
+        var content_txt_short = content_txt.substring(0,100)+"...";
+        var btn_more = $('<a href="javascript:void(0)" class="more">더보기</a>');
+
+        
+        $(this).append(btn_more);
+        
+        if(content_txt.length >= 100){
+            content.html(content_txt_short)
+            
+        }else{
+            btn_more.hide()
+        }
+        
+        btn_more.click(toggle_content);
+        // 아래 bind가 안 되는 이유는??
+        // btn_more.bind('click',toggle_content);
+
+        function toggle_content(){
+            if($(this).hasClass('short')){
+                // 접기 상태
+                $(this).html('더보기');
+                content.html(content_txt_short)
+                $(this).removeClass('short');
+            }else{
+                // 더보기 상태
+                $(this).html('접기');
+                content.html(content_txt);
+                $(this).addClass('short');
+
+            }
+        }
+    });
+});
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
 			$('#myModal').on('show.bs.modal', function(e) {
@@ -155,7 +388,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 					 var formData = new FormData(); //FormData 객체 생성
 					formData.append("title", $("input[name=title]").val());
     				formData.append("content", $("textarea[name=content]").val());
-				    formData.append("location", $("input[name=location]").val());
+				    formData.append("location", $("input[id=addrCheck]").val() + $("input[id=detailAddrCheck]").val());
+				    formData.append("volZip", $("input[id=zipCheck]").val());
 				    formData.append("cap", $("input[name=cap]").val());
 				    formData.append("volDate", $("input[name=volDate]").val());
 				    formData.append("startDate", $("input[name=startDate]").val());

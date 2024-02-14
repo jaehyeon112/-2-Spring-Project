@@ -23,4 +23,7 @@ public class VolActVO {
 	private Date startDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	private Date expireDate;
+	//
+	private Integer count;
+	private Integer volZip;
 }

@@ -21,6 +21,7 @@ import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.SubCodeVO;
 import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.common.mapper.CommonMapper;
 import com.bongsamaru.dona.service.DonaVO;
@@ -151,11 +152,45 @@ public class facilityController {
 		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		// String facId = userDetails.getUsername();
-		List<VolActVO> list = facilityService.getVolunteerJoinList(principal.getName());
+		List<VolActVO> list = facilityService.getVolunteerJoinList( principal.getName());
 		model.addAttribute("volList", list);
+		log.info(list);
 		return "facility/myPageVolJoin";
 	}
-
+	
+	@GetMapping("/VolAppList")
+	@ResponseBody
+	public List<VolMemVO> getVolunteerAppList(Model model, Integer volActId) {
+		List<VolMemVO> listApp = facilityService.getVolunteerAppList(volActId);
+		model.addAttribute("volAppList", listApp);
+		
+		return listApp;
+	}
+	
+	@PostMapping("/volAppUpdate")
+	@ResponseBody
+	public int volAppUpdate(Model model, Integer volActId, String memId) {
+		int list = facilityService.volAppUpdate(volActId, memId);
+		//model.addAttribute("volAppUpd", list);
+		return list;
+	}
+	
+	@PostMapping("/volAppInsert")
+	
+	public int volAppInsert(Model model, VolMemVO volMemVO) {
+		int list = facilityService.volAppInsert(volMemVO);
+		//model.addAttribute("volAppIns", list);
+		return list;
+	}
+	
+	@GetMapping("/showJoin")
+	public VolMemVO getJoinApp(Model model, Integer volActId) {
+		VolMemVO info = facilityService.getJoinApp(volActId);
+		model.addAttribute("info", info);
+		return info; 
+	}
+	
+	
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody
