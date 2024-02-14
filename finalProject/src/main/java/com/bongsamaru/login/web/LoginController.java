@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -139,10 +141,9 @@ public class LoginController {
 		String ssn = vo.getMemSsn();
 		if(vo.getMemSsn() != null && vo.getMemSsn() != "") {
 			String encSsn = encrypt.encryptSsn(ssn);
-			byte[] encSsn2 = encrypt.stringToByteArray(encSsn);
+			
 			//암호화 된 주민번호
-			System.out.println(encSsn2);
-			vo.setMemSsn(Arrays.toString(encSsn2));
+			vo.setMemSsn(encSsn);
 		}
 		
 		List<String> categories = new ArrayList<>();
@@ -176,16 +177,23 @@ public class LoginController {
 	public String goToUserSignUp(Model model) {
 		List<UserCategoryVO> vo = userService.userCategoty();
 		model.addAttribute("category",vo);
-		System.out.println("FlashAttribute 'kakao': " + model.asMap().get("kakao"));
-		if (model.containsAttribute("kakao")) {
-	        // Flash attribute로부터 "kakao" 속성 사용
-	        String kakaoUserInfo = (String) model.asMap().get("kakao");
-	        System.out.println("있다 제발!!!!!!!!!!!!!!!!");
-	        // kakaoUserInfo를 사용하여 필요한 작업 수행
-	    }
-		System.out.println(model.getAttribute("kakao"));
-		System.out.println("확인해보자");
 		return "login/signup";
+	}
+	
+	@GetMapping("/socialsignup")
+	public String goTosocialsignup(HttpSession session, Model model) {
+		  String name = (String) session.getAttribute("name");
+		  String email = (String) session.getAttribute("email");
+		  String sub = (String) session.getAttribute("sub");
+		  String profile = (String) session.getAttribute("profile");
+		  model.addAttribute("name", name);
+		  model.addAttribute("email", email);
+		  model.addAttribute("sub", sub);
+		  model.addAttribute("profile", profile);
+		  List<UserCategoryVO> vo = userService.userCategoty();
+		  model.addAttribute("category",vo);
+		  
+		return "login/SocialSignUp";
 	}
 	
 	

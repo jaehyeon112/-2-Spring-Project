@@ -28,4 +28,7 @@ public class VolActVO {
 	private Date startDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	private Date expireDate;
+	private String path;
+	private Integer rn;
+	private String volZip2; 
 }

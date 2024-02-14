@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.bongsamaru.bongsa.mapper.BongsaMapper">
+ 
+ 	<select id="meetingList" resultType="VolunteerVO">
+		select meet_name
+				,vol_id
+				,cap
+				,region
+				,REC_PERIOD
+				,end_period
+				,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code=1) as meetingCnt
+        from volunteer
+        where room_stat=1
+	</select>
+	
+	<select id="tagList" resultType="TagVO">
+		select tag_content,
+				vol_id
+		from tag 
+		order by tag_id
+	</select>
+	<select id="facilityList" resultType="VolActVO">
+	SELECT * FROM (
+    SELECT  ROWNUM rn,
+            vol_act_id,
+            FAC_ID, 
+            select_sub(CATEGORY) as CATEGORY,
+            TITLE, 
+            CONTENT, 
+            LOCATION, 
+            CAP, 
+            VOL_DATE,
+            start_Date,
+            expire_Date,
+            select_sub(vol_zip2) as volZip2,
+            select_file(vol_act_id,'p14') as path
+    from vol_act
+    where fac_id is not null and expire_date > sysdate
+    <if test="category != null and category != '' ">    
+    and  CATEGORY = #{category}
+    </if>
+    <if test="volZip2 != null">
+    and vol_zip2 = #{volZip2}
+    </if> 
+    <if test="searchKeyword!=null and searchKeyword!='' ">
+        AND (title LIKE '%' || #{searchKeyword} || '%')		
+    </if>
+    order by expire_date)
+    where rn between #{start} and #{end}
+	</select>
+	
+	<select id="cntFacilityList" resultType="int">
+		select count(*)
+		from vol_act
+		where vol_id is null
+		<if test="category != null and category != '' ">    
+	    	AND CATEGORY = #{category}
+	    </if>	
+        <if test="searchKeyword!=null and searchKeyword!='' ">
+    	    AND (title LIKE '%' || #{searchKeyword} || '%')		
+   		</if>
+	</select>
+	
+ </mapper>

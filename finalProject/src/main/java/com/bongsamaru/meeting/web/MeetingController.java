@@ -144,7 +144,18 @@ public class MeetingController {
 								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		
 		int total = service.meetingVolActListCnt(volId);
+<<<<<<< HEAD
 		pvo = new PageVO(total, start, end, volId,null);
+=======
+		int startPage = (start == null) ? 1 : Integer.parseInt(start);
+        int endPage = (end == null) ? 10 : Integer.parseInt(end);
+		
+        if(searchKeyword == null) {
+        	pvo = new PageVO(total, startPage, endPage, category , 10);	            	
+        }else {
+        	pvo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
+        }
+>>>>>>> develop
         
 		List<VolActVO> list = service.meetingVolActListPaging(pvo);
 		req.getSession().setAttribute("id",volId);
@@ -228,7 +239,15 @@ public class MeetingController {
 								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		int total = service.getBoardListCnt(volId);
         
+<<<<<<< HEAD
         vo = new PageVO(total, start, end, volId,null);
+=======
+        if(searchKeyword == null) {
+        	vo = new PageVO(total, startPage, endPage, category, 10);	            	
+        }else {
+        	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
+        }
+>>>>>>> develop
         req.getSession().setAttribute("id",volId);
         
 		List<FreeBoardVO> list = service.getBoardList(vo);
@@ -245,6 +264,35 @@ public class MeetingController {
 		return "meeting/freeBoardList";
 	}
 	
+<<<<<<< HEAD
+=======
+	//봉사후기
+	@GetMapping("reviewBoardList")
+	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req
+								, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+								, @RequestParam(value="category", required = false)String category
+								, @RequestParam(value="start", required = false)String start
+								, @RequestParam(value="end", required = false)String end) {
+		int total = service.volActReviewListCnt(volId);
+		int startPage = (start == null) ? 1 : Integer.parseInt(start);
+		int endPage = (end == null) ? 10 : Integer.parseInt(end);
+		
+		if(searchKeyword == null) {
+			vo = new PageVO(total, startPage, endPage, category, 10);	            	
+		}else {
+			vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
+		}
+		
+		List<VolActVO> list = service.volActReviewListPaging(vo);
+		req.getSession().setAttribute("id",volId);
+		model.addAttribute("board",list);
+		model.addAttribute("vo",vo);
+		model.addAttribute("category",category);
+		
+		return "meeting/reviewBoardList";
+	}
+	
+>>>>>>> develop
 	//자유게시판 작성폼
 	@GetMapping("freeBoardInsertPage")
 	public String freeBoardInsertPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {

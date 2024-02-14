@@ -402,7 +402,7 @@ public class UserController {
 		int total = userService.getBoardCnt(vo);
         
       
-        vo = new PageVO(total, start, end, category,searchKeyword);
+        vo = new PageVO(total, start, end, category,searchKeyword,10);
        
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("boardList",list);
@@ -445,7 +445,7 @@ public class UserController {
 		
 		int total = userService.getFaqCnt(vo);
         
-        vo = new PageVO(total, start, end, category);	            	
+        vo = new PageVO(total, start, end, category,10);	            	
      	
 		List<FaqVO> list = userService.getFaqList(vo);
 		model.addAttribute("vo",vo);
