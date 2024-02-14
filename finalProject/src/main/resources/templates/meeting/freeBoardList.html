@@ -41,11 +41,11 @@
 				 	<th:block th:each="board,st : ${board}" >
 						<tr>
 							 <td th:text="${st.count}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&detailCate=[[${board.detailCate}]]'" th:if="${userId}==${board.memId}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&detailCate=[[${board.detailCate}]]'" th:if="${userId}!=${board.memId}">제목</td>
-							 <td th:text="${board.memId}" >작성자</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}==${board.writer}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}!=${board.writer}">제목</td>
+							 <td th:text="${board.writer}" >작성자</td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy/MM/dd')}" >날짜</td>
-							 <td th:text="${board.views}" >조회수</td>
+							 <td th:text="${board.viewCnt}" >조회수</td>
 						</tr>
 					</th:block>
 				</tbody>
@@ -54,16 +54,16 @@
 			    <ul class="pagination justify-content-center">
 			        <!-- 이전 버튼 -->
 			        <li class="page-item" th:if="${vo.prev}">
-			            <a class="page-link" th:href="@{/freeBoardList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},category=b03)}">이전</a>
+			            <a class="page-link" th:href="@{/freeBoardList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},volId=${session.id})}">이전</a>
 			        </li>
 			        <!-- 페이지 번호 출력 -->
 			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-			            <a class="page-link" th:href="@{/freeBoardList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},category=b03)}"
+			            <a class="page-link" th:href="@{/freeBoardList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},volId=${session.id})}"
 			               th:text="${pageNum}"></a>
 			        </li>
 			        <!-- 다음 버튼 -->
 			        <li class="page-item" th:if="${vo.next}">
-			            <a class="page-link" th:href="@{/freeBoardList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage}, category=b03)}">다음</a>
+			            <a class="page-link" th:href="@{/freeBoardList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},volId=${session.id})}">다음</a>
 			        </li>
 			    </ul>
 			</nav>

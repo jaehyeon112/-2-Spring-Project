@@ -54,7 +54,7 @@ public interface AdminService {
 	public List<FilesVO> selectFile(String codeNo);
 	public int delFile(String filePath);
 	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
-	public List<TagVO> tagList();
+	public List<TagVO> tagList(TagVO vo);
 	public List<VolunteerVO> facVolunteerList();
 	public List<VolunteerVO> memMeetList(String memId);
 	public List<DonaVO> donationLedgerList(String recStat);

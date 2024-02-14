@@ -182,8 +182,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<TagVO> tagList() {
-		return userMapper.tagList();
+	public List<TagVO> tagList(TagVO vo) {
+		return userMapper.tagList(vo);
 	}
 
 	@Override
