@@ -63,6 +63,9 @@
   		<option value="">==봉사유형==</option>
   		<option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
   	</select>
+  	<!-- 날짜 검색할것;; -->
+  	<input type="date" id="startDate" class="date-input" onchange="search()">
+    <input type="date" id="endDate" class="date-input" onchange="search()">
   	  </div>
   	<!-- 여기 수직선상에 검색인풋태그를 만들고 싶음. 또 옆에는 처음 화면으로 돌아가는 초기화 버튼도 만들고 싶음 -->
   	<div>

@@ -23,8 +23,10 @@
 		from tag 
 		order by tag_id
 	</select>
-	<select id="facilityList" resultType="VolActVO">
-	SELECT * FROM (
+
+	
+<select id="facilityList" resultType="VolActVO">
+SELECT * FROM (
     SELECT  ROWNUM rn,
             vol_act_id,
             FAC_ID, 
@@ -40,18 +42,35 @@
             select_file(vol_act_id,'p14') as path
     from vol_act
     where fac_id is not null and expire_date > sysdate
-    <if test="category != null and category != '' ">    
-    and  CATEGORY = #{category}
+    
+    <if test="pageVO.category != null and pageVO.category != '' ">    
+    and  CATEGORY = #{pageVO.category}
     </if>
-    <if test="volZip2 != null">
-    and vol_zip2 = #{volZip2}
+    
+    <if test="pageVO.volZip2 != null">
+    and vol_zip2 = #{pageVO.volZip2}
     </if> 
-    <if test="searchKeyword!=null and searchKeyword!='' ">
-        AND (title LIKE '%' || #{searchKeyword} || '%')		
+    
+ 
+	
+	<if test="startDate != null">
+	    AND start_Date >= #{startDate} 
+	</if>
+
+	<if test="endDate != null">
+		and expire_date <![CDATA[
+<=
+]]>  #{endDate}	
+	</if>
+	
+
+     <if test="pageVO.searchKeyword != null and pageVO.searchKeyword != ''">
+        AND (title LIKE '%' || #{pageVO.searchKeyword} || '%')      
     </if>
     order by expire_date)
-    where rn between #{start} and #{end}
-	</select>
+where rn between #{pageVO.start} and #{pageVO.end}
+</select>
+
 	
 	<select id="cntFacilityList" resultType="int">
 		select count(*)
