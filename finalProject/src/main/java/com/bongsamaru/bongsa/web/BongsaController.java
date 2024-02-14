@@ -31,16 +31,31 @@ public class BongsaController {
 	CommonService commonService;
 	
 	@GetMapping("/daily")
-	public String goToDaily() {
+	public String goToDaily(PageVO vo, Model model,
+	        @RequestParam(value="searchKeyword", required = false) String searchKeyword,
+	        @RequestParam(value="category", required = false) String category,
+	        @RequestParam(value="location", required = false) String zip,
+	        @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+	        @RequestParam(value="end", required = false, defaultValue = "8") Integer end) {
 		return "bongsa/DailyVol";
 	}
 
 	@GetMapping("/Group")
-	public String goToGroup(Model model, VolunteerVO vo) {
-		List<VolunteerVO> list = userService.meetingList(vo);
-		model.addAttribute("meet", list);
-		List<TagVO> tags = userService.tagList();
-		model.addAttribute("tag", tags);
+	public String goToGroup(PageVO vo, Model model,
+	        @RequestParam(value="searchKeyword", required = false) String searchKeyword,
+	        @RequestParam(value="category", required = false) String category,
+	        @RequestParam(value="location", required = false) String zip,
+	        @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+	        @RequestParam(value="end", required = false, defaultValue = "8") Integer end) {
+	    // 필터링 조건 설정
+	    if (category != null && !category.isEmpty()) {
+	        vo.setCategory(category);
+	    }
+	    if (zip != null && !zip.isEmpty()) {
+	        vo.setVolZip2(zip);
+	    }
+
+		
 		return "bongsa/GroupVol";
 	}
 	@GetMapping("/FacilityVol")
