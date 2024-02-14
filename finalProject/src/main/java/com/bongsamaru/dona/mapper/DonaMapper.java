@@ -58,6 +58,9 @@ public interface DonaMapper {
 		
 	//기부후기등록2
 		public int insertReviewDetail(DonaVO donaVO);
+		
+	//기부후기 개별
+		public DonaVO getDonaReview(Integer donId);
 	
 	//결제프로세스
 	 public int paymentProcess(DonaVO donaVO);

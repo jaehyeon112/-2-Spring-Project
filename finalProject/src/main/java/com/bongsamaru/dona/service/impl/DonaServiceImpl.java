@@ -110,6 +110,12 @@ public class DonaServiceImpl implements DonaService {
 	}
 
 	
+	//후기 조회
+	@Override
+	public DonaVO getDonaReview(Integer donId) {
+		return donaMapper.getDonaReview(donId);
+	}
+	
 	//결제프로세스	
 		@Override
 		public int paymentProcess(DonaVO donaVO) {

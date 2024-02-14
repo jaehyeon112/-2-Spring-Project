@@ -46,6 +46,10 @@ public class DonaController {
 
 	@Autowired
 	MailUtil mail;
+	
+	
+	
+	
 
 	/**
 	 * 전체 기부 리스트(모집중, 모집완료), 카테고리 리스트
@@ -63,7 +67,7 @@ public class DonaController {
 //		model.addAttribute("recruitList", recruitList);
 //		model.addAttribute("completedList", completedList);
 
-		String h = "h"; //** 변수이름 기부유형으로 정해놓기
+		String h = "f"; //** 변수이름 기부유형으로 정해놓기
 		List<DonaVO> categoryList = donaService.getCategoryList(h);
 		model.addAttribute("categoryList", categoryList);
 
@@ -111,7 +115,13 @@ public class DonaController {
 		// 댓글리스트
 		List<DonaVO> commentList = donaService.getCommentList(donId);
 		model.addAttribute("comment", commentList);
-
+		
+		//후기글
+		DonaVO rev = donaService.getDonaReview(donId);
+		System.out.println("======================");
+		System.out.println(rev);
+		model.addAttribute("rlist", rev);
+		
 		// 랜덤
 		List<DonaVO> random = donaService.selectRecruitingItems();
 		model.addAttribute("randomlist", random);
@@ -247,7 +257,7 @@ public class DonaController {
 	// 등록폼 이동
 	@GetMapping("/form")
 	public String openRegitform(Model model) {
-		String h = "h";
+		String h = "f";
 		List<DonaVO> categoryList = donaService.getCategoryList(h);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("donaVO", new DonaVO()); // 빈개체 추가
@@ -324,10 +334,16 @@ public class DonaController {
 		return "redirect:my/mapage";
 	}
 
-	// 템플릿 놔둔곳... 입니다.. (삭제)
-	// 기부신청폼22
-	@GetMapping("/applyform2")
-	public String openapplyform2(Model model) {
-		return "donation/applyDona";
-	}
+					// 템플릿 놔둔곳... 입니다.. (삭제)
+					// 기부신청폼22
+					@GetMapping("/applyform2")
+					public String openapplyform2(Model model) {
+						return "donation/applyDona";
+					}
+					
+					// 일단-모달창
+					@GetMapping("/extmodal")
+					public String openModal(Model model) {
+						return "donation/extension";
+					}
 }

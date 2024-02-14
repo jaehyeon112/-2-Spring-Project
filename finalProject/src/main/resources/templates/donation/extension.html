@@ -3,12 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>모달</title>
     <!-- 부트스트랩 링크 추가 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
+	<div class="container">
+	<p>연장기한 모달..</p>
+	<button type="button">버 튼 </button>
+	</div>
+	
     <div class="modal fade" id="extendDeadlineModal" tabindex="-1" role="dialog" aria-labelledby="extendDeadlineModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -50,7 +55,7 @@
         // 기한 연장 처리 함수
         function extendDeadline() {
             // 선택된 기한 값 가져오기
-            var newDeadlineValue = document.getElementById("newDeadline").value;
+            let newDeadlineValue = document.getElementById("newDeadline").value;
             // 여기에서 기한 연장 처리 로직 추가
             console.log("새로운 기한:", newDeadlineValue);
             // 모달 닫기
