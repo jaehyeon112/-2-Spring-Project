@@ -48,6 +48,8 @@ public class PasswordEncodeTest {
 		System.out.println(vo + "주민번호는?");
 		String ssn = vo;
 			String encSsn = enc.encryptSsn(ssn);
+			System.out.println(encSsn + "!!!");
+		
 			byte[] encSsn2 = enc.stringToByteArray(encSsn);
 			// 암호화 된것
 			System.out.println();

@@ -141,9 +141,9 @@ public class MeetingController {
         int endPage = (end == null) ? 10 : Integer.parseInt(end);
 		
         if(searchKeyword == null) {
-        	pvo = new PageVO(total, startPage, endPage, category);	            	
+        	pvo = new PageVO(total, startPage, endPage, category , 10);	            	
         }else {
-        	pvo = new PageVO(total, startPage, endPage, category,searchKeyword);
+        	pvo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
         }
         
 		List<VolActVO> list = service.meetingVolActList(volId);
@@ -174,9 +174,9 @@ public class MeetingController {
         int endPage = (end == null) ? 10 : Integer.parseInt(end);
         
         if(searchKeyword == null) {
-        	vo = new PageVO(total, startPage, endPage, category);	            	
+        	vo = new PageVO(total, startPage, endPage, category, 10);	            	
         }else {
-        	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+        	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
         }
         req.getSession().setAttribute("id",volId);
         
@@ -206,9 +206,9 @@ public class MeetingController {
 		int endPage = (end == null) ? 10 : Integer.parseInt(end);
 		
 		if(searchKeyword == null) {
-			vo = new PageVO(total, startPage, endPage, category);	            	
+			vo = new PageVO(total, startPage, endPage, category, 10);	            	
 		}else {
-			vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+			vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
 		}
 		
 		List<VolActVO> list = service.volActReviewListPaging(vo);

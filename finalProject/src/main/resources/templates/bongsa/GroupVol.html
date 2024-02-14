@@ -7,8 +7,10 @@
 </head>
 <body>
   <section layout:fragment="content">
+  	<div class="row">
+	  <div class="side col-2" th:insert="~{bongsa/sidebar::side}"></div>
+	  <div class="col-10">
   	<div class="container-fluid">
-	  <h2>봉사 프로젝트</h2>
 		<div style="float:right;color:black" class="cur">
 	</div>
 	<div id="tableData">
@@ -43,6 +45,8 @@
 	          </div>
 	        </div>
         </div>
+      </div>
+      </div>
       </div>
       </div>
   </section>

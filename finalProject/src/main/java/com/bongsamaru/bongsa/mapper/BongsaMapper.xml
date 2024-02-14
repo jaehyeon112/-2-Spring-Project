@@ -24,21 +24,42 @@
 		order by tag_id
 	</select>
 	<select id="facilityList" resultType="VolActVO">
-		    SELECT
-	            vol_act_id,
-	            FAC_ID, 
-	            CATEGORY,
-	            TITLE, 
-	            CONTENT, 
-	            LOCATION, 
-	            CAP, 
-	            VOL_DATE,
-	            start_Date,
-            	expire_Date,
-	            select_file(vol_act_id,'p14') as path
-        from vol_act
-        where fac_id is not null
-        order by vol_act_id
+	SELECT * FROM (
+    SELECT  ROWNUM rn,
+            vol_act_id,
+            FAC_ID, 
+            select_sub(CATEGORY) as CATEGORY,
+            TITLE, 
+            CONTENT, 
+            LOCATION, 
+            CAP, 
+            VOL_DATE,
+            start_Date,
+            expire_Date,
+            select_sub(vol_zip2) as volZip2,
+            select_file(vol_act_id,'p14') as path
+    from vol_act
+    where fac_id is not null and expire_date > sysdate
+    <if test="category != null and category != '' ">    
+    and  CATEGORY = #{category}
+    </if>
+    <if test="searchKeyword!=null and searchKeyword!='' ">
+        AND (title LIKE '%' || #{searchKeyword} || '%')		
+    </if>
+    order by expire_date)
+    where rn between #{start} and #{end}
+	</select>
+	
+	<select id="cntFacilityList" resultType="int">
+		select count(*)
+		from vol_act
+		where vol_id is null
+		<if test="category != null and category != '' ">    
+	    	AND CATEGORY = #{category}
+	    </if>	
+        <if test="searchKeyword!=null and searchKeyword!='' ">
+    	    AND (title LIKE '%' || #{searchKeyword} || '%')		
+   		</if>
 	</select>
 	
  </mapper>

@@ -141,10 +141,9 @@ public class LoginController {
 		String ssn = vo.getMemSsn();
 		if(vo.getMemSsn() != null && vo.getMemSsn() != "") {
 			String encSsn = encrypt.encryptSsn(ssn);
-			byte[] encSsn2 = encrypt.stringToByteArray(encSsn);
+			
 			//암호화 된 주민번호
-			System.out.println(encSsn2);
-			vo.setMemSsn(Arrays.toString(encSsn2));
+			vo.setMemSsn(encSsn);
 		}
 		
 		List<String> categories = new ArrayList<>();

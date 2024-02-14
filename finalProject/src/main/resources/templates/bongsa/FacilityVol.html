@@ -4,27 +4,63 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.page-item.active .page-link {
+    z-index: 2;
+    color: #fff;
+    background-color: #ffb524;
+    border-color: #ffb524;
+}
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: black;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+</style>
+
 </head>
+
 <body>
   <section layout:fragment="content">
+  	  <div th:text="${fac}"></div>
+  <div class="row">
+  	<div class="side col-2" th:insert="~{bongsa/sidebar::side}"></div>
+	<div class="col-10">
+  <div>
+  	<select class="btn  dropdown-toggle" style="background-color: #ffb524; color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  		<option>==지역==</option>
+  		<option th:each="location:${location}" th:text="${location.value}"> </option>
+  	</select>
+  	<select  class="btn  dropdown-toggle" style="background-color: #ffb524; color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  		<option>==봉사유형==</option>
+  		<option th:each="cate:${cate}" th:text="${cate.value}"> </option>
+  	</select>
+  </div>
 	<div id="tableData">
 		<div id="meetVolList">
 		<br>
 	        <div class="row">
-	          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="fac : ${fac}">
-	            <div class="card overflow-hidden rounded-2">
+	          <div class="col-sm-6 col-xl-3" style="color:black; width:25%;" th:each="fac ,stat : ${fac}">
+	            <div class="card overflow-hidden rounded-2" style=" margin-bottom: 20px;">
 	              <div class="position-relative">
-	                <a><img th:src="@{${fac.path}}" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+	                <a><img th:src="@{${fac.path}}" class="card-img-top rounded-0" alt="..." style="height:200px;"></a>
 	              </div>
 	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
-				    <span>모집중[[${fac.volActId}]]</span><br>
+				    <span>모집중[[${fac.rn}]]</span><br>
 					</div>
 	               <div class="d-flex align-items-center justify-content-between">
 		            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 		                <h4><a th:text="${fac.title}">동아리명</a></h4>
 		                <a href="#" style="color:gray">
-						   <span >지역할거임</span>
-						   <span >관심분야할거임 </span>
+						   <span th:text="|#${fac.volZip2}|">지역할거임</span>
+						   <span th:text="|#${fac.category}|">관심분야할거임 </span>
 						</a>
 						<br>
 						<Strong><span>모집기간</span></Strong>
@@ -40,6 +76,42 @@
 	        </div>
         </div>
       </div>
+      <nav style="margin-top:50px;" aria-label="Page navigation example" th:if="${fac.size} != 0">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/FacilityVol(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, category=${category})}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/FacilityVol(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage}, category=${category})}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/FacilityVol(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage}, category=${category})}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</div>
+		</div>
+<script th:inline="javascript">
+let vo = [[${vo}]];
+
+function select(category) {
+    console.log(category);
+    
+ 
+    $.ajax({
+        url: `/FacilityVol?category=${category}`,
+        type: "GET",
+        success: function(result) {
+            window.location.href = `/faq?category=${category}`;
+        }	
+    });
+}
+
+</script>
   </section>
 </body>
 </html>

@@ -6,20 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.bongsa.service.BongsaService;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.common.service.CommonService;
+
+import lombok.extern.log4j.Log4j2;
 
 @Controller
+@Log4j2
 public class BongsaController {
 	@Autowired
 	AdminService userService;
 	
 	@Autowired
 	BongsaService bongsaService;
+	
+	@Autowired
+	CommonService commonService;
 	
 	@GetMapping("/daily")
 	public String goToDaily() {
@@ -36,10 +45,27 @@ public class BongsaController {
 	}
 	
 	@GetMapping("/FacilityVol")
-	public String goToFacility(Model model) {
-		List<VolActVO> list = bongsaService.facilityList();
-		model.addAttribute("fac", list);
+	public String goToFacility(PageVO vo, Model model
+		 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+		 	, @RequestParam(value="category", required = false)String category
+			, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+			, @RequestParam(value="end", required = false,defaultValue = "8")Integer end) {
 		
+		
+		int total = bongsaService.cntFacilityList(vo);
+		
+        if(searchKeyword == null) {
+         	vo = new PageVO(total, start, end, category, 8);	            	
+         }else {
+         	vo = new PageVO(total, start, end, category,searchKeyword,8);
+         }
+		
+		List<VolActVO> list = bongsaService.facilityList(vo);
+		log.info(vo);
+		model.addAttribute("cate", commonService.selectSubCode("f"));
+		model.addAttribute("fac", list);
+		model.addAttribute("vo", vo);
+		model.addAttribute("location", commonService.selectSubCode("z"));
 		return "bongsa/FacilityVol";
 	}
 	
