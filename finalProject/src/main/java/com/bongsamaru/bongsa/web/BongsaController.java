@@ -43,30 +43,33 @@ public class BongsaController {
 		model.addAttribute("tag", tags);
 		return "bongsa/GroupVol";
 	}
-	
 	@GetMapping("/FacilityVol")
-	public String goToFacility(PageVO vo, Model model
-		 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
-		 	, @RequestParam(value="category", required = false)String category
-			, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
-			, @RequestParam(value="end", required = false,defaultValue = "8")Integer end) {
-		
-		
-		int total = bongsaService.cntFacilityList(vo);
-		
-        if(searchKeyword == null) {
-         	vo = new PageVO(total, start, end, category, 8);	            	
-         }else {
-         	vo = new PageVO(total, start, end, category,searchKeyword,8);
-         }
-		
-		List<VolActVO> list = bongsaService.facilityList(vo);
-		log.info(vo);
-		model.addAttribute("cate", commonService.selectSubCode("f"));
-		model.addAttribute("fac", list);
-		model.addAttribute("vo", vo);
-		model.addAttribute("location", commonService.selectSubCode("z"));
-		return "bongsa/FacilityVol";
+	public String goToFacility(PageVO vo, Model model,
+	        @RequestParam(value="searchKeyword", required = false) String searchKeyword,
+	        @RequestParam(value="category", required = false) String category,
+	        @RequestParam(value="location", required = false) String zip,
+	        @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+	        @RequestParam(value="end", required = false, defaultValue = "8") Integer end) {
+
+	    // 필터링 조건 설정
+	    if (category != null && !category.isEmpty()) {
+	        vo.setCategory(category);
+	    }
+	    if (zip != null && !zip.isEmpty()) {
+	        vo.setVolZip2(zip);
+	    }
+	    log.info(zip);
+	    
+	    // 전체 개수 조회
+	    int total = bongsaService.cntFacilityList(vo);
+	    vo = new PageVO(total, start, end, category, searchKeyword, 8 ,zip);
+	    List<VolActVO> list = bongsaService.facilityList(vo);
+	    log.info(vo);
+	    model.addAttribute("cate", commonService.selectSubCode("f"));
+	    model.addAttribute("fac", list);
+	    model.addAttribute("vo", vo);
+	    model.addAttribute("location", commonService.selectSubCode("z"));
+	    return "bongsa/FacilityVol";
 	}
 	
 }

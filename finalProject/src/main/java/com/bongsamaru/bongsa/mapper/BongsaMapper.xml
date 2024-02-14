@@ -43,6 +43,9 @@
     <if test="category != null and category != '' ">    
     and  CATEGORY = #{category}
     </if>
+    <if test="volZip2 != null">
+    and vol_zip2 = #{volZip2}
+    </if> 
     <if test="searchKeyword!=null and searchKeyword!='' ">
         AND (title LIKE '%' || #{searchKeyword} || '%')		
     </if>
