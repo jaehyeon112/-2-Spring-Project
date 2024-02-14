@@ -54,7 +54,6 @@ public class UserController {
 	//@Scheduled(cron = "0 0 0 * * *")
 	public void sendMailing() {
 		List<RemittanceVO> remList = userService.remittanceList();
-		System.out.println();
 		for(RemittanceVO vo : remList) {
 			if(vo.getChecking()==null) {
 				MailVO mailvo = new MailVO();

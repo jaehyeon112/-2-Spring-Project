@@ -84,8 +84,8 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                           <a th:href="@{../meetings(volId=${session.id})}" class="nav-item nav-link">Home</a>
                           <a th:href="@{../meetingInfoPage(volId=${session.id})}" class="nav-item nav-link">동아리소개</a>
                           <a th:href="@{../volBoardList(volId=${session.id})}" class="nav-item nav-link">봉사게시판</a>
-                          <a th:href="@{../reviewBoardList(volId=${session.id})}" class="nav-item nav-link">후기게시판</a>
-                          <a th:href="@{../freeBoardList(category=b03,volId=${session.id})}" class="nav-item nav-link">자유게시판</a>
+                          <a th:href="@{../reviewBoardList(volId=${session.id})}" class="nav-item nav-link" style="display:block" id="reviewBoard">후기게시판</a>
+                          <a th:href="@{../freeBoardList(volId=${session.id})}" class="nav-item nav-link">자유게시판</a>
                           <div class="nav-item dropdown">
                               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
                               <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -170,7 +170,8 @@ $.ajax('../meetingInfo?volId='+[[${session.id}]])
 	}
 	$("#meetingName").text(result.meetName);
 	  if(result.meetType=='e01'){
-	   	  $("#meetingType").text('일일봉사모임');    			  
+	   	  $("#meetingType").text('일일봉사모임');
+	   	  $('#reviewBoard').css('display','none');
 	  }else if(result.meetType=='e02'){
 		  $("#meetingType").text('동아리모임');
 	  }
