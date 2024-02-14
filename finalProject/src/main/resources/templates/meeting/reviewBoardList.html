@@ -3,6 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{meeting/meetingLayout}">
 <head>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
 <meta charset="UTF-8">
 <title>후기게시판</title>
 </head>
@@ -15,9 +20,8 @@
 		<br>
 			<th:block th:if="${board.size} == 0">
 			<div style="text-align:center;">
-				<h5>현재 등록된 게시글이 없습니다. 첫글을 등록해보세요!</h5>
+				<h5>현재 등록된 게시글이 없습니다.</h5>
 				<br>
-				<button class="btn btn-outline-secondary m-1">등록하기</button>
 			</div>
 			</th:block>
 			<th:block th:if="${board.size} != 0">
@@ -26,7 +30,7 @@
 					<tr>
 						<th>No.</th>
 						<th>봉사번호</th>
-						<th>제목</th>
+						<th>봉사제목</th>
 						<th>작성자</th>
 						<th>작성날짜</th>
 					</tr>
@@ -34,9 +38,9 @@
 				<tbody>
 				 	<th:block th:each="board,st : ${board}" >
 						<tr>
-							 <td th:text="${st.count}">제목</td>
-							 <td th:text="${board.volActId}" >제목</td>
-							 <td th:text="${board.title}" >제목</td>
+							 <td th:text="${st.count}">No</td>
+							 <td th:text="${board.volActId}">봉사번호</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../ReviewInfo?volId=[[${session.id}]]&reviewId=[[${board.reviewId}]]'">제목</td>
 							 <td th:text="${board.writer}" >작성자</td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy/MM/dd')}" >날짜</td>
 						</tr>
@@ -51,7 +55,7 @@
 			        </li>
 			        <!-- 페이지 번호 출력 -->
 			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-			            <a class="page-link" th:href="@{/reviewBoardList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},volId=${session.id})})}"
+			            <a class="page-link" th:href="@{/reviewBoardList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},volId=${session.id})}"
 			               th:text="${pageNum}"></a>
 			        </li>
 			        <!-- 다음 버튼 -->

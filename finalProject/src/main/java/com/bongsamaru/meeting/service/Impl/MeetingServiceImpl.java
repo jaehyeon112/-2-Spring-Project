@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
@@ -27,11 +29,6 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public List<VolActVO> meetingVolActList(Integer volId) {
-		return mapper.meetingVolActList(volId);
-	}
-
-	@Override
 	public List<VolMemVO> meetingMemList(Integer volId) {
 		return mapper.meetingMemList(volId);
 	}
@@ -42,7 +39,7 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public VolActVO volActMemCnt(Integer volActId) {
+	public int volActMemCnt(Integer volActId) {
 		return mapper.volActMemCnt(volActId);
 	}
 
@@ -72,18 +69,13 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public List<VolActVO> volActReviewList(Integer volId) {
-		return mapper.volActReviewList(volId);
-	}
-
-	@Override
 	public String findFile(String code,Integer codeNo) {
 		return mapper.findFile(code,codeNo);
 	}
 
 	@Override
-	public int insertBoard(BoardVO boardVO) {
-		return mapper.insertBoard(boardVO);
+	public int insertBoard(FreeBoardVO vo) {
+		return mapper.insertBoard(vo);
 	}
 
 	@Override
@@ -92,20 +84,85 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public BoardVO freeBoardInfo(Integer detailCate) {
-		return mapper.freeBoardInfo(detailCate);
+	public FreeBoardVO freeBoardInfo(FreeBoardVO vo) {
+		return mapper.freeBoardInfo(vo);
 	}
 
 	@Override
-	public int updateFreeBoard(BoardVO vo) {
+	public int updateFreeBoard(FreeBoardVO vo) {
 		return mapper.updateFreeBoard(vo);
 	}
 
 	@Transactional
 	@Override
-	public int deleteFreeBoard(Integer detailCate) {
-		mapper.delFile("p13",detailCate);
-		return mapper.deleteFreeBoard(detailCate);
+	public int deleteFreeBoard(Integer volId,Integer boardNo) {
+		mapper.delFile("p13",boardNo);
+		return mapper.deleteFreeBoard(volId,boardNo);
+	}
+
+	@Override
+	public List<VolMemVO> MemVolActList(Integer volId, String memId) {
+		return mapper.MemVolActList(volId, memId);
+	}
+
+	@Override
+	public VolActVO volActInfo(VolActVO vo) {
+		return mapper.volActInfo(vo);
+	}
+
+	@Override
+	public int findReviewNo() {
+		return mapper.findReviewNo();
+	}
+
+	@Override
+	public int insertReview(VolActReviewVO vo) {
+		return mapper.insertReview(vo);
+	}
+
+	@Override
+	public VolActReviewVO ReviewInfo(VolActReviewVO vo) {
+		return mapper.ReviewInfo(vo);
+	}
+
+	@Override
+	public int delReview(Integer reviewId) {
+		return mapper.delReview(reviewId);
+	}
+
+	@Override
+	public VolActVO volActBoardInfo(Integer volActId) {
+		return mapper.volActBoardInfo(volActId);
+	}
+
+	@Override
+	public int insertVolAct(VolActVO vo) {
+		return mapper.insertVolAct(vo);
+	}
+
+	@Override
+	public int delVolActBoard(Integer volActId) {
+		return mapper.delVolActBoard(volActId);
+	}
+
+	@Override
+	public int findVolActNo() {
+		return mapper.findVolActNo();
+	}
+
+	@Override
+	public List<FreeBoardVO> getBoardList(PageVO pageVO) {
+		return mapper.getBoardList(pageVO);
+	}
+
+	@Override
+	public int getBoardListCnt(Integer volId) {
+		return mapper.getBoardListCnt(volId);
+	}
+
+	@Override
+	public int approveMeeting(VolMemVO vo) {
+		return mapper.approveMeeting(vo);
 	}
 
 

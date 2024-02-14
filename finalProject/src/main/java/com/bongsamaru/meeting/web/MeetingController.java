@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.TagVO;
+import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
@@ -43,11 +45,11 @@ public class MeetingController {
 	 * @return
 	 */
 	@GetMapping("meetings")
-	public String meetings(@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
+	public String meetings(PageVO pvo,@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
 		 if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
 		 } else {
-	        System.out.println("User is not logged in.");
+			model.addAttribute("userId","익명");
 		 }
 		 
 		req.getSession().setAttribute("id",volId);
@@ -55,7 +57,8 @@ public class MeetingController {
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
 		
-		List<VolActVO> list = service.meetingVolActList(volId);
+		pvo = new PageVO(10, 1, 10, volId,null);
+		List<VolActVO> list = service.meetingVolActListPaging(pvo);
 		model.addAttribute("act",list);
 		
 		List<VolMemVO> member = service.meetingMemList(volId);
@@ -64,19 +67,20 @@ public class MeetingController {
 		List<VolMemVO> cnt = service.volCnt(volId);
 		model.addAttribute("cnt",cnt);
 		
+		
 		Date today = new Date();
 		model.addAttribute("today",today);
 		
-		List<VolActVO> review = service.volActReviewList(volId);
+		List<VolActVO> review = service.volActReviewListPaging(pvo);
 		for(VolActVO vo : review) {
 			vo.setFilePath(service.findFile("p12",vo.getVolActId()));
 		}
-		
 		model.addAttribute("review",review);
+		
 		List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
-		
 		for(VolActVO vo : list) {
+			vo.setCnt(service.volActMemCnt(vo.getVolActId()));
 			vo.setFilePath(service.findFile("p11",vo.getVolActId()));
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
@@ -90,14 +94,19 @@ public class MeetingController {
 		volunteerVO.setRoomStat(1);
 		List<VolunteerVO> randomList = userService.meetingList(volunteerVO);
 		model.addAttribute("choose",randomList);
-		
 		return "meeting/meetings";
 	}
 	
-	@GetMapping("volActMemCnt")
+//	@GetMapping("volActMemCnt")
+//	@ResponseBody
+//	public VolActVO volActMemCnt(@RequestParam(name="volActId") Integer volActId) {
+//		return service.volActMemCnt(volActId);
+//	}
+	
+	@PostMapping("approveMeeting")
 	@ResponseBody
-	public VolActVO volActMemCnt(@RequestParam(name="volActId") Integer volActId) {
-		return service.volActMemCnt(volActId);
+	public int approveMeeting(VolMemVO vo) {
+		return service.approveMeeting(vo);
 	}
 	
 	//레이아웃에서 아작스로 받기
@@ -110,8 +119,8 @@ public class MeetingController {
 	//레이아웃에서 아작스로 받기
 	@GetMapping("meetingTag")
 	@ResponseBody
-	public List<TagVO> meetingTag() {
-		return userService.tagList();
+	public List<TagVO> meetingTag(TagVO vo) {
+		return userService.tagList(vo);
 	}
 	
 	//레이아웃에서 아작스로 받기
@@ -130,13 +139,14 @@ public class MeetingController {
 	
 	//봉사게시판
 	@GetMapping("volBoardList")
-	public String volBoardList(PageVO pvo,@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req
-								, @RequestParam(value="searchKeyword", required = false)String searchKeyword
-							 	, @RequestParam(value="category", required = false)String category
-								, @RequestParam(value="start", required = false)String start
-								, @RequestParam(value="end", required = false)String end) {
+	public String volBoardList(Principal prin,PageVO pvo,@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req
+							 	, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		
 		int total = service.meetingVolActListCnt(volId);
+<<<<<<< HEAD
+		pvo = new PageVO(total, start, end, volId,null);
+=======
 		int startPage = (start == null) ? 1 : Integer.parseInt(start);
         int endPage = (end == null) ? 10 : Integer.parseInt(end);
 		
@@ -145,45 +155,105 @@ public class MeetingController {
         }else {
         	pvo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
         }
+>>>>>>> develop
         
-		List<VolActVO> list = service.meetingVolActList(volId);
+		List<VolActVO> list = service.meetingVolActListPaging(pvo);
 		req.getSession().setAttribute("id",volId);
 		model.addAttribute("vo",pvo);
-     	model.addAttribute("category",category);
 		model.addAttribute("act",list);
 		Date today = new Date();
+		
 		for(VolActVO vo : list) {
-			if(vo.getVolDate().compareTo(today) >= 0) {
+			if(vo.getExpireDate().compareTo(today) < 0||vo.getVolDate().compareTo(today) < 0) {
 				vo.setState(1);
 			}else {
 				vo.setState(0);
 			}
 		}
+		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	    	 model.addAttribute("userId","없음");
+	    }
+		
 		return "meeting/volBoardList";
 	}
 	
+	@GetMapping("findVolActNo")
+	@ResponseBody
+	public int findVolActNo() {
+		return service.findVolActNo();
+	}
+	
+	//봉사게시판 작성폼
+	@GetMapping("insertVolActPage")
+	public String insertVolActPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	    	 model.addAttribute("userId","없음");
+	    }
+		req.getSession().setAttribute("id",volId);
+		
+		return "meeting/volActBoardInsert";
+	}
+	
+	@PostMapping("insertVolAct")
+	@ResponseBody
+	public int insertVolAct(VolActVO vo) {
+		return service.insertVolAct(vo);
+	}
+	
+	//봉사게시판 정보
+	@GetMapping("volActBoardInfo")
+	public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
+		VolActVO info = service.volActBoardInfo(volActId);
+		model.addAttribute("info",info);
+		req.getSession().setAttribute("id",volId);
+		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	    	 model.addAttribute("userId","없음");
+	    }
+		
+		VolunteerVO vo = service.meetingInfo(volId);
+		model.addAttribute("meeting",vo.getMemId());
+		
+		return "meeting/volActInfo";
+	}
+	
+	//봉사게시판 삭제
+	@PostMapping("delVolActBoard")
+	@ResponseBody
+	public int delVolActBoard(Integer volActId) {
+		return service.delVolActBoard(volActId);
+	}
+	
+	
 	//자유게시판
 	@GetMapping("freeBoardList")
-	public String freeBoardList(PageVO vo, Model model,HttpServletRequest req,@RequestParam Integer volId,Principal prin
-							 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
-							 	, @RequestParam(value="category", required = false)String category
-								, @RequestParam(value="start", required = false)String start
-								, @RequestParam(value="end", required = false)String end) {
-		int total = userService.getBoardCnt(vo);
-		int startPage = (start == null) ? 1 : Integer.parseInt(start);
-        int endPage = (end == null) ? 10 : Integer.parseInt(end);
+	public String freeBoardList(PageVO vo,FreeBoardVO freeVo, Model model,HttpServletRequest req,@RequestParam Integer volId,Principal prin
+								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = service.getBoardListCnt(volId);
         
+<<<<<<< HEAD
+        vo = new PageVO(total, start, end, volId,null);
+=======
         if(searchKeyword == null) {
         	vo = new PageVO(total, startPage, endPage, category, 10);	            	
         }else {
         	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
         }
+>>>>>>> develop
         req.getSession().setAttribute("id",volId);
         
-		List<BoardVO> list = userService.getBoardList(vo);
+		List<FreeBoardVO> list = service.getBoardList(vo);
 		model.addAttribute("board",list);
 		model.addAttribute("vo",vo);
-		model.addAttribute("category",category);
+		System.out.println(list);
 		
 		if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
@@ -194,6 +264,8 @@ public class MeetingController {
 		return "meeting/freeBoardList";
 	}
 	
+<<<<<<< HEAD
+=======
 	//봉사후기
 	@GetMapping("reviewBoardList")
 	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req
@@ -220,6 +292,7 @@ public class MeetingController {
 		return "meeting/reviewBoardList";
 	}
 	
+>>>>>>> develop
 	//자유게시판 작성폼
 	@GetMapping("freeBoardInsertPage")
 	public String freeBoardInsertPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
@@ -232,43 +305,116 @@ public class MeetingController {
 		
 		return "meeting/freeBoardInsert";
 	}
-	
+	//자유게시판 추가
 	@PostMapping("freeBoardInsert")
 	@ResponseBody
-	public int freeBoardInsert(BoardVO vo) {
+	public int freeBoardInsert(FreeBoardVO vo) {
 		return service.insertBoard(vo);
 	}
 	
+	//자유게시판 추가 번호
 	@GetMapping("findNo")
 	@ResponseBody
 	public int findBoardNo() {
 		return service.findBoardNo();
 	}
 	
+	@GetMapping("findReviewNo")
+	@ResponseBody
+	public int findReviewNo() {
+		return service.findReviewNo();
+	}
+	
 	@GetMapping("updateFreeBoard")
-	public String updateFreeBoard(Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer detailCate) {
-		BoardVO vo = service.freeBoardInfo(detailCate);
+	public String updateFreeBoard(FreeBoardVO freeVO,Model model,@RequestParam Integer volId,HttpServletRequest req) {
+		FreeBoardVO vo = service.freeBoardInfo(freeVO);
 		model.addAttribute("vo",vo);
 		return "meeting/updateFreeBoard";
 	}
 	
 	@GetMapping("freeBoardInfo")
-	public String freeBoardInfo(Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer detailCate) {
-		BoardVO vo = service.freeBoardInfo(detailCate);
+	public String freeBoardInfo(FreeBoardVO freeVO,Model model,@RequestParam Integer volId,HttpServletRequest req) {
+		FreeBoardVO vo = service.freeBoardInfo(freeVO);
 		model.addAttribute("vo",vo);
 		return "meeting/freeBoardInfo";
 	}
 	
 	@PostMapping("updateFreeBoard")
 	@ResponseBody
-	public int updateFreeBoard(BoardVO vo) {
+	public int updateFreeBoard(FreeBoardVO vo) {
 		return service.updateFreeBoard(vo);
 	}
 	
 	@PostMapping("deleteFreeBoard")
 	@ResponseBody
-	public int deleteFreeBoard(@RequestParam Integer detailCate) {
-		return service.deleteFreeBoard(detailCate);
+	public int deleteFreeBoard(@RequestParam Integer volId,@RequestParam Integer boardNo) {
+		return service.deleteFreeBoard(volId,boardNo);
 	}
 	
+	
+	//봉사후기
+	@GetMapping("reviewBoardList")
+	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req,Principal prin
+								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = service.volActReviewListCnt(volId);
+		
+		vo = new PageVO(total, start, end,volId,null);
+		
+		List<VolActVO> list = service.volActReviewListPaging(vo);
+		req.getSession().setAttribute("id",volId);
+		model.addAttribute("board",list);
+		model.addAttribute("vo",vo);
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+	        System.out.println("User is not logged in.");
+		 }
+		
+		return "meeting/reviewBoardList";
+	}
+	
+	//봉사후기 작성폼
+	@GetMapping("reviewBoardInsertPage")
+	public String reviewBoardInsertPage(VolActVO vo,Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	    } else {
+	    	 model.addAttribute("userId","익명");
+	    }
+		req.getSession().setAttribute("id",volId);
+		
+		
+		VolActVO volVO = service.volActInfo(vo);
+		model.addAttribute("volVO",volVO);
+		return "meeting/reviewBoardInsert";
+	}
+	
+	@PostMapping("reviewBoardInsert")
+	@ResponseBody
+	public int reviewBoardInsert(VolActReviewVO vo) {
+		return service.insertReview(vo);
+	}
+	
+	@GetMapping("ReviewInfo")
+	public String ReviewInfo(Principal prin,Model model,VolActReviewVO vo,HttpServletRequest req,@RequestParam Integer reviewId,@RequestParam Integer volId) {
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+			 model.addAttribute("userId","익명");
+		 }
+		
+		vo.setReviewId(reviewId);
+		req.getSession().setAttribute("id",volId);
+		
+		VolActReviewVO reviewInfo = service.ReviewInfo(vo);
+		model.addAttribute("info",reviewInfo);
+		return "meeting/reviewBoardInfo";
+	}
+	
+	@PostMapping("delReview")
+	@ResponseBody
+	public int delReview(@RequestParam Integer reviewId) {
+		return service.delReview(reviewId);
+	}
 }

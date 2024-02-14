@@ -87,7 +87,6 @@
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p13")
-				           			formData.append("codeNo", [[${vo.detailCate}]]);
 				           			$.ajax({
 						           		url: '/uploadsAjax',
 						           		type: 'POST',
@@ -145,9 +144,8 @@
 							var formData = new FormData();
 							formData.append("title",title.val());
 							formData.append("content",content);
-							formData.append("detailCate",[[${vo.detailCate}]]);
 							$.ajax({
-				           		url: '/updateFreeBoard',
+				           		url: `/updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${vo.boardNo}]]`,
 				           		type: 'POST',
 				           		processData: false,
 				           		contentType: false,
@@ -163,7 +161,7 @@
 						
 						function handleDel(){
 							$.ajax({
-				           		url: '/deleteFreeBoard?detailCate='+[[${vo.detailCate}]],
+				           		url: `/deleteFreeBoard?volId=[[${session.id}]]&boardNo=[[${vo.boardNo}]]`,
 				           		type: 'POST',
 				           		processData: false,
 				           		contentType: false,
