@@ -9,7 +9,7 @@ public interface FeedService {
 	public List<FeedVO> getFeedList(String memId);
 	public List<FeedVO> getFeedFirstList(String memId);
 	public List<InterestVO> getInterestList(String memId);
-	public int LikeInsert(String memId, Integer boardId);
-	public boolean getLike(String memId, Integer boardId);
-	public int DeleteLike(Integer boardId);
+	public int changeLike(String memId, Integer boardId);
+	public List<FeedVO> getFeedDetail(String memId,Integer boardId);
+		
 }

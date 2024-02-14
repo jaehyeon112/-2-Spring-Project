@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.user.service.UserDetailVO;
 
+
+/**
+ * 하루모임,동아리,시설봉사 리스트 아직 미구현
+ * @author 나채현
+ *
+ */
 @Controller
 public class ClassAllListController {
 	 @Autowired

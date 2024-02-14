@@ -26,7 +26,9 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 
 /**
- * Handles requests for the application home page.
+ * 마이페이지, 프로필 페이지
+ * @author 나채현
+ *
  */
 @Controller
 public class MypageController {
@@ -34,6 +36,12 @@ public class MypageController {
 	 @Autowired
 	 MypageService mypageService;
 	
+	 /**
+	  *  마이페이지 마음온도,기부횟수,기부금액,프로필 리스트
+	  * @param model
+	  * @return my/mypage
+	  */
+	 
 	 @GetMapping("/my")
 	 public String myPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -60,6 +68,12 @@ public class MypageController {
 
 	      return "my/mypage"; 
 	}
+	 
+	 /**
+	  * 프로필페이지 리스트출력
+	  * @param model
+	  * @return my/profile
+	  */
 	 
 	 @GetMapping("/profile")
 	    public String profile(Model model) {
@@ -88,13 +102,25 @@ public class MypageController {
 
 	        return "my/profile";
 	    }
-	
+	 
+	 /**
+	  * CoolSMS 이용한 프로필에서 휴대폰 인증번호
+	  * @param to
+	  * @return smsService.PhoneNumberCheck(to)
+	  * @throws CoolsmsException
+	  */
+	 
 	 // coolSMS 구현 로직 연결  
 	 @GetMapping("/sendSMS")
 	 public @ResponseBody String sendSMS(@RequestParam(value="to") String to) throws CoolsmsException {  
 	     sendSmsService smsService = new sendSmsService();
 	     return smsService.PhoneNumberCheck(to);
 	 }
+	 
+	 /**
+	  * 프로필 이메일 수정 아직 하는중
+	  * @param userVO
+	  */
 	 
 	 // 수정
 	 @PostMapping("/profile")

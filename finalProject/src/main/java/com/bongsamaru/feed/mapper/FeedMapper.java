@@ -16,11 +16,13 @@ public interface FeedMapper {
 	// 회원별 관심사 조회
 	public List<InterestVO> getInterestList(String memId);
 	// 좋아요 버튼 추가	
-	public int LikeInsert(String memId, Integer boardId);
+	public int insertLike(String memId, Integer boardId);
 	// 좋아요 여부 확인
 	public LikeVO getLike(LikeVO likeVO);
 	// 좋아요 되있으면 삭제
-	public int DeleteLike(Integer boardId);
+	public int deleteLike(String memId, Integer boardId);
+	// 해당하는 피드 게시글 불러오기
+	public List<FeedVO> getFeedDetail(String memId,Integer boardId);
 }
 
 

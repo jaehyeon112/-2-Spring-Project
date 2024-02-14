@@ -13,8 +13,10 @@ public class FeedVO {
 	private double tempChange;
 	private String memProfile;
 	private String title;
+	private String content;
 	private String filePath;
 	private Integer likes;
 	private Date createdAt;
+	private Date writeDate;
 	
 }

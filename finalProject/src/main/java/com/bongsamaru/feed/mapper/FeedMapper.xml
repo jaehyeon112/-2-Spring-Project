@@ -4,30 +4,59 @@
  
  <mapper namespace="com.bongsamaru.feed.mapper.FeedMapper">
  
-	<!-- 상대방 피드 조회 -->
+	<!-- 회원 상세 조회 -->
  	<select id="getFeedList" resultType="FeedVO">
-        SELECT DISTINCT b.mem_id, b.mem_nick, sum(a.temp_change) as temp_change, c.file_path as mem_profile
+        SELECT b.mem_id, 
+               b.mem_nick, 
+               c.file_path as mem_profile,
+               sum(a.temp_change) as temp_change 
         FROM HEART A 
         LEFT JOIN MEMBER B ON A.MEM_ID = B.MEM_ID
         LEFT JOIN files C ON b.mem_id = c.code_user AND c.code = 'p01'
+        
         WHERE B.MEM_ID = #{memId}
+        
         GROUP BY b.mem_id, b.mem_nick, c.file_path
  	</select>
  	<!-- 피드 첫번째들 불러오기 -->
  	<select id="getFeedFirstList" resultType="FeedVO">
-        SELECT  a.board_id, a.title, b.file_path,c.board_id as likes
-		FROM BOARD a LEFT JOIN FILES b
-		ON a.board_id = b.code_no
-        LEFT JOIN likes c
-        ON a.board_id = c.board_id
+        SELECT  a.board_id, 
+        		a.title,
+        		b.file_path,
+        		c.board_id as likes
+		
+		FROM BOARD a 
+		LEFT JOIN FILES b	ON a.board_id = b.code_no
+        LEFT JOIN likes c   ON a.board_id = c.board_id
+        
 		WHERE a.mem_id = #{memId}
 		AND a.category = 'b04'
 		AND b.file_order = 1
-		ORDER BY a.WRITE_DATE DESC
+		ORDER BY a.board_id DESC
  	</select>
+ 	<!-- 회원 해당하는 피드게시글 상세조회 -->
+ 	<select id="getFeedDetail" resultType="FeedVO">
+ 	    SELECT  a.board_id, 
+                a.content,
+                a.mem_id,
+                a.write_date,
+        		a.title,
+        		b.file_path,
+        		c.board_id as likes
+		
+		FROM BOARD a 
+		LEFT JOIN FILES b	ON a.board_id = b.code_no
+        LEFT JOIN likes c   ON a.board_id = c.board_id
+        
+		WHERE a.mem_id = #{memId}
+        AND a.board_id = #{boardId}
+		AND b.code = 'b04'
+		ORDER BY b.file_order ASC,a.board_id DESC
+ 	</select>
+ 	
  	<!-- 회원별 관심사 조회 -->
 	<select id="getInterestList" resultType="InterestVO">
-             SELECT DISTINCT select_sub(interest_code) as interest_code
+             SELECT select_sub(interest_code) as interest_code
              FROM interest
              WHERE mem_id = #{memId}
              ORDER BY interest_code
@@ -39,21 +68,24 @@
              WHERE mem_id = #{memId}
              AND board_id = #{boardId}
 	</select>
- 	<insert id="LikeInsert" parameterType="LikeVO">
+ 	<insert id="insertLike" parameterType="LikeVO">
 		INSERT INTO likes(
 			like_id,
 			mem_id,
 			board_id,
-			created_at)
+			created_at,
+			category)
 		VALUES(likes_SEQ.NEXTVAL
 				,#{memId}
 				,#{boardId}
-				,sysdate)
+				,sysdate
+				,'l01')
 	</insert>
 	<!-- 좋아요 되있으면 삭제 -->
-	<delete id="DeleteLike" parameterType="Integer">
+	<delete id="deleteLike" parameterType="LikeVO">
 		DELETE
 		FROM likes
 		WHERE board_id = #{boardId}
+		AND mem_id = #{memId}
 	</delete>
  </mapper>
