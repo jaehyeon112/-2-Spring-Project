@@ -15,13 +15,15 @@ public class DonaVO {
 		private String title; // 메인제목 (v500) - 
 		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date recPeriod; // 모집기간
+		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date endPeriod; // 종료기간
+		@DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
+	    private Integer recStat; //모집현황(c3)
 	    private String intro; //소개 (v2000) : 젤 위에표시되는 애
 	    private String introTitle;// 소개글제목
-	    private String recStat; //모집현황(c3)
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
 
@@ -36,7 +38,7 @@ public class DonaVO {
 	    private Integer donationCount; //기부인원수
 	    private Integer donationRatio; //목표금액대비 기부금비율
 	    private String facilityName; //시설명
-	    private Integer total;
+	    private Integer total; //실제모금액
 	    
 	    //상세페이지
 	    private String dday; //디데이
@@ -74,24 +76,29 @@ public class DonaVO {
 	    private Integer donRevId; //기부후기등록번호 (not null)
 	    //private Integer donId; 
 	    private Integer execAmt; //집행금액  (not null)
+	    @DateTimeFormat(pattern="yyyy-MM-dd") 
 	    private Date startPeriod; //사업시작기간
+	    @DateTimeFormat(pattern="yyyy-MM-dd") 
 	    //private Date endPeriod; //사업종료기간
 	    private String revApp; //후기승인여부 
+	    //private String title; //후기 제목
+	    private String content; // 내용
 	    private Integer targetOk;//기부장부에서 총합
-    
-    //don_review(기부후기사업비) 테이블
-	    private Integer donRevExpId; //기부후기사업비상세등록번호 (c18) not null
-	    //private Integer donRevId; //기부후기등록번호 
-	    private Integer bizCost; //사업비 not null
-	    private String bizContent; //사업내용 not null
-	    private Integer bizAmt; // 사업금액(구체적) not null
+	    
 	    
     
-    //don_review_table(기부후기제목) 테이블
-	    private Integer donRevTitleId; //기부후기등록상세번호 notnull
-	    //private String title; //제목
-	    private String content; // 내용
-	    //private Integer donRevId; // 기부후기등록번호
+    //don_review_exp(기부후기사업비) 테이블
+	    private Integer donRevExpId; //기부후기사업비상세등록번호 (c18) not null
+	    //private Integer donRevId; //기부후기등록번호 
+	    private Integer bizCost; //사업비 not null (실질적 모금액)
+	    private String bizContent; //사업내용 not null
+	    private Integer bizAmt; // 사업금액(구체적) not null
+	    private Integer bizAmt2;
+	    private Integer bizAmt3;
+	    private String bizContent2;
+	    private String bizContent3;
+    
+
 	    
 	//시설테이블
 	   // private String facId;

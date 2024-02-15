@@ -61,7 +61,7 @@ public class facilityController {
 			/*
 			 * @RequestParam(value="cntPerPage", required = false, defaultValue = "10")
 			 * Integer cntPerPage,
-			 */					
+			 */					  Integer cntPerPage,
 								  String facId,
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
@@ -71,8 +71,7 @@ public class facilityController {
 		
         // start와 end가 null일 경우 기본값으로 1과 10을 사용
 		
-        vo = new PageVO(total,start, end, category);
-        //vo.setCntPerPage(6);
+        vo = new PageVO(total,start, end, category ,6);
         System.out.println(vo);
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);

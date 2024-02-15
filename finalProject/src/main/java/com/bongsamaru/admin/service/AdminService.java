@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CodeVO;
 import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.DonationLedgerVO;
 import com.bongsamaru.common.VO.DonationVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FaqVO;
+import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.common.VO.TagVO;
@@ -20,16 +22,19 @@ import com.bongsamaru.mypage.service.DonledgerVO;
 
 
 public interface AdminService {
+	public List<CodeVO> subCodeList(String mainCodeId);
 	public List<UserVO> getUserList(String memStat);
-	public List<BoardVO> getBoardList(String category);
+	public List<BoardVO> getBoardList(PageVO pageVO);
+	public int getBoardCnt(PageVO pageVO);
 	public List<FacilityVO> getFacilityList();
 	public List<DonationVO> getDonationList(String donRegApp);
 	public List<ReportVO> getReportList(String category);
 	public List<DonledgerVO> DonationKing();
-	public int insertNotice(BoardVO boardVO);
-	public List<FaqVO> getFaqList();
+	public void insertNotice(BoardVO boardVO);
+	public List<FaqVO> getFaqList(PageVO pageVO);
+	public int getFaqCnt(PageVO pageVO);
 	public UserVO getUserOne(String memId);
-	public VolunteerVO volCount(String memId,String mId);
+	public VolunteerVO volCount(String memId);
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
 	public DonationVO getDonOne(String donId);
@@ -47,10 +52,9 @@ public interface AdminService {
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
-	public int maxNotice();
 	public int delFile(String filePath);
-	public List<FacilityVO> meetingList();
-	public List<TagVO> tagList();
+	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
+	public List<TagVO> tagList(TagVO vo);
 	public List<VolunteerVO> facVolunteerList();
 	public List<VolunteerVO> memMeetList(String memId);
 	public List<DonaVO> donationLedgerList(String recStat);

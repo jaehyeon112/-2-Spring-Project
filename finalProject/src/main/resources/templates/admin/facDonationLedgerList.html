@@ -6,7 +6,7 @@
 		  </button>
 		  <ul class="dropdown-menu">
 		  	<li><a class="dropdown-item cur" onclick="show1()">전체보기</a></li>
-		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==0"><a class="dropdown-item" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==0"><a class="dropdown-item cur" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
 		  </ul>
 		</div>
 		<table class="table" th:if="${fac.size}!=0">
@@ -21,7 +21,7 @@
 					<tr th:each="ledger : ${fac}">
 						 <td th:text="${#dates.format(ledger.payDate, 'yyyy년 MMM dd일')}"></td>
 						 <td th:if="${ledger.anonCheck}=='1'">익명기부자</td>
-						 <td th:if="${ledger.anonCheck}=='0'" th:text="${ledger.memId}">익명</td>
+						 <td th:if="${ledger.anonCheck}=='0'" th:text="${ledger.memId}">사람이름</td>
 						 <td data-th-text="${#numbers.formatInteger(ledger.donAmt, 1, 'COMMA') + '원'}"></td>
 					</tr>
 			</tbody>
@@ -36,7 +36,7 @@
 		  </button>
 		  <ul class="dropdown-menu">
 		  	<li><a class="dropdown-item cur" onclick="show2()">전체보기</a></li>
-		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==1"><a class="dropdown-item" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==1"><a class="dropdown-item cur" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
 		  </ul>
 		</div>
 		<table class="table" th:if="${fac.size}!=0">
