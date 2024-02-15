@@ -13,6 +13,7 @@ import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingMapper {
 	public VolunteerVO meetingInfo(Integer volId);
+	public int withdrawalMeeting(VolMemVO vo);
 	public List<VolMemVO> meetingMemList(Integer volId);
 	public List<VolMemVO> MemVolActList(Integer volId,String memId);
 	public List<VolMemVO> volCnt(Integer volId);
