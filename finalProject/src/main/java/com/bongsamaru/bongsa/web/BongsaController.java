@@ -39,8 +39,6 @@ public class BongsaController {
 	public String goToGroup(Model model, VolunteerVO vo) {
 		List<VolunteerVO> list = userService.meetingList(vo);
 		model.addAttribute("meet", list);
-		List<TagVO> tags = userService.tagList();
-		model.addAttribute("tag", tags);
 		return "bongsa/GroupVol";
 	}
 	@GetMapping("/FacilityVol")

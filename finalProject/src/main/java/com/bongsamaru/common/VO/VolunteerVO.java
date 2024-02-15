@@ -25,6 +25,7 @@ public class VolunteerVO {
 	private Integer volId;
 	private String meetName;
 	private String meetType;
+	private String path;
 	//private Integer cap;
 	private String meetPurp;
 	private String meetDesc;
