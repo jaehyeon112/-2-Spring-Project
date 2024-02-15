@@ -163,21 +163,20 @@ public class facilityController {
 	                                     Principal principal,
 	                                     PageVO vo, 
 	                                     Integer cntPerPage,
-	                                     String facId,
+	                                     
 	                                     @RequestParam(value="category", required = false)String category,
 	                                     @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
-	                                     @RequestParam(value="end", required = false, defaultValue = "10") Integer end) {
+	                                     @RequestParam(value="end", required = false, defaultValue = "10") Integer end)
+	  {
+		 // model.addAttribute("category",category);
+		  String facId = principal.getName();
+		  int total = facilityService.getFVolCategoryCount(facId);
+		  vo = new PageVO(total, start, end,category, 5);
+	      log.info(vo);
+	      List<VolActVO> list = facilityService.getVolunteerJoinList(vo,facId);
+	      model.addAttribute("volList", list);
 	      
-		  
-		  facId = principal.getName();
-	      int total = facilityService.getFVolCategoryCount(facId);
-        
-List<VolActVO> list = facilityService.getVolunteerJoinList(facId);
-model.addAttribute("volList", list);
-
-	      vo = new PageVO(total, start, end, category, 5);
 	      model.addAttribute("vo", vo);
-	      
 	      log.info(list);
 	      return "facility/myPageVolBefore";
 	  }

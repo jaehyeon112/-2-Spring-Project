@@ -33,7 +33,7 @@ public interface FacilityService {
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	
-	public List<VolActVO> getVolunteerJoinList(String facId);
+	public List<VolActVO> getVolunteerJoinList(PageVO pageVO, String facId);
 	
 	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType);
 	public int getFVolCategoryCount(String facId);

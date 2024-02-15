@@ -199,7 +199,7 @@ FROM (
             EXPIRE_DATE,
             (SELECT COUNT(*) FROM VOL_ACT_MEM WHERE VOL_ACT_ID = VOL_ACT.VOL_ACT_ID) AS COUNT 
         FROM  VOL_ACT
-        WHERE  FAC_ID=#{facId}  <!-- 이 부분을 문자열 비교로 변경 -->
+        WHERE  FAC_ID=#{facId}  
             AND  VOL_DATE > SYSDATE
         ORDER BY  EXPIRE_DATE
     ) A
