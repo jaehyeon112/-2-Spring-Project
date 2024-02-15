@@ -32,15 +32,11 @@
 		order by MEM_ID
 	</select>
 	<select id="volCount" resultType="VolunteerVO">
-		select (select nvl(sum(count(mem_id)),0) 
-		from vol_act_mem 
-		where mem_id=#{memId} group by mem_id) as  vol,
-<<<<<<< HEAD
-		(select nvl(sum(count(mem_id)),0) from vol_mem where mem_id=#{memId} and app_code='1' group by mem_id) as fac 
-		from dual
-=======
-		(select nvl(sum(count(mem_id)),0) from vol_mem where mem_id=#{memId} and app_code='h02' group by mem_id) as fac from dual
->>>>>>> branch 'younghee' of https://github.com/hyeon0902/-2-Spring-Project.git
+      select (select nvl(sum(count(mem_id)),0) 
+      from vol_act_mem 
+      where mem_id=#{memId} group by mem_id) as  vol,
+      (select nvl(sum(count(mem_id)),0) from vol_mem where mem_id=#{memId} and app_code='h02' group by mem_id) as fac 
+      from dual
 	</select>
 	
 	<select id="donCount" resultType="DonationLedgerVO">
