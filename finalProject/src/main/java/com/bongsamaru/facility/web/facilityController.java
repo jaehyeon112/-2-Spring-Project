@@ -148,11 +148,11 @@ public class facilityController {
 	@GetMapping("/facilityMyPage/donaInfo")
 	public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
 		
-		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(),1);
+		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(), 0); // 모금완료
 		model.addAttribute("donaList1", list1);
 		log.info(list1);
 		
-		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(),0);
+		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(), 1); //모금중
 		model.addAttribute("donaList0", list0);
 		log.info(list0);
 		return "facility/myPageDona";
