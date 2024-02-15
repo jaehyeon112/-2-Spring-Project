@@ -22,11 +22,11 @@
     border: 1px solid #ddd;
 }
 .search-container {
-    display: flex;
-    justify-content: space-between; /* 요소들을 양 끝으로 정렬 */
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 .search-input {
     padding: 0.5rem;
@@ -44,37 +44,76 @@
 .reset-button {
     background-color: #6c757d;
 }
+
+
+/* 검색 및 필터 컨테이너 스타일 */
+.search-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 날짜 입력 필드 스타일 */
+.date-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+}
+
+/* 검색 및 초기화 버튼 호버 효과 */
+.search-button:hover, .reset-button:hover {
+    opacity: 0.8;
+}
+.btn.dropdown-toggle {
+    display: inline-block; /* 드롭다운을 인라인 블록 요소로 설정 */
+    margin-right: 10px; /* 드롭다운 간 간격 */
+}
+
+.date-input {
+    margin-left: 10px; /* 날짜 입력 필드 간 간격 */
+}
 </style>
 </head>
 
 <body>
   <section layout:fragment="content">
+
   <div class="row">
-  	<div class="side col-2" th:insert="~{bongsa/sidebar::side}"></div>
+  	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
 	<div class="col-10">
   <div>
-  	  <div class="search-container">
-  	  <div>
-  	<select id="location" class="btn  dropdown-toggle" onchange="search()" style="background-color: #ffb524; color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  		<option value="">==지역==</option>
-  		<option th:each="location:${location}" th:text="${location.value}" th:value="${location.subCode}"> </option>
-  	</select>
-  	<select id="cate" onchange="search()" class="btn dropdown-toggle" style="background-color: #ffb524; color:white;">
-  		<option value="">==봉사유형==</option>
-  		<option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
-  	</select>
-  	<!-- 날짜 검색할것;; -->
-  	<input type="date" id="startDate" class="date-input" onchange="search()">
-    <input type="date" id="endDate" class="date-input" onchange="search()">
-  	  </div>
-  	<!-- 여기 수직선상에 검색인풋태그를 만들고 싶음. 또 옆에는 처음 화면으로 돌아가는 초기화 버튼도 만들고 싶음 -->
-  	<div>
-        <input type="text" id="searchKeyword" class="search-input" placeholder="검색어 입력...">
-        <button onclick="search()" class="search-button">검색</button>
-        <button onclick="resetSearch()" class="reset-button">초기화</button>
-  	</div>
+  <div class="search-container">
+	    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+	        <input type="text" id="searchKeyword" class="search-input" placeholder="검색어 입력...">
+	        <button onclick="search()" class="search-button">검색</button>
+	        <button onclick="resetSearch()" class="reset-button">초기화</button>
+	    </div>
+	    <!-- 드롭다운 및 날짜 입력 -->
+	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+	        <div>
+	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	                <option value="">==지역==</option>
+	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
+	            </select>
+	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	                <option value="">==봉사유형==</option>
+	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
+	            </select>
+	        </div>
+	        <div>
+	            <span class="date-label">시작 날짜:</span>
+	            <input type="date" id="startDate" class="date-input" onchange="search()">
+	            <span class="date-label">종료 날짜:</span>
+	            <input type="date" id="endDate" class="date-input" onchange="search()">
+	        </div>
+	    </div>
+	</div>
+ 
     </div>
-  </div>
 	<div id="tableData">
 				<div class="content" th:if="${fac.size} == 0" style="text-align:center;margin-top:200px;">
 				<span>검색결과가 존재하지 않습니다</span>
@@ -129,8 +168,8 @@
     </ul>
 </nav>
 
-			</div>
-		</div>
+</div>
+</div>
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
@@ -147,11 +186,15 @@ $(document).ready(function() {
     const category = urlParams.get('category');
     const location = urlParams.get('location');
     const searchKeyword = urlParams.get('searchKeyword');
+    const startDateParam = urlParams.get('startDate');
+    const endDateParam = urlParams.get('endDate');
     
     // 드롭다운 값 설정
     if (category) $('#cate').val(category);
     if (location) $('#location').val(location);
     if (searchKeyword) $('#searchKeyword').val(searchKeyword);
+    if (startDateParam) $('#startDate').val(startDateParam);
+    if (endDateParam) $('#endDate').val(endDateParam);
 
     // 페이지네이션 링크 업데이트 함수 호출 수정
     updatePaginationLinks();
@@ -177,19 +220,21 @@ function updatePaginationLinks() {
 }
 
 function search() {
-    let baseUrl = '/FacilityVol?start=1&end=8'; // 페이지네이션을 1로 초기화
+    let baseUrl = '/FacilityVol?start=1&end=8';
     const cate = $('#cate').val();
     const location = $('#location').val();
     const searchKeyword = $('#searchKeyword').val();
-	
-    // 쿼리 파라미터 추가 로직
+    const startDate = $('#startDate').val();
+    const endDate = $('#endDate').val();
+
     if (cate) baseUrl += `&category=${encodeURIComponent(cate)}`;
     if (location) baseUrl += `&location=${encodeURIComponent(location)}`;
     if (searchKeyword) baseUrl += `&searchKeyword=${encodeURIComponent(searchKeyword)}`;
-	
+    if (startDate) baseUrl += `&startDate=${encodeURIComponent(startDate)}`;
+    if (endDate) baseUrl += `&endDate=${encodeURIComponent(endDate)}`;
+
     window.location.href = baseUrl;
 }
-
 
 function resetSearch() {
     window.location.href = '/FacilityVol';
