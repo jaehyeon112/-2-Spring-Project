@@ -197,10 +197,10 @@ public class DonaController {
 	 * @return 시설 마이페이지로 이동 예정. (주소를 아직..)
 	 */
 	// 기한연장하기
-	@PutMapping(value = "/extendDonationPeriod")
+	@PutMapping("/facilityMyPage/donaInfo/extension")
 	public String extendDonationPeriod(DonaVO donaVO) {
 		donaService.extendDonationPeriod(donaVO);
-		return "redirect:facility/myPageDona"; // 마이페이지주소찾기
+		return "facility/myPageDona"; 
 	}
 
 	/**

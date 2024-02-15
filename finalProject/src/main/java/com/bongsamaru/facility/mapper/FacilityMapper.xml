@@ -133,16 +133,19 @@ SELECT  T1.VOL_ACT_ID,
   		  D.GOAL_AMT,
   		  D.DON_REG_APP, 
   		  NVL(SUM(CASE WHEN DL.PAY_STAT ='g01' THEN DL.DON_AMT ELSE 0 END), 0)     AS TARGETOK,
-  		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
+  		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio,
+  		  D.DON_ID,
+  		  F.FAC_ID
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
   <where>
-          FAC_ID=#{facId}
+          F.FAC_ID=#{facId}
      <if test="recStat != null">
       AND REC_STAT=#{recStat}
      </if>
    </where>
- GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
+ GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID, F.FAC_ID
 
 </select>
 <!-- volunteer정보 -->

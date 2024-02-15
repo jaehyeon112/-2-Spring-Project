@@ -132,38 +132,89 @@ public class MeetingController {
    }
    
    //봉사게시판
-      @GetMapping("volBoardList")
-      public String volBoardList(Principal prin,PageVO pvo,@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req
-                            , @RequestParam(value="start", required = false,defaultValue = "1")Integer start
-                           , @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
-         
-         int total = service.meetingVolActListCnt(volId);
+   @GetMapping("volBoardList")
+   public String volBoardList(Principal prin,PageVO pvo,@RequestParam(name="volId") Integer volId,Model model,HttpServletRequest req
+                         , @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+                        , @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+      
+      int total = service.meetingVolActListCnt(volId);
 
-         pvo = new PageVO(total, start, end, volId,null);
+      pvo = new PageVO(total, start, end, volId,null);
 
-           
-         List<VolActVO> list = service.meetingVolActListPaging(pvo);
-         req.getSession().setAttribute("id",volId);
-         model.addAttribute("vo",pvo);
-         model.addAttribute("act",list);
-         Date today = new Date();
-         
-         for(VolActVO vo : list) {
-            if(vo.getExpireDate().compareTo(today) < 0||vo.getVolDate().compareTo(today) < 0) {
-               vo.setState(1);
-            }else {
-               vo.setState(0);
-            }
+        
+      List<VolActVO> list = service.meetingVolActListPaging(pvo);
+      req.getSession().setAttribute("id",volId);
+      model.addAttribute("vo",pvo);
+      model.addAttribute("act",list);
+      Date today = new Date();
+      
+      for(VolActVO vo : list) {
+         if(vo.getExpireDate().compareTo(today) < 0||vo.getVolDate().compareTo(today) < 0) {
+            vo.setState(1);
+         }else {
+            vo.setState(0);
          }
-         
-         if(prin != null && prin.getName() != null) {
-              model.addAttribute("userId",prin.getName());
-          } else {
-              model.addAttribute("userId","없음");
-          }
-         
-         return "meeting/volBoardList";
       }
+      
+      if(prin != null && prin.getName() != null) {
+           model.addAttribute("userId",prin.getName());
+       } else {
+           model.addAttribute("userId","없음");
+       }
+      
+      return "meeting/volBoardList";
+   }
+   
+   //봉사게시판 작성폼
+   @GetMapping("insertVolActPage")
+   public String insertVolActPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
+      if(prin != null && prin.getName() != null) {
+           model.addAttribute("userId",prin.getName());
+       } else {
+           model.addAttribute("userId","없음");
+       }
+      req.getSession().setAttribute("id",volId);
+      
+      return "meeting/volActBoardInsert";
+   }
+   
+   @PostMapping("insertVolAct")
+   @ResponseBody
+   public int insertVolAct(VolActVO vo) {
+      return service.insertVolAct(vo);
+   }
+   
+   //봉사게시판 삭제
+   @PostMapping("delVolActBoard")
+   @ResponseBody
+   public int delVolActBoard(Integer volActId) {
+      return service.delVolActBoard(volActId);
+   }
+   
+   @GetMapping("findVolActNo")
+   @ResponseBody
+   public int findVolActNo() {
+      return service.findVolActNo();
+   }
+   
+   //봉사게시판 정보
+   @GetMapping("volActBoardInfo")
+   public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
+      VolActVO info = service.volActBoardInfo(volActId);
+      model.addAttribute("info",info);
+      req.getSession().setAttribute("id",volId);
+      
+      if(prin != null && prin.getName() != null) {
+           model.addAttribute("userId",prin.getName());
+       } else {
+           model.addAttribute("userId","없음");
+       }
+      
+      VolunteerVO vo = service.meetingInfo(volId);
+      model.addAttribute("meeting",vo.getMemId());
+      
+      return "meeting/volActInfo";
+   }
       
    //자유게시판
    @GetMapping("freeBoardList")
