@@ -1,5 +1,8 @@
 package com.bongsamaru.securing;
 
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.bongsamaru.securing.config.CustomOAuth2UserService;
 import com.bongsamaru.securing.filter.AdditionalInfoFilter;
@@ -27,6 +32,8 @@ public class WebSecurityConfig {
 	
 	private final CustomOAuth2UserService customOAuthUserService;
 	private final AdditionalInfoFilter additionalInfoFilter;
+	@Autowired
+	private DataSource dataSource; // 데이터 소스 주입
 	
 	@Bean
 	public BCryptPasswordEncoder bcryptEncoder() {
@@ -64,14 +71,21 @@ public class WebSecurityConfig {
 				.successHandler(success)
 				.usernameParameter("username")
 				.permitAll()
+				
 			)
-			.logout((logout) -> logout.permitAll()
+			.logout((logout) -> logout.permitAll().deleteCookies("REMEMBER_ME_COOKIE")
 			)
 			.oauth2Login((oauth2Login) -> oauth2Login
 					.loginPage("/login")
 					.successHandler(authsuccess)
 					.userInfoEndpoint()
-					.userService(customOAuthUserService));
+					.userService(customOAuthUserService))
+			.rememberMe() // remember-me 설정 추가
+			.tokenRepository(persistentTokenRepository())
+			.rememberMeCookieName("REMEMBER_ME_COOKIE")
+            .key(secret) // remember-me 토큰을 생성하기 위한 키 설정
+            .tokenValiditySeconds(86400)
+            .rememberMeParameter("remember-me");// 토큰 유효 시간 설정 (예: 24시간 = 86400초)
 			//.userDetailsService(null)
            
 		return http.build();
@@ -79,7 +93,12 @@ public class WebSecurityConfig {
 
 	
 	
-	
+	 @Bean
+	    public PersistentTokenRepository persistentTokenRepository() {
+	        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+	        db.setDataSource(dataSource); // 데이터 소스 설정
+	        return db;
+	    }
 	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
