@@ -1,6 +1,7 @@
 package com.bongsamaru.dona.web;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +24,8 @@ import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FileService;
 
+import lombok.extern.log4j.Log4j2;
+
 /**
  * '기부' 페이지에서 담당하는 모든 기능(게시글 crud, 결제, 신청폼)
  * 
@@ -34,7 +36,7 @@ import com.bongsamaru.file.service.FileService;
  *
  * 
  */
-
+@Log4j2
 @Controller
 public class DonaController {
 
@@ -194,11 +196,14 @@ public class DonaController {
 	/**
 	 * 
 	 * @param donaVO 모금기한 - 기간 연장.
-	 * @return 시설 마이페이지로 이동 예정. (주소를 아직..)
+	 * @return 시설 마이페이지로 이동 예정. 
 	 */
 	// 기한연장하기
 	@PutMapping("/facilityMyPage/donaInfo/extension")
-	public String extendDonationPeriod(DonaVO donaVO) {
+	@ResponseBody
+	public String extendDonationPeriod(@RequestBody DonaVO donaVO) {
+		log.info(donaVO);		
+		
 		donaService.extendDonationPeriod(donaVO);
 		return "facility/myPageDona"; 
 	}
@@ -220,7 +225,7 @@ public class DonaController {
 	 * @param model  결제후 결제정보 insert
 	 * @return 결제완료창으로 이동
 	 */
-	// 찐 결제하기
+	// 찐 결제하기\
 	@PostMapping("/paymentProcess")
 	@ResponseBody
 	public String payProcess(@RequestBody DonaVO donaVO, Model model) {
