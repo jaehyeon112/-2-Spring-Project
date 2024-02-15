@@ -249,32 +249,7 @@ public class MeetingController {
 		return "meeting/freeBoardList";
 	}
 
-	//봉사후기
-	@GetMapping("reviewBoardList")
-	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req
-								, @RequestParam(value="searchKeyword", required = false)String searchKeyword
-								, @RequestParam(value="category", required = false)String category
-								, @RequestParam(value="start", required = false)String start
-								, @RequestParam(value="end", required = false)String end) {
-		int total = service.volActReviewListCnt(volId);
-		int startPage = (start == null) ? 1 : Integer.parseInt(start);
-		int endPage = (end == null) ? 10 : Integer.parseInt(end);
-		
-		if(searchKeyword == null) {
-			vo = new PageVO(total, startPage, endPage, category, 10);	            	
-		}else {
-			vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
-		}
-		
-		List<VolActVO> list = service.volActReviewListPaging(vo);
-		req.getSession().setAttribute("id",volId);
-		model.addAttribute("board",list);
-		model.addAttribute("vo",vo);
-		model.addAttribute("category",category);
-		
-		return "meeting/reviewBoardList";
-	}
-	
+
 
 	//자유게시판 작성폼
 	@GetMapping("freeBoardInsertPage")
