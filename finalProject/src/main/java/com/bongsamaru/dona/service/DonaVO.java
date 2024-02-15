@@ -133,5 +133,7 @@ public class DonaVO {
 	    private String subCodeId;
 	    
 	    
+	//파일 - 이미지 넣도록! 
+	    private String filePath;
 	    
 }
