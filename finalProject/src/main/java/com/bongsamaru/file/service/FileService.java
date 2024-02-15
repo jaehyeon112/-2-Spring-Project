@@ -140,7 +140,7 @@ public class FileService {
         }
 
         // 전체 경로 조합
-        String folderPath = baseFolderPath + File.separator + subFolderPath;
+        String folderPath = baseFolderPath + '/' + subFolderPath;
         File uploadFolder = new File(folderPath);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();

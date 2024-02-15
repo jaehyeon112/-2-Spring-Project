@@ -60,6 +60,7 @@
 						<hr>
 						<label>>봉사 장소</label>
 						<div class="write_item facility hidden">
+							<input id="facAddr1" style="display: none;" type="text" class="form-control">
 							<div class="error-message" id="facZipCheckError"></div>
 							<input id="facAddr2" onclick="Addr()" readonly style="display: inline; margin-top: 10px" type="text" class="form-control plus-bnt" placeholder="주소">
 							<div class="error-message" id="facAddrCheckError"></div>
@@ -93,6 +94,18 @@
 					<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 					<script>
 						var cateNo = 0;
+						$.ajax({
+			           		url: '/findVolActNo',
+			           		type: 'GET',
+			           		processData: false,
+			           		contentType: false,
+			           		success: function(data) {
+			           			cateNo = data;
+			           		},
+			           		error: function(e) {
+			           			console.log('실패');
+			           		}
+			           	});
 						const editor = new toastui.Editor({
 							el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
 							height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
@@ -105,35 +118,22 @@
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p11")
-						        	$.ajax({
-						           		url: '/findVolActNo',
-						           		type: 'GET',
+				           			formData.append("codeNo", cateNo);
+				           			$.ajax({
+						           		url: '/uploadsAjax',
+						           		type: 'POST',
 						           		processData: false,
 						           		contentType: false,
-						           		success: function(data) {
-						           			console.log(data)
-						           			cateNo = data;
-						           			formData.append("codeNo", data);
-						           			$.ajax({
-								           		url: '/uploadsAjax',
-								           		type: 'POST',
-								           		processData: false,
-								           		contentType: false,
-								           		data: formData,
-								           		success: function(datas) {
-								           			url = url + datas;
-								           			url = url.replace(/\\/g, '/')
-								           			callback(url);
-								           		},
-								           		error: function(e) {
-								           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
-								           		}
-								           	});	
+						           		data: formData,
+						           		success: function(datas) {
+						           			url = url + datas;
+						           			url = url.replace(/\\/g, '/')
+						           			callback(url);
 						           		},
 						           		error: function(e) {
-						           			console.log('실패');
+						           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
 						           		}
-						           	});
+						           	});	
 						        	
 						        }
 						    }
@@ -193,6 +193,8 @@
 							const content = editor.getMarkdown();
 							const addr = $('#facAddr2').val();
 							const detail = $('#facAddr3').val();
+							const volZip = $('#facAddr1').val();;
+							
 							var formData = new FormData();
 							formData.append("volActId",cateNo);
 							formData.append("volId",[[${session.id}]]);
@@ -200,8 +202,8 @@
 							formData.append("title",title);
 							formData.append("content",content);
 							formData.append("location",addr+' '+detail);
-							//우편번호도 추가
 							formData.append("cap",cap);
+							formData.append("volZip",volZip);
 							formData.append("volDate",volDate);
 							formData.append("startDate",startDate);
 							formData.append("expireDate",expireDate);
@@ -243,6 +245,7 @@
 									}
 
 									// 우편번호와 주소 정보를 해당 필드에 넣는다.
+									document.getElementById('facAddr1').value = data.zonecode;
 									document.getElementById("facAddr2").value = roadAddr;
 									// 커서를 상세주소 필드로 이동한다.
 									document.getElementById("facAddr3").focus();

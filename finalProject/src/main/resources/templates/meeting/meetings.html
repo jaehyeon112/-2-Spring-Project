@@ -124,14 +124,14 @@
 												<a href="#" class="text-dark link-hover me-3"><i class="fa fa-user" id="cnts"></i> [[${act.cnt}]]명</a>
 											</div>
 										</div>
-										<div class="col-lg-4" th:each="act,st : ${after}" th:if="${st.count}>1">
+										<div class="col-lg-4">
 											<div class="row g-4">
-												<div class="col-12">
+												<div class="col-12" th:each="act,st : ${after}" th:if="${st.count}>1">
 													<div class="row g-4 align-items-center">
 														<div class="col-5">
 															<div class="overflow-hidden rounded">
-																<img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" >
-																<img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="">
+																<img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
+																<img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
 															</div>
 														</div>
 														<div class="col-7">
