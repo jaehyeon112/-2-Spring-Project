@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>모달</title>
+    <!-- 부트스트랩 링크 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container">
+	<p>연장기한 모달..</p>
+	<button type="button">버 튼 </button>
+	</div>
+	
+    <div class="modal fade" id="extendDeadlineModal" tabindex="-1" role="dialog" aria-labelledby="extendDeadlineModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="extendDeadlineModalLabel">기한 연장 확인</h5>
+                </div>
+                <div class="modal-body">
+                    <p>정말로 기한을 연장하시겠습니까? 기한을 연장하면 이전 기한으로 돌아갈 수 없습니다.</p>
+                    <!-- date 입력란 추가 -->
+                    <div class="form-group">
+                        <label for="newDeadline">새로운 기한 선택:</label>
+                        <input type="date" class="form-control" id="newDeadline" name="newDeadline" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+                    <!-- 기한 연장을 처리할 버튼 -->
+                    <button type="button" class="btn btn-primary" onclick="extendDeadline()">네</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // 기한 연장 모달 표시
+        $(".btn-extendDeadline").click(function () {
+            $("#extendDeadlineModal").modal("show");
+        });
+
+        // 모달 닫기
+        $(".btn-secondary").click(function () {
+            $("#extendDeadlineModal").modal("hide");
+        });
+
+        // 기한 연장 처리 함수
+        function extendDeadline() {
+            // 선택된 기한 값 가져오기
+            let newDeadlineValue = document.getElementById("newDeadline").value;
+            // 여기에서 기한 연장 처리 로직 추가
+            console.log("새로운 기한:", newDeadlineValue);
+            // 모달 닫기
+            $("#extendDeadlineModal").modal("hide");
+        }
+    </script>
+</body>
+
+</html>

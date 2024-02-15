@@ -16,7 +16,7 @@ public interface DonaMapper {
 		//모금완료
 		List<DonaVO> selectCompletedItems();
 		//카테고리별
-		List<DonaVO> getDonaListByCategory(@Param("category") String category);
+		List<DonaVO> getDonaListByCategory(DonaVO donaVO);
 	
 	// 모금중.모금완료
 	//	List<DonaVO> getRecStat(String recStat);
@@ -37,8 +37,15 @@ public interface DonaMapper {
 		List<DonaVO> getCategoryList(String h);
 
 	
-	
+	// 연장여부이메일대상자(시설)
+		List<DonaVO> selectExtensionTargetList();
 		
+	//모금종료시 update	
+		 void updateRecStat(DonaVO donaVO);
+	
+	//기한 연장 update	 
+		 void extendDonationPeriod(DonaVO donaVO);
+		 
 	//기부등록폼 - donation
 		public int insertDonation(DonaVO donaVO);
 		
@@ -51,6 +58,9 @@ public interface DonaMapper {
 		
 	//기부후기등록2
 		public int insertReviewDetail(DonaVO donaVO);
+		
+	//기부후기 개별
+		public DonaVO getDonaReview(Integer donId);
 	
 	//결제프로세스
 	 public int paymentProcess(DonaVO donaVO);

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+
+	
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설마이페이지</title>
@@ -60,15 +61,18 @@
                     <div class="col-md-9">
                         <div class="boking_table">
                             <div class="row">
+                            
                             <th:block th:each="dona0:${donaList0}">
+                            
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p th:text="${dona0.title}"></p>
+                                     <p><a th:href="@{/donaDetail(id=${dona0.donId}, facId=${dona0.facId})}" th:text="${dona0.title}"></a></p>
+                                    <input type="hidden" id="did" th:value="${dona0.donId}"> 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                      <p th:text="${#dates.format(dona0.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona0.endPeriod,'yyyy-MM-dd')}"></p>
+                                      <p id="endP" th:text="${#dates.format(dona0.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona0.endPeriod,'yyyy-MM-dd')}"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -85,8 +89,8 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                      
-                                        <a class="book_now_btn button_hover" href="#">후기작성</a>
+                                     <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
+                                      <a  class="book_now_btn button_hover" href="#" th:onclick="openExtModal([[${dona0.donId}]])">연장하기</a>
                                     </div>
                                 </div>
                                 </th:block>   
@@ -133,7 +137,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:20px">후기작성</p>
+                                       <p style="color:black; font-size:20px">연장하기</p>
                                        
                                     </div>
                                 </div>
@@ -174,7 +178,7 @@
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
                                       
-                                        <a class="book_now_btn button_hover" href="#">후기작성</a>
+                                        <a class="book_now_btn button_hover" href="/reviewform">후기작성</a>
                                     </div>
                                 </div>
                                 </th:block>   
@@ -183,6 +187,100 @@
                     </div>
                 </div>
             </div>
+            
+     <div class="modal fade" id="extendDeadlineModal" tabindex="-1" role="dialog" aria-labelledby="extendDeadlineModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="extendDeadlineModalLabel"> 모금 기한 연장하기 </h5> 
+                </div>
+                <div class="modal-body">
+                    <p> 모금액이 목표모금액보다 적기 때문에 2주 이내로 기한을 연장할 수 있습니다. (1회 한정)</p>
+                    
+                    <!-- date 입력란 추가 -->
+                    <div class="form-group">
+                        <label for="newDeadline">연장 기한 선택:</label>
+                        <input type="date" class="form-control" id="newDeadline" name="newDeadline" required>
+                    </div>
+		                    <!-- 숨겨진 입력 필드 추가 -->
+		                	<input type="hidden" id="donIdForExtension">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="extendDeadline()"> 연장하기 </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                
+<script th:inline="javascript">
+
+function openExtModal(donId){
+	console.log("모달창열리고", donId);
+	// 모달에 donId 저장하기
+    document.getElementById("donIdForExtension").value = donId;
+	
+	$("#extendDeadlineModal").modal("show");
+	
+	$(".btn-secondary").click(function () {
+	    $("#extendDeadlineModal").modal("hide");
+	});
+}
+
+
+// 기한 연장 처리 함수
+function extendDeadline() {
+    // 선택된 기한 값 가져오기
+    let newDeadlineValue = document.getElementById("newDeadline").value;
+    //	console.log("새로운 기한:", newDeadlineValue);
+    	
+    let donIdVal = document.getElementById("donIdForExtension").value; // 수정된 부분
+    console.log("새로운 기한:", newDeadlineValue, "donId:", donIdVal);
+    
+     //let donIdVal =  document.getElementById("did").value;
+     //$('#did').val();
+    // console.log(donIdVal);
+ 		
+     let donaVO = {
+    		 donId : donIdVal,
+    		 extPeriod : newDeadlineValue
+     }
+     
+     console.log(donaVO);
+    	
+        $.ajax({
+        	type: 'PUT',
+            url: '/facilityMyPage/donaInfo/extension',
+            dataType : 'json',   
+            data: JSON.stringify(donaVO),
+        	contentType : 'application/json', 
+            
+            success: function(response) {
+              
+
+                alert("연장하기성공!");
+                //location.href = `facilityMyPage?facId=id`;
+                //location.href = "facilityMyPage";
+                return;
+            },
+            error: function(error) {
+            	console.log("아작스실패");
+                console.error(error);
+            }
+        })
+    	
+    	
+    	
+    // 모달 닫기
+    $("#extendDeadlineModal").modal("hide");
+}
+
+</script>
 	</section>
 </body>
 </html>

@@ -17,9 +17,6 @@ public class UserSuccessHandler implements AuthenticationSuccessHandler {
             Authentication authentication) throws IOException, ServletException {
     	UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
     	System.out.println(user.getUserVO());
-    	if(user.getUserVO().getId()==null) {
-    		response.sendRedirect("/signup");
-    	};
         response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트
     }
 }

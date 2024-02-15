@@ -127,19 +127,23 @@
 	        <div class="row">
 	          <div class="col-sm-6 col-xl-3" style="color:black; width:25%;" th:each="fac ,stat : ${fac}">
 	            <div class="card overflow-hidden rounded-2" style=" margin-bottom: 20px;">
+
 	              <div class="position-relative">
 	                <a><img th:src="@{${fac.path}}"  th:data-vol-act-id="${fac.volActId}" data-toggle="modal" data-target="#myModal2"
 	                class="card-img-top rounded-0"onerror="this.onerror=null; this.src='/userresources/image/nonono.png';"style="height:200px;"></a>
+
 	              </div>
-	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
-				    <span>모집중[[${fac.rn}]]</span><br>
+	              <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
+				    <span>모집중[[${fac.rn}]]</span>
+				    </div>
+	              <div class="text-white px-1 rounded position-absolute" style="top: 10px; right: 10px;background-color:#28a745;">
+					<span th:text="|${fac.category}|">관심분야할거임 </span>
 					</div>
 	               <div class="d-flex align-items-center justify-content-between">
 		            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 		                <h4><a th:text="${fac.title}">동아리명</a></h4>
 		                <a href="#" style="color:gray">
 						   <span th:text="|#${fac.volZip2}|">지역할거임</span>
-						   <span th:text="|#${fac.category}|">관심분야할거임 </span>
 						</a>
 						<br>
 						<Strong><span>모집기간</span></Strong>

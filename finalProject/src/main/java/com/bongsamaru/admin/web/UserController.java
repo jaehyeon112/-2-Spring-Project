@@ -81,7 +81,7 @@ public class UserController {
 		List<DonaVO> before = new ArrayList<>();
 		
 		for(DonaVO vo : donaList) {
-			if(vo.getRecStat()==0) {
+			if(vo.getRecStat().equals('0')) {
 				before.add(vo);
 			}
 		}
