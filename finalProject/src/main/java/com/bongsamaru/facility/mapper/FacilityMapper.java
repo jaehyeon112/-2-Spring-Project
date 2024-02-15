@@ -21,6 +21,10 @@ public interface FacilityMapper {
 	public List<FundingVO> getfundedList(String facId);
 	public List<VolunteerVO> getVolList(String facId);
 	
+	
+	public int insertJoinVolunteer(VolMemVO volMemVO);//회원이 시설 봉사 참가하기위한 등록폼
+	public VolActVO getFacVolInfo(Integer volActId);
+	
 	//시설 마이페이지(기부)
 	public List<DonaVO> getDonaList(String facId, Integer recStat);
 	
@@ -30,7 +34,7 @@ public interface FacilityMapper {
 	public int volAppUpdate(Integer volActId, String memId);//참여 승인되서 업데이트
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
-	//public VolunteerVO insertJoinVolunteer();//회원이 시설 봉사 참가하기위한 등록폼
+	
 	public List<VolActVO> getVolunteerJoinList( String facId); //신청 수락 기다리는 리스트
 	//public List<VolunteerVO> getVolunteerFinishList(); //봉사 완료 후 리스트
 	//public VolunteerVO volunteerFinishInfo(); //봉사 완료 된 후 참여자 승인해주기 위해

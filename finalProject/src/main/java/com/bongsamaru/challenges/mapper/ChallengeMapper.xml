@@ -75,6 +75,7 @@ SELECT  CHAL_ID,
               AND CODE = #{code}
             
 </select>
+
 <resultMap id="challengeWithFiles" type="ChallengesVO">
     <id property="chalDetId" column="CHAL_DET_ID"/>
     <result property="chalId" column="CHAL_ID"/>

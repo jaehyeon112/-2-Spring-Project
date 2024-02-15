@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.bongsa.service.BongsaService;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.PageVO;
@@ -46,6 +47,8 @@ public class facilityController {
 
 	@Autowired
 	CommonMapper commonMapper;
+	@Autowired
+	BongsaService bongsaService;
 	
 	/**
 	 * 사이트에 가입한 시설 리스트
@@ -148,11 +151,11 @@ public class facilityController {
 	@GetMapping("/facilityMyPage/donaInfo")
 	public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
 		
-		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(),1);
+		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(),0);
 		model.addAttribute("donaList1", list1);
 		log.info(list1);
 		
-		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(),0);
+		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(),1);
 		model.addAttribute("donaList0", list0);
 		log.info(list0);
 		return "facility/myPageDona";
@@ -188,7 +191,7 @@ public class facilityController {
 	}
 	
 	@PostMapping("/volAppInsert")
-	
+	@ResponseBody
 	public int volAppInsert(Model model, VolMemVO volMemVO) {
 		int list = facilityService.volAppInsert(volMemVO);
 		//model.addAttribute("volAppIns", list);
@@ -201,8 +204,27 @@ public class facilityController {
 		model.addAttribute("info", info);
 		return info; 
 	}
+
 	
+	  //회원이 시설봉사 정보 조회
+	 
+	  @GetMapping("/facilityVolInfo")
+	  @ResponseBody
+	  public VolActVO getFacVolInfo(Model model, Integer volActId) { 
+		  VolActVO info = facilityService.getFacVolInfo(volActId);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
 	
+	//회원이 시설봉사 신청
+	@PostMapping("/joinVol")
+	@ResponseBody
+	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal) {
+		
+		int joinVol = facilityService.insertJoinVolunteer(volMemVO);
+		log.info(joinVol);
+		return joinVol;
+	}
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody

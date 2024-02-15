@@ -220,6 +220,38 @@ INSERT INTO VOL_ACT_MEM
 <update id= "volAppUpdate" parameterType="VolMemVO">
 UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 </update>
+<!-- 회원이 시설봉사 정보조회 -->
+<select id="getFacVolInfo" resultType="VolActVO">
+SELECT   FAC_ID,
+		 CATEGORY,
+		 TITLE,
+		 LOCATION,
+		 CAP,
+		 VOL_DATE,
+		 START_DATE,
+		 EXPIRE_DATE,
+		 CONTENT 
+  FROM   VOL_ACT 
+ WHERE   VOL_ACT_ID=#{volActId}
+</select>
+<!-- 회원이 시설봉사 신청 -->
+<insert id="insertJoinVolunteer" parameterType="VolMemVO">
+INSERT INTO VOL_MEM
+		           (VOL_MEM_ID,
+		            FAC_ID,
+		            APP_CODE,
+		            APP_DATE,
+		            APP_REASON,
+		            MEM_ID,
+		            VOL_ACT_ID)
+		   VALUES(VOLMEMBER_SEQ.nextval,
+		   		  #{facId},
+		   		  'h01',
+		   		  sysdate,
+		   		  #{appReason},
+		   		  #{memId},
+		   		  #{volActId})         
+</insert>
 <!-- 시설이 봉사 승인시 확인할 참여자 신청서 -->
 <select id="getJoinApp" parameterType="VolMemVO">
 SELECT  MEM_ID,

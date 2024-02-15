@@ -47,7 +47,18 @@ public class FacilityServiceImpl implements FacilityService {
 		
 		return mapper.getVolList(facId);
 	}
-
+	
+	@Override
+	public int insertJoinVolunteer(VolMemVO volMemVO) {
+		return mapper.insertJoinVolunteer(volMemVO);
+		
+	}
+	
+	@Override
+	public VolActVO getFacVolInfo(Integer volActId) {
+		return mapper.getFacVolInfo(volActId);
+	}
+	
 	@Override
 	public List<DonaVO> getDonaList(String facId,Integer recStat) {
 		return mapper.getDonaList(facId,recStat);
@@ -94,6 +105,12 @@ public class FacilityServiceImpl implements FacilityService {
 			
 			return mapper.getCategoryCount(facZip2, facType);
 		}
+
+
+		
+
+
+		
 
 
 		

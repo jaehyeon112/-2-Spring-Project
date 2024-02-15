@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout}"
+	 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -109,6 +112,7 @@
 	            <input type="date" id="startDate" class="date-input" onchange="search()">
 	            <span class="date-label">종료 날짜:</span>
 	            <input type="date" id="endDate" class="date-input" onchange="search()">
+<input id="userData"   th:value="|${#authentication.principal.userVO.id}">
 	        </div>
 	    </div>
 	</div>
@@ -124,7 +128,8 @@
 	          <div class="col-sm-6 col-xl-3" style="color:black; width:25%;" th:each="fac ,stat : ${fac}">
 	            <div class="card overflow-hidden rounded-2" style=" margin-bottom: 20px;">
 	              <div class="position-relative">
-	                <a><img th:src="@{${fac.path}}" class="card-img-top rounded-0"onerror="this.onerror=null; this.src='/userresources/image/nonono.png';"style="height:200px;"></a>
+	                <a><img th:src="@{${fac.path}}"  th:data-vol-act-id="${fac.volActId}" data-toggle="modal" data-target="#myModal2"
+	                class="card-img-top rounded-0"onerror="this.onerror=null; this.src='/userresources/image/nonono.png';"style="height:200px;"></a>
 	              </div>
 	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 				    <span>모집중[[${fac.rn}]]</span><br>
@@ -143,6 +148,7 @@
 	                    <br>
 	                    <span th:text="'정원 : 해야함'+${fac.cap}+'명'">정원 : 해야함</span>
 						 <br>
+						 
 		            </div>
 	               </div>
 	            </div>
@@ -150,6 +156,72 @@
 	        </div>
         </div>
       </div>
+      <!-- 봉사정보 모달 -->
+      <div class="modal" tabindex="-1" id="myModal2">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">봉사정보조회</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	    <div class="form-group">
+			<div class="write_item user">
+				<table class="table" id="showTable">
+				
+				
+				</table>
+					
+				</div>
+				</div>
+	    </div>
+      
+      <div class="modal-footer">
+        <button type="button" id="joinVolBtn" class="btn btn-outline-warning btn-sm " style="color:black;" data-toggle="modal" data-target="#myModal"  >봉사신청하기</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+      
+      
+      <!-- 봉사신청 모달 -->
+          <div class="modal" tabindex="-1" id="myModal">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">봉사신청하기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<div class="write_item user">
+					<div class="subheading">
+					<textarea class="form-control plus-bnt" id="content" name="content" maxlength="500" placeholder="신청이유를 작성해 주세요"></textarea>
+					<br>
+				</div>
+				</div>
+				</div>
+			</div> <!-- class="modal-body" -->
+			<div class="modal-footer">
+				
+				<button type="submit" class="btn btn-outline-warning btn-sm uploadBtn" style="color:black;" >신청!
+					</button>
+			</div>
+		</div>
+
+	</div>
+</div> 
+ </div>     
+      
       <nav style="margin-top:50px;" aria-label="Page navigation example" th:if="${fac.size} != 0">
     <ul class="pagination justify-content-center">
         <!-- 이전 버튼 -->
@@ -169,7 +241,7 @@
 </nav>
 
 </div>
-</div>
+
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
@@ -239,6 +311,84 @@ function search() {
 function resetSearch() {
     window.location.href = '/FacilityVol';
 }
+
+var volActId ='';
+var facId = '';
+    $(document).ready(function() {
+        // 이미지 클릭 이벤트 처리
+        $('img.card-img-top').on('click', function() {
+        	$("#showTable").empty();
+             volActId = $(this).data('vol-act-id'); // 클릭된 이미지의 volActId 값을 가져옴
+            console.log(volActId);
+           
+
+            // 모달에 Ajax 요청 보내기
+            $.ajax({
+                url: '/facilityVolInfo?volActId='+volActId,
+                type: 'GET',
+                success: function(result) {
+                	console.log("info",result);
+                	facId=result.facId
+                	$("#showTable").append( 
+  		                   `<tr><th>시설정보</th><td>${result.facId}</td></tr>
+  		                   <tr><th>카테고리</th><td>${result.category}</td></tr>
+  		                   <tr><th>제목</th><td>${result.title}</td></tr>
+  		                   <tr><th>내용</th><td>${result.content}</td></tr>
+  		                   <tr><th>봉사일시</th><td>${result.volDate}</td></tr>
+  		                   <tr><th>정원</th><td>${result.cap}</td></tr>`
+  		                   
+  		    		);
+                },
+                error: function(err) {
+                    // Ajax 요청이 실패했을 때의 처리
+                    console.log(err);
+                }
+            });
+           
+        });
+       
+        $('#joinVolBtn').on('click', function() {
+
+            // 모달 닫기
+            $('#myModal2').modal('hide');
+        });
+    });
+   
+
+$('.uploadBtn').click(function (){
+	console.log(facId);
+    var userId = $('#userData').val();
+  
+   
+
+	console.log(userId)
+	let appReason = $('[name="content"]').val();
+	console.log(appReason);
+	var formData= new FormData();
+	formData.append('appReason',appReason);
+	formData.append('facId',facId);
+	formData.append('memId', userId );
+	formData.append('volActId',volActId);
+	console.log(formData);
+	$.ajax({
+	    url: '/joinVol',
+	    type: 'POST',
+	    data:formData,
+	    processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+		contentType: false,
+	    success: function(result) {
+	       alert('봉사신청되었습니다. 승인을 기다려 주세요~')
+
+	            // 모달 닫기
+	            $('#myModal').modal('hide');
+	        
+	    },
+	    error: function(err) {
+	        console.log(err);
+	    }
+	}); 
+});
+
 </script>
   </section>
 </body>
