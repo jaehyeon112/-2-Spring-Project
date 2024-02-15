@@ -5,11 +5,19 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<style>
+.box-container{
+   
+    }
+</style>
 </head>
 <body>
 <!-- 마이페이지 사이드바 -->
 <div th:fragment="side">
-  <div class="card">
+  <div class="card" style="background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;">
     <div class="card-body">
       <h1>봉사</h1>
       <hr>
