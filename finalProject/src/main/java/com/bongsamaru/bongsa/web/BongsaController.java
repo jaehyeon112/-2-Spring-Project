@@ -55,8 +55,7 @@ public class BongsaController {
 	    if (zip != null && !zip.isEmpty()) {
 	        vo.setVolZip2(zip);
 	    }
-
-		
+	
 		return "bongsa/GroupVol";
 	}
 	@GetMapping("/FacilityVol")
