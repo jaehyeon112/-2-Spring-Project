@@ -88,6 +88,11 @@
 </select>
 
 
+
+
+
+
+
 <!--  메인페이지 전체조회 : 모금완료 (recStat = 0)-->
  <select id="selectCompletedItems" resultType="DonaVO">
     SELECT 

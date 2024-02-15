@@ -49,7 +49,33 @@ public class DonaController {
 	@Autowired
 	MailUtil mail;
 	
-	
+	@GetMapping("/test")
+	public String test(@RequestParam("id") Integer donId,
+			@RequestParam(name = "facId", required = true) String facId, Model model) {
+		// 상세페이지
+		DonaVO dona = donaService.getDonaDetail(donId, facId);
+		model.addAttribute("dona", dona);
+
+		// 기부자목록
+		List<DonaVO> donaList = donaService.getDonerList(donId);
+		model.addAttribute("list", donaList);
+
+		// 댓글리스트
+		List<DonaVO> commentList = donaService.getCommentList(donId);
+		model.addAttribute("comment", commentList);
+		
+		//후기글
+		DonaVO rev = donaService.getDonaReview(donId);
+		System.out.println("======================");
+		System.out.println(rev);
+		model.addAttribute("rlist", rev);
+		
+		// 랜덤
+		List<DonaVO> random = donaService.selectRecruitingItems();
+		model.addAttribute("randomlist", random);
+
+		return "donation/donaDetail";
+	}
 	
 	
 
@@ -106,6 +132,11 @@ public class DonaController {
 	@GetMapping("/donaDetail")
 	public String donaDetailPage2(@RequestParam("id") Integer donId,
 			@RequestParam(name = "facId", required = true) String facId, Model model) {
+		
+		//날자 
+		DonaVO donaVO = new DonaVO();
+		 Date endPeriod = donaVO.getEndPeriod();
+		 
 		// 상세페이지
 		DonaVO dona = donaService.getDonaDetail(donId, facId);
 		model.addAttribute("dona", dona);
@@ -128,7 +159,7 @@ public class DonaController {
 		List<DonaVO> random = donaService.selectRecruitingItems();
 		model.addAttribute("randomlist", random);
 
-		return "donation/donaDetail";
+		return "donation/testdona";
 	}
 
 	/**

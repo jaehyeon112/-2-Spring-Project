@@ -48,7 +48,17 @@ public class DonaVO {
 	    //상세페이지
 	    private String dday; //디데이
 	    
-    
+   //연장관련 날짜 수저 오버라이딩
+	    public Date getEndPeriod() {
+	    	if(extPeriod != null) {
+	    		return extPeriod;
+	    	}else {
+	    		return endPeriod;
+	    	}
+	    }
+	    
+	    
+	    
     //Don_Detail(기부상세) 테이블
 	    private Integer donDetId; //기부등록상세번호 (notnull)
 	    //private Integer donId; 
