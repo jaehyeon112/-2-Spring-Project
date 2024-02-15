@@ -5,155 +5,47 @@
 <head>
 <meta charset="UTF-8">
 <title>시설마이페이지</title>
- <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-    }
-
-    .sidebar {
-      background-color: #ffebcd;
-      color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      margin-top: 20px;
-      position: fixed; /* 스크롤 따라 움직이도록 설정 */
-      height: 40vh; /* 뷰포트의 100% 높이를 차지하도록 설정 */
-      overflow-y: auto; /* 내용이 넘칠 경우 스크롤 허용 */
-    }
 
 
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .btn-toggle {
-      width: 100%;
-      text-align: left;
-    }
-
-    .btn-toggle:focus {
-      outline: none;
-    }
-
-    .btn-toggle:hover, .btn-toggle:focus {
-      background-color: #ffebcd;
-    }
-
-    .btn-toggle.active {
-      background-color: #ffebcd;
-      color: #fff;
-    }
-
-    .btn-toggle-nav {
-      padding-left: 20px;
-    }
-
-    .link-dark {
-      color: #343a40 !important;
-    }
- .p {
-  text-align: center;
-}
-.main-content {
-   margin-left: 280px; /* 사이드바의 너비만큼 마진 설정 */
- }
-  </style>
 </head>
 <body>
-
-  
-
-
-
-
 	<section layout:fragment="content"  class="d-flex">
- <!--  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;"> -->
-    <div class="col-md-2 d-none d-md-block sidebar">
-      <div class="sidebar-sticky">
-    <ul class="nav flex-column">
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-collapse" aria-expanded="false">
-          봉사관련
-        </button>
-        <div class="collapse" id="volunteer-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li>
-              <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">
-                봉사신청중
-              </button>
-              <div class="collapse" id="volunteer-ongoing">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a th:href="@{/facilityMyPage/volJoin}" class="link-dark rounded"><button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">
-              신청하기 & 신청내역</button></a></li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-completed" aria-expanded="false">
-                봉사완료
-              </button>
-              <div class="collapse" id="volunteer-completed">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-dark rounded">완료승인</a></li>
-                  <li><a href="#" class="link-dark rounded">후기작성</a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#dashboard-collapse" aria-expanded="false">
-          기부관련
-        </button>
-        <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#orders-collapse" aria-expanded="false">
-          정보수정
-        </button>
-      </li>
-    </ul>
-  </div>
-  </div>
-  
-  
-  
-  
-   <div class="col-md-10 main-content">
-		<p>기부등록하기</p>
-		<p>기부신청하기</p>
-		
-		<div class="row hotel_booking_table">
-					<div class="col-md-3">
-                        
+ 		<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
+  	    <div class="col-md-10 main-content">
+		                
+                <div class="row hotel_booking_table">
+                <div class="col-md-3">
+                    
                     </div>
                     <div class="col-md-9">
                         <div class="boking_table">
                        
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">목표금액</p>
+                                     <p style="color:black; font-size:20px">기부제목</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">모집기간</p>
+                                      <p style="color:black; font-size:20px">모집기간</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">승인상태</p>
+                                       <p style="color:black; font-size:20px">모집금액</p>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="book_tabel_item">
+                                       <p style="color:black; font-size:20px">달성률</p>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="book_tabel_item">
+                                       <p style="color:black; font-size:20px">후기작성</p>
                                        
                                     </div>
                                 </div>
@@ -161,32 +53,44 @@
                           
                         </div>
                     </div>
-                    
                     <div class="col-md-3">
-                        <h2>기부신청<br>진행상황</h2>
+                        <h2>진행된<br>기부리스트</h2>
                     </div>
+                    
                     <div class="col-md-9">
                         <div class="boking_table">
-                        <th:block th:each="dona:${donaList}">
                             <div class="row">
-                                <div class="col-md-4">
+                            <th:block th:each="dona0:${donaList0}">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p  th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}" ></p>
+                                     <p th:text="${dona0.title}"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                      <p th:text="${#dates.format(dona.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona.endPeriod,'yyyy-MM-dd')}"></p>
+                                      <p th:text="${#dates.format(dona0.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona0.endPeriod,'yyyy-MM-dd')}"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p th:text="${dona.donRegApp}"></p>
-                                       
+                                       <p th:text="${#numbers.formatInteger(dona0.targetOk,3,'COMMA')+'원'}"></p>
+                                     
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="book_tabel_item">
+                                       <p th:text="${dona0.donationRatio}+'%'"></p>
+                                     
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="book_tabel_item">
+                                      
+                                        <a class="book_now_btn button_hover" href="#">후기작성</a>
+                                    </div>
+                                </div>
+                                </th:block>   
                             </div>
-                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -207,29 +111,29 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">기부제목</p>
+                                     <p style="color:black; font-size:20px">기부제목</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">모집기간</p>
+                                      <p style="color:black; font-size:20px">모집기간</p>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">모집금액</p>
+                                       <p style="color:black; font-size:20px">모집금액</p>
                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">달성률</p>
+                                       <p style="color:black; font-size:20px">달성률</p>
                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">후기작성</p>
+                                       <p style="color:black; font-size:20px">후기작성</p>
                                        
                                     </div>
                                 </div>
@@ -238,13 +142,13 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <h2>기부후기</h2>
+                        <h2>완료된<br>기부리스트</h2>
                     </div>
                     
                     <div class="col-md-9">
                         <div class="boking_table">
                             <div class="row">
-                            <th:block th:each="dona:${donaList}">
+                            <th:block th:each="dona:${donaList1}">
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p th:text="${dona.title}"></p>

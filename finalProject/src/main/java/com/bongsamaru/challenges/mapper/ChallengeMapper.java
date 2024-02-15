@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.file.service.FilesVO;
 
 public interface ChallengeMapper {
@@ -15,6 +16,9 @@ public interface ChallengeMapper {
 			public List<ChallengesVO> getChallengesList(int chalId);			
 			public int getChallengeInsert(ChallengesVO challengeVO);
 			public int getChallengesInsert(ChallengesVO challengeVO);
-			//public Map<String, Object> updateEmpInfo(EmpVO empVO);
+			
 			public int getChallengesDel(int chalDetId);
+			public List<LikeVO> getChallengeLike(LikeVO likeVO);
+			public int challengesLikeInsert(LikeVO likeVO);
+			public int deleteChallengeLike(Integer boardId);
 }
