@@ -111,6 +111,7 @@
 						,rep_name 
 						,rep_phone
 						,fac_type
+						,fac_zip2
 				)values(
 						#{facId}
 					   ,#{facPwd}
@@ -126,6 +127,7 @@
 					   ,#{repName}
 					   ,#{repPhone}
 					   ,#{facType}
+					   ,FIND_ZIP(#{facZip})
 									)
 	</insert>
 	

@@ -361,7 +361,12 @@
 	<select id="tagList" resultType="TagVO">
 		select tag_content,
 				vol_id
-		from tag 
+		from tag
+		<where>
+        	<if test="volId!=null">
+        		vol_id = #{volId}
+        	</if>
+        </where>
 		order by tag_id
 	</select>
 	<select id="facVolunteerList" resultType="VolunteerVO">

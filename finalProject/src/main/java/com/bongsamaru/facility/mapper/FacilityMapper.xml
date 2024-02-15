@@ -6,16 +6,18 @@
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
 <select id="getFacilityList" resultType="FacilityVO">
-
-	SELECT 			FAC_ID,
+	SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
+	
+    SELECT 			FAC_ID,
 					FAC_NAME,
 					FAC_ADDR,
 					select_sub(FAC_ZIP2) AS region,
 					FAC_ZIP2,
 					FAC_ZIP,
-					FAC_TYPE
+					FAC_TYPE,
+					(select file_Path from files where code='p02' and code_user=#{facId}) as filePath
     FROM FACILITY
-	<where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+	       <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
         <if test="facZip2 != null and facZip2 !=''">
             AND 	FAC_ZIP2=#{facZip2}
         </if>
@@ -23,11 +25,23 @@
         	AND 	FAC_TYPE = #{facType}
         </if>
     </where>
-
-
-
+	    ) A )
+	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
+	
 </select>
-
+<!-- 시설리스트 페이지네이션용 -->
+<select id="getCategoryCount" resultType="int">
+	SELECT count(*) 
+	  FROM FACILITY
+	  <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+        <if test="facZip2 != null and facZip2 !=''">
+            AND 	FAC_ZIP2=#{facZip2}
+        </if>
+        <if test="facType != null and facType != ''">
+        	AND 	FAC_TYPE = #{facType}
+        </if>
+    </where>
+</select>
 
 <!-- 시설정보 -->
 <select id="getFacilityInfo" resultType="FacilityVO">
@@ -122,12 +136,21 @@ SELECT  T1.VOL_ACT_ID,
   		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
-     WHERE FAC_ID=#{facId} 
+  <where>
+          FAC_ID=#{facId}
+     <if test="recStat != null">
+      AND REC_STAT=#{recStat}
+     </if>
+   </where>
  GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID
 
 </select>
 <!-- volunteer정보 -->
+<!-- 시설이 봉사 등록 -->
 <insert id="InsertFacVol" parameterType="VolActVO">
+<selectKey keyProperty="volActId" resultType="int"	order="BEFORE">
+			SELECT VOLACT_SEQ.nextval FROM dual
+	</selectKey> 
  INSERT INTO VOL_ACT 
                     (VOL_ACT_ID,
                      FAC_ID,
@@ -136,34 +159,55 @@ LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
                      CONTENT,
                      LOCATION,
                      CAP,
+                     VOL_ZIP,
                      VOL_DATE,
                      START_DATE,
                      EXPIRE_DATE)
-             VALUES (VOLACT_SEQ.nextval,
+             VALUES (#{volActId},
              		 #{facId},
              		 'i06',
              		 #{title},
              		 #{content},
                      #{location},
                      #{cap},
+                     #{volZip},
                      #{volDate},
                      #{startDate},
                      #{expireDate})
 
 </insert>
+<!-- 시설이 봉사 올린 리스트(아직 봉사 안한 상태만) -->
 <select id="getVolunteerJoinList" resultType="VolActVO">
-   SELECT  FAC_ID, 
+   SELECT  VOL_ACT_ID,
+   		   FAC_ID, 
    		   CATEGORY,
    		   TITLE, 
    		   CONTENT, 
    		   LOCATION, 
    		   CAP, 
-   		   VOL_DATE 
+   		   VOL_ZIP,
+   		   VOL_DATE,
+   		   START_DATE,
+   		   EXPIRE_DATE,
+   		   (SELECT COUNT(*) FROM VOL_ACT_MEM WHERE VOL_ACT_ID = VOL_ACT.VOL_ACT_ID)   AS COUNT 
      FROM  VOL_ACT
     WHERE  FAC_ID=#{facId}
+      AND  VOL_DATE > SYSDATE
+ ORDER BY  EXPIRE_DATE
 </select>
-
-<insert id="volAppList" parameterType="VolMemVO">
+<!-- 그 봉사에 관해 신청자들 승인할 리스트 -->
+<select id="getVolunteerAppList" resultType="VolMemVO">
+SELECT   MEM_ID,
+		 VOL_ACT_ID,
+		 APP_DATE, 
+		 APP_CODE, 
+		 APP_REASON
+  FROM   VOL_MEM
+ WHERE   VOL_ACT_ID=#{volActId}
+ AND     VOL_ID IS NULL
+ORDER BY APP_DATE DESC
+</select>
+<insert id="volAppInsert" parameterType="VolMemVO">
 INSERT INTO VOL_ACT_MEM 
 					   (VOL_ACT_MEM_ID, 
 					    VOL_ACT_ID, 
@@ -176,14 +220,25 @@ INSERT INTO VOL_ACT_MEM
 <update id= "volAppUpdate" parameterType="VolMemVO">
 UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 </update>
-
+<!-- 시설이 봉사 승인시 확인할 참여자 신청서 -->
+<select id="getJoinApp" parameterType="VolMemVO">
+SELECT  MEM_ID,
+        APP_DATE,
+        APP_REASON
+FROM    VOL_MEM
+WHERE   VOL_ACT_ID=#{volActId}
+</select>
+<!-- 시설이 봉사완료 후 -->
 <select id="getVolunFinishList" resultType="VolMemVO">
- 	SELECT FAC_ID, 
- 		   APP_CODE, 
- 		   APP_DATE, 
- 		   APP_REASON, 
- 		   MEM_ID 
-      FROM VOL_MEM WHERE VOL_ACT_ID=#{volActId}
+SELECT     VOL_ACT_ID, 
+		   FAC_ID, CATEGORY,
+		   TITLE,
+		   CONTENT, 
+		   LOCATION, 
+		   CAP, 
+		   VOL_DATE
+  FROM     VOL_ACT
+ WHERE     VOL_DATE > SYSDATE
 </select>
 
 <!-- 시설봉사완료후 참여자 확인해주면 마음온도 변화 -->

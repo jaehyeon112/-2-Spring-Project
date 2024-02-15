@@ -12,19 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class CommonUserController {
 	
-	@Value("${kakao.client.id}")
-	private String kakaoClientId;
-
-	@Value("${kakao.redirect.url}")
-	private String kakaoRedirectUrl;
-	
-	@Value("${kakao.client.secret}")
-	private String secret_code;
 	
 	 @GetMapping("/login")
 	    public String loginForm(Model model){
-		 model.addAttribute("kakaoUrl", "https://kauth.kakao.com/oauth/authorize?client_id=" 
-		            + kakaoClientId + "&redirect_uri=" + kakaoRedirectUrl + "&response_type=code");
 		 
 		 
 	        return "login/FacilityLogin";

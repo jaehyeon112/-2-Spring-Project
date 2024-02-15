@@ -38,9 +38,7 @@ public class FileController {
     @GetMapping("/deleteFiles")
     @ResponseBody
     public String deleteFile(@RequestParam(name="filePath") String filePath) {
-    	System.out.println("여기까진..?"+filePath);
         boolean isDeleted = fileService.deleteFile(filePath);
-        System.out.println("파일삭제"+isDeleted);
         if(isDeleted==true) {
         	return "ok";
         }else {

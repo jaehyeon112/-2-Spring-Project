@@ -19,6 +19,7 @@ public class VolunteerVO {
 	private String facName; 
 	//영희
 	private Integer vol;
+	private Integer capCnt;
 	private Integer fac;
 	private String memId;
 	private Integer volId;

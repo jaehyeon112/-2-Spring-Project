@@ -8,47 +8,20 @@
 
 <!-- TUI 에디터 CSS CDN -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <style>
-h1 {
-    text-align: center;
-    padding: 10px 10px;
-    padding-bottom: 30px;
-    border-bottom:1px solid #848484;
-}
-
-.form-0 {
-    position: relative;
-}
-
-.board-top {
-    width : 80%;
-    height: 50px;
-    margin: 0 auto;
-    max-width: 100%;
-}
-
-hr{
-    width: 100%;
-}
-
-.form-1 {
-    display: flex;
-    flex-direction: column;
-    width: 800px;
-    margin: 0 auto;
-}
-
 .write-1 {
     height: 30px;
+    width:70%;
     border : none;
     font-size: 18px;
-    background-color: #f5f6f7;
     outline: none;
 }
 </style>
 </head>
 <body>
 	<section layout:fragment="content">
+	<br>
 		<div class="body-wrapper">
 			<div class="container-fluid">
 				<div class="container">
@@ -60,12 +33,41 @@ hr{
 					<!-- 에디터를 적용할 요소 (컨테이너) -->
 					<div id="contents"></div>
 					<br>
-					<button type="button" onClick="handleSave()" style="float: right;width:80px" class="btn btn-success m-1">등록</button>
-	                <button type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</button>
+					<button type="button" onClick="modalOpen()" style="float: right;width:80px" class="btn btn-success m-1">등록</button>
+	                <a th:href="@{../freeBoardList(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a>
 					<!-- TUI 에디터 JS CDN -->
+					<!-- 모달창 -->
+					<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+					    <div class="modal-dialog" role="document">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="deleteConfirmationModalLabel">등록 확인</h5>
+					            </div>
+					            <div class="modal-body">
+					                <p>등록하시겠습니까?</p>
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">아니오</button>
+					                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">네</button>
+					            </div>
+					        </div>
+					    </div>
+					 </div>
 					
-					<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 					<script>
+						var cateNo = 0;
+						$.ajax({
+			           		url: '/findNo',
+			           		type: 'GET',
+			           		processData: false,
+			           		contentType: false,
+			           		success: function(data) {
+			           			cateNo = data;
+			           		},
+			           		error: function(e) {
+			           			console.log('실패');
+			           		}
+			           	});
 						const editor = new toastui.Editor({
 							el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
 							height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
@@ -79,35 +81,60 @@ hr{
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p13")
-									formData.append("codeNo", 2);
-						        	console.log(formData)
-						   			$.ajax({
+						           	formData.append("codeNo", cateNo);
+				           			$.ajax({
 						           		url: '/uploadsAjax',
 						           		type: 'POST',
 						           		processData: false,
 						           		contentType: false,
 						           		data: formData,
-						           		success: function(data) {
-						           			url = url + data;
+						           		success: function(datas) {
+						           			url = url + datas;
 						           			url = url.replace(/\\/g, '/')
 						           			callback(url);
-						           			console.log('성공',data);
+						           			console.log('성공',datas);
 						           		},
 						           		error: function(e) {
 						           			console.log('ajax 이미지 업로드 실패');
 						           			callback('image_load_fail', '사진 대체 텍스트 입력');
 						           		}
-						           	});
-						    	}
+						           	});	
+						        }
 						    }
 						});
+						
+						function modalOpen(){
+							const title = $("input[name='title']")
+							const content = editor.getMarkdown();
+							if(title.val()==''){
+								alert('제목을 입력하세요!');
+								title.focus();
+								return;
+							}else if(content==''){
+								alert('내용을 입력하세요!');
+								return;
+							}
+							$("#confimModal").modal("show");
+							
+							$("#yesBtn").on('click',function () {
+								handleSave();
+							});
+						};
+						
+						$("#noBtn").on('click',function () {
+						    $("#confimModal").modal("hide");
+						});
+						
 						function handleSave(){
-							const title = $("input[name='title']").val();
+							const title = $("input[name='title']")
+							const content = editor.getMarkdown();
+							
 							var formData = new FormData();
-							formData.append("category","b03");
-							formData.append("title",title);
-							formData.append("content",editor.getMarkdown());
-							formData.append("memId",'[[${userId}]]');
+							formData.append("boardNo",cateNo);
+							formData.append("volId","[[${session.id}]]");
+							formData.append("title",title.val());
+							formData.append("content",content);
+							formData.append("writer",'[[${userId}]]');
 							$.ajax({
 				           		url: '/freeBoardInsert',
 				           		type: 'POST',
@@ -115,7 +142,7 @@ hr{
 				           		contentType: false,
 				           		data: formData,
 				           		success: function(data) {
-				           			console.log('성공',data);
+				           			location.href="freeBoardList?volId="+[[${session.id}]]
 				           		},
 				           		error: function(e) {
 				           			console.log('실패');
@@ -126,6 +153,7 @@ hr{
 				</div>
 			</div>
 		</div>
+		<br>
 	</section>
 </body>
 </html>

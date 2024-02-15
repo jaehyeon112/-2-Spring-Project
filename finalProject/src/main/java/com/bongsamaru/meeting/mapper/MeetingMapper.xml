@@ -25,24 +25,38 @@
 		from files 
 		where code=#{code} and code_no=#{codeNo}
 	</select>
+	<!-- 파일 삭제 -->
+	<delete id="delFile" parameterType="FilesVO">
+		delete 
+		from files 
+		where code = #{code}
+		and code_no = #{codeNo}
+	</delete>
+	<!-- 모임 가입하기 -->
+	<insert id="approveMeeting" parameterType="VolMemVO">
+		insert into vol_mem(
+			VOL_MEM_ID
+			,VOL_ID
+			,APP_CODE
+			,APP_DATE
+			,APP_REASON
+			,MEM_ID
+		)
+		values(
+			VOLMEMBER_SEQ.NEXTVAL
+			,#{volId}
+			,0
+			,sysdate
+			,#{appReason}
+			,#{memId}
+		)
+	</insert>
+	
 	<!-- 봉사활동게시판 -->
 	<select id="meetingVolActListCnt" resultType="int">
 		select count(*)
 		from vol_act
 		where vol_id = #{volId}
-	</select>
-	<select id="meetingVolActList" resultType="VolActVO">
-		select VOL_ACT_ID
-			,VOL_ID
-			,CATEGORY
-			,TITLE
-			,CONTENT
-			,LOCATION
-			,CAP
-			,VOL_DATE 
-		from vol_act
-		where vol_id = #{volId}
-		order by vol_date
 	</select>
 	<select id="meetingVolActListPaging" resultType="VolActVO">
 		SELECT * 
@@ -57,12 +71,64 @@
 				,CONTENT
 				,LOCATION
 				,CAP
-				,VOL_DATE 
+				,VOL_DATE
+				,START_DATE
+				,EXPIRE_DATE
 			from vol_act
 			where vol_id = #{volId}
 			order by vol_date) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
+	<select id="findVolActNo" resultType="int">
+		select VOLACT_SEQ.NEXTVAL
+		from dual
+	</select>
+	<insert id="insertVolAct" parameterType="VolActVO">
+		insert into VOL_ACT(
+				VOL_ACT_ID
+				,VOL_ID
+				,CATEGORY
+				,TITLE
+				,CONTENT
+				,LOCATION
+				,CAP
+				,VOL_DATE
+				,START_DATE
+				,EXPIRE_DATE)
+		values(#{volActId}
+				,#{volId}
+				,#{category}
+				,#{title}
+				,#{content}
+				,#{location}
+				,#{cap}
+				,#{volDate}
+				,#{startDate}
+				,#{expireDate}
+				)
+	</insert>
+	<select id="volActBoardInfo" resultType="VolActVO">
+		select VOL_ACT_ID
+				,VOL_ID
+				,CATEGORY
+				,TITLE
+				,CONTENT
+				,LOCATION
+				,CAP
+				,VOL_DATE
+				,START_DATE
+				,EXPIRE_DATE
+		from VOL_ACT
+		where VOL_ACT_ID=#{volActId}
+	</select>
+	<delete id="delVolActBoard" parameterType="int">
+		delete 
+		from VOL_ACT 
+		where VOL_ACT_ID=#{volActId}
+	</delete>
+	
+	
+	
 	<!-- 봉사후기게시판 -->
 	<select id="volActReviewListPaging" resultType="VolActVO">
 		SELECT * 
@@ -70,7 +136,8 @@
 			SELECT ROWNUM RN 
 			,A.* 
 		from(  
-        	select VOL_ID
+        	select REVIEW_ID
+        			,VOL_ID
 			        ,VOL_ACT_ID
 			        ,TITLE
 			        ,CONTENT
@@ -81,22 +148,121 @@
 			order by vol_act_id) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
-	<select id="volActReviewList" resultType="VolActVO">
-       	select VOL_ID
-		        ,VOL_ACT_ID
-		        ,TITLE
-		        ,CONTENT
-		        ,writer
-		        ,WRITE_DATE 
-		from vol_review
-		where vol_id = #{volId}
-		order by vol_act_id
-	</select>
 	<select id="volActReviewListCnt" resultType="int">
        	select count(*)
 		from vol_review
 		where vol_id = #{volId}
 	</select>
+	<select id="findReviewNo" resultType="int">
+		select REVIEW_SEQ.NEXTVAL
+		from dual
+	</select>
+	<insert id="insertReview" parameterType="VolActReviewVO">
+		insert into VOL_REVIEW(
+			REVIEW_ID
+			,VOL_ID
+			,VOL_ACT_ID
+			,TITLE
+			,CONTENT
+			,WRITER
+			,WRITE_DATE)
+		values(#{reviewId}
+				,#{volId}
+				,#{volActId}
+				,#{title}
+				,#{content}
+				,#{writer}
+				,sysdate)
+	</insert>
+	<select id="ReviewInfo" resultType="VolActReviewVO">
+		select REVIEW_ID
+				,VOL_ID
+				,VOL_ACT_ID
+				,TITLE
+				,CONTENT
+				,WRITER
+				,WRITE_DATE
+		from vol_review
+		where REVIEW_ID=#{reviewId}
+	</select>
+	<delete id="delReview" parameterType="int">
+		delete 
+		from vol_review 
+		where REVIEW_ID=#{reviewId}
+	</delete>
+	
+	<!-- 자유게시판 -->
+	<select id="getBoardList" resultType="FreeBoardVO">
+		SELECT * 
+		from(
+			SELECT ROWNUM RN 
+			,A.* 
+		from(  
+        	select BOARD_NO
+					,VOL_ID
+					,TITLE
+					,WRITER
+					,WRITE_DATE
+					,CONTENT
+					,VIEW_CNT
+		from free_board
+		where VOL_ID = #{volId}
+		order by BOARD_NO) A)
+        where RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getBoardListCnt" resultType="int">
+        select count(*)
+		from free_board
+		where VOL_ID = #{volId}
+		order by BOARD_NO
+	</select>
+	<select id="findBoardNo" resultType="int">
+		select FREEBOARD_SEQ.NEXTVAL 
+		from dual
+	</select>
+	<insert id="insertBoard" parameterType="FreeBoardVO">
+		insert into free_board(
+				BOARD_NO
+				,VOL_ID
+				,TITLE
+				,WRITER
+				,WRITE_DATE
+				,CONTENT
+				,VIEW_CNT)
+		values(#{boardNo}
+				,#{volId}
+				,#{title}
+				,#{writer}
+				,sysdate
+				,#{content}
+				,0)
+	</insert>
+	<select id="freeBoardInfo" resultType="FreeBoardVO">
+		select BOARD_NO
+				,VOL_ID
+				,TITLE
+				,WRITER
+				,WRITE_DATE
+				,CONTENT
+				,VIEW_CNT
+		from free_board
+		where VOL_ID = #{volId}
+		and BOARD_NO = #{boardNo}
+	</select>
+	<update id="updateFreeBoard" parameterType="FreeBoardVO">
+		update free_board
+		set title = #{title},
+			content = #{content}
+		where VOL_ID = #{volId}
+		and BOARD_NO = #{boardNo}
+	</update>
+	<delete id="deleteFreeBoard" parameterType="int">
+		delete 
+		from free_board
+		where VOL_ID = #{volId}
+		and BOARD_NO = #{boardNo}
+	</delete>
+	
 	<select id="meetingMemList" resultType="VolMemVO">
 		select VOL_MEM_ID
 			,VOL_ID
@@ -115,18 +281,31 @@
 	<select id="findMember" resultType="int">
 		select count(*) 
 		from vol_mem 
-		where app_code=1
-		and vol_id = #{volId}
+		where vol_id = #{volId}
 		and mem_id = #{memId}
 	</select>
+	<!-- 회원별 봉사활동한 리스트 -->
 	<select id="MemVolActList" resultType="VolMemVO">
-		select m.vol_act_id
+		select m.vol_act_id,a.title
 		from vol_Act_mem m join vol_act a 
 		on m.VOL_ACT_ID=a.VOL_ACT_ID
 		where a.vol_id = #{volId}
 		and mem_id = #{memId}
 	</select>
-	<!-- 유저별 봉사활동 횟수 -->
+	<!-- 봉사활동 정보 -->
+	<select id="volActInfo" resultType="VolActVO">
+		select VOL_ACT_ID
+				,VOL_ID
+				,CATEGORY
+				,TITLE
+				,CONTENT
+				,LOCATION
+				,VOL_DATE 
+		from VOL_ACT 
+		where VOL_ID=#{volId} 
+		and VOL_ACT_ID=#{volActId}
+	</select>
+	<!-- 회원별 봉사활동 횟수 -->
 	<select id="volCnt" resultType="VolMemVO">
 		select m.mem_id
 				,count(m.mem_id) cnt
@@ -141,24 +320,11 @@
 		order by cnt desc
 	</select>
 	<!-- 봉사활동별 참여 인원 -->
-	<select id="volActMemCnt" resultType="VolActVO">
+	<select id="volActMemCnt" resultType="int">
 		select count(mem_id) cnt 
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
 	</select>
-	<insert id="insertBoard" parameterType="BoardVO">
-		insert into board(
-			board_id,
-			CATEGORY,
-			TITLE,
-			CONTENT,
-			MEM_ID,
-			DETAIL_CATE)
-		values(board_id.NEXTVAL
-				,#{category}
-				,#{title}
-				,#{content}
-				,#{memId}
-				,FREEBOARD_SEQ.NEXTVAL)
-	</insert>
+	
+	
 </mapper>

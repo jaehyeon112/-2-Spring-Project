@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.challenges.service.ChallengesService;
 import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.file.service.FilesVO;
 
@@ -82,6 +83,7 @@ public class challengesController {
 	@GetMapping("/challenge/challengesList")
 	public String getChallengesList(@RequestParam(name="chalId") Integer chalId, Model model) {
 		List<ChallengesVO> dList = challengeService.getChallengesList(chalId);
+		log.info(dList);
 	    model.addAttribute("challengesList", dList);
 		 return "challenge/challengesList";
 	}
@@ -145,6 +147,29 @@ public class challengesController {
 		
 		return chalDetId;
 	}
-	
+	/**
+	 *좋아요한 상태인지 조회하고 추가 or 삭제
+	 * @param model
+	 * @param likeVO
+	 * @return
+	 */
+	@PostMapping("challengeLike")
+	@ResponseBody
+	public List<LikeVO> getChallengeLike(Model model, Principal principal, LikeVO likeVO, @RequestParam Integer boardId) {
+		likeVO.setMemId(principal.getName());
+		//likeVO.setBoardId(boardId);
+		List<LikeVO> list = challengeService.getChallengeLike(likeVO);
+		model.addAttribute("challengeLikeList", list);
+		boolean isLiked = list.stream()
+                .anyMatch(vo -> vo.getMemId().equals(principal.getName()) && vo.getBoardId().equals(boardId) && vo.getCategory().equals("l02"));
+		if (!isLiked) {
+         
+            challengeService.challengesLikeInsert(likeVO);
+        } else {
+           
+        	challengeService.deleteChallengeLike(boardId);
+        }
+		return list;
+	}
 	
 }

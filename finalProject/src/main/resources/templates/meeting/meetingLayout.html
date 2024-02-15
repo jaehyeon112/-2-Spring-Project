@@ -6,6 +6,11 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Modernize Free</title>
+  <style type="text/css">
+  	#mymodals{
+  		z-index:999
+  	}
+  </style>
 		<script src="../admin/libs/jquery/dist/jquery.min.js"></script>
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,6 +42,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 		<!-- Template Javascript -->
 		<script src="../dpdd/js/main.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Spinner Start -->
@@ -44,7 +50,6 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
       <div class="spinner-grow text-primary" role="status"></div>
   </div>
   <!-- Spinner End -->
-
 
   <!-- Navbar start -->
   <div class="container-fluid sticky-top px-0">
@@ -61,7 +66,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                       <div class="overflow-hidden" style="width: 800px;">
                           <div id="note" class="ps-2">
                               <img src="../image/기본이미지.jpg" class="img-fluid rounded-circle border border-3 border-primary me-2" style="width: 30px; height: 30px;" alt="">
-                              <a href="#"><p class="text-white mb-0 link-hover" id="oneLiner">반갑습니다~</p></a>
+                              <p class="text-white mb-0 link-hover" id="oneLiner">반갑습니다~</p>
                           </div>
                       </div>
                   </div>
@@ -83,8 +88,8 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                           <a th:href="@{../meetings(volId=${session.id})}" class="nav-item nav-link">Home</a>
                           <a th:href="@{../meetingInfoPage(volId=${session.id})}" class="nav-item nav-link">동아리소개</a>
                           <a th:href="@{../volBoardList(volId=${session.id})}" class="nav-item nav-link">봉사게시판</a>
-                          <a th:href="@{../reviewBoardList(volId=${session.id})}" class="nav-item nav-link">후기게시판</a>
-                          <a th:href="@{../freeBoardList(category=b03)}" class="nav-item nav-link">자유게시판</a>
+                          <a th:href="@{../reviewBoardList(volId=${session.id})}" class="nav-item nav-link" style="display:block" id="reviewBoard">후기게시판</a>
+                          <a th:href="@{../freeBoardList(volId=${session.id})}" class="nav-item nav-link">자유게시판</a>
                           <div class="nav-item dropdown">
                               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
                               <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -107,22 +112,44 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                               </div>
                           </div>
                       </div>
-                      <div id="showing" style="display:none"><button class="btn btn-secondary">신청하기</button></div>
+                      <div id="showing" style="display:none"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">모임 가입</button></div>
                   </div>
               </nav>
           </div>
       </div>
   </div>
-  
+  <br>
+<!-- 신청 모달폼 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">모임 가입하기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">가입 사유:</label>
+            <textarea class="form-control" id="message-text" name="appReason"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="approveMeeting()">신청하기</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Navbar End -->
-<section layout:fragment="content"></section>
-<!-- <section sec:authorize = "isAuthenticated()"></section> -->
-<script type="text/javascript">
+<section layout:fragment="content">
+</section>
 
+<script type="text/javascript">
 const API_KEY = "979764b808d33fb79bb7bf2a5d222afc";
 let latitude = "";
 let longitude = "";
-let session = 1;
 //날짜 포맷
 function dateFormat(value, format) {
     let date = value == "" ? new Date() : new Date(value);
@@ -169,7 +196,8 @@ $.ajax('../meetingInfo?volId='+[[${session.id}]])
 	}
 	$("#meetingName").text(result.meetName);
 	  if(result.meetType=='e01'){
-	   	  $("#meetingType").text('일일봉사모임');    			  
+	   	  $("#meetingType").text('일일봉사모임');
+	   	  $('#reviewBoard').css('display','none');
 	  }else if(result.meetType=='e02'){
 		  $("#meetingType").text('동아리모임');
 	  }
@@ -177,15 +205,24 @@ $.ajax('../meetingInfo?volId='+[[${session.id}]])
 .fail(err => console.log(err));
 
 //모임 태그 가져오기
-$.ajax('../meetingTag')
+$.ajax(`../meetingTag?volId=[[${session.id}]]`)
 .done(result => {
-	for(let i=0;i<result.length;i++){	
-		$("#tags").append('<small class="text-body fw-normal" style="letter-spacing: 12px;">#'+result[i].tagContent+'</small>');
+	if(result.length>3){
+		for(let i=0;i<3;i++){
+			$("#tags").append('<small class="text-body fw-normal" style="letter-spacing: 12px;">#'+result[i].tagContent+'</small>');
+		}
+	}else if(result.length==0){
+		$("#tags").append('<small class="text-body fw-normal" style="letter-spacing: 12px;">#사랑합니다</small>');
+	}else{
+		for(let i=0;i<result.length;i++){
+			$("#tags").append('<small class="text-body fw-normal" style="letter-spacing: 12px;">#'+result[i].tagContent+'</small>');
+		}
 	}
 })
 .fail(err => console.log(err));
 //모임회원 목록
-$.ajax('../findMember?volId='+[[${session.id}]]+'&memId='+session)
+console.log('현재 봉사번호',[[${session.id}]])
+$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${userId}]]')
 .done(result => {
 	if(result==0){
 		$('#showing').css('display','block')
@@ -194,6 +231,28 @@ $.ajax('../findMember?volId='+[[${session.id}]]+'&memId='+session)
 	}
 })
 .fail(err => console.log(err));
+
+function approveMeeting(){
+	const appReason = $("textarea[name='appReason']").val();
+	
+	var formData = new FormData();
+	formData.append("volId","[[${session.id}]]");
+	formData.append("appReason",appReason);
+	formData.append("memId",'[[${userId}]]');
+	$.ajax({
+   		url: '/approveMeeting',
+   		type: 'POST',
+   		processData: false,
+   		contentType: false,
+   		data: formData,
+   		success: function(data) {
+   			location.href="meetings?volId="+[[${session.id}]]
+   		},
+   		error: function(e) {
+   			console.log('실패');
+   		}
+   	});
+}
 </script>
 </body>
 </html>

@@ -35,9 +35,9 @@ public class CenterController {
 	            
 	            
 	            if(searchKeyword == null) {
-	            	vo = new PageVO(total, startPage, endPage, category);	            	
+	            	vo = new PageVO(total, startPage, endPage, category ,10);	            	
 	            }else {
-	            	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+	            	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
 	            }
 	            System.out.println(startPage);
 	            System.out.println(endPage);
@@ -71,9 +71,9 @@ public class CenterController {
          
          
          if(searchKeyword == null) {
-         	vo = new PageVO(total, startPage, endPage, category);	            	
+         	vo = new PageVO(total, startPage, endPage, category, 10);	            	
          }else {
-         	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+         	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
          }
          System.out.println(searchKeyword + "검색어");
 		 List<BoardVO> list = centerService.getNoticeList(vo);

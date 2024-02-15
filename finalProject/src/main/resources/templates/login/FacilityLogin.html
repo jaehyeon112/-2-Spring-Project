@@ -52,9 +52,7 @@
                 <span style="cursor:pointer " class="loginMethod" id="user"> 회원</span>
                 <span style="cursor:pointer " class="loginMethod" id="facility"> 회원가입</span>
             </div>
-
-            <div><label><a th:href="${kakaoUrl}"><img src="/image/kakao_login_medium.png">
-            <img id="kakao" style="width:300px;" src="/image/kakao.png" ></a></label></div>
+			  <a th:href="@{/oauth2/authorization/google}" class="btn btn-primary me-2 active" role="button">Google Login</a>
             <form th:action="@{/login}" method="post" id="loginForm">
                 <div><label> <input class="form-control" type="text" name="username" placeholder="아이디를 입력해주세요" />
                     </label></div>
