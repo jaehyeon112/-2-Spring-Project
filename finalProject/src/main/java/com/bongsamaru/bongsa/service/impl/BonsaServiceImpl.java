@@ -1,22 +1,33 @@
 package com.bongsamaru.bongsa.service.impl;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.admin.mapper.AdminMapper;
 import com.bongsamaru.bongsa.mapper.BongsaMapper;
+import com.bongsamaru.bongsa.service.BongsaDTO;
 import com.bongsamaru.bongsa.service.BongsaService;
+import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolunteerVO;
 
 @Service
 public class BonsaServiceImpl implements BongsaService {
 	@Autowired
 	BongsaMapper bongsaMapper;
 	
+	@Autowired
+	AdminMapper adminMapper;
 	@Override
 	public List<VolActVO> facilityList(PageVO vo, Date start, Date end) {
 	    if (start == null) {
@@ -40,4 +51,29 @@ public class BonsaServiceImpl implements BongsaService {
 	public int cntFacilityList(PageVO vo) {
 		return bongsaMapper.cntFacilityList(vo);
 	}
+	
+	@Override
+	public CountVO cntVol(PageVO vo) {
+		return bongsaMapper.countVol(vo);
+	}
+	
+	@Override
+	public List<VolunteerVO> volList(PageVO vo, Date start, Date end, String type) {
+		return bongsaMapper.volList(vo, start, end, type);
+	}
+	@Override
+	public List<BongsaDTO> getVolTagDTO(PageVO vo, Date startDate, Date endDate , String cate) {
+		
+	    List<VolunteerVO> volunteers = bongsaMapper.volList(vo, startDate, endDate, cate);
+	    System.out.println(volunteers);
+	    List<TagVO> allTags = adminMapper.tagList(null);
+	    Map<Integer, List<TagVO>> tagsByVolunteer = allTags.stream()
+	            .collect(Collectors.groupingBy(TagVO::getVolId));
+
+	    List<BongsaDTO> result = volunteers.stream()
+	            .map(volunteer -> new BongsaDTO(volunteer, tagsByVolunteer.getOrDefault(volunteer.getVolId(), Collections.emptyList())))
+	            .collect(Collectors.toList());
+	    return result;
+	}
+	
 }

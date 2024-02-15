@@ -35,4 +35,6 @@ public class VolunteerVO {
 	private Date recPeriod;
 	private Date endPeriod;
 	private Date appDate;
+	private String path;
+	private String mainCategory;
 }
