@@ -107,6 +107,13 @@ public class FacilityServiceImpl implements FacilityService {
 		}
 
 
+		@Override
+		public int getFVolCategoryCount(String facId) {
+			
+			return mapper.getFVolCategoryCount(facId);
+		}
+
+
 		
 
 

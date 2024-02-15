@@ -61,10 +61,7 @@ public class facilityController {
 	public String getFacilityList(String facZip2, 
 								  String facType,
 								  PageVO vo, 
-			/*
-			 * @RequestParam(value="cntPerPage", required = false, defaultValue = "10")
-			 * Integer cntPerPage,
-			 */					  Integer cntPerPage,
+								  Integer cntPerPage,
 								  String facId,
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
@@ -75,7 +72,6 @@ public class facilityController {
         // start와 end가 null일 경우 기본값으로 1과 10을 사용
 		
         vo = new PageVO(total,start, end, category ,6);
-        System.out.println(vo);
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);
      	
@@ -162,16 +158,29 @@ public class facilityController {
 	   }
 	
 	 //마이페이지(시설봉사신청, 신청진행상황)
-	@GetMapping("/facilityMyPage/volJoin")
-	public String getFacilityMyPageVol(Model model,Principal principal) {
-		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		// String facId = userDetails.getUsername();
-		List<VolActVO> list = facilityService.getVolunteerJoinList( principal.getName());
-		model.addAttribute("volList", list);
-		log.info(list);
-		return "facility/myPageVolBefore";
-	}
+	  @GetMapping("/facilityMyPage/volJoin")
+	  public String getFacilityMyPageVol(Model model,
+	                                     Principal principal,
+	                                     PageVO vo, 
+	                                     Integer cntPerPage,
+	                                     String facId,
+	                                     @RequestParam(value="category", required = false)String category,
+	                                     @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+	                                     @RequestParam(value="end", required = false, defaultValue = "10") Integer end) {
+	      
+		  
+		  facId = principal.getName();
+	      int total = facilityService.getFVolCategoryCount(facId);
+        
+List<VolActVO> list = facilityService.getVolunteerJoinList(facId);
+model.addAttribute("volList", list);
+
+	      vo = new PageVO(total, start, end, category, 5);
+	      model.addAttribute("vo", vo);
+	      
+	      log.info(list);
+	      return "facility/myPageVolBefore";
+	  }
 	
 	@GetMapping("/VolAppList")
 	@ResponseBody
