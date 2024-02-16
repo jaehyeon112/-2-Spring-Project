@@ -12,6 +12,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 </head>
 <body>
 <section layout:fragment="content">
+<div class="row">
 <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>	
  <div class="col-md-10 main-content" th:if="${#authentication.principal.userVO.donApp} == 0">
 
@@ -89,6 +90,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                     </div>
                 </div>
                 </div>
+</div>                
 </section>                
 </body>
 </html>
