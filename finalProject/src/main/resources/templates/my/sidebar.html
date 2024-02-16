@@ -3,17 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+</style>
 </head>
 <!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- Bootstrap JS (Popper.js 포함) -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap');
-.list-group-item::active {
-	background: black !important;
-}
-</style>
 <body>
 <!-- 마이페이지 사이드바 -->
  <div th:fragment="side">
@@ -28,7 +24,7 @@
   		<h4>봉사</h4>
 			<a class="list-group-item list-group-item-action" data-toggle="list" href="/dayList" role="tab">하루모임</a>
 			<a class="list-group-item list-group-item-action" data-toggle="list" href="/clubList" role="tab">동아리</a>
-			<a class="list-group-item list-group-item-action" data-toggle="list" href="/facilityList" role="tab">봉사시설</a>
+			<a class="list-group-item list-group-item-action" data-toggle="list" href="/facility" role="tab">봉사시설</a>
 	</div>
 <script th:inline="javascript">
 		$('#myList a').click(function (e) {

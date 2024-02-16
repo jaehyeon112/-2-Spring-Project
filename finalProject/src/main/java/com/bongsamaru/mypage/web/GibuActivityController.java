@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.user.service.UserDetailVO;
 
+/**
+ * 활동 증서 페이지 아직 미구현
+ * @author 나채현
+ *
+ */
 @Controller
 public class GibuActivityController {
 

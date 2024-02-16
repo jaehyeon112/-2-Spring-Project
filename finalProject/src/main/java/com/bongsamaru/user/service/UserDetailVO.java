@@ -90,4 +90,5 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 	}
+	
 }

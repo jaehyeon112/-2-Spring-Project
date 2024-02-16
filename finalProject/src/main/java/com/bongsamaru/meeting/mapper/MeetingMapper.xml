@@ -16,6 +16,8 @@
 			,END_PERIOD
 			,MEM_ID
 			,ONE_LINER
+			,(select file_path from files where code='p09' and code_no=volunteer.vol_id) path
+			,category
 		from volunteer
 		where VOL_ID = #{volId}
 	</select>
@@ -45,7 +47,7 @@
 		values(
 			VOLMEMBER_SEQ.NEXTVAL
 			,#{volId}
-			,0
+			,'h01'
 			,sysdate
 			,#{appReason}
 			,#{memId}
@@ -92,6 +94,8 @@
 				,CONTENT
 				,LOCATION
 				,CAP
+				,VOL_ZIP
+				,VOL_ZIP2
 				,VOL_DATE
 				,START_DATE
 				,EXPIRE_DATE)
@@ -102,6 +106,8 @@
 				,#{content}
 				,#{location}
 				,#{cap}
+				,#{volZip}
+				,FIND_ZIP(#{volZip})
 				,#{volDate}
 				,#{startDate}
 				,#{expireDate}
@@ -274,7 +280,7 @@
 			where code='p01' 
 			and code_user=vol_mem.mem_id) path
 		from vol_mem 
-		where app_code=1
+		where app_code='h02'
 		and vol_id = #{volId}
 		order by app_date
 	</select>
@@ -283,6 +289,7 @@
 		from vol_mem 
 		where vol_id = #{volId}
 		and mem_id = #{memId}
+		and app_code = 'h02'
 	</select>
 	<!-- 회원별 봉사활동한 리스트 -->
 	<select id="MemVolActList" resultType="VolMemVO">
@@ -326,5 +333,12 @@
 		where vol_act_id=#{volActId}
 	</select>
 	
+	<!-- 회원 탈퇴 -->
+	<update id="withdrawalMeeting" parameterType="VolMemVO">
+		update vol_mem 
+		set app_code = 'h04' 
+		where vol_id=#{volId}
+		and mem_id=#{memId}
+	</update>	
 	
 </mapper>
