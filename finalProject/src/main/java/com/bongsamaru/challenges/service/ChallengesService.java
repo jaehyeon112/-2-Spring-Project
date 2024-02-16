@@ -20,7 +20,10 @@ public interface ChallengesService {
 	public boolean getChallengesDel(Integer chalDetId);
 	
 	public List<LikeVO> getChallengeLike(LikeVO likeVO);
-	public int challengesLikeInsert(LikeVO likeVO);
-	public int deleteChallengeLike(Integer boardId);
+
+	/*
+	 * public int challengesLikeInsert(LikeVO likeVO); public int
+	 * deleteChallengeLike(Integer boardId);
+	 */
 	public int reportInsert(ReportVO reportVO);
 }

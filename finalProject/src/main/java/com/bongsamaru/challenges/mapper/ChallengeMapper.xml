@@ -211,7 +211,7 @@ INSERT INTO REPORT(REP_ID,
 				   REP_REASON,
 				   REQ_CODE)
 			VALUES(REPORT_SEQ.NEXTVAL,
-				   'r01',
+				   #{category},
 				   #{memId},
 				   sysdate,
 				   #{categoryNo},
