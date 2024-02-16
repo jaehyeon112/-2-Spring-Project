@@ -15,7 +15,7 @@ import com.bongsamaru.dona.service.DonaVO;
 public interface FacilityMapper {
 	
 	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType, @Param("facId") String facId);
-	public int getCategoryCount( @Param("facZip2") String facZip2, @Param("facType") String facType);
+
 	public FacilityVO getFacilityInfo(String facId);
 	public List<FundingVO> getfundingList(String facId);
 	public List<FundingVO> getfundedList(String facId);
@@ -35,8 +35,10 @@ public interface FacilityMapper {
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	
-	public List<VolActVO> getVolunteerJoinList( String facId); //신청 수락 기다리는 리스트
+	public List<VolActVO> getVolunteerJoinList(@Param("pageVO") PageVO pageVO, @Param("facId")String facId); //신청 수락 기다리는 리스트
 	//public List<VolunteerVO> getVolunteerFinishList(); //봉사 완료 후 리스트
 	//public VolunteerVO volunteerFinishInfo(); //봉사 완료 된 후 참여자 승인해주기 위해
 	
+	public int getCategoryCount( @Param("facZip2") String facZip2, @Param("facType") String facType);
+	public int getFVolCategoryCount(String facId);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bongsamaru.challenges.service.ChallengesService;
 import com.bongsamaru.common.VO.ChallengesVO;
 import com.bongsamaru.common.VO.LikeVO;
+import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.file.service.FilesVO;
 
@@ -170,6 +171,15 @@ public class challengesController {
         	challengeService.deleteChallengeLike(boardId);
         }
 		return list;
+	}
+	@PostMapping("/reportInsert")
+	@ResponseBody
+	public int reportInsert(Model model, ReportVO reportVO, Principal principal) {
+		
+		reportVO.setMemId(principal.getName());
+		challengeService.reportInsert(reportVO); 
+		log.info(reportVO);
+		return challengeService.reportInsert(reportVO); 
 	}
 	
 }

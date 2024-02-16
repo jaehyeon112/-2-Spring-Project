@@ -67,6 +67,9 @@ public class FacilityServiceImpl implements FacilityService {
 	
 	@Override
 	public int InsertFacVol(VolActVO volActVO) {
+		//boolean check =mapper.checkList(String memID, Integer VolActId);
+		//if(check){
+		//
 		int result = mapper.InsertFacVol(volActVO);
 		if(result ==1) {
 			return volActVO.getVolActId();
@@ -76,8 +79,8 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	@Override
-	public List<VolActVO> getVolunteerJoinList(String facId) {
-		return mapper.getVolunteerJoinList(facId);
+	public List<VolActVO> getVolunteerJoinList(PageVO pageVO,String facId) {
+		return mapper.getVolunteerJoinList(pageVO,facId);
 	}
 	@Override
 	public List<VolMemVO> getVolunteerAppList(Integer volActId) {
@@ -104,6 +107,13 @@ public class FacilityServiceImpl implements FacilityService {
 		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
 			
 			return mapper.getCategoryCount(facZip2, facType);
+		}
+
+
+		@Override
+		public int getFVolCategoryCount(String facId) {
+			
+			return mapper.getFVolCategoryCount(facId);
 		}
 
 
