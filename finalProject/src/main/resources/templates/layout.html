@@ -35,7 +35,7 @@
     </head>
 <body>
 	    <!--================Header Area =================-->
-        <header class="header_area">
+        <header class="header_area" style="height:100px">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -97,8 +97,8 @@
 		<div sec:authorize="isAuthenticated()">
    		
 		</div>
+			<button type="button" class="btn btn-outline-primary m-1">등록</button>
 	<div class="divfooter" th:insert="~{footer::copy}">
-			
 	</div>
 	
 
