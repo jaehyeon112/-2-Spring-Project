@@ -76,12 +76,19 @@
 						 </div>
 						 
 					<script>
-						const cont = `[[${info.content}]]`;
+						function decodeHtml(html) {
+						    var txt = document.createElement('textarea');
+						    txt.innerHTML = html;
+						    return txt.value;
+						}
+
+						const cont = decodeHtml(`[[${info.content}]]`);
+
 						const viewer = new toastui.Editor.factory({
 							  el: document.querySelector('#viewer'),
 							  viewer: true,
 							  height: '500px',
-							  initialValue: cont
+							  initialValue: cont,
 							});
 						function delAct(){
 							$.ajax({

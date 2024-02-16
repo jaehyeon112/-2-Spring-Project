@@ -165,5 +165,10 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.approveMeeting(vo);
 	}
 
+	@Override
+	public int withdrawalMeeting(VolMemVO vo) {
+		return mapper.withdrawalMeeting(vo);
+	}
+
 
 }

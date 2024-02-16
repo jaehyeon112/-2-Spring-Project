@@ -9,7 +9,7 @@ public class VolMemVO {
 	private Integer volMemId;
 	private Integer volId;
 	private String facId;
-	private Integer appCode;
+	private String appCode;
 	private Date appDate;
 	private String appReason;
 	private String memId;

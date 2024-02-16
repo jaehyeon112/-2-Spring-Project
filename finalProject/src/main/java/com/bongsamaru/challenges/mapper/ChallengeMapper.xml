@@ -75,6 +75,7 @@ SELECT  CHAL_ID,
               AND CODE = #{code}
             
 </select>
+
 <resultMap id="challengeWithFiles" type="ChallengesVO">
     <id property="chalDetId" column="CHAL_DET_ID"/>
     <result property="chalId" column="CHAL_ID"/>
@@ -200,4 +201,22 @@ SELECT  C.CHAL_DET_ID,
 <delete id="getChallengesDel" parameterType="int">
 
 </delete>
+<!-- 신고하기 -->
+<insert id="reportInsert" parameterType="int">
+INSERT INTO REPORT(REP_ID,
+				   CATEGORY,
+				   MEM_ID,
+				   REP_DATE,
+				   CATEGORY_NO,
+				   REP_REASON,
+				   REQ_CODE)
+			VALUES(REPORT_SEQ.NEXTVAL,
+				   'r01',
+				   #{memId},
+				   sysdate,
+				   1,
+				   #{repReason},
+				   0)	   
+
+</insert>
 </mapper>

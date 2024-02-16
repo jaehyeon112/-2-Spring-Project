@@ -181,22 +181,37 @@ LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
 </insert>
 <!-- 시설이 봉사 올린 리스트(아직 봉사 안한 상태만) -->
 <select id="getVolunteerJoinList" resultType="VolActVO">
-   SELECT  VOL_ACT_ID,
-   		   FAC_ID, 
-   		   CATEGORY,
-   		   TITLE, 
-   		   CONTENT, 
-   		   LOCATION, 
-   		   CAP, 
-   		   VOL_ZIP,
-   		   VOL_DATE,
-   		   START_DATE,
-   		   EXPIRE_DATE,
-   		   (SELECT COUNT(*) FROM VOL_ACT_MEM WHERE VOL_ACT_ID = VOL_ACT.VOL_ACT_ID)   AS COUNT 
-     FROM  VOL_ACT
-    WHERE  FAC_ID=#{facId}
-      AND  VOL_DATE > SYSDATE
- ORDER BY  EXPIRE_DATE
+SELECT *    
+FROM (     
+    SELECT ROWNUM RN, A.*  
+    FROM (
+        SELECT  
+            VOL_ACT_ID,
+            FAC_ID, 
+            CATEGORY,
+            TITLE, 
+            CONTENT, 
+            LOCATION, 
+            CAP, 
+            VOL_ZIP,
+            VOL_DATE,
+            START_DATE,
+            EXPIRE_DATE,
+            (SELECT COUNT(*) FROM VOL_ACT_MEM WHERE VOL_ACT_ID = VOL_ACT.VOL_ACT_ID) AS COUNT 
+        FROM  VOL_ACT
+        WHERE  FAC_ID=#{facId}  
+            AND  VOL_DATE > SYSDATE
+        ORDER BY  EXPIRE_DATE
+    ) A
+)
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
+</select>
+<!-- 마이페이지 봉사전 페이지네이션 -->
+<select id="getFVolCategoryCount" resultType="int">
+SELECT    COUNT(*)
+  FROM    VOL_ACT
+ WHERE    FAC_ID=#{facId}
+   AND    VOL_DATE > SYSDATE
 </select>
 <!-- 그 봉사에 관해 신청자들 승인할 리스트 -->
 <select id="getVolunteerAppList" resultType="VolMemVO">
@@ -223,6 +238,38 @@ INSERT INTO VOL_ACT_MEM
 <update id= "volAppUpdate" parameterType="VolMemVO">
 UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 </update>
+<!-- 회원이 시설봉사 정보조회 -->
+<select id="getFacVolInfo" resultType="VolActVO">
+SELECT   FAC_ID,
+		 CATEGORY,
+		 TITLE,
+		 LOCATION,
+		 CAP,
+		 VOL_DATE,
+		 START_DATE,
+		 EXPIRE_DATE,
+		 CONTENT 
+  FROM   VOL_ACT 
+ WHERE   VOL_ACT_ID=#{volActId}
+</select>
+<!-- 회원이 시설봉사 신청 -->
+<insert id="insertJoinVolunteer" parameterType="VolMemVO">
+INSERT INTO VOL_MEM
+		           (VOL_MEM_ID,
+		            FAC_ID,
+		            APP_CODE,
+		            APP_DATE,
+		            APP_REASON,
+		            MEM_ID,
+		            VOL_ACT_ID)
+		   VALUES(VOLMEMBER_SEQ.nextval,
+		   		  #{facId},
+		   		  'h01',
+		   		  sysdate,
+		   		  #{appReason},
+		   		  #{memId},
+		   		  #{volActId})         
+</insert>
 <!-- 시설이 봉사 승인시 확인할 참여자 신청서 -->
 <select id="getJoinApp" parameterType="VolMemVO">
 SELECT  MEM_ID,

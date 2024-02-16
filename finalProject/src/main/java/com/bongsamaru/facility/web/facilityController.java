@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.bongsa.service.BongsaService;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.PageVO;
@@ -46,6 +47,8 @@ public class facilityController {
 
 	@Autowired
 	CommonMapper commonMapper;
+	@Autowired
+	BongsaService bongsaService;
 	
 	/**
 	 * 사이트에 가입한 시설 리스트
@@ -58,10 +61,7 @@ public class facilityController {
 	public String getFacilityList(String facZip2, 
 								  String facType,
 								  PageVO vo, 
-			/*
-			 * @RequestParam(value="cntPerPage", required = false, defaultValue = "10")
-			 * Integer cntPerPage,
-			 */					  Integer cntPerPage,
+								  Integer cntPerPage,
 								  String facId,
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
@@ -72,7 +72,6 @@ public class facilityController {
         // start와 end가 null일 경우 기본값으로 1과 10을 사용
 		
         vo = new PageVO(total,start, end, category ,6);
-        System.out.println(vo);
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);
      	
@@ -145,30 +144,42 @@ public class facilityController {
 	}
 	
 	
-	@GetMapping("/facilityMyPage/donaInfo")
-	public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
-		
-		List<DonaVO> list1 = facilityService.getDonaList(principal.getName(), 0); // 모금완료
-		model.addAttribute("donaList1", list1);
-		log.info(list1);
-		
-		List<DonaVO> list0 = facilityService.getDonaList(principal.getName(), 1); //모금중
-		model.addAttribute("donaList0", list0);
-		log.info(list0);
-		return "facility/myPageDona";
-	}
+	  @GetMapping("/facilityMyPage/donaInfo")
+	   public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
+	      
+	      List<DonaVO> list1 = facilityService.getDonaList(principal.getName(), 0); // 모금완료
+	      model.addAttribute("donaList1", list1);
+	      log.info(list1);
+	      
+	      List<DonaVO> list0 = facilityService.getDonaList(principal.getName(), 1); //모금중
+	      model.addAttribute("donaList0", list0);
+	      log.info(list0);
+	      return "facility/myPageDona";
+	   }
 	
 	 //마이페이지(시설봉사신청, 신청진행상황)
-	@GetMapping("/facilityMyPage/volJoin")
-	public String getFacilityMyPageVol(Model model,Principal principal) {
-		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		// String facId = userDetails.getUsername();
-		List<VolActVO> list = facilityService.getVolunteerJoinList( principal.getName());
-		model.addAttribute("volList", list);
-		log.info(list);
-		return "facility/myPageVolBefore";
-	}
+	  @GetMapping("/facilityMyPage/volJoin")
+	  public String getFacilityMyPageVol(Model model,
+	                                     Principal principal,
+	                                     PageVO vo, 
+	                                     Integer cntPerPage,
+	                                     
+	                                     @RequestParam(value="category", required = false)String category,
+	                                     @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+	                                     @RequestParam(value="end", required = false, defaultValue = "10") Integer end)
+	  {
+		 // model.addAttribute("category",category);
+		  String facId = principal.getName();
+		  int total = facilityService.getFVolCategoryCount(facId);
+		  vo = new PageVO(total, start, end,category, 5);
+	      log.info(vo);
+	      List<VolActVO> list = facilityService.getVolunteerJoinList(vo,facId);
+	      model.addAttribute("volList", list);
+	      
+	      model.addAttribute("vo", vo);
+	      log.info(list);
+	      return "facility/myPageVolBefore";
+	  }
 	
 	@GetMapping("/VolAppList")
 	@ResponseBody
@@ -188,7 +199,7 @@ public class facilityController {
 	}
 	
 	@PostMapping("/volAppInsert")
-	
+	@ResponseBody
 	public int volAppInsert(Model model, VolMemVO volMemVO) {
 		int list = facilityService.volAppInsert(volMemVO);
 		//model.addAttribute("volAppIns", list);
@@ -201,8 +212,27 @@ public class facilityController {
 		model.addAttribute("info", info);
 		return info; 
 	}
+
 	
+	  //회원이 시설봉사 정보 조회
+	 
+	  @GetMapping("/facilityVolInfo")
+	  @ResponseBody
+	  public VolActVO getFacVolInfo(Model model, Integer volActId) { 
+		  VolActVO info = facilityService.getFacVolInfo(volActId);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
 	
+	//회원이 시설봉사 신청
+	@PostMapping("/joinVol")
+	@ResponseBody
+	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal) {
+		
+		int joinVol = facilityService.insertJoinVolunteer(volMemVO);
+		log.info(joinVol);
+		return joinVol;
+	}
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody

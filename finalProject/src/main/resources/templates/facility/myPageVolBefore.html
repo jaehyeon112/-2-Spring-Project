@@ -8,14 +8,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 </head>
 <body>
 <section layout:fragment="content">
+<div class="row">
 <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
 <div class="col-md-10 main-content">
+
 <div class="row hotel_booking_table">
-    <div class="col-md-3">
-                   <button type="button" data-toggle="modal"
-						data-target="#myModal">시설봉사 등록</button>
-    </div>
-<div class="col-md-9">
+<div class="col-md-3" style="margin-bottom:30px;"> </div>
+
+<div class="col-md-9" style="margin-bottom:30px;">
+<button class="btn btn-warning float-right" type="button" data-toggle="modal" data-target="#myModal">시설봉사 등록</button>
+</div>
+
+
+
     <div class="boking_table">
         <div class="row">
             <div class="col-md-2">
@@ -52,6 +57,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
               
            </div>
        </div>
+       
    <th:block th:each="list: ${volList}">
        <div class="col-md-2">
            <div class="book_tabel_item">
@@ -89,10 +95,32 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        </div>        
                 
                 </th:block>
+             
+
+<nav class="blog-pagination justify-content-center d-flex">
+				<ul class="pagination">
+					<li class="page-item"><a th:href="@{/facilityMyPage/volJoin(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
+						aria-label="Previous"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-left"></span>
+						</span>
+					</a></li>
+					
+					<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/facilityMyPage/volJoin(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
+			               th:text="${pageNum}"></a>
+			        </li>
+					
+					<li class="page-item"><a th:href="@{/facilityMyPage/volJoin(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
+						aria-label="Next"> <span aria-hidden="true"> <span
+								class="lnr lnr-chevron-right"></span>
+						</span>
+					</a></li>
+				</ul>
+			</nav>
             </div>
           
         </div>
-    </div>
+ 
     
     </div>
     <br>
@@ -177,7 +205,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 			</div> <!-- class="modal-body" -->
 			<div class="modal-footer">
 				
-				<button type="submit" class="btn btn-primary uploadBtn">등록하기
+				<button type="submit" class="btn btn-outline-warning btn-sm uploadBtn">등록하기
 					</button>
 			</div>
 		</div>
@@ -204,7 +232,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		    </div>
 	  </div>
   </div>        
-         </div>  
+ </div>
+ </div>
+         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
 			// 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -243,7 +273,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
 //봉사에대해 신청자 내역보기 클릭시 show할 부분
 function showList(id) {
-
+	$("#showTableBody").empty();
     // 이벤트의 기본 동작을 막음
     // 숨겨진 테이블 요소를 가져와서 보여줌
     var hiddenTable = document.getElementById("hiddenTable");
@@ -427,6 +457,7 @@ $(document).ready(function(){
 		});
                     
 </script>
+
 
 </section>
 </body>

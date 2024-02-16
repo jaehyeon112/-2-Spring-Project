@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.user.service.UserDetailVO;
 
+/**
+ * 기부영수증 페이지 미구현
+ * @author 나채현
+ *
+ */
 @Controller
 public class GibuReceiptController {
 	 @Autowired
