@@ -2,7 +2,6 @@ package com.bongsamaru.login.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +33,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author 김재현
  *
  */
+
+import lombok.extern.log4j.Log4j2;
 @Controller
+@Log4j2
 public class LoginController {
 	
 	@Autowired
@@ -194,6 +196,14 @@ public class LoginController {
 		  model.addAttribute("category",vo);
 		  
 		return "login/SocialSignUp";
+	}
+	
+	@GetMapping("/")
+	
+	public String firstPage() {
+		String arr = "test";
+		log.info(arr);
+		return "layout"; 
 	}
 	
 	

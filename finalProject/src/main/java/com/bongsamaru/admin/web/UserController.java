@@ -279,7 +279,7 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("userInfo")
+	@GetMapping("/admin/userInfo")
 	@ResponseBody
 	public UserVO getUserlOne(@RequestParam(name="memId") String memId,Model model) {
 		UserVO vo = userService.getUserOne(memId);

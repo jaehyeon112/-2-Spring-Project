@@ -112,7 +112,7 @@
 	            <input type="date" id="startDate" class="date-input" onchange="search()">
 	            <span class="date-label">종료 날짜:</span>
 	            <input type="date" id="endDate" class="date-input" onchange="search()">
-<input id="userData"   th:value="|${#authentication.principal.userVO.id}">
+<input id="userData" type="hidden"  th:value="|${#authentication.principal.userVO.id}">
 	        </div>
 	    </div>
 	</div>
@@ -134,7 +134,7 @@
 
 	              </div>
 	              <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
-				    <span>모집중[[${fac.rn}]]</span>
+				    <span>모집중</span>
 				    </div>
 	              <div class="text-white px-1 rounded position-absolute" style="top: 10px; right: 10px;background-color:#28a745;">
 					<span th:text="|${fac.category}|">관심분야할거임 </span>

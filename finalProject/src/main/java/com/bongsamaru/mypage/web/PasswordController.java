@@ -15,16 +15,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.user.service.UserDetailVO;
 
+/**
+ * 프로필 수정을 위한 비밀번호 인증
+ * @author 나채현
+ *
+ */
 @Controller
 public class PasswordController {
 	@Autowired
     private PasswordEncoder passwordEncoder;
     
+	/**
+	 * 비밀번호 인증 페이지 생성
+	 * @return my/pass
+	 */
 	@GetMapping("/pass")
 	public String getPasswordForm() {
 	    return "my/pass";
 	}
 
+	/**
+	 * 비밀번호 인증 절차
+	 * @param currentPassword
+	 * @return
+	 */
 	@PostMapping("/passwordCheck")
 	public ResponseEntity<?> passwordCheck(@RequestParam("currentPassword") String currentPassword) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();

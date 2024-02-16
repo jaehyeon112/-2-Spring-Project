@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bongsamaru.challenges.mapper.ChallengeMapper;
 import com.bongsamaru.common.VO.ChallengesVO;
 import com.bongsamaru.common.VO.LikeVO;
+import com.bongsamaru.common.VO.ReportVO;
 import com.bongsamaru.file.service.FilesVO;
 @Service
 public class ChallengesServiceImpl implements ChallengesService{
@@ -84,6 +85,12 @@ public class ChallengesServiceImpl implements ChallengesService{
 	public int deleteChallengeLike(Integer boardId) {
 		
 		return challengeMapper.deleteChallengeLike(boardId);
+	}
+
+	@Override
+	public int reportInsert(ReportVO reportVO) {
+		
+		return challengeMapper.reportInsert(reportVO);
 	}
 
 
