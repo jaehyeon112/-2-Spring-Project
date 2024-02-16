@@ -22,7 +22,9 @@
 	        	detail_cate
 	        FROM board
 	        WHERE category = 'b01'
+	        <if test="searchKeyword != null and searchKeyword != ''">
 	        AND (title LIKE '%' || #{searchKeyword} || '%') 
+	        </if>
 	        ORDER BY priority DESC, write_date DESC) A
 	    )
 	  	WHERE RN BETWEEN #{start} AND #{end}
@@ -31,14 +33,14 @@
 		SELECT count(*) 
 		FROM board 
 		WHERE category = 'b01'
+		<if test="searchKeyword != null and searchKeyword != ''">
 		AND (title LIKE '%' || #{searchKeyword} || '%') 
+		</if>
 	</select>
    	<!-- FAQList -->
     <select id="getFaqList" resultType="FaqVO">
-        SELECT *
-        FROM (
-            SELECT ROWNUM RN, A.*
-            FROM (
+        SELECT *  FROM (   SELECT ROWNUM RN, A.*    FROM (
+        
                 SELECT
                     faq_id,
                     category,
@@ -47,13 +49,10 @@
                 FROM faq
                 WHERE category = #{category} <!-- 카테고리 값 적용 -->
                 ORDER BY faq_id DESC
-            ) A
-        )
-        WHERE RN BETWEEN #{start} AND #{end}
+                
+                
+        ) A   )  WHERE RN BETWEEN #{start} AND #{end}
     </select>
-	<select id="getFaqCount" resultType="int">
-	SELECT count(*) FROM faq
-	</select>
 	<select id="getFaqCategoryCount" resultType="int">
 	SELECT count(*) 
 	FROM faq 
