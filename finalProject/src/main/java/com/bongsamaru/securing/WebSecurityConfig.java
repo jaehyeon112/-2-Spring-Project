@@ -61,9 +61,10 @@ public class WebSecurityConfig {
 			.addFilterBefore(additionalInfoFilter, UsernamePasswordAuthenticationFilter.class) // 여기에 필터 추가
 			.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
+				.antMatchers("/fac/").hasAnyAuthority("ROLE_M03")
 				.antMatchers("/**")
 				.permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("ROLE_M01","ROLE_SUPER")
+				.antMatchers("/AdminMain").hasAnyAuthority("ROLE_M01")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -80,13 +81,12 @@ public class WebSecurityConfig {
 					.successHandler(authsuccess)
 					.userInfoEndpoint()
 					.userService(customOAuthUserService))
-			.rememberMe() // remember-me 설정 추가
+			.rememberMe() 
 			.tokenRepository(persistentTokenRepository())
 			.rememberMeCookieName("REMEMBER_ME_COOKIE")
-            .key(secret) // remember-me 토큰을 생성하기 위한 키 설정
+            .key(secret)
             .tokenValiditySeconds(86400)
-            .rememberMeParameter("remember-me");// 토큰 유효 시간 설정 (예: 24시간 = 86400초)
-			//.userDetailsService(null)
+            .rememberMeParameter("remember-me");
            
 		return http.build();
 	}
