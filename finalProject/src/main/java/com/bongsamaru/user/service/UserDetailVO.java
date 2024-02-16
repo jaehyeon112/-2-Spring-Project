@@ -31,6 +31,7 @@ public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	 * public UserDetailVO() {} public UserDetailVO(MemberVO memberVO) {
 	 * this.memberVO = memberVO; }
 	 */
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list = new ArrayList<>();

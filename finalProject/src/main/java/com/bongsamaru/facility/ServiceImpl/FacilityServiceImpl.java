@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
@@ -23,16 +22,10 @@ public class FacilityServiceImpl implements FacilityService {
 	FacilityMapper mapper;
 
 	@Override
-	public List<FacilityVO> getFacilityList(String facZip2, String facType) {
-		return mapper.getFacilityList(facZip2,facType);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType,@Param("facId") String facId) {
+		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
 	}
 	
-	/*
-	 * @Override public Page<FacilityVO> paging(Pageable pageable) { int page =
-	 * pageable.getPageNumber()-1; int pageLimit = 6; Page<FacilityEntity>
-	 * facilityEntities = facilityRepository.findAll(PageRequest.of(page,
-	 * pageLimit,Sort.by(Sort.Direction.DESC,.facilityEntities..))) return null; }
-	 */
 	
 	@Override
 	public FacilityVO getFacilityInfo(String facId) {
@@ -54,12 +47,74 @@ public class FacilityServiceImpl implements FacilityService {
 		
 		return mapper.getVolList(facId);
 	}
+	
+	@Override
+	public int insertJoinVolunteer(VolMemVO volMemVO) {
+		return mapper.insertJoinVolunteer(volMemVO);
+		
+	}
+	
+	@Override
+	public VolActVO getFacVolInfo(Integer volActId) {
+		return mapper.getFacVolInfo(volActId);
+	}
+	
+	@Override
+	public List<DonaVO> getDonaList(String facId,Integer recStat) {
+		return mapper.getDonaList(facId,recStat);
+	}
+	
+	
+	@Override
+	public int InsertFacVol(VolActVO volActVO) {
+		int result = mapper.InsertFacVol(volActVO);
+		if(result ==1) {
+			return volActVO.getVolActId();
+		}else {
+			return -1;
+		}	
+	}
 
 	@Override
-	public List<DonaVO> getDonaList() {
-		
-		return mapper.getDonaInfo();
+	public List<VolActVO> getVolunteerJoinList(String facId) {
+		return mapper.getVolunteerJoinList(facId);
 	}
+	@Override
+	public List<VolMemVO> getVolunteerAppList(Integer volActId) {
+		return mapper.getVolunteerAppList(volActId);
+	}
+	
+	//시설이 회원봉사 승인하면 업데이트
+	@Override
+	public int volAppUpdate(Integer volActId, String memId) {
+		return mapper.volAppUpdate(volActId, memId);
+	}
+	//시설이 회원봉사 승인하면 인서트
+	@Override
+	public int volAppInsert(VolMemVO volMemVO) {
+		return mapper.volAppInsert(volMemVO);
+	}
+	@Override
+	public VolMemVO getJoinApp(Integer volActId) {
+		return mapper.getJoinApp(volActId);
+	}
+
+	//페이지네이션하기 위한거
+		@Override
+		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
+			
+			return mapper.getCategoryCount(facZip2, facType);
+		}
+
+
+		
+
+
+		
+
+
+		
+	
 
 	
 }

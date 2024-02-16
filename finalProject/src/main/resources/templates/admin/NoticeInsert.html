@@ -129,11 +129,8 @@
 													location.href="boardList?category=b01"
 													return;
 												}else{
-													$.ajax('../maxNotice')
-											    	.done(result => {
-														fileSub(result);
-											    	})
-											    	.fail(err => console.log(err));
+													console.log(result);
+													fileSub(result);
 												}
 												
 											},

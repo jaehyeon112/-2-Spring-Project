@@ -15,16 +15,17 @@ public class VolunteerVO {
 	private String title; 
 	private String location; 
 	private Date volDate;
-	private Integer capCnt;
+	private Integer cap;
 	private String facName; 
 	//영희
 	private Integer vol;
+	private Integer capCnt;
 	private Integer fac;
 	private String memId;
 	private Integer volId;
 	private String meetName;
 	private String meetType;
-	private Integer cap;
+	//private Integer cap;
 	private String meetPurp;
 	private String meetDesc;
 	private String region;
@@ -34,4 +35,6 @@ public class VolunteerVO {
 	private Date recPeriod;
 	private Date endPeriod;
 	private Date appDate;
+	private String path;
+	private String mainCategory;
 }

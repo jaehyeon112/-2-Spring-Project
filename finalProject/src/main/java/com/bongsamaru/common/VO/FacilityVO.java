@@ -33,7 +33,7 @@ public class FacilityVO {
 	private String facZip2;  //지역(우편번호 앞 2)
 	
 	//join문으로 생긴 별칭
-	
+	 private String filePath;
 	 private Integer donaitonAmt; 
 	 private Integer donors;
 	 

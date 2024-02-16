@@ -1,1206 +1,272 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{meeting/meetingLayout}"
->
-
-    <head>
-        <meta charset="utf-8">
-        <title>봉사모임 페이지</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
-    </head>
-    <body>
-    <section layout:fragment="content">
-      <!-- Features Start -->
-	  <div class="container-fluid features mb-5" id="">
-	      <div class="container py-5">
-	          <h3>우리 모임 봉사활동</h3>
-	          <div class="row g-4">
-	          <!-- 시작 -->
-	              <div class="col-md-6 col-lg-6 col-xl-3" th:each="act : ${act}">
-	                  <div class="row g-4 align-items-center features-item">
-	                      <div class="col-4">
-	                          <div class="rounded-circle position-relative">
-	                              <div class="overflow-hidden rounded-circle">
-	                                  <img src="../dpdd/img/features-sports-1.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-	                              </div>
-	                              <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-	                          </div>
-	                      </div>
-	                      <div class="col-8">
-	                          <div class="features-content d-flex flex-column">
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i01'">동물</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i02'">어르신</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i03'">가족 ·여성</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i04'">장애인</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i05'">아동·청소년</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i06'">환경</p>
-	                              <p class="text-uppercase mb-2" th:if="${act.category}=='i07'">기타</p>
-	                              <a href="#" class="h6" th:text="${act.title}">
-	                              </a>
-	                              <small class="text-body d-block" th:text="${#dates.format(act.volDate, 'yyyy/MM/dd')}"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-	                          </div>
-	                      </div>
-	                  </div>
-	              </div>
-	              <!-- 마지막 -->
-	          </div>
-	      </div>
-	  </div>
-	    <!-- Features End -->
-        <!-- Main Post Section Start -->
-        <div class="container-fluid py-5">
-            <div class="container py-5">
-                <div class="row g-4">
-                    <div class="col-lg-7 col-xl-8 mt-0">
-                        <div class="position-relative overflow-hidden rounded">
-                            <img src="/admin/images/logos/봉사.png" class="../dpdd/img-fluid rounded img-zoomin w-100" alt="동아리 대표사진">
-                            <div class="d-flex justify-content-center px-4 position-absolute flex-wrap" style="bottom: 10px; left: 0;">
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-clock"></i> 06 minute read</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                <a href="#" class="text-white me-3 link-hover"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                <a href="#" class="text-white link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                            </div>
-                        </div>
-                        <div class="border-bottom py-3">
-                            <a href="#" class="display-4 text-dark mb-0 link-hover">Lorem Ipsum is simply dummy text of the printing</a>
-                        </div>
-                        <p class="mt-3 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley standard dummy text ever since the 1500s, when an unknown printer took a galley...
-                        </p>
-                        <div class="bg-light p-4 rounded">
-                            <div class="news-2">
-                                <h3 class="mb-4">Top Story</h3>
-                            </div>
-                            <div class="row g-4 align-items-center">
-                                <div class="col-md-6">
-                                    <div class="rounded overflow-hidden">
-                                        <img src="../dpdd/img/news-2.jpg" class="img-fluid rounded img-zoomin w-100" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex flex-column">
-                                        <a href="#" class="h3">Stoneman Clandestine Ukrainian claims successes against Russian.</a>
-                                        <p class="mb-0 fs-5"><i class="fa fa-clock"> 06 minute read</i> </p>
-                                        <p class="mb-0 fs-5"><i class="fa fa-eye"> 3.5k Views</i></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-xl-4">
-                       <div class="bg-light rounded p-4 pt-0">
-                            <div class="row g-4">
-                                <div class="col-12">
-                                    <div class="rounded overflow-hidden">
-                                        <img src="../dpdd/img/news-3.jpg" class="img-fluid rounded img-zoomin w-100" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="d-flex flex-column">
-                                        <a href="#" class="h4 mb-2">Get the best speak market, news.</a>
-                                        <p class="fs-5 mb-0"><i class="fa fa-clock"> 06 minute read</i> </p>
-                                        <p class="fs-5 mb-0"><i class="fa fa-eye"> 3.5k Views</i></p>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-5">
-                                            <div class="overflow-hidden rounded">
-                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="features-content d-flex flex-column">
-                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                <small><i class="fa fa-clock"> 06 minute read</i> </small>
-                                                <small><i class="fa fa-eye"> 3.5k Views</i></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                       </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Main Post Section End -->
-         <!-- Banner Start -->
-        <div class="container-fluid py-5 my-5" style="background: linear-gradient(rgba(202, 203, 185, 1), rgba(202, 203, 185, 1));">
-            <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-lg-7">
-                        <h1 class="mb-4 text-primary">Newsers</h1>
-                        <h1 class="mb-4">Get Every Weekly Updates</h1>
-                        <p class="text-dark mb-4 pb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        </p>
-                        <div class="position-relative mx-auto">
-                            <input class="form-control w-100 py-3 rounded-pill" type="email" placeholder="Your Busines Email">
-                            <button type="submit" class="btn btn-primary py-3 px-5 position-absolute rounded-pill text-white h-100" style="top: 0; right: 0;">Subscribe Now</button>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="rounded">
-                            <img src="../dpdd/img/banner-img.jpg" class="img-fluid rounded w-100 rounded" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Banner End -->
-
-
-        <!-- Latest News Start -->
-        <div class="container-fluid latest-news py-5">
-            <div class="container py-5">
-                <h2 class="mb-4">Latest News</h2>
-                <div class="latest-news-carousel owl-carousel">
-                    <div class="latest-news-item">
-                        <div class="bg-light rounded">
-                            <div class="rounded-top overflow-hidden">
-                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                            </div>
-                            <div class="d-flex flex-column p-4">
-                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of...</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="small text-body link-hover">by Willum Skeem</a>
-                                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="latest-news-item">
-                        <div class="bg-light rounded">
-                            <div class="rounded-top overflow-hidden">
-                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                            </div>
-                            <div class="d-flex flex-column p-4">
-                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of...</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="small text-body link-hover">by Willum Skeem</a>
-                                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="latest-news-item">
-                        <div class="bg-light rounded">
-                            <div class="rounded-top overflow-hidden">
-                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                            </div>
-                            <div class="d-flex flex-column p-4">
-                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of...</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="small text-body link-hover">by Willum Skeem</a>
-                                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="latest-news-item">
-                        <div class="bg-light rounded">
-                            <div class="rounded-top overflow-hidden">
-                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                            </div>
-                            <div class="d-flex flex-column p-4">
-                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of...</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="small text-body link-hover">by Willum Skeem</a>
-                                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="latest-news-item">
-                        <div class="bg-light rounded">
-                            <div class="rounded-top overflow-hidden">
-                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                            </div>
-                            <div class="d-flex flex-column p-4">
-                                <a href="#" class="h4 ">Lorem Ipsum is simply dummy text of...</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="small text-body link-hover">by Willum Skeem</a>
-                                    <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Latest News End -->
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{meeting/meetingLayout}">
+<head>
+<style>
+.cur{
+	cursor:pointer;
+}
+</style>
+<meta charset="utf-8">
+<title>봉사모임 페이지</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+</head>
+<body>
+	<section layout:fragment="content">
+		<!-- Features Start -->
+		<div class="container-fluid features mb-5" id="">
+			<div class="container py-5">
+				<h3>이달의 봉사왕</h3>
+				<div class="row g-4">
+					<!-- 시작 -->
+					<div th:if="${cnt.size}=='0'">아직 봉사를 한 회원이 없습니다. 모임에 참여하여 함께 봉사를 해주세요!</div>
+					<div class="col-md-6 col-lg-6 col-xl-3" th:each="cnt,st : ${cnt}" th:if="${st.count}<=3">
+						<div class="row g-4 align-items-center features-item">
+							<div class="col-4">
+								<div class="rounded-circle position-relative">
+									<div class="overflow-hidden rounded-circle">
+										<img th:if="${cnt.path}!=null" th:src="@{${cnt.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+										<img th:if="${cnt.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+									</div>
+									<span class="rounded-circle border border-2 border-white bg-primary text-white position-absolute"
+										style="top: 10%; right: -10px;" th:text="${st.count}+'등'"></span>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="features-content d-flex flex-column">
+									<p class="text-uppercase mb-2" th:text="${cnt.cnt}+'회'"></p>
+									<a href="#" class="h6" th:text="${cnt.memId}+'님'"> </a> 
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 마지막 -->
+				</div>
+			</div>
+		</div>
+		<!-- Features End -->
+		<!-- Latest News Start -->
+		<div class="container-fluid latest-news py-5" style="padding:0 !important">
+			<div class="container py-5" style="padding:0 !important">
+				<h3 class="mb-4 border-bottom">지난 봉사활동</h3>
+				<div class="latest-news-carousel owl-carousel" id="three">
+					<div th:if="${before.size}=='0'">지난 봉사가 없습니다.</div>
+					<div class="latest-news-item" th:each="act : ${before}">
+						<div class="bg-light rounded">
+							<div class="rounded-top overflow-hidden">
+								<img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
+								<img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
+							</div>
+							<div class="d-flex flex-column p-4">
+								<a th:onclick="location.href='volActBoardInfo?volId=[[${session.id}]]&volActId=[[${act.volActId}]]))'" class="h4 cur" th:text="${act.title}"></a>
+								<div class="d-flex justify-content-between">
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f01'">아동 및 청소년</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f02'">장애인</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f03'">문화,체육</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f04'">캠페인</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f05'">보건의료</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f06'">환경정리</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f07'">동물</p>
+									<p class="text-uppercase mb-2" th:if="${act.category}=='f07'">기타</p>
+									<small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>[[${#dates.format(act.volDate, 'yyyy/MM/dd')}]]</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Most Populer News Start -->
+		<div class="container-fluid populer-news py-5" style="padding:0 !important">
+			<div class="container py-5">
+				<div class="tab-class mb-4">
+					<div class="row g-4">
+						<div class="col-lg-8 col-xl-9">
+							<div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
+								<h3 class="mb-4">예정 봉사활동</h3>
+							</div>
+							<div class="tab-content mb-4">
+								<div id="tab-1" class="tab-pane fade show p-0 active">
+									<div class="row g-4">
+										<div th:if="${after.size}=='0'">예정되어있는 봉사가 없습니다.</div>
+										<div class="col-lg-8" th:each="act,st : ${after}" th:if="${st.count}==1">
+											<div class="position-relative rounded overflow-hidden">
+												<img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:270px;">
+												<img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" 
+													class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:270px;">
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f01'"
+													style="top: 20px; right: 20px;">아동 및 청소년</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f02'"
+													style="top: 20px; right: 20px;">장애인</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f03'"
+													style="top: 20px; right: 20px;">문화,체육</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f04'"
+													style="top: 20px; right: 20px;">캠페인</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f05'"
+													style="top: 20px; right: 20px;">보건의료</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f06'"
+													style="top: 20px; right: 20px;">환경정리</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f07'"
+													style="top: 20px; right: 20px;">동물</div>
+												<div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f08'"
+													style="top: 20px; right: 20px;">기타</div>
+											</div>
+											<div class="my-4">
+												<a th:onclick="location.href='volActBoardInfo?volId=[[${session.id}]]&volActId=[[${act.volActId}]]'" class="h4 cur" th:text="${act.title}"></a>
+											</div>
+											<div class="d-flex justify-content-left">
+												<a href="#" class="text-dark link-hover me-3">
+												<i class="fa fa-clock"></i>[[${#dates.format(act.volDate, 'yyyy년 MM월 dd일')}]]</a> 
+												<a href="#" class="text-dark link-hover me-3"><i class="fa fa-user" id="cnts"></i> [[${act.cnt}]]명</a>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="row g-4">
+												<div class="col-12" th:each="act,st : ${after}" th:if="${st.count}>1">
+													<div class="row g-4 align-items-center">
+														<div class="col-5">
+															<div class="overflow-hidden rounded">
+																<img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
+																<img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
+															</div>
+														</div>
+														<div class="col-7">
+															<div class="features-content d-flex flex-column">
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f01'">아동 및 청소년</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f02'">장애인</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f03'">문화,체육</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f04'">캠페인</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f05'">보건의료</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f06'">환경정리</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f07'">동물</p>
+															<p class="text-uppercase mb-2" th:if="${act.category}=='f07'">기타</p>
+															<a th:onclick="location.href='volActBoardInfo?volId=[[${session.id}]]&volActId=[[${act.volActId}]]'" class="h6 cur" th:text="${act.title}"></a>
+															<small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>[[${#dates.format(act.volDate, 'yyyy년 MM월 dd일')}]]</small>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="border-bottom mb-4">
+								<h3 class="my-4">봉사 후기</h3>
+							</div>
+							<div class="whats-carousel owl-carousel">
+								<div th:if="${review.size}=='0'">등록된 후기가 없습니다.</div>
+								<div class="latest-news-item" th:each="review : ${review}">
+									<div class="bg-light rounded">
+										<div class="rounded-top overflow-hidden">
+											<img th:if="${review.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
+											<img th:if="${review.filePath}!=null" th:src="${review.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
+										</div>
+										<div class="d-flex flex-column p-4">
+											<a th:onclick="location.href='ReviewInfo?volId=[[${session.id}]]&reviewId=[[${review.reviewId}]]'" class="h4 cur" th:text="${review.title}"></a>
+											<div class="d-flex justify-content-between">
+												<a class="small text-body link-hover" th:text="'by '+${review.writer}+'님'"></a> <small class="text-body d-block"><i
+													class="fas fa-calendar-alt me-1"></i>[[${#dates.format(review.writeDate, 'yyyy/MM/dd')}]]</small>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-xl-3" style="margin-top:8%">
+							<div class="row g-4">
+								<div class="col-12">
+									<div class="p-3 rounded border">
+										<th:block th:if="${choose.size}!=0">
+											<h4 class="mb-4">이런 모임은 어때요?</h4>
+											<div class="row g-4" th:each="meet,st : ${choose}" th:if="${st.count}<4">
+												<div class="col-12 rounded" style="padding:10px">
+													<h5><a th:text="${meet.meetName}" th:href="@{meetings(volId=${meet.volId})}" target='_blank'>동아리명</a></h5>
+													  <span th:if="${meet.region}=='z01'" style="color:gray">#서울</span>
+													  <span th:if="${meet.region}=='z02'" style="color:gray">#부산</span>
+													  <span th:if="${meet.region}=='z03'" style="color:gray">#대구</span>
+													  <span th:if="${meet.region}=='z04'" style="color:gray">#인천</span>
+													  <span th:if="${meet.region}=='z05'" style="color:gray">#광주</span>
+													  <span th:if="${meet.region}=='z06'" style="color:gray">#대전</span>
+													  <span th:if="${meet.region}=='z07'" style="color:gray">#울산</span>
+													  <span th:if="${meet.region}=='z08'" style="color:gray">#세종</span>
+													  <span th:if="${meet.region}=='z09'" style="color:gray">#경기도</span>
+													  <span th:if="${meet.region}=='z10'" style="color:gray">#강원도</span>
+													  <span th:if="${meet.region}=='z11'" style="color:gray">#충북</span>
+													  <span th:if="${meet.region}=='z12'" style="color:gray">#충남</span>
+													  <span th:if="${meet.region}=='z13'" style="color:gray">#전북</span>
+													  <span th:if="${meet.region}=='z14'" style="color:gray">#전남</span>
+													  <span th:if="${meet.region}=='z15'" style="color:gray">#경북</span>
+													  <span th:if="${meet.region}=='z16'" style="color:gray">#경남</span>
+													  <span th:if="${meet.region}=='z17'" style="color:gray">#제주도</span>
+								                    <br>
+								                    <span th:text="'정원 : '+${meet.meetingCnt}+'/'+${meet.cap}+'명'">정원 : 3/10명</span> 
+												</div>
+											</div>
+										</th:block>
+										<hr>
+										<h4 class="my-4">참여중인 회원</h4>
+										<th:block th:if="${member.size}==0">
+											<h5>회원이 존재하지 않습니다.</h5>
+										</th:block>
+										<div class="row g-4">
+											<div class="col-12" th:each="mem,st : ${member}" th:if="${st.count}<5">
+												<div class="row g-4 align-items-center features-item">
+													<div class="col-4">
+														<div class="rounded-circle position-relative">
+															<div class="overflow-hidden rounded-circle">
+																<img th:if="${mem.path}!=null" th:src="@{${mem.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+																<img th:if="${mem.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+															</div>
+															<span th:if="${mem.memId}==${info.memId}" class="rounded-circle border border-2 border-white bg-primary  text-white position-absolute" style="top: 10%; right: -10px;">
+															방장
+															</span>
+														</div>
+													</div>
+													<div class="col-8">
+														<div class="features-content d-flex flex-column">
+															<a href="#" class="h6" th:text="${mem.memId}"></a> <small class="text-body d-block">
+															<i class="fas fa-calendar-alt me-1"></i>[[${#dates.format(mem.appDate, 'yyyy년 MM월 dd일')}]] 가입</small>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<a href="#" th:if="${member.size}>4"class="link-hover btn border border-primary rounded-pill text-dark w-100 py-3 mb-4">View More</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Latest News End -->
+		<!-- Back to Top -->
+		<a href="#"
+			class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i
+			class="fa fa-arrow-up"></i></a>
 
 
-        <!-- Most Populer News Start -->
-        <div class="container-fluid populer-news py-5">
-            <div class="container py-5">
-                <div class="tab-class mb-4">
-                    <div class="row g-4">
-                        <div class="col-lg-8 col-xl-9">
-                            <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
-                                <h1 class="mb-4">What’s New</h1>
-                                <ul class="nav nav-pills d-inline-flex text-center">
-                                    <li class="nav-item mb-3">
-                                        <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill" href="#tab-1">
-                                            <span class="text-dark" style="width: 100px;">Sports</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mb-3">
-                                        <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                            <span class="text-dark" style="width: 100px;">Magazine</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mb-3">
-                                        <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
-                                            <span class="text-dark" style="width: 100px;">Politics</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mb-3">
-                                        <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
-                                            <span class="text-dark" style="width: 100px;">Technology</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mb-3">
-                                        <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-5">
-                                            <span class="text-dark" style="width: 100px;">Fashion</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tab-content mb-4">
-                                <div id="tab-1" class="tab-pane fade show p-0 active">
-                                    <div class="row g-4">
-                                        <div class="col-lg-8">
-                                            <div class="position-relative rounded overflow-hidden">
-                                                <img src="../dpdd/img/news-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                <div class="position-absolute text-white px-4 py-2 bg-primary rounded" style="top: 20px; right: 20px;">                                              
-                                                    Sports
-                                                </div>
-                                            </div>
-                                            <div class="my-4">
-                                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                                <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                                            </div>
-                                            <p class="my-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy..
-                                            </p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Sports</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Sports</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Sports</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Sports</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-2" class="tab-pane fade show p-0">
-                                    <div class="row g-4">
-                                        <div class="col-lg-8">
-                                            <div class="position-relative rounded overflow-hidden">
-                                                <img src="../dpdd/img/news-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                <div class="position-absolute text-white px-4 py-2 bg-primary rounded" style="top: 20px; right: 20px;">                                              
-                                                    Magazine
-                                                </div>
-                                            </div>
-                                            <div class="my-3">
-                                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                                            </div>
-                                            <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy..
-                                            </p>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                                <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Magazine</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-3" class="tab-pane fade show p-0">
-                                    <div class="row g-4">
-                                        <div class="col-lg-8">
-                                            <div class="position-relative rounded overflow-hidden">
-                                                <img src="../dpdd/img/news-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                <div class="position-absolute text-white px-4 py-2 bg-primary rounded" style="top: 20px; right: 20px;">                                              
-                                                    Politics
-                                                </div>
-                                            </div>
-                                            <div class="my-3">
-                                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                                            </div>
-                                            <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy..
-                                            </p>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                                <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Politics</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Politics</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Politics</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Politics</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Politics</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-4" class="tab-pane fade show p-0">
-                                    <div class="row g-4">
-                                        <div class="col-lg-8">
-                                            <div class="position-relative rounded overflow-hidden">
-                                                <img src="../dpdd/img/news-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                <div class="position-absolute text-white px-4 py-2 bg-primary rounded" style="top: 20px; right: 20px;">                                              
-                                                    Technology
-                                                </div>
-                                            </div>
-                                            <div class="my-3">
-                                                <a href="#" class="h4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                                            </div>
-                                            <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy
-                                            </p>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                                <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Technology</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Technology</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Technology</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Technology</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Technology</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab-5" class="tab-pane fade show p-0">
-                                    <div class="row g-4">
-                                        <div class="col-lg-8">
-                                            <div class="position-relative rounded overflow-hidden">
-                                                <img src="../dpdd/img/news-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                <div class="position-absolute text-white px-4 py-2 bg-primary rounded" style="top: 20px; right: 20px;">                                              
-                                                    Fashion
-                                                </div>
-                                            </div>
-                                            <div class="my-3">
-                                                <a href="#" class="h4">World Happiness Report 2023: What's the highway to happiness?</a>
-                                            </div>
-                                            <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum has been the industry's standard dummy
-                                            </p>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                                                <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05 Comment</a>
-                                                <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="row g-4">
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Fashion</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Fashion</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Fashion</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Fashion</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row g-4 align-items-center">
-                                                        <div class="col-5">
-                                                            <div class="overflow-hidden rounded">
-                                                                <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7">
-                                                            <div class="features-content d-flex flex-column">
-                                                                <p class="text-uppercase mb-2">Fashion</p>
-                                                                <a href="#" class="h6">Get the best speak market, news.</a>
-                                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-bottom mb-4">
-                                <h2 class="my-4">Most Views News</h2>
-                            </div>
-                            <div class="whats-carousel owl-carousel">
-                                <div class="latest-news-item">
-                                    <div class="bg-light rounded">
-                                        <div class="rounded-top overflow-hidden">
-                                            <img src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                                        </div>
-                                        <div class="d-flex flex-column p-4">
-                                            <a href="#" class="h4">There are many variations of passages of Lorem Ipsum available,</a>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="small text-body link-hover">by Willium Smith</a>
-                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="whats-item">
-                                    <div class="bg-light rounded">
-                                        <div class="rounded-top overflow-hidden">
-                                            <img src="../dpdd/img/news-6.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                                        </div>
-                                        <div class="d-flex flex-column p-4">
-                                            <a href="#" class="h4">There are many variations of passages of Lorem Ipsum available,</a>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="small text-body link-hover">by Willium Smith</a>
-                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="whats-item">
-                                    <div class="bg-light rounded">
-                                        <div class="rounded-top overflow-hidden">
-                                            <img src="../dpdd/img/news-3.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                                        </div>
-                                        <div class="d-flex flex-column p-4">
-                                            <a href="#" class="h4">There are many variations of passages of Lorem Ipsum available,</a>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="small text-body link-hover">by Willium Smith</a>
-                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="whats-item">
-                                    <div class="bg-light rounded">
-                                        <div class="rounded-top overflow-hidden">
-                                            <img src="../dpdd/img/news-4.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                                        </div>
-                                        <div class="d-flex flex-column p-4">
-                                            <a href="#" class="h4">There are many variations of passages of Lorem Ipsum available,</a>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="small text-body link-hover">by Willium Smith</a>
-                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="whats-item">
-                                    <div class="bg-light rounded">
-                                        <div class="rounded-top overflow-hidden">
-                                            <img src="../dpdd/img/news-5.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="">
-                                        </div>
-                                        <div class="d-flex flex-column p-4">
-                                            <a href="#" class="h4">There are many variations of passages of Lorem Ipsum available,</a>
-                                            <div class="d-flex justify-content-between">
-                                                <a href="#" class="small text-body link-hover">by Willium Smith</a>
-                                                <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-5 lifestyle">
-                                <div class="border-bottom mb-4">
-                                    <h1 class="mb-4">Life Style</h1>
-                                </div>
-                                <div class="row g-4">
-                                    <div class="col-lg-6">
-                                        <div class="lifestyle-item rounded">
-                                            <img src="../dpdd/img/lifestyle-1.jpg" class="img-fluid w-100 rounded" alt="">
-                                            <div class="lifestyle-content">
-                                               <div class="mt-auto">
-                                                    <a href="#" class="h4 text-white link-hover">There are many variations of passages of Lorem Ipsum available,</a>
-                                                    <div class="d-flex justify-content-between mt-4">
-                                                        <a href="#" class="small text-white link-hover">By Willium Smith</a>
-                                                        <small class="text-white d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                    </div>
-                                               </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="lifestyle-item rounded">
-                                            <img src="../dpdd/img/lifestyle-2.jpg" class="img-fluid w-100 rounded" alt="">
-                                            <div class="lifestyle-content">
-                                               <div class="mt-auto">
-                                                    <a href="#" class="h4 text-white link-hover">There are many variations of passages of Lorem Ipsum available,</a>
-                                                    <div class="d-flex justify-content-between mt-4">
-                                                        <a href="#" class="small text-white link-hover">By Willium Smith</a>
-                                                        <small class="text-white d-block"><i class="fas fa-calendar-alt me-1"></i> Dec 9, 2024</small>
-                                                    </div>
-                                               </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-xl-3">
-                            <div class="row g-4">
-                                <div class="col-12">
-                                    <div class="p-3 rounded border">
-                                        <h4 class="mb-4">Stay Connected</h4>
-                                        <div class="row g-4">
-                                            <div class="col-12">
-                                                <a href="#" class="w-100 rounded btn btn-primary d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-facebook-f btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">13,977 Fans</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-danger d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-twitter btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">21,798 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-youtube btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">7,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-dark d-flex align-items-center p-3 mb-2">
-                                                    <i class="fab fa-instagram btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">19,764 Follower</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-secondary d-flex align-items-center p-3 mb-2">
-                                                    <i class="bi-cloud btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">31,999 Subscriber</span>
-                                                </a>
-                                                <a href="#" class="w-100 rounded btn btn-warning d-flex align-items-center p-3 mb-4">
-                                                    <i class="fab fa-dribbble btn btn-light btn-square rounded-circle me-3"></i>
-                                                    <span class="text-white">37,999 Subscriber</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <h4 class="my-4">Popular News</h4>
-                                        <div class="row g-4">
-                                            <div class="col-12">
-                                                <div class="row g-4 align-items-center features-item">
-                                                    <div class="col-4">
-                                                        <div class="rounded-circle position-relative">
-                                                            <div class="overflow-hidden rounded-circle">
-                                                                <img src="../dpdd/img/features-sports-1.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                            </div>
-                                                            <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <div class="features-content d-flex flex-column">
-                                                            <p class="text-uppercase mb-2">Sports</p>
-                                                            <a href="#" class="h6">
-                                                                Get the best speak market, news.
-                                                            </a>
-                                                            <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="row g-4 align-items-center features-item">
-                                                    <div class="col-4">
-                                                        <div class="rounded-circle position-relative">
-                                                            <div class="overflow-hidden rounded-circle">
-                                                                <img src="../dpdd/img/features-technology.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                            </div>
-                                                            <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <div class="features-content d-flex flex-column">
-                                                            <p class="text-uppercase mb-2">Technology</p>
-                                                            <a href="#" class="h6">
-                                                                Get the best speak market, news.
-                                                            </a>
-                                                            <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="row g-4 align-items-center features-item">
-                                                    <div class="col-4">
-                                                        <div class="rounded-circle position-relative">
-                                                            <div class="overflow-hidden rounded-circle">
-                                                                <img src="../dpdd/img/features-fashion.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                            </div>
-                                                            <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <div class="features-content d-flex flex-column">
-                                                            <p class="text-uppercase mb-2">Fashion</p>
-                                                            <a href="#" class="h6">
-                                                                Get the best speak market, news.
-                                                            </a>
-                                                            <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="row g-4 align-items-center features-item">
-                                                    <div class="col-4">
-                                                        <div class="rounded-circle position-relative">
-                                                            <div class="overflow-hidden rounded-circle">
-                                                                <img src="../dpdd/img/features-life-style.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                            </div>
-                                                            <span class="rounded-circle border border-2 border-white bg-primary btn-sm-square text-white position-absolute" style="top: 10%; right: -10px;">3</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <div class="features-content d-flex flex-column">
-                                                            <p class="text-uppercase mb-2">Life Style</p>
-                                                            <a href="#" class="h6">
-                                                                Get the best speak market, news.
-                                                            </a>
-                                                            <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i> December 9, 2024</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <a href="#" class="link-hover btn border border-primary rounded-pill text-dark w-100 py-3 mb-4">View More</a>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="border-bottom my-3 pb-3">
-                                                    <h4 class="mb-0">Trending Tags</h4>
-                                                </div>
-                                                <ul class="nav nav-pills d-inline-flex text-center mb-4">
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Lifestyle</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Sports</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Politics</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Magazine</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Game</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Movie</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">Travel</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item mb-3">
-                                                        <a class="d-flex py-2 bg-light rounded-pill me-2" href="#">
-                                                            <span class="text-dark link-hover" style="width: 90px;">World</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="position-relative banner-2">
-                                                    <img src="../dpdd/img/banner-2.jpg" class="img-fluid w-100 rounded" alt="">
-                                                    <div class="text-center banner-content-2">
-                                                        <h6 class="mb-2">The Most Populer</h6>
-                                                        <p class="text-white mb-2">News & Magazine WP Theme</p>
-                                                        <a href="#" class="btn btn-primary text-white px-4">Shop Now</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Most Populer News End -->
-        
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+		<!-- JavaScript Libraries -->
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="../dpdd/lib/easing/easing.min.js"></script>
+		<script src="../dpdd/lib/waypoints/waypoints.min.js"></script>
+		<script src="../dpdd/lib/owlcarousel/owl.carousel.min.js"></script>
 
-        
-        <!-- JavaScript Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../dpdd/lib/easing/easing.min.js"></script>
-        <script src="../dpdd/lib/waypoints/waypoints.min.js"></script>
-        <script src="../dpdd/lib/owlcarousel/owl.carousel.min.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="../dpdd/js/main.js"></script>
-       </section>
-    </body>
+		<!-- Template Javascript -->
+		<script src="../dpdd/js/main.js"></script>
+	</section>
+</body>
 
 </html>

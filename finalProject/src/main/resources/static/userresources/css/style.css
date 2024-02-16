@@ -556,7 +556,7 @@ button:focus {
 
 /*============= End banner_area css =============*/
 .hotel_booking_table {
-  background: #93f58d;
+  background: white;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -564,6 +564,8 @@ button:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  border: 7px groove #9cfd68;
+  border-radius: 20px;
 }
 
 .hotel_booking_table h2 {

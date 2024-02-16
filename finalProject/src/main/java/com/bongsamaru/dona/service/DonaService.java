@@ -6,6 +6,12 @@ import java.util.List;
 public interface DonaService {
 	//메인페이지 전체리스트
 	List<DonaVO> getDonaList();
+	//모금중
+	List<DonaVO> selectRecruitingItems();
+	//모금완료
+	List<DonaVO> selectCompletedItems();
+	//카테고리별리스트
+	List<DonaVO> getDonaListByCategory(DonaVO donaVO);
 	
 	
 	//상세페이지 조회 1
@@ -20,13 +26,33 @@ public interface DonaService {
 	
 	
 	//댓글 리스트
-	public List<DonaVO> getCommentList(Integer donId);
+	public List<DonaVO> getCommentList(Integer detailCode);
 	
 	//댓글 등록하기
-	public int insertComment(Integer donId, DonaVO donaVO);
+	public int insertComment(DonaVO donaVO);
+	
+	//연장 이메일 대상자
+	List<DonaVO> selectExtensionTargetList();
+	//모금종료 update
+	public void updateRecStat(DonaVO donaVO);
+	
+	//모금기한연장-수정
+	public void extendDonationPeriod(DonaVO donaVO);
+	
 	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);
+	public int insertDonDetail(DonaVO donaVO);
 	
 	
+	//등록 후기 insert
+	public int insertReview(DonaVO donaVO);
+	public int insertReviewDetail(DonaVO donaVO);
+	
+	//후기 개별
+	public DonaVO getDonaReview(Integer donId);
+	
+	
+	//결제하기
+	public int paymentProcess(DonaVO donaVO);
 }

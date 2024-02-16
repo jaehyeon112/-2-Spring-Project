@@ -35,17 +35,14 @@ public class FileController {
         
     }
     
-    @GetMapping("/files/delete/{fileName}")
-    public String deleteFile(@PathVariable String fileName) {
-        String uploadDir = "/path/to/uploaded/files"; // 실제 파일이 저장된 디렉터리 경로
-        String fullPath = uploadDir + File.separator + fileName;
-
-        boolean isDeleted = fileService.deleteFile(fullPath);
-
-        if (isDeleted) {
-            return "파일이 성공적으로 삭제되었습니다.";
-        } else {
-            return "파일 삭제에 실패했습니다. 파일이 존재하지 않거나 삭제할 수 없습니다.";
+    @GetMapping("/deleteFiles")
+    @ResponseBody
+    public String deleteFile(@RequestParam(name="filePath") String filePath) {
+        boolean isDeleted = fileService.deleteFile(filePath);
+        if(isDeleted==true) {
+        	return "ok";
+        }else {
+        	return "no";
         }
     }
 }

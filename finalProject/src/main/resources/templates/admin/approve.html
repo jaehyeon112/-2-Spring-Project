@@ -53,11 +53,15 @@ table th {
 				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp==0}">
 						<tr>
 							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])">시설명</td>
-							 <td th:text="${fac.facType}" >시설유형</td>
+							 <td th:if="${fac.facType}=='f01'" >아동 및 청소년</td>
+							 <td th:if="${fac.facType}=='f02'" >장애인</td>
+							 <td th:if="${fac.facType}=='f03'" >문화,체육</td>
+							 <td th:if="${fac.facType}=='f04'" >캠페인</td>
+							 <td th:if="${fac.facType}=='f05'" >보건의료</td>
+							 <td th:if="${fac.facType}=='f06'" >환경정리</td>
+							 <td th:if="${fac.facType}=='f07'" >기타</td>
 							 <td th:text="${fac.bizNum}" >사업자등록번호</td>
 							 <td th:text="${fac.facAddr}" >시설 주소</td>
-							 <!--<td th:text="${#dates.format(fac.facEstDate, 'yyyy년 MMM dd일')}" >설립일</td>  -->
-							 <td th:text="${fac.facEmail}" >이메일</td>
 							 <td th:text="${fac.repName}" >대표자명</td>
 							 <td th:text="${fac.repPhone}">대표번호</td>
 						</tr>
@@ -209,7 +213,7 @@ table th {
 				                		</tr>
 				                		<tr>
 				                			<th>모집 시작일</th>
-				                			<td id="start"></td>
+				                			<td id="startDate"></td>
 				                		</tr>
 				                		<tr>
 				                			<th>모집 종료일</th>
@@ -284,6 +288,21 @@ table th {
 			       .done(result => {
 			    	   result.facEstDate = dateFormat(result.facEstDate,'yyyy년 MM월 dd일');
 			    	   facN = result.facName;
+			    	   if(result.facType=='f01'){
+		    			   result.facType='아동 및 청소년'
+		    		   }else if(result.facType=='f02'){
+		    			   result.facType='장애인'
+		    		   }else if(result.facType=='f03'){
+		    			   result.facType='문화,체육'
+		    		   }else if(result.facType=='f04'){
+		    			   result.facType='캠페인'
+		    		   }else if(result.facType=='f05'){
+		    			   result.facType='보건의료'
+		    		   }else if(result.facType=='f06'){
+		    			   result.facType='환경정리'
+		    		   }else if(result.facType=='f07'){
+		    			   result.facType='기타'
+		    		   }
 			           $("#name").append(result.facName)
 			           $("#type").append(result.facType)
 			           $("#bizNum").append(result.bizNum)
@@ -314,6 +333,22 @@ table th {
 			       .done(result => {
 			    	   result.facEstDate = dateFormat(result.facEstDate,'yyyy년 MM월 dd일');
 			    	   facI = result.facId;
+		    		   if(result.facType=='f01'){
+		    			   result.facType='아동 및 청소년'
+		    		   }else if(result.facType=='f02'){
+		    			   result.facType='장애인'
+		    		   }else if(result.facType=='f03'){
+		    			   result.facType='문화,체육'
+		    		   }else if(result.facType=='f04'){
+		    			   result.facType='캠페인'
+		    		   }else if(result.facType=='f05'){
+		    			   result.facType='보건의료'
+		    		   }else if(result.facType=='f06'){
+		    			   result.facType='환경정리'
+		    		   }else if(result.facType=='f07'){
+		    			   result.facType='기타'
+		    		   }
+			    	   
 			           $("#name2").append(result.facName)
 			           $("#type2").append(result.facType)
 			           $("#bizNum2").append(result.bizNum)
@@ -342,16 +377,16 @@ table th {
 			        $("#title").empty();
 			        $("#intro").empty();
 			        $("#expect").empty();
-			        $("#start").empty();
+			        $("#startDate").empty();
 			        $("#end").empty();
 			        $("#goal").empty();
 			        $("#page").prop('href','')
 			        
 			    	$.ajax('../donInfo?donId='+id)
 			       .done(result => {
-			    	   if(result.intro.length>100||result.expEffect.length>100){
-			    		   result.intro = result.intro.substring(0,100)+' ...';
-			    		   result.expEffect = result.expEffect.substring(0,100)+' ...';
+			    	   if(result.intro.length>20||result.expEffect.length>20){
+			    		   result.intro = result.intro.substring(0,20)+' ...';
+			    		   result.expEffect = result.expEffect.substring(0,20)+' ...';
 			    	   }
 			    	   result.recPeriod = dateFormat(result.recPeriod,'yyyy년 MM월 dd일');
 			    	   result.endPeriod = dateFormat(result.endPeriod,'yyyy년 MM월 dd일');
@@ -362,7 +397,7 @@ table th {
 			           $("#title").append(result.title)
 			           $("#intro").append(result.intro)
 			           $("#expect").append(result.expEffect)
-			           $("#start").append(result.recPeriod)
+			           $("#startDate").append(result.recPeriod)
 			           $("#end").append(result.endPeriod)
 			           $("#goal").append(result.goalAmt+'원')
 			           $("#page").prop('href',`../donaDetail?id=${result.donId}&facId=${result.facId}`)

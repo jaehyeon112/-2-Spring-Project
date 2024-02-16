@@ -1,87 +1,106 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
-    <!-- 다른 필요한 CSS 파일들을 여기에 추가 -->
+  <!-- jQuery 라이브러리 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- jQuery Form Plugin 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+  
 </head>
 <body>
-<form>
+
+ <section layout:fragment="content" >
+ 
+ 사용자 아이디: <span sec:authentication="name"></span>
+
+
+
+<form name="donaForm" >
   <fieldset>
     <legend> Donation Regit Form </legend>
 
-    <div class="form-group">
-      <label for="inputFacName" class="form-label mt-4">시설단체명</label>
-      <input type="email" class="form-control" id="inputFacName" aria-describedby="emailHelp" placeholder="call session value">
-      <small id="emailHelp" class="form-text text-muted">회원 가입시 등록한 시설의 이름</small>
-    </div>
+    
     
     <div class="form-group">
-      <label for="categories" class="form-label mt-4"> 유형</label>
-      <select class="form-select" id="categories" >
-        <option th:each="category : ${categoryList}" th:text="${category.subCodeName}">1</option>
+      <label for="categories" class="form-label mt-4"><span style="color:red">*</span> 유형</label>
+      <select class="form-select" id="category" name="category">
+        <option th:each="category : ${categoryList}" th:value="${category.subCodeId}" th:text="${category.subCodeName}"></option>
       </select>
     </div>
     
     <div class="form-group">
-      <label for="sPeriod" class="form-label mt-4">기부모금기간 (DATE)</label>
-      <input type="date" class="form-control" id="sPeriod" placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" class="form-control" id="ePeriod" placeholder="기부모금종료기간 " autocomplete="off">
-    </div>
-
-    <div class="form-group">
-      <label for="formFile" class="form-label mt-4">이미지 첨부파일</label>
-      <input class="form-control" type="file" id="formFile">
+      <label for="title" class="form-label mt-4"><span style="color:red">*</span>주 제목</label>
+      <input type="text" name="title" class="form-control" id="title"  aria-describedby="titleHelp" placeholder="메인 제목" >
+      <small id="titleHelp" class="form-text text-muted">메인 화면에 보이는 제목입니다.</small>
     </div>
     
     <div class="form-group">
-      <label for="goalAmt" class="form-label mt-4">목표모금액</label>
-      <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
+      <label for="recPeriod" class="form-label mt-4"><span style="color:red">*</span>기부모금기간 (DATE)</label>
+      <input type="date" name="recPeriod" th:datetime="${#dates.format(recPeriod, 'yyyy-MM-dd')}" class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
+      <input type="date" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
     </div>
 
     <div class="form-group">
-      <label for="detailBiz" class="form-label mt-4">기부금사용계획(+)</label>
+      <label for="formFile" class="form-label mt-4"> <span style="color:red">*</span>이미지 첨부파일 </label>
+      <input name="file" class="form-control" type="file" id="formFile" >
+    </div>
+
+    
+    
+    <div class="form-group">
+      <label for="goalAmt" class="form-label mt-4"><span style="color:red">*</span>목표모금액</label>
+      <input name="goalAmt" type="text" class="form-control" id="goalAmt"  placeholder="(원)" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="usePlan" class="form-label mt-4"><span style="color:red">*</span>기부금사용계획(+)</label>
       <div id = "dynamicFields" class="mb-3">
       	<div class="input-group">
-	      <input type="text" class="form-control" id="detailBiz" placeholder="구체적사업내용" autocomplete="off"> 
-	      <input type="text" class="form-control" id="detailAmt" placeholder="구체적사업비" autocomplete="off">
+	      <input type="text" name="usePlan" class="form-control" id="usePlan"  placeholder="구체적사업내용" autocomplete="off"> 
+	      <input type="text" name="usePlanAmt" class="form-control" id="usePlanAmt"  placeholder="구체적사업비" autocomplete="off">
 	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="bTarget" class="form-label mt-4">사업대상</label>
-      <input type="text" class="form-control" id="bTarget" placeholder="기부금 사업대상 입력" autocomplete="off">
+      <label for="projTarget" class="form-label mt-4"><span style="color:red">*</span>사업대상</label>
+      <input type="text" name="projTarget" class="form-control" id="projTarget"  placeholder="기부금 사업대상 입력" autocomplete="off">
     </div>
 
 
     <div class="form-group">
-      <label for="expEffect" class="form-label mt-4">기대효과</label>
-      <textarea class="form-control" id="expEffect" rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
+      <label for="expEffect" class="form-label mt-4"><span style="color:red">*</span>기대효과</label>
+      <textarea name="expEffect" class="form-control" id="expEffect"  rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
     </div>
     
 
+
     <div class="form-group">
-	  <label for="article" class="form-label mt-4">소개글</label>
+	  <label for="intro" class="form-label mt-4">소개글</label>
 	    <div id="articleContainer" class="mb-3">
 	        <div class="input-group">
-	        	<input type="text" class="form-control" id="articleTitle" placeholder="제목" autocomplete="off">
+	        	<input type="text"  name="introTitle" class="form-control" id="introTitle" placeholder="제목" autocomplete="off">
 	        </div>
 	        <div class="input-group">
-	            <textarea class="form-control" id="article" rows="3"></textarea>
+	            <textarea name="intro" class="form-control" id="intro" rows="3"></textarea>
 	        </div>
 	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs('articleContainer')">+</button>
 	    </div>
 	</div>
     
 <div class="form-group">
-    <label for="relatedLink" class="form-label mt-4">관련링크(+)</label>
+    <label for="link" class="form-label mt-4">관련링크(+)</label>
     <div id="relatedLinkContainer" class="mb-3">
         <div class="input-group">
-            <input type="text" class="form-control" id="relatedLink" placeholder="null 가능" autocomplete="off">
+            <input type="text" class="form-control" id="link" name="link" placeholder="null 가능" autocomplete="off">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('relatedLinkContainer')">+</button>
         </div>
     </div>
@@ -92,7 +111,7 @@
     <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
     <div id="formFile2Container" class="mb-3">
         <div class="input-group">
-            <input class="form-control" type="file" id="formFile2">
+            <input class="form-control" type="file" id="formFile2" name="file">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
         </div>
     </div>
@@ -100,60 +119,151 @@
     
     
     <fieldset class="form-group">
-      <legend class="mt-4">필수 동의 </legend>
+      <legend class="mt-4"><span style="color:red">*</span>필수 동의 </legend>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">
+        <span style="color:red">*</span>
           유의사항을 읽었습니다.
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" >
         <label class="form-check-label" for="flexCheckChecked">
+        <span style="color:red">*</span>
          약관동의합니다.
         </label>
       </div>
     </fieldset>
 
     
-    <button type="submit" class="btn btn-primary">등록하기 </button>
+    <button type="button" class="btn btn-primary" onclick="submitForm()">등록하기 </button>
     
   </fieldset>
 </form>
 
 
-<script>
+<script th:inline="javascript">
+
+
+
+function submitForm() {
+	
+	console.log("버튼눌렀다!");
+    // 기본 제출 동작 방지
+    event.preventDefault();
+
+    // FormData 생성
+    let formData = new FormData(document.querySelector('form[name="donaForm"]'));
+
+    var facId = [[${#authentication.name}]];
+    console.log("facId는 ? :  " + facId);
+
+    
+    formData.append('facId', facId);
+    
+
+	 //파일 추가
+	let fileInputs = document.querySelectorAll('input[type="file"]');
+	    fileInputs.forEach(function(fileInput) {
+	        for (let i = 0; i < fileInput.files.length; i++) {
+	            formData.append('uploadfiles', fileInput.files[i]);
+	        }
+	    });
+
+    
+    console.log("formData는? : " + formData);
+
+ // FormData 
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+ 
+
+
+ // input 입력한거
+    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+        console.log(input.name + ': ' + input.value);
+    });
+ 
+
+    // FormData 서버전송 
+
+    $.ajax({
+        type: 'POST',
+        url: 'regitForm',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            
+            console.log("ajax 안에 success response " + response);
+
+            alert("등록성공!");
+            location.href = "donaMain";
+            return;
+        },
+        error: function(error) {
+           
+            console.error(error);
+        }
+    });
+}
+
+
+	//동적 
 	let dynamicFieldsCount = 1;
 	let articleContainerCount = 1;
 	let relatedLinkContainerCount = 1;
 	let formFile2ContainerCount = 1;
 	let count;
 	
+    const MAX_DYNAMIC_FIELDS = 2; // 동적사업내용 추가 최대 허용 개수
+    const MAX_ARTICLE_CONTAINERS = 1; // 소개글 추가 최대 허용 개수
+    const MAX_RELATED_LINK_CONTAINERS = 1; // 관련링크 추가 최대 허용 개수
+    const MAX_FORM_FILE_2_CONTAINERS = 1; // 추가 이미지 첨부파일 추가 최대 허용 개수
+
     function addInputs(type) {
-        
         let container = document.getElementById(type);
         if (!container) {
-            console.error("찾을 수 없는 CONTAINER: " + type);
+            console.error("컨테이너를 찾을 수 없습니다: " + type);
             return;
         }
 
         switch (type) {
-        case "dynamicFields":
-            count = dynamicFieldsCount++;
-            break;
-        case "articleContainer":
-            count = articleContainerCount++;
-            break;
-        case "relatedLinkContainer":
-            count = relatedLinkContainerCount++;
-            break;
-        case "formFile2Container":
-            count = formFile2ContainerCount++;
-            break;
-        default:
-            console.error("Invalid type: " + type);
-            return;
-    }
+            case "dynamicFields":
+                if (dynamicFieldsCount > MAX_DYNAMIC_FIELDS) {
+                    alert("동적사업내용 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = dynamicFieldsCount++;
+                break;
+            case "articleContainer":
+                if (articleContainerCount > MAX_ARTICLE_CONTAINERS) {
+                    alert("소개글 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = articleContainerCount++;
+                break;
+            case "relatedLinkContainer":
+                if (relatedLinkContainerCount > MAX_RELATED_LINK_CONTAINERS) {
+                    alert("관련링크 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = relatedLinkContainerCount++;
+                break;
+            case "formFile2Container":
+                if (formFile2ContainerCount > MAX_FORM_FILE_2_CONTAINERS) {
+                    alert("추가 이미지 첨부파일 추가 허용 개수를 초과했습니다.");
+                    return;
+                }
+                count = formFile2ContainerCount++;
+                break;
+            default:
+                console.error("유효하지 않은 타입입니다: " + type);
+                return;
+        }
 
         
         let newFields = document.createElement("div");
@@ -162,41 +272,49 @@
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="detailBiz${count}" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" id="detailAmt${count}" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlan" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlans[${count}].usePlanAmt" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "articleContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="articleTitle${count}" placeholder="제목" autocomplete="off">` +
+                `<input type="text" class="form-control" name="introTitles[${count}]" placeholder="제목" autocomplete="off">` +
                 `</div>` +
                 `<div class="input-group">` +
-                `<textarea class="form-control" id="article${count}" rows="3"></textarea>` +
+                `<textarea class="form-control" name="intros[${count}]" rows="3"></textarea>` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "relatedLinkContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" id="relatedLink${count}" placeholder="null 가능" autocomplete="off">` +
+                `<input type="text" class="form-control" name="links[${count}]" placeholder="null 가능" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input class="form-control" type="file" id="formFile2${count}">` +
+                `<input class="form-control" type="file" name="formFiles[${count}]" id="formFile2${count}">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         }
 
+
         container.appendChild(newFields);
     }
 
+
     function removeInputs(button, type) {
-        button.parentNode.remove();
+        //해당 컨테이너 모든 자식 삭제
+        let container = button.parentNode.parentNode;
+        container.parentNode.removeChild(container);
     }
+    
+   
 </script>
 
 
 
+
+</section>
 </body>

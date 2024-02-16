@@ -59,15 +59,20 @@
                            <li class="nav-item submenu dropdown">
                                 <a style="cursor: pointer" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">봉사</a>
                                 <ul class="dropdown-menu" >
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/}">일일봉사</a></li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/}">동아리</a></li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/}">시설봉사</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/daily}">일일봉사</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/Group}">동아리</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/FacilityVol}">시설봉사</a></li>
+                                    <li class="nav-item"><a class="nav-link" th:href="@{/meetings?volId=1}">일일봉사</a></li>
                                 </ul>
                             </li> 
-                            <li class="nav-item"><a class="nav-link" th:href="@{/}">기부</a></li>
+
+                            <li class="nav-item"><a class="nav-link" th:href="@{/donaMain}">기부</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
+
                     		<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">로그인</a></li>
-						    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
+						    <li th:if="${session.name}!=null" class="nav-item"><a class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
+						    <li sec:authorize="hasRole('M03')" class="nav-item"><a class="nav-link" th:href="@{/facilityMyPage}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
@@ -83,9 +88,10 @@
         </header>
         <!--================Header Area =================-->
           <section class="accomodation_area section_gap">
+         	 	
          	 <div class="container">
-         	 
-				<section layout:fragment="content"></section>
+				<section layout:fragment="content">
+				</section>
        		 </div>
 		</section>
 		<div sec:authorize="isAuthenticated()">

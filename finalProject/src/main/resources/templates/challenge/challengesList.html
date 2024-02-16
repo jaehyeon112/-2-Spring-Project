@@ -21,6 +21,25 @@
 	color: white;
 	cursor: pointer;
 }
+.gallery_img {
+    position: relative;
+    display: inline-block;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.bi-heart {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.bi-heart.filled path {
+    fill: red;
+}
+
 </style>
 </head>
 <body>
@@ -30,25 +49,30 @@
 			<section class="blog_area">
 				<div class="container">
 					<div class="row">
-					<th:block th:each="list:${challengesList}">
-					
+					<th:block th:each="list: ${challengesList}">
+					<img th:each="file : ${list.file}" th:src="${file.filePath}">
 						<div class="col-lg-8">
 							<div class="blog_left_sidebar">
 								
-								
 									<div class="col-md-4 gallery_item">
-										<div class="gallery_img">
-											<img th:src="${list.filePath}" alt="post">
+										<div >
+										
+											 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"  onclick="toggleHeartColor()">
+											 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/></svg> 
 											<div class="hover">
 												<a class="light"><i class="fa fa-expand"></i></a>
 											</div>
 										</div>
 										<p th:text="${list.memId}"></p>
+										<div class="getChalId" data-boardId="[[${list.chalDetId}]]"></div>
 									</div>
 
-								
-
-
+								<!-- 
+										<img th:if="{list != null and not #lists.isEmpty(list) and list.filePath != null }" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" th:src="${list.filePath}" alt="post">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+</svg>
+ -->
 							</div>
 						</div>
 						
@@ -60,7 +84,7 @@
 									<aside class="single_sidebar_widget popular_post_widget">
 										<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
 										<div class="media post_item">
-											<img th:if="${list != null and !list.isEmpty()}" th:src="${list[0].filePath}" alt="post">
+											<img th:if="${session.FileList != null and !session.FileList.isEmpty()}"  th:src="${session.FileList[0].filePath}" alt="post">
 
 											<div class="media-body">
 												<h3>How to</h3>
@@ -124,6 +148,27 @@
 			
 		
 <script>
+/* function toggleHeartColor() {
+    var heartIcon = document.querySelector('.bi-heart');
+    heartIcon.classList.toggle('filled');
+    
+    var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
+    console.log('boardId:', boardId); 
+    $.ajax({
+        type: 'POST',
+        url: 'challengeLike',
+        data: {
+        	boardId: boardId
+        },
+        success: function(result) {
+            console.log(result);
+            
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+} */
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
 			$('#myModal').on('show.bs.modal', function(e) {
@@ -186,10 +231,10 @@
 			
 			});
 
-			// 모달이 숨겨질 때 이벤트 처리
+			/* // 모달이 숨겨질 때 이벤트 처리
 			$('#myModal').on('hidden.bs.modal', function(e) {
 				// 모달이 숨겨질 때 실행할 코드
-			});
+			}); */
 		});
 	</script>
 

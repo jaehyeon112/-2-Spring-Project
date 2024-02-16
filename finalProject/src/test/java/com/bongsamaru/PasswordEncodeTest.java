@@ -1,6 +1,5 @@
 package com.bongsamaru;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -12,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.bongsamaru.common.VO.SubCodeVO;
 import com.bongsamaru.common.service.CommonService;
+import com.bongsamaru.securing.EncryptService;
 import com.bongsamaru.user.service.UserService;
 
 @SpringBootTest
@@ -23,7 +23,10 @@ public class PasswordEncodeTest {
 	@Autowired
 	CommonService commonService;
 	
-	@Test
+	@Autowired
+	EncryptService enc;
+	
+	//@Test
 	public void 결과값보기() {
 	    String main = "p";
 	    List<SubCodeVO> list = commonService.selectSubCode(main);
@@ -38,4 +41,22 @@ public class PasswordEncodeTest {
 			System.out.println(result);
 			assertTrue(encoder.matches("1234", result));
 		}
+		
+	@Test
+	public void 테스트() {
+		String vo = "1234561234567";
+		System.out.println(vo + "주민번호는?");
+		String ssn = vo;
+			String encSsn = enc.encryptSsn(ssn);
+			System.out.println(encSsn + "!!!");
+		
+			byte[] encSsn2 = enc.stringToByteArray(encSsn);
+			// 암호화 된것
+			System.out.println();
+			String encSs3 = enc.byteArrayToString(encSsn2);
+			encSsn = enc.decryptSsn(encSs3);
+			
+			// 복호화 된것
+			System.out.println(encSsn);
+	}
 }

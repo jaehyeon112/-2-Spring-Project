@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<style>
+.box-container{
+   
+    }
+</style>
+</head>
+<body>
+<!-- 마이페이지 사이드바 -->
+<div th:fragment="side">
+  <div class="card" style="background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;">
+    <div class="card-body">
+      <h1>봉사</h1>
+      <hr>
+      <div id="myList"> 
+        <h4 style="cursor: pointer;" id="/daily">일일봉사</h4>
+        <h4 style="cursor: pointer;" id="/Group">동아리</h4>
+        <h4 style="cursor: pointer;" id="/FacilityVol">시설봉사</h4>
+      </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    $('#myList h4').click(function (e) {
+        var href = $(this).attr('id'); // 클릭한 요소의 id 속성 값을 가져옵니다.
+        window.location.href = href; // 해당 경로로 이동합니다.
+    });
+    
+    $(function () {
+        // 현재 페이지의 URL을 가져옵니다.
+        var currentUrl = window.location.href;
+
+        // 리스트 항목을 순회하며 현재 페이지와 연관된 항목을 찾습니다.
+        $('#myList h4').each(function () {
+            var href = $(this).attr('id');
+            
+            // 현재 페이지와 id 속성 값이 일치하는 경우 해당 항목에 스타일을 적용합니다.
+            if (currentUrl.indexOf(href) > -1) {
+                $(this).css({
+                    'color': 'black', // 글씨 색상을 파란색으로 변경
+                    'font-size' : '24px',
+                    'font-weight': 'bold' // 글씨를 더 진하게 변경
+                });
+            } else {
+                // 다른 항목들은 기본 스타일로 설정합니다.
+                $(this).css({
+                    'color': 'gray', // 기본 글씨 색상으로
+                    'font-weight': '' // 기본 글씨 두께로
+                });
+            }
+        });
+    });
+</script>
+</div>
+</body>
+</html>

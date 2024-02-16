@@ -2,10 +2,43 @@ package com.bongsamaru.meeting.service;
 
 import java.util.List;
 
+import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.FreeBoardVO;
+import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingService {
 	public VolunteerVO meetingInfo(Integer volId);
-	public List<VolActVO> meetingVolActList(Integer volId);
+	public int withdrawalMeeting(VolMemVO vo);
+	public int approveMeeting(VolMemVO vo);
+	public int meetingVolActListCnt(Integer volId);
+	public List<VolActVO> meetingVolActListPaging(PageVO pageVO);
+	public List<VolMemVO> meetingMemList(Integer volId);
+	public List<VolMemVO> MemVolActList(Integer volId,String memId);
+	public List<VolMemVO> volCnt(Integer volId);
+	public int volActMemCnt(Integer volActId);
+	public List<VolActVO> volActReviewListPaging(PageVO pageVO);
+	public int volActReviewListCnt(Integer volId);
+	public int findMember(Integer volId,String memId);
+	public String findFile(String code,Integer codeNo);
+	public int insertBoard(FreeBoardVO vo);
+	public int findBoardNo();
+	public int findReviewNo();
+	public FreeBoardVO freeBoardInfo(FreeBoardVO vo);
+	public int updateFreeBoard(FreeBoardVO vo);
+	public int deleteFreeBoard(Integer volId,Integer boardNo);
+	public VolActVO volActInfo(VolActVO vo);
+	public int insertReview(VolActReviewVO vo);
+	public VolActReviewVO ReviewInfo(VolActReviewVO vo);
+	public int delReview(Integer reviewId);
+	public VolActVO volActBoardInfo(Integer volActId);
+	public int insertVolAct(VolActVO vo);
+	public int delVolActBoard(Integer volActId);
+	public int findVolActNo();
+	public List<FreeBoardVO> getBoardList(PageVO pageVO);
+	public int getBoardListCnt(Integer volId);
 }

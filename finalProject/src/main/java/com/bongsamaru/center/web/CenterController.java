@@ -54,9 +54,9 @@ public class CenterController {
 	            
 	            
 	            if(searchKeyword == null) {
-	            	vo = new PageVO(total, startPage, endPage, category);	            	
+	            	vo = new PageVO(total, startPage, endPage, category ,10);	            	
 	            }else {
-	            	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+	            	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
 	            }
 	            log.info(startPage);
 	            log.info(endPage);
@@ -93,9 +93,9 @@ public class CenterController {
          String category = "b01";        
          
          if(searchKeyword == null) {
-         	vo = new PageVO(total, startPage, endPage, category);	            	
+         	vo = new PageVO(total, startPage, endPage, category, 10);	            	
          }else {
-         	vo = new PageVO(total, startPage, endPage, category,searchKeyword);
+         	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
          }
 		 List<BoardVO> list = centerService.getNoticeList(vo);
 		 model.addAttribute("searchKeyword",searchKeyword);

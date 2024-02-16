@@ -24,23 +24,25 @@
 
 
 
-<div>
-<select id="selRegion" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
-<option value="">==지역==</option>
-    <option th:each="region : ${facilityList}"  th:value="${region.facZip2}" th:text="${region.region}"></option>
-</select>
-<select id= "selFacType" th:field="*{facilityList}" style="weight:100;"onchange="filterFacilities()">
-<option value="">==봉사유형==</option>
-<option th:each="facility : ${uniqueFacTypes}" th:value="${facility}" th:text="${facility}"></option>
-</select>
-</div>
+		<div>
+		<select id="selRegion" style="weight:100;"onchange="filterFacilities()">
+			<option value="">==지역==</option>
+		    <option th:each="sub : ${subZ}"  th:value="${sub.subCode}" th:text="${sub.value}" th:selected="${#strings.equals(sub.subCode, param.facZip2)}"></option>
+		</select>
+		
+		<select id= "selFacType"  style="weight:100;"onchange="filterFacilities()">
+			<option value="">==봉사유형==</option>
+			<option th:each="subf : ${subF}" th:value="${subf.subCode}" th:text="${subf.value}" th:selected="${#strings.equals(subf.subCode, param.facType)}"></option>
+		</select>
+		</div>
 
 			<div class="row mb_30">
 				<th:block th:each="facility:${facilityList}" id="filteredFacilities">
 					<div class="col-lg-4 col-md-6">
 						<div class="single-recent-blog-post">
 							<div class="thumb">
-								<img class="img-fluid" src="../image/초록개구리.png" alt="post">
+								<!-- <img class="img-fluid" src="../image/초록개구리.png" alt="post"> -->
+								<img th:src="${facility.filePath}" alt="">
 							<!-- 	 <a class="btn theme_btn button_hover" th:href="@{/facilityInfo/{facId}(facId=${facility.facId})}"></a> -->
 								<a class="btn theme_btn button_hover" th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
 										th:text="${facility.facName}"></a>
@@ -67,17 +69,18 @@
 
 <nav class="blog-pagination justify-content-center d-flex">
 				<ul class="pagination">
-					<li class="page-item"><a href="#" class="page-link"
+					<li class="page-item"><a th:href="@{/facilityList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
 						aria-label="Previous"> <span aria-hidden="true"> <span
 								class="lnr lnr-chevron-left"></span>
 						</span>
 					</a></li>
-					<li class="page-item"><a href="#" class="page-link">01</a></li>
-					<li class="page-item active"><a href="#" class="page-link">02</a></li>
-					<li class="page-item"><a href="#" class="page-link">03</a></li>
-					<li class="page-item"><a href="#" class="page-link">04</a></li>
-					<li class="page-item"><a href="#" class="page-link">05</a></li>
-					<li class="page-item"><a href="#" class="page-link"
+					
+					<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/facilityList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
+			               th:text="${pageNum}"></a>
+			        </li>
+					
+					<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
 						aria-label="Next"> <span aria-hidden="true"> <span
 								class="lnr lnr-chevron-right"></span>
 						</span>
@@ -93,32 +96,6 @@
         let selectedRegion = $('#selRegion').val();
 		let selectedFacType = $('#selFacType').val();
 		location.href=`facilityList?facZip2=${selectedRegion}&facType=${selectedFacType}`
-		
-		/* alert('실행')
-        $.ajax({
-            type:'GET',
-            url:'/facilityFilter',
-            data: { facZip2: selectedRegion, facType: selectedFacType },
-            success: function (data) {
-            	
-            	console.log("data",data)
-               alert('성공');
-				
-            }, 
-       
-            error: function () {
-                console.error('Error fetching filtered facilities');
-            }
-        }) */
-        /* .done(result=>{
-        	
-        	console.log("결과" ,result)
-        	
-        }) */
-			
-		
-		
-		
     }
 
   

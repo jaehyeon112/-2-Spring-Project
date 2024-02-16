@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.challenges.mapper.ChallengeMapper;
 import com.bongsamaru.common.VO.ChallengesVO;
+import com.bongsamaru.common.VO.LikeVO;
+import com.bongsamaru.file.service.FilesVO;
 @Service
 public class ChallengesServiceImpl implements ChallengesService{
 	
@@ -14,8 +16,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	ChallengeMapper challengeMapper;
 	
 	@Override
-	public List<ChallengesVO> getChallengeList() {
-		return challengeMapper.getChallengeList();
+	public List<ChallengesVO> getChallengeList(ChallengesVO challengesVO) {
+		return challengeMapper.getChallengeList( challengesVO);
 	}
 	
 	@Override
@@ -24,8 +26,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	}
 
 	@Override
-	public List<ChallengesVO> getFileList(Integer codeNo, String code, Integer chalId, Integer chalDetId) {
-		return challengeMapper.getFileList(codeNo, code,chalId, chalDetId);
+	public List<FilesVO> getFileList(Integer codeNo, String code) {
+		return challengeMapper.getFileList(codeNo, code);
 	}
 
 	@Override
@@ -61,6 +63,27 @@ public class ChallengesServiceImpl implements ChallengesService{
 		int result = challengeMapper.getChallengesDel(chalDetId);
 		return result == 1 ? true : false;
 		
+	}
+
+	@Override
+	public List<LikeVO> getChallengeLike(LikeVO likeVO) {
+		return challengeMapper.getChallengeLike( likeVO);
+	}
+
+	@Override
+	public int challengesLikeInsert(LikeVO likeVO) {
+		int result=challengeMapper.challengesLikeInsert(likeVO);
+		if(result ==1) {
+			return likeVO.getLikeId();
+		}else {
+			return -1;
+		}
+	}
+
+	@Override
+	public int deleteChallengeLike(Integer boardId) {
+		
+		return challengeMapper.deleteChallengeLike(boardId);
 	}
 
 

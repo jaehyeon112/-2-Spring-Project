@@ -7,4 +7,5 @@ public class LikeVO {
 	private Integer likeId;
 	private String memId;
 	private Integer boardId;
+	private String category;
 }
