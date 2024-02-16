@@ -1,6 +1,7 @@
 package com.bongsamaru.admin.web;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 
+
 /**
  * 관리자페이지
  * @author 서영희
@@ -41,6 +43,7 @@ import com.bongsamaru.mypage.service.DonledgerVO;
  */
 @Component
 @Controller
+@lombok.extern.log4j.Log4j2
 public class UserController {
 	@Autowired
 	AdminService userService;
@@ -104,6 +107,7 @@ public class UserController {
 		List<VolunteerVO> facVol = userService.facVolunteerList();
 		model.addAttribute("facVol", facVol);
 		
+		log.info(facVol);	//sysout 대신에 더 상세하게 어디서 적히는지 알 수 있음
 //		List<AlertVO> alert = userService.alertList();
 //		model.addAttribute("alert", alert);
 		return "admin/adminMain";
