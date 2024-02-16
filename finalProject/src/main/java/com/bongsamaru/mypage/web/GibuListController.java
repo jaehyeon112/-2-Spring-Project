@@ -16,7 +16,9 @@ import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.user.service.UserDetailVO;
 
 /**
- * Handles requests for the application home page.
+ * 기부 내역 볼수있는 페이지
+ * @author 나채현
+ *
  */
 @Controller
 public class GibuListController {
@@ -24,6 +26,11 @@ public class GibuListController {
 	 @Autowired
 	 MypageService mypageService;
 	
+	 /**
+	  * 기부 내역 리스트 출력
+	  * @param model
+	  * @return my/gibulist
+	  */
 	 @GetMapping("/gibuList")
 	 public String myPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -29,16 +29,16 @@
 			       acct_num,
 			       bank_name,
 			       mem_stat
-			 FROM  member a right join files b
+			 FROM  member a LEFT JOIN files b
 			 ON    a.mem_id = b.code_user
-			 WHERE a.mem_id = #{memId}
 			 AND b.code = 'p01'
+			 WHERE a.mem_id = #{memId}
 	</select>
 	<!-- 기부 내역 조회 -->
 	<select id="getGibuList" resultType="DonledgerVO">
 			SELECT 
-					don_led_id,
 					a.don_id,
+					don_led_id,
 					don_amt,
 					pay_method,
 					pay_date,
@@ -47,10 +47,12 @@
 					anon_check,
 					mem_id,
 					title
-			FROM don_ledger a LEFT JOIN donation b
-			ON a.don_id = b.don_id
+			
+			FROM don_ledger a 
+			LEFT JOIN donation b ON a.don_id = b.don_id
+			
 			WHERE mem_id = #{memId}
-			ORDER BY don_led_id
+			ORDER BY don_led_id DESC
 	</select>
 	<!-- 기부 횟수 조회 -->
 	<select id="getGibuCount" resultType="Integer">
@@ -76,10 +78,12 @@
 					  ,Mem_id
 					  ,temp_code
 					  ,temp_change
-					  )values(
+					  )
+			   values(
 						HEARTTEMP_SEQ.nextVal, 
 						#{memId}
 						,#{tempCode}
-						,#{tempChange})
+						,#{tempChange}
+					 )
 	</insert>
 </mapper>
