@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.InterestVO;
 import com.bongsamaru.feed.service.FeedService;
 import com.bongsamaru.feed.service.FeedVO;
 import com.bongsamaru.user.service.UserDetailVO;
+
+import groovyjarjarpicocli.CommandLine.Parameters;
 
 /**
  * 내 피드와 상대방 피드, 좋아요 페이지
@@ -91,11 +94,13 @@ public class FeedController {
 	  */
 	 @GetMapping("/feed/{memId}/{boardId}")
 	 public String feedDetail(@PathVariable String memId,@PathVariable Integer boardId, Model model) {
-
+		 
 		 List<FeedVO> list = feedService.getFeedDetail(memId, boardId);
 		 List<FeedVO> list1 = feedService.getFeedList(memId);
+		 List<CommentsVO> list2 = feedService.getFeedCommentsList(boardId);
 		 model.addAttribute("list", list);
 		 model.addAttribute("getMem", list1);
+		 model.addAttribute("CommentList", list2);
 		 return "feed/feedDetail";
 	 }
 	 

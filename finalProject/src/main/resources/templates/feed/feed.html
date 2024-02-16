@@ -59,16 +59,9 @@
 				<hr>
 				<div class="image-container" style="display: flex; flex-wrap: wrap;">
 				  <th:block th:each="list, iter : ${feedList}">
-				    <div th:if="${iter.index} &lt; 9" style="display: flex; flex-direction: column; width: calc(33.33% - 10px); margin-right: 10px; margin-bottom: 10px;">
+				    <div th:if="${iter.index}" style="display: flex; flex-direction: column; width: calc(33.33% - 10px); margin-right: 10px; margin-bottom: 10px;">
 				      <span>
 					    <img th:onclick="feedDetail([[${item.memId}]],[[${list.boardId}]])" style="width: 200px; height: 200px;" alt="" class="img_thumb" th:src="@{${list.filePath}}">
-				        <span th:onclick="likes([[${list.boardId}]])">좋아요</span>
-				      </span>
-				      <p th:text="${list.title}"></p>
-				    </div>
-				    <div th:if="${iter.index} >= 9" style="display: none; flex-direction: column; width: calc(33.33% - 10px); margin-right: 10px; margin-bottom: 10px;">
-				      <span>
-				        <img style="width: 200px; height: 200px;" alt="" class="img_thumb" th:src="@{${list.filePath}}">
 				        <span th:onclick="likes([[${list.boardId}]])">좋아요</span>
 				      </span>
 				      <p th:text="${list.title}"></p>
@@ -78,7 +71,6 @@
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				</div>
-				<button id="moreButton" onclick="showMoreFeeds()">더보기</button>
 				<h5 th:if="${feedList.size == 0}" style="margin-top: 250px; color: gray;">아직 작성 된 피드가 없어요. 🌱</h5>
 			</div>
 		</div>
@@ -117,7 +109,7 @@ function feedDetail(memId,boardId){
 	window.location.href = "/feed/" + memId + "/" + boardId;
 }
 
-var visibleFeeds = 9; // 현재 보이는 피드의 수
+/* var visibleFeeds = 9; // 현재 보이는 피드의 수
 
 function showMoreFeeds() {
   var remainingFeeds = document.querySelectorAll('.image-container > div:nth-child(n+' + (visibleFeeds + 1) + '):nth-child(-n+' + (visibleFeeds + 9) + ')');
@@ -128,7 +120,7 @@ function showMoreFeeds() {
   if (visibleFeeds >= document.querySelectorAll('.image-container > div').length) {
     document.getElementById('moreButton').style.display = 'none'; // 모든 피드가 보이면 더보기 버튼 감추기
   }
-}
+} */
 	</script>
 	</section>
 </body>

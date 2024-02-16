@@ -61,28 +61,15 @@
 				<a data-tiara-layer="profile_img" data-tiara-action-name="프로필수정_클릭" class="link_thumb" href="/pass">설정</a>
 			<div>
 					<input type="button" class="btn btn-seccess" value="기부하러가기">
-					<div>기부내역</div>
-					<div class="contenttext">
-						<div>현재까지 기부횟수 <span>[[${gibuCount}]]회</span></div>
-						<div>현재까지 기부하신 금액 <span th:text="${sumAmt != null ? #numbers.formatInteger(sumAmt, 3, 'COMMA') : '0'}"></span>원<span></span></div>
-					</div>
-					<div class="a-tag-container">
+					<div class="a-tag-container" style="margin-bottom: 50px; margin-top: 50px;">
 					  <a href="/gibuList" class="a-tag">기부내역</a>
 					  <a href="/" class="a-tag">기부영수증</a>
 					  <a href="/" class="a-tag">활동증서</a>
 					</div>
 			</div>
-					<div>봉사내역</div>
-					<div class="contenttext">
-						<div>일일모임 <span>참여횟수 회</span></div>
-						<div>정기모임 <span>참여횟수 회</span></div>
-						<div>봉사시설(단체) <span>참여횟수 회</span></div>
-					</div>
 					<div class="a-tag-container">
 					  <a href="/dayList" class="a-tag">일일모임</a>
-					  <span>|</span>
 					  <a href="/clubList" class="a-tag">동아리</a>
-					  <span>|</span>
 					  <a href="/facilityList" class="a-tag">봉사시설</a>
 					</div>
 			</div>
