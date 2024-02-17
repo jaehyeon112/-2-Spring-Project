@@ -4,95 +4,183 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>봉사완료후</title>
+<title>시설마이페이지 - 봉사완료리스트</title>
+ <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+ <style>
+ button:hover,
+ button:focus {
+    background-color: #689f38; 
+    color: white;
+ }
+ </style>
 </head>
 <body>
  <section layout:fragment="content">
  <div class="row">
- <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
+ 	<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
     <div class="col-md-10 main-content">
-	<div class="row hotel_booking_table">
-					<div class="col-md-3">
-                        
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                       
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">봉사제목</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">봉사내용</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">참여자승인</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">후기작성</p>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">연장신청</p>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <h2>기부신청<br>진행상황</h2>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                       
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                     <p  th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}" ></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <p th:text="${#dates.format(dona.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona.endPeriod,'yyyy-MM-dd')}"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                       <p th:text="${dona.donRegApp}"></p>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <button>후기작성</button>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="book_tabel_item">
-                                      <a>연장신청</a>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                          
-                        </div>
-                    </div>
-                </div>
-</div>
+		<div class="row justify-content-center hotel_booking_table">
+        
+        		<div class="row" style="text-align:center;">
+            		<div class="col-md-2">
+                		<div class="book_tabel_item">
+                    	<p style="color:black; font-size:20px">봉사제목</p>
+                		</div>
+            		</div>
+        			<div class="col-md-4">
+            			<div class="book_tabel_item">
+                		<p style="color:black; font-size:20px">봉사내용</p>
+            			</div>
+          			</div>
+        			<div class="col-md-2">
+            			<div class="book_tabel_item">
+                		<p style="color:black; font-size:20px">봉사일시</p>
+		            	</div>
+        			</div>
+       				<div class="col-md-2">
+           				<div class="book_tabel_item">
+              			<p style="color:black; font-size:20px" >참여자</p>
+           				</div>
+       				</div>
+       				<div class="col-md-2">
+           				<div class="book_tabel_item">
+              			<p style="color:black; font-size:20px" >후기작성</p>
+       	    			</div>
+       				</div>
+       
+   				   <th:block th:each="list: ${volList}">
+			       <div class="col-md-2">
+			           <div class="book_tabel_item">
+			            <p style="color:black; font-size:15px" th:text="${list.title}"></p>
+			           </div>
+			       </div>
+			       <div class="col-md-4">
+			           <div class="book_tabel_item box">
+			             <p class="content" style="color:black; font-size:15px"th:text="${list.content}"></p>
+			           </div>
+			       </div>
+			       <div class="col-md-2">
+			           <div class="book_tabel_item">
+			              <p style="color:black; font-size:15px"th:text="${#dates.format(list.volDate, 'yyyy-MM-dd')}"></p>
+			              
+			           </div>
+			       </div>
+			       <div class="col-md-2">
+			           <div class="book_tabel_item">
+			            
+					<p style="color:black; font-size:15px">
+			    	 <a onclick="showListLink()" data-toggle="modal" data-target="#myModal" th:data-vol-act-id="${list.volActId}">참여자목록</a></p>
+			          </div>
+			      </div>
+			      
+			      <div class="col-md-2">
+                      <div class="book_tabel_item">
+                       <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
+                         
+                       <button class="btn" >후기작성</button>
+                      </div>
+                  </div>
+			         </th:block>
+	
+
+				</div>
+				
+<!-- 시설이 신청자의 등록내용을 보기위한 모달 -->			
+	
+    <div class="modal" tabindex="-1" id="myModal">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">참여자내역보기</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+			    </div>
+			<div class="modal-body">
+				<div class="form-group">
+				<table class="table">
+				<thead>
+				<tr>
+				<th>참여자이름</th>
+				<th>태도불량</th>
+				<th>성실봉사자</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				<td id="showTableBody"></td>
+				<td></td>
+				<td></td>
+				</tr>
+				</tbody>
+				</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		    </div>
+	  </div>
+  </div>				
+				
+				
+				
+				
+				
+				
+				
+					       		         
+<nav class="blog-pagination justify-content-center d-flex">
+	<ul class="pagination">
+		<li class="page-item">
+			<a th:href="@{/fac/volFinish(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
+				aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
+		<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+            <a class="page-link" th:href="@{/fac/volFinish(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"th:text="${pageNum}"></a>
+        </li>
+		<li class="page-item"><a th:href="@{/fac/volFinish(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
+			aria-label="Next"><span aria-hidden="true"><span class="lnr lnr-chevron-right"></span>
+			</span>
+		</a></li>
+	</ul>
+</nav>	
+		</div>
+	</div>
 </div>
 </section>
+<script >
+$(document).ready(function() {
+    // showListLink 함수 정의
+    function showListLink() {
+        // 클릭된 요소에서 vol-act-id 가져오기
+        var volActId = $(this).data('vol-act-id');
+        
+        // 모달 열기
+        $('#myModal').modal('show');
+
+        // 참여자 목록 초기화
+        $("#showTableBody").empty();
+
+        // Ajax를 통해 데이터 가져오기
+        $.ajax({
+            url: '/VolAppList?volActId=' + volActId,
+            type: 'GET',
+            success: function(result) {
+                alert('성공');
+                console.log(result);
+                for (var i = 0; i < result.length; i++) {
+                    $("#showTableBody").append(
+                          result[i].memId 
+                    );
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    // showListLink 함수를 클릭 이벤트에 연결
+    $(document).on('click', '#showListLink', showListLink);
+});
+</script>
 </body>
 </html>

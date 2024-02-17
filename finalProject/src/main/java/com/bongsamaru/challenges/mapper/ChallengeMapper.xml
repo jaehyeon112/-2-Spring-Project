@@ -55,6 +55,7 @@ SELECT  CHAL_ID,
         EXP_IMPACT,
         ACTION_REASON,
         REG_DATE,
+        END_DATE,
         PART_METHOD1,
         PART_METHOD2
   FROM  CHALLENGE
@@ -123,6 +124,7 @@ SELECT  C.CHAL_DET_ID,
 			 EXP_IMPACT,
 			 ACTION_REASON,
 			 REG_DATE,
+			 END_DATE,
 			 PART_METHOD1,
 			 PART_METHOD2)
 		 VALUES
@@ -133,6 +135,7 @@ SELECT  C.CHAL_DET_ID,
 			 #{expImpact},
 			 #{actionReason},
 			 sysdate,
+			 #{endDate},
 			 #{partMethod1},
 			 #{partMethod2})
  
@@ -211,7 +214,7 @@ INSERT INTO REPORT(REP_ID,
 				   REP_REASON,
 				   REQ_CODE)
 			VALUES(REPORT_SEQ.NEXTVAL,
-				   #{category},
+				   'r01',
 				   #{memId},
 				   sysdate,
 				   #{categoryNo},

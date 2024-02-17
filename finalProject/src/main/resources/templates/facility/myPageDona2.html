@@ -5,14 +5,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>기부 등록</title>
+ <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
 <style>
 
 </style>
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row">
+<div class="row" style="text-align:center;">
 <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>	
  <div class="col-md-10 main-content" th:if="${#authentication.principal.userVO.donApp} == 0">
 

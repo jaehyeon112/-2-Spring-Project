@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -87,6 +88,10 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getVolunteerAppList(volActId);
 	}
 	
+	@Override
+	public List<VolActVO> getVolunteerFinishList(PageVO pageVO, String facId) {
+		return mapper.getVolunteerFinishList(pageVO,facId);
+	}
 	//시설이 회원봉사 승인하면 업데이트
 	@Override
 	public int volAppUpdate(Integer volActId, String memId) {
@@ -114,6 +119,18 @@ public class FacilityServiceImpl implements FacilityService {
 		public int getFVolCategoryCount(String facId) {
 			
 			return mapper.getFVolCategoryCount(facId);
+		}
+
+		@Override
+		public int getFinishVolCategoryCount(String facId) {
+			return mapper.getFinishVolCategoryCount(facId);
+		}
+
+		//마음온도
+		@Override
+		public int insertVolHeart(LikeVO likeVO) {
+			
+			return mapper.insertVolHeart(likeVO);
 		}
 
 

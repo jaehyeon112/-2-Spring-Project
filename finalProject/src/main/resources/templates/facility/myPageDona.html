@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-
-	
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설마이페이지</title>
-
-
+ <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+ <style>
+ .btn:hover,
+ .btn:focus {
+    background-color: #689f38; 
+    color: white;
+ }
+</style>
 </head>
 <body>
 	<section layout:fragment="content"  class="d-flex">
-	<div class="row">
+	<div class="row" >
  		<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
   	    <div class="col-md-10 main-content">
 		                
                 <div class="row hotel_booking_table">
-                <div class="col-md-3">
-                    
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
+                
+                        <div class="row" style="text-align:center;">
                        
-                            <div class="row">
+                           
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p style="color:black; font-size:20px">기부제목</p>
@@ -47,21 +48,14 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:20px">후기작성</p>
+                                       <p style="color:black; font-size:20px">기간연장</p>
                                        
                                     </div>
                                 </div>
-                            </div>
+                        
                           
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h2>진행된<br>기부리스트</h2>
-                    </div>
-                    
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                            <div class="row">
+                  
+                 
                             
                             <th:block th:each="dona0:${donaList0}">
                             
@@ -91,15 +85,14 @@
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
                                      <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
-                                      <a  class="book_now_btn button_hover" href="#" th:onclick="openExtModal([[${dona0.donId}]])">연장하기</a>
+                                       
+                                      <a href="#" th:onclick="openExtModal([[${dona0.donId}]])"><button class="btn" >연장하기</button></a>
                                     </div>
                                 </div>
                                 </th:block>   
-                            </div>
-                        </div>
-                    </div>
+                       
                 </div>
-                
+                </div>
                 
                 <br>
                 <br>
@@ -107,13 +100,11 @@
                 <br>
                 
                 <div class="row hotel_booking_table">
-                <div class="col-md-3">
-                        
-                    </div>
-                    <div class="col-md-9">
+                
+                    
                         <div class="boking_table">
                        
-                            <div class="row">
+                         <div class="row" style="text-align:center;">
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p style="color:black; font-size:20px">기부제목</p>
@@ -138,21 +129,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:20px">연장하기</p>
+                                       <p style="color:black; font-size:20px">후기작성</p>
                                        
                                     </div>
                                 </div>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h2>완료된<br>기부리스트</h2>
-                    </div>
-                    
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                            <div class="row">
+                        
                             <th:block th:each="dona:${donaList1}">
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
@@ -176,18 +157,21 @@
                                      
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                            
+                           
+                         <div class="col-md-2">
                                     <div class="book_tabel_item">
+                                     <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
+                                        <a href="/reviewform"><button class="btn" >후기작성</button></a>
                                       
-                                        <a class="book_now_btn button_hover" href="/reviewform">후기작성</a>
                                     </div>
                                 </div>
-                                </th:block>   
-                            </div>
-                        </div>
-                    </div>
+                    </th:block> 
                 </div>
             </div>
+            </div>
+          </div>  
+            
             
      <div class="modal fade" id="extendDeadlineModal" tabindex="-1" role="dialog" aria-labelledby="extendDeadlineModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bongsamaru.bongsa.service.BongsaService;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.SubCodeVO;
 import com.bongsamaru.common.VO.VolActVO;
@@ -137,14 +138,14 @@ public class facilityController {
 	
 	//시설 마이페이지	
 	//마이페이지 (기부)
-	@GetMapping("/facilityMyPage")
+	@GetMapping("/fac")
 	public String getFacilityMyPage(Model model,Integer recStat,Principal principal) {
 		
 		return "facility/myPageDona2";
 	}
 	
 	
-	  @GetMapping("/facilityMyPage/donaInfo")
+	  @GetMapping("/fac/donaInfo")
 	   public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
 	      
 	      List<DonaVO> list1 = facilityService.getDonaList(principal.getName(), 0); // 모금완료
@@ -158,7 +159,7 @@ public class facilityController {
 	   }
 	
 	 //마이페이지(시설봉사신청, 신청진행상황)
-	  @GetMapping("/facilityMyPage/volJoin")
+	  @GetMapping("/fac/volJoin")
 	  public String getFacilityMyPageVol(Model model,
 	                                     Principal principal,
 	                                     PageVO vo, 
@@ -180,13 +181,32 @@ public class facilityController {
 	      log.info(list);
 	      return "facility/myPageVolBefore";
 	  }
+	//마이페이지(시설 봉사 마무리 후)
+		@GetMapping("/fac/volFinish")
+		  public String getFacilityVolFinish(Model model,
+							                  Principal principal,
+							                  PageVO vo, 
+							                  
+							                  Integer cntPerPage,
+							                  @RequestParam(value="category", required = false)String category,
+							                  @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
+							                  @RequestParam(value="end", required = false, defaultValue = "10") Integer end){
+			String facId = principal.getName();
+			int total = facilityService.getFinishVolCategoryCount(facId);
+			vo = new PageVO(total, start, end,category, 5);
+			List<VolActVO> list = facilityService.getVolunteerFinishList(vo,facId);
+			model.addAttribute("volList", list);
+			model.addAttribute("vo", vo);
+			log.info(list);
+			return "facility/myPageVolAfter";
+		}
+		
 	
 	@GetMapping("/VolAppList")
 	@ResponseBody
 	public List<VolMemVO> getVolunteerAppList(Model model, Integer volActId) {
 		List<VolMemVO> listApp = facilityService.getVolunteerAppList(volActId);
 		model.addAttribute("volAppList", listApp);
-		
 		return listApp;
 	}
 	
@@ -249,12 +269,12 @@ public class facilityController {
 		return result;
 	}
 		
-	
-	//마이페이지
-	@GetMapping("facilityMyPage/volFinish")
-	public String getFacilityMyPageVolFinish(Model model) {
-		
-		return "facility/myPageVolAfter";
+	@PostMapping("/InsertVolHeart")
+	@ResponseBody
+	public int volHeartInsert (LikeVO likeVO, Principal principal) {
+		likeVO.setMemId(principal.getName());
+		int result = facilityService.insertVolHeart(likeVO);
+		return result;
 	}
 	
 	

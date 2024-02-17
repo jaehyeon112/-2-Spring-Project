@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -34,9 +35,13 @@ public interface FacilityService {
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	
 	public List<VolActVO> getVolunteerJoinList(PageVO pageVO, String facId);
-	
+	public List<VolActVO> getVolunteerFinishList( PageVO pageVO, String facId); //봉사 완료 후 리스트
 	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType);
+	
 	public int getFVolCategoryCount(String facId);
+	public int getFinishVolCategoryCount(String facId);
+	//마음온도
+	public int insertVolHeart(LikeVO likeVO);
 
 
 }

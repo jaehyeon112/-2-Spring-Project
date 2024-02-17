@@ -85,7 +85,12 @@ public class ChallengesServiceImpl implements ChallengesService{
 
 	@Override
 	public int reportInsert(ReportVO reportVO) {
-		return challengeMapper.reportInsert(reportVO);
+		int result = challengeMapper.reportInsert(reportVO);
+		if(result ==1) {
+			return reportVO.getRepId();
+		}else {
+			return -1;
+		}	
 	}
 
 
