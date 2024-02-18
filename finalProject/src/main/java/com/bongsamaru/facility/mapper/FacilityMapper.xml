@@ -270,16 +270,24 @@ INSERT INTO VOL_MEM
 		   		  #{memId},
 		   		  #{volActId})         
 </insert>
+<!-- 신청할 당시 중복체크 -->
+<select id="getJoinAppCheck" parameterType="volMemVO">
+SELECT COUNT(*)
+FROM VOL_MEM
+WHERE VOL_ACT_ID=#{volActId}
+AND MEM_ID=#{memId}
+</select>
 <!-- 시설이 봉사 승인시 확인할 참여자 신청서 -->
 <select id="getJoinApp" parameterType="VolMemVO">
 SELECT  MEM_ID,
         APP_DATE,
-        APP_REASON
+        APP_REASON,
+        VOL_ACT_ID
 FROM    VOL_MEM
 WHERE   VOL_ACT_ID=#{volActId}
 </select>
 <!-- 시설이 봉사완료 후 -->
-<select id="getVolunFinishList" resultType="VolMemVO">
+<select id="getVolunFinishList22" resultType="VolMemVO">
 SELECT     VOL_ACT_ID, 
 		   FAC_ID, CATEGORY,
 		   TITLE,
@@ -291,9 +299,100 @@ SELECT     VOL_ACT_ID,
  WHERE     VOL_DATE > SYSDATE
 </select>
 
+<!-- 시설이 봉사 완료한 리스트 -->
+<select id="getVolunteerFinishList" resultType="VolActVO">
+SELECT *    
+FROM (     
+    SELECT ROWNUM RN, A.*  
+    FROM (
+        SELECT  
+            VOL_ACT_ID,
+            FAC_ID, 
+            CATEGORY,
+            TITLE, 
+            CONTENT, 
+            LOCATION, 
+            CAP, 
+            VOL_ZIP,
+            VOL_DATE,
+            START_DATE,
+            EXPIRE_DATE,
+            (SELECT COUNT(*) FROM VOL_ACT_MEM WHERE VOL_ACT_ID = VOL_ACT.VOL_ACT_ID) AS COUNT 
+        FROM  VOL_ACT
+        WHERE  FAC_ID=#{facId}  
+          AND  SYSDATE > VOL_DATE
+        ORDER BY  EXPIRE_DATE
+    ) A
+)
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
+</select>
+<!-- 마이페이지 봉사전 페이지네이션 -->
+<select id="getFinishVolCategoryCount" resultType="int">
+SELECT    COUNT(*)
+  FROM    VOL_ACT
+ WHERE    FAC_ID=#{facId}
+   AND    SYSDATE > VOL_DATE
+</select>
 <!-- 시설봉사완료후 참여자 확인해주면 마음온도 변화 -->
+<insert id="insertVolHeart" parameterType="HeartVO">
+INSERT INTO HEART
+                (heart_temp_id,
+                MEM_ID,
+                TEMP_DATE, 
+                TEMP_CODE, 
+                TEMP_CHANGE,
+                HEART_NO)
+      VALUES    
+      			(HEARTTEMP_SEQ.NEXTVAL,
+      			#{memId},
+      			SYSDATE,
+      			'j02',
+      			 #{tempChange},
+      			 #{heartNo})
+</insert>
 
-
+<!-- 봉사후기 -->
+<insert id="insertVolReview" parameterType="BoardVO">
+     
+      insert into board(
+         board_id,
+         CATEGORY,
+         TITLE,
+         CONTENT,
+         MEM_ID,
+         DETAIL_CATE)
+      values(board_id.NEXTVAL
+            ,'b03'
+            ,#{title}
+            ,#{content}
+            ,#{memId}
+            ,#{detailCate})
+</insert>
+ <select id="getVolReviewInfo" resultType="BoardVO">
+  select BOARD_ID,
+         TITLE,
+         CONTENT,
+         category,
+         WRITE_DATE,
+         VIEWS,
+         MEM_ID,
+         MOD_DATE,
+         DETAIL_CATE
+      from board
+      where CATEGORY = 'b03'
+      and detail_cate = #{detailCate}
+   </select>
+   <update id="updateVolReview" parameterType="BoardVO">
+      update board
+      set
+         
+         TITLE=#{title},
+         CONTENT=#{content},
+         mod_date=sysdate
+      where CATEGORY = 'b03'
+      and detail_cate = #{detailCate}
+   </update>
+   
 </mapper>
 
 

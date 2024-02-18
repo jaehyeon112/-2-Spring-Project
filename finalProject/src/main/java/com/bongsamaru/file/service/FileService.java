@@ -25,14 +25,21 @@ public class FileService {
 
     @Value("${file.upload.path}")
     private String uploadPath;
-
+    
+    private final long MAX_SIZE = 50 * 1024 * 1024; // 50MB in bytes
+    
     public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user) throws IOException {
         List<String> imageList = new ArrayList<>();
-
+        
         for(MultipartFile uploadFile : uploadFiles) {
+            if (uploadFile.getSize() > MAX_SIZE) {
+                System.err.println("File size exceeds the maximum limit of 50MB");
+                continue; // Skip this file
+            }
+            
             if (!isAllowedFileType(uploadFile)) {
-                System.err.println("this file is not type");
-                return null;
+                System.err.println("This file type is not allowed");
+                continue; // Skip this file
             }
 
             String uploadFileName = handleFileUpload(uploadFile, code, codeNo, user);

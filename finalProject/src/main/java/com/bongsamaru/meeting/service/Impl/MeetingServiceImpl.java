@@ -32,7 +32,7 @@ public class MeetingServiceImpl implements MeetingService{
 	public List<VolMemVO> meetingMemList(VolMemVO vo) {
 		return mapper.meetingMemList(vo);
 	}
-
+	
 	@Override
 	public List<VolMemVO> volCnt(VolMemVO vo) {
 		return mapper.volCnt(vo);

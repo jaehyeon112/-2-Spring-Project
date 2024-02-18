@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -15,6 +17,7 @@ import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.mapper.FacilityMapper;
+import com.bongsamaru.mypage.service.HeartVO;
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
@@ -87,6 +90,10 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getVolunteerAppList(volActId);
 	}
 	
+	@Override
+	public List<VolActVO> getVolunteerFinishList(PageVO pageVO, String facId) {
+		return mapper.getVolunteerFinishList(pageVO,facId);
+	}
 	//시설이 회원봉사 승인하면 업데이트
 	@Override
 	public int volAppUpdate(Integer volActId, String memId) {
@@ -114,6 +121,35 @@ public class FacilityServiceImpl implements FacilityService {
 		public int getFVolCategoryCount(String facId) {
 			
 			return mapper.getFVolCategoryCount(facId);
+		}
+
+		@Override
+		public int getFinishVolCategoryCount(String facId) {
+			return mapper.getFinishVolCategoryCount(facId);
+		}
+
+		//마음온도
+		@Override
+		public int insertVolHeart(HeartVO heartVO) {
+			return mapper.insertVolHeart(heartVO);
+		}
+
+		@Override
+		public void insertVolReview(BoardVO boardVO) {
+			mapper.insertVolReview(boardVO);
+			
+		}
+		@Override
+		public int updateVolReview(BoardVO boardVO) {
+			return mapper.updateVolReview(boardVO);
+		}
+		@Override
+		public BoardVO getVolReviewInfo(Integer detailCate) {
+			return mapper.getVolReviewInfo(detailCate);
+		}
+		@Override
+		public int getJoinAppCheck(Integer volActId, String memId) {
+			return mapper.getJoinAppCheck(volActId, memId);
 		}
 
 
