@@ -24,9 +24,9 @@ public class DonaServiceImpl implements DonaService {
 	}
 	
 	 @Override
-	public List<DonaVO> selectRecruitingItems() {
+	public List<DonaVO> randomlyShow() {
 		
-		 return donaMapper.selectRecruitingItems();
+		 return donaMapper.randomlyShow();
 	}
 	 
 	 @Override
@@ -97,7 +97,8 @@ public class DonaServiceImpl implements DonaService {
 	@Override
 	public int insertDonation(DonaVO donaVO) {
 		donaMapper.insertDonation(donaVO);
-		return donaMapper.insertDonDetail(donaVO);
+		donaMapper.insertDonDetail(donaVO);
+		return donaMapper.insertAlertDona(donaVO);
 	}
 	
 	
@@ -136,6 +137,12 @@ public class DonaServiceImpl implements DonaService {
 
 	@Override
 	public int insertReviewDetail(DonaVO donaVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public int insertAlertDona(DonaVO donaVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

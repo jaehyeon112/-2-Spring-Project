@@ -308,23 +308,23 @@ function submitForm() {
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" name="usePlans[${count}].usePlan" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" name="usePlans[${count}].usePlanAmt" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlan${count + 1}" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlanAmt${count + 1}" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "articleContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" name="introTitles[${count}]" placeholder="제목" autocomplete="off">` +
+                `<input type="text" class="form-control" name="addIntroTitle" placeholder="제목" autocomplete="off">` +
                 `</div>` +
                 `<div class="input-group">` +
-                `<textarea class="form-control" name="intros[${count}]" rows="3"></textarea>` +
+                `<textarea class="form-control" name="addIntro" rows="3"></textarea>` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "relatedLinkContainer") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" name="links[${count}]" placeholder="null 가능" autocomplete="off">` +
+                `<input type="text" class="form-control" name="link2"  autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {

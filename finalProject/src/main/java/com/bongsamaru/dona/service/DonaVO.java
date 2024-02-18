@@ -1,8 +1,11 @@
 package com.bongsamaru.dona.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.bongsamaru.file.service.FilesVO;
 
 import lombok.Data;
 
@@ -145,5 +148,14 @@ public class DonaVO {
 	    
 	//파일 - 이미지 넣도록! 
 	    private String filePath;
+	    //private String code; p08
+	    private Integer codeNo;
+	    
+	
+	//알람
+	    private Integer alertId;
+	    //private String category; //o04(기부등록신청), 05(기부글등록), 06(기부후기등록)
+	    //private String content;
+	    private String receiveId; //ADMIN
 	    
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,7 +72,7 @@ public class DonaController {
 		model.addAttribute("rlist", rev);
 		
 		// 랜덤
-		List<DonaVO> random = donaService.selectRecruitingItems();
+		List<DonaVO> random = donaService.randomlyShow();
 		model.addAttribute("randomlist", random);
 
 		return "donation/donaDetail";
@@ -156,10 +157,10 @@ public class DonaController {
 		model.addAttribute("rlist", rev);
 		
 		// 랜덤
-		List<DonaVO> random = donaService.selectRecruitingItems();
+		List<DonaVO> random = donaService.randomlyShow();
 		model.addAttribute("randomlist", random);
 
-		return "donation/testdona";
+		return "donation/donaDetail";
 	}
 
 	/**
@@ -230,13 +231,22 @@ public class DonaController {
 	 * @return 시설 마이페이지로 이동 예정. 
 	 */
 	// 기한연장하기
+//	@PutMapping("/facilityMyPage/donaInfo/extension")
+//	@ResponseBody
+//	public String extendDonationPeriod(@RequestBody DonaVO donaVO) {
+//		log.info(donaVO);		
+//		
+//		donaService.extendDonationPeriod(donaVO);
+//		return "facility/myPageDona"; 
+//	}
+	
 	@PutMapping("/facilityMyPage/donaInfo/extension")
 	@ResponseBody
-	public String extendDonationPeriod(@RequestBody DonaVO donaVO) {
-		log.info(donaVO);		
-		
-		donaService.extendDonationPeriod(donaVO);
-		return "facility/myPageDona"; 
+	public ResponseEntity<String> extendDonationPeriod(@RequestBody DonaVO donaVO) {
+	    log.info(donaVO);
+
+	    donaService.extendDonationPeriod(donaVO);
+	    return ResponseEntity.ok("연장 성공!");
 	}
 
 	/**

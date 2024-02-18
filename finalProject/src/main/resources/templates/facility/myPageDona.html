@@ -214,6 +214,23 @@
             </div>
         </div>
     </div>
+    
+    <!-- 새로운 모달: 연장 성공 메시지 -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">연장 성공</h5>
+            </div>
+            <div class="modal-body">
+                <p>연장이 성공적으로 완료되었습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -257,16 +274,17 @@ function extendDeadline() {
         $.ajax({
         	type: 'PUT',
             url: '/facilityMyPage/donaInfo/extension',
-            dataType : 'json',   
+            //dataType : 'json',   
             data: JSON.stringify(donaVO),
         	contentType : 'application/json', 
             
             success: function(response) {
               
+            	   // 기존 모달 닫기
+                $("#extendDeadlineModal").modal("hide");
 
-                alert("연장하기성공!");
-                //location.href = `facilityMyPage?facId=id`;
-                //location.href = "facilityMyPage";
+                // 새로운 모달 열기
+                openSuccessModal();
                 return;
             },
             error: function(error) {
@@ -279,6 +297,18 @@ function extendDeadline() {
     	
     // 모달 닫기
     $("#extendDeadlineModal").modal("hide");
+}
+
+//성공 메시지 모달 열기
+function openSuccessModal() {
+    $("#successModal").modal("show");
+
+    // 모달이 닫힐 때 이벤트 리스너 등록
+    $("#successModal").on("hidden.bs.modal", function () {
+        // 모달 닫힌 후 실행할 동작 작성
+        // 예를 들면 페이지 새로고침 등
+        location.reload(); // 새로고침 예시
+    });
 }
 
 </script>
