@@ -37,8 +37,13 @@ public interface AdminMapper {
 	public List<FacilityVO> getFacilityList(PageVO pageVO);
 	public int getFacilityCnt(PageVO pageVO);
 	
+	//기부리스트
+	public List<DonaVO> getDonaList(PageVO pageVO);
+	public int getDonaCnt(PageVO pageVO);
 	
-	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
+	//모임리스트
+	public List<VolunteerVO> meetingList(PageVO pageVO);
+	public int meetingCnt(PageVO pageVO);
 	public List<TagVO> tagList(TagVO vo);
 	//기부금 신청
 	public List<DonationVO> getDonationList(PageVO vo);
@@ -48,14 +53,17 @@ public interface AdminMapper {
 	public int getReportCnt(PageVO pageVO);
 	
 	public List<DonledgerVO> DonationKing();
-	public List<VolunteerVO> facVolunteerList();
+	//시설봉사리스트
+	public List<VolunteerVO> facVolunteerList(PageVO pageVO);
+	public int facVolunteerCnt(PageVO pageVO);
+	
 	public UserVO getUserOne(String memId);
 	public void insertNotice(BoardVO boardVO);
 	public int faqInsert(FaqVO faqVO);
 	public VolunteerVO volCount(String memId);
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
-	public DonationVO getDonOne(String donId);
+	public DonationVO getDonOne(Integer donId);
 	public int updateFacApp(String facId);
 	public int updateDonApp(String facId);
 	public int updateDonRegApp(String donId);

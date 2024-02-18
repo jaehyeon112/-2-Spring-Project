@@ -102,7 +102,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public DonationVO getDonOne(String donId) {
+	public DonationVO getDonOne(Integer donId) {
 		return userMapper.getDonOne(donId);
 	}
 
@@ -197,18 +197,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO) {
-		return userMapper.meetingList(volunteerVO);
-	}
-
-	@Override
 	public List<TagVO> tagList(TagVO vo) {
 		return userMapper.tagList(vo);
-	}
-
-	@Override
-	public List<VolunteerVO> facVolunteerList() {
-		return userMapper.facVolunteerList();
 	}
 
 	@Override
@@ -273,6 +263,36 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int getFaqCnt(PageVO pageVO) {
 		return userMapper.getFaqCnt(pageVO);
+	}
+
+	@Override
+	public List<DonaVO> getDonaList(PageVO pageVO) {
+		return userMapper.getDonaList(pageVO);
+	}
+
+	@Override
+	public int getDonaCnt(PageVO pageVO) {
+		return userMapper.getDonaCnt(pageVO);
+	}
+
+	@Override
+	public List<VolunteerVO> meetingList(PageVO pageVO) {
+		return userMapper.meetingList(pageVO);
+	}
+
+	@Override
+	public int meetingCnt(PageVO pageVO) {
+		return userMapper.meetingCnt(pageVO);
+	}
+
+	@Override
+	public List<VolunteerVO> facVolunteerList(PageVO pageVO) {
+		return userMapper.facVolunteerList(pageVO);
+	}
+
+	@Override
+	public int facVolunteerCnt(PageVO pageVO) {
+		return userMapper.facVolunteerCnt(pageVO);
 	}
 
 }

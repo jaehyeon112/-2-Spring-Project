@@ -262,10 +262,10 @@ table th {
 		</div>
 			<script th:inline="javascript">
 				function show(){
-					$('#tableData').load("../approve #bas");
+					$('#tableData').load("../approve?memApp=0 #bas");
 				}
 				function show1(){
-					$('#tableData').load("../facilityApprove?donApp=0 #fac");
+					$('#tableData').load("../facilityApprove?memApp=1&donApp=0 #fac");
 				}
 				function show2(){
 					$('#tableData').load("../facilityApprove?donRegApp=0 #don");
@@ -470,7 +470,7 @@ table th {
 			    	$.ajax('../updateFacApp?facId='+facN)
 			        .done(result => {
 			           $("#myModal").modal("hide");
-			           $('#tableData').load("../approve #bas");
+			           $('#tableData').load("../approve?memApp=0 #bas");
 			        })
 			        .fail(err => console.log(err));
 			    }
@@ -479,7 +479,7 @@ table th {
 			    	$.ajax('../updateDonApp?facId='+facI)
 			        .done(result => {
 			           $("#myModal2").modal("hide");
-			           $('#tableData').load("../facilityApprove #fac");
+			           $('#tableData').load("../facilityApprove?memApp=1&donApp=0 #fac");
 			        })
 			        .fail(err => console.log(err));
 			    }
@@ -488,7 +488,7 @@ table th {
 			    	$.ajax('../updateDonRegApp?donId='+facI)
 			        .done(result => {
 			           $("#mys").modal("hide");
-			           $('#tableData').load("../facilityApprove #don");
+			           $('#tableData').load("../facilityApprove?donRegApp=0 #don");
 			        })
 			        .fail(err => console.log(err));
 			    }

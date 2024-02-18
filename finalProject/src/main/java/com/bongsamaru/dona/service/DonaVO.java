@@ -34,6 +34,7 @@ public class DonaVO {
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
 
 	    private String category; // 유형
+	    private Integer RN; // 유형
 
 
 	    private String paidCode;

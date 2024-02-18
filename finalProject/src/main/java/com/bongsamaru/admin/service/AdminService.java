@@ -38,6 +38,10 @@ public interface AdminService {
 	public List<ReportVO> getReportList(PageVO pageVO);
 	public int getReportCnt(PageVO pageVO);
 	
+	//기부리스트
+	public List<DonaVO> getDonaList(PageVO pageVO);
+	public int getDonaCnt(PageVO pageVO);
+	
 	public List<DonledgerVO> DonationKing();
 	public void insertNotice(BoardVO boardVO);
 	public List<FaqVO> getFaqList(PageVO pageVO);
@@ -46,7 +50,7 @@ public interface AdminService {
 	public VolunteerVO volCount(String memId);
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
-	public DonationVO getDonOne(String donId);
+	public DonationVO getDonOne(Integer donId);
 	public int updateFacApp(String facId);
 	public int updateDonApp(String facId);
 	public int updateDonRegApp(String donId);
@@ -62,9 +66,15 @@ public interface AdminService {
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
 	public int delFile(String filePath);
-	public List<VolunteerVO> meetingList(VolunteerVO volunteerVO);
+	
+	public List<VolunteerVO> meetingList(PageVO pageVO);
+	public int meetingCnt(PageVO pageVO);
 	public List<TagVO> tagList(TagVO vo);
-	public List<VolunteerVO> facVolunteerList();
+	
+	//시설봉사리스트
+	public List<VolunteerVO> facVolunteerList(PageVO pageVO);
+	public int facVolunteerCnt(PageVO pageVO);
+	
 	public List<VolunteerVO> memMeetList(String memId);
 	
 	//기부금 장부 리스트

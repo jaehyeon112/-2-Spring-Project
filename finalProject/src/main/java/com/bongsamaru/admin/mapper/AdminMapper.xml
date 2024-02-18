@@ -97,15 +97,63 @@
             CATEGORY_NO,
             REP_REASON,
             REQ_CODE
-      from report
-      where CATEGORY = #{category}
-      order by rep_id) A)
-        where RN BETWEEN #{start} AND #{end}
+	      from report
+	      where CATEGORY = #{category}
+	      <if test="reqCode!=null and reqCode!=''">
+	      		REQ_CODE = #{reqCode}
+	      </if>
+	      order by REQ_CODE) A)
+       where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="getReportCnt" resultType="int">
       select count(*)
       from report
       where CATEGORY = #{category}
+   </select>
+   <select id="getDonaList" resultType="DonaVO">
+	   SELECT * 
+	      from(
+	         SELECT ROWNUM RN 
+	         ,A.* 
+	      from(  
+	           SELECT 
+		 			d.title,
+		 			d.goal_amt,
+		 			COUNT(f.don_id) AS donationCount,
+		 			nvl(SUM(f.don_amt),0) AS total,
+		 			nvl((SUM(f.don_amt) / d.goal_amt) * 100,0) AS donationRatio,
+		 			c.fac_name AS facilityName,
+		 			d.rec_stat,
+		 			d.don_id,
+		 			c.fac_id,
+		 			d.category
+		 		FROM donation d
+		 			LEFT JOIN don_ledger f ON d.don_id = f.don_id
+		 			LEFT JOIN facility c ON d.fac_id = c.fac_id
+				where d.DON_REG_APP = 1
+				<if test="recStat!=null and recStat!=''">
+					and d.rec_stat = #{recStat}
+				</if>
+				<if test="searchKeyword!=null and searchKeyword!='' ">
+		         	AND (d.title LIKE '%' || #{searchKeyword} || '%')      
+		      	</if>
+		      	GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category) A)
+	    where RN BETWEEN #{start} AND #{end}
+ 	</select>
+   <select id="getDonaCnt" resultType="int">
+       SELECT 
+ 			count(count(*))
+ 		FROM donation d
+ 			LEFT JOIN don_ledger f ON d.don_id = f.don_id
+ 			LEFT JOIN facility c ON d.fac_id = c.fac_id
+		where d.DON_REG_APP = 1
+		<if test="searchKeyword!=null and searchKeyword!='' ">
+         	AND (d.title LIKE '%' || #{searchKeyword} || '%')      
+      	</if>
+		<if test="recStat!=null and recStat!='' ">
+         	AND d.rec_stat = #{recStat}     
+      	</if>
+      	GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category
    </select>
    <update id="updateReport" parameterType="ReportVO">
       update report
@@ -138,12 +186,12 @@
 		            MEM_APP
 		      from facility
 		      where MEM_APP = #{memApp}
-      <if test="donApp!=null and donApp!='' ">
-         and don_app = #{donApp}  
-      </if>
-      <if test="searchKeyword!=null and searchKeyword!='' ">
-         AND (FAC_NAME LIKE '%' || #{searchKeyword} || '%')      
-      </if>
+		      <if test="donApp!=null and donApp!='' ">
+		         and don_app = #{donApp}  
+		      </if>
+		      <if test="searchKeyword!=null and searchKeyword!='' ">
+		         AND (FAC_NAME LIKE '%' || #{searchKeyword} || '%')      
+		      </if>
      	order by FAC_ID) A)
         where RN BETWEEN #{start} AND #{end}
    </select>
@@ -151,6 +199,9 @@
       select count(*)
       from facility
       where MEM_APP = #{memApp}
+      <if test="donApp!=null and donApp!='' ">
+         and don_app = #{donApp}  
+      </if>
       <if test="searchKeyword!=null and searchKeyword!='' ">
          AND (FAC_NAME LIKE '%' || #{searchKeyword} || '%')      
       </if>
@@ -178,7 +229,6 @@
       where fac_id = #{facId}
    </select>
    <select id="getDonationList" resultType="DonationVO">
-   
    	  SELECT * 
 	      from(
 	         SELECT ROWNUM RN 
@@ -240,7 +290,7 @@
            ,DETAIL_CATE
       from board
       where CATEGORY = #{category}
-      <if test="searchKeyword!=null and searchKeyword!='' ">
+      <if test="searchKeyword!=null and searchKeyword!=''">
          AND (title LIKE '%' || #{searchKeyword} || '%')      
       </if>
       order by BOARD_ID) A)
@@ -407,22 +457,48 @@
         order by total desc
    </select>
    <select id="meetingList" resultType="VolunteerVO">
-      select meet_name
-            ,vol_id
-            ,cap
-            ,region
-            ,REC_PERIOD
-            ,end_period
-            ,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') as meetingCnt
-        from volunteer
-        <where>
-           <if test="roomStat!=null">
-              room_stat = #{roomStat}
-           </if>
-           <if test="volId!=null">
-              and vol_id != #{volId}
-           </if>
-        </where>
+   		SELECT * 
+	      from(
+	         SELECT ROWNUM RN 
+	         ,A.* 
+	      from(  
+	           select meet_name
+		            ,vol_id
+		            ,cap
+		            ,region
+		            ,REC_PERIOD
+		            ,end_period
+		            ,room_stat
+		            ,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') as meetingCnt
+		        from volunteer
+		        <where>
+		           <if test="roomStat!=null">
+		              room_stat = #{roomStat}
+		           </if>
+		           <if test="volId!=null">
+		              and vol_id != #{volId}
+		           </if>
+		           <if test="searchKeyword!=null and searchKeyword!=''">
+			         AND (meet_name LIKE '%' || #{searchKeyword} || '%')      
+			      </if>
+        		</where>
+     	order by vol_id) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="meetingCnt" resultType="int">
+      select count(*)
+      from volunteer
+      <where>
+         <if test="roomStat!=null">
+            room_stat = #{roomStat}
+         </if>
+         <if test="volId!=null">
+            and vol_id != #{volId}
+         </if>
+         <if test="searchKeyword!=null and searchKeyword!=''">
+	         AND (meet_name LIKE '%' || #{searchKeyword} || '%')      
+	      </if>
+      </where>
    </select>
    <select id="tagList" resultType="TagVO">
       select tag_content,
@@ -436,17 +512,35 @@
       order by tag_id
    </select>
    <select id="facVolunteerList" resultType="VolunteerVO">
-      select (select fac_name from facility where fac_id=vol_act.fac_id) as facName
-            ,(select count(*) from vol_mem where vol_act_id=vol_act.vol_act_id and app_code='h02') as capCnt
-            ,fac_id
-            ,category
-            ,title
-            ,location
-            ,cap
-            ,vol_Date
+   
+   		SELECT * 
+	      from(
+	         SELECT ROWNUM RN 
+	         ,A.* 
+	      from(  
+	           select (select fac_name from facility where fac_id=vol_act.fac_id) as facName
+		            ,(select count(*) from vol_mem where vol_act_id=vol_act.vol_act_id and app_code='h02') as capCnt
+		            ,fac_id
+		            ,category
+		            ,title
+		            ,location
+		            ,cap
+		            ,vol_Date
+		      from vol_Act
+		      where fac_id is not null
+	           <if test="searchKeyword!=null and searchKeyword!=''">
+		         AND (fac_id LIKE '%' || #{searchKeyword} || '%')      
+		      </if>
+     	order by vol_act_id) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="facVolunteerCnt" resultType="int">
+      select count(*)
       from vol_Act
       where fac_id is not null
-      order by vol_act_id
+      <if test="searchKeyword!=null and searchKeyword!=''">
+         AND (fac_id LIKE '%' || #{searchKeyword} || '%')      
+      </if>
    </select>
    <select id="memMeetList" resultType="VolunteerVO">
       select (select meet_name from volunteer where vol_id=vol_mem.vol_id) as facName,app_date

@@ -53,7 +53,7 @@
 				<button class="btn btn-outline-primary" type="button" onclick="show1()">초기화</button>
 			</div>
 			<th:block th:if="${userList.size} == 0" style="text-align:center">
-				<p>데이터가 존재하지 않습니다<p>
+				<h3>데이터가 존재하지 않습니다</h3>
 			</th:block>
 			<th:block th:if="${userList.size} != 0">
 			<table class="table">
@@ -216,7 +216,7 @@
 			};
 			
 			function show2(){
-				$('#tableData').load("../userListDetail #facility");
+				$('#tableData').load("../userListDetail?memApp=1 #facility");
 			};
 			
 			function prev(vo){

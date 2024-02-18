@@ -50,7 +50,7 @@
       <!--  Header End -->
       <div class="container-fluid">
         <div class="row justify-content-center" style="text-align:center">
-           <h5 class="fw-semibold mb-4">이달의 기부리스트</h5>
+           <h3 class="fw-semibold mb-4">이달의 기부리스트</h3>
            <div class="table-responsive">
              <table class="table">
                <thead class="text-dark fs-4">
@@ -70,7 +70,7 @@
                  </tr>
                </thead>
                <tbody>
-                 <tr th:each="king,st : ${king}">
+                 <tr th:each="king,st : ${king}" th:if="${st.count}<=10">
                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${st.count}+'.'"></h6></td>
                    <td class="border-bottom-0">
                        <h6 class="mb-0 fw-normal" th:text="${king.memId}"></h6>

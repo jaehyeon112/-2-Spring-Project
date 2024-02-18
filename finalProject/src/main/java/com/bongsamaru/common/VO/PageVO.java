@@ -17,16 +17,19 @@ public class PageVO {
     private int	currentPage;
     private int pageSize = 5; // 한페이지보여줄 버튼수
     private Integer volId;
+    private Integer roomStat;
     
     private int startPage;
     private int endPage;
     
-    
-    private int memApp;
-    private int donApp;
-    private int donRegApp;
+    //영희
+    private String memApp;
+    private String donApp;
+    private String donRegApp;
     private Integer recStat;
-    private int donId;
+    private Integer donId;
+    private Integer reqCode;
+    private String writer;
    
 
     // Getter와 Setter 메서드

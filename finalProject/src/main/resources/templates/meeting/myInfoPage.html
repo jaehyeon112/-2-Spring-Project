@@ -15,13 +15,11 @@
 <meta content="" name="description">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
 	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
 	<link rel="stylesheet" href="css/daterangepicker.css">
-	<link rel="stylesheet" href="css/aos.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -30,9 +28,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" style="margin:auto">
-					<div class="counter-wrap">
+					<div class="counter-wrap" style="width:500px">
 						<div class="counter">
-							<span class="" data-number="0">0</span>
+							<span th:text="${#dates.format(date, 'yyyy년 MM월 dd일')}"></span>
 						</div>
 						<span class="caption">가입 날짜</span>
 					</div>
@@ -55,72 +53,17 @@
 			<div class="row text-center justify-content-center mb-5">
 				<div class="col-lg-7"><h2 class="section-title text-center">작성한 봉사후기</h2></div>
 			</div>
-
 			<div class="owl-carousel owl-3-slider">
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
+				<div class="item" th:each="review : ${review}">
+					<a class="media-thumb" th:href="${review.filePath}" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Pragser Wildsee</h3>
-							<span class="location">Italy</span>
+							<h3>[[${review.title}]]</h3>
+							<span class="location">[[${#dates.format(review.writeDate, 'yyyy년 MM월 dd일')}]]</span>
 						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
+						<img th:src="@{${review.filePath}}" onError="this.src='../image/기본이미지.jpg'" alt="Image" class="img-fluid" style="width:430px;height:290px">
 					</a> 
 				</div>
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
-						<div class="media-text">
-							<h3>Oia</h3>
-							<span class="location">Greece</span>
-						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
-					</a> 
-				</div>
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
-						<div class="media-text">
-							<h3>Perhentian Islands</h3>
-							<span class="location">Malaysia</span>
-						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
-					</a> 
-				</div>
-
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
-						<div class="media-text">
-							<h3>Rialto Bridge</h3>
-							<span class="location">Italy</span>
-						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
-					</a> 
-				</div>
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
-						<div class="media-text">
-							<h3>San Francisco, United States</h3>
-							<span class="location">United States</span>
-						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
-					</a> 
-				</div>
-
-				<div class="item">
-					<a class="media-thumb" href="../dpdd/img/news-7.jpg" data-fancybox="gallery">
-						<div class="media-text">
-							<h3>Lake Thun</h3>
-							<span class="location">Switzerland</span>
-						</div>
-						<img src="../dpdd/img/news-7.jpg" alt="Image" class="img-fluid">
-					</a> 
-				</div>
-
 			</div>
-
 		</div>
 	</div>
 
@@ -188,6 +131,7 @@
 
 	<script src="js/typed.js"></script>
 	<script>
+		const cnt = [[${cnt}]]
 		$(function() {
 			var slides = $('.slides'),
 			images = slides.find('img');
@@ -199,7 +143,7 @@
 		
 		let countBox = document.querySelector('#count');
 		let count = 0;
-		let num = 100;
+		let num = cnt;
 		
 		if(num  > 50){
 			let counting = setInterval(function () {
@@ -209,7 +153,7 @@
 			    } else {
 			        count += 1;
 			    }
-			    countBox.innerHTML = new Intl.NumberFormat().format(count);
+			    countBox.innerHTML = new Intl.NumberFormat().format(count)+'회';
 			}, 10);
 		}else{
 			let counting = setInterval(function () {
@@ -219,7 +163,7 @@
 			    } else {
 			        count += 1;
 			    }
-			    countBox.innerHTML = new Intl.NumberFormat().format(count);
+			    countBox.innerHTML = new Intl.NumberFormat().format(count)+'회';
 			}, 200);
 		}
 		

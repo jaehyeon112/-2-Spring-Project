@@ -34,7 +34,7 @@
 		<div style="float:right;" class="cur">
 			<a style="color:black;font-size:14px" onclick="show1()">챌린지 신고건 |</a>
 			<a style="color:black;font-size:14px" onclick="show2()"> 모임 신고건 |</a>
-			<a style="color:black;font-size:14px" onclick="show3()"> 댓글 신고건</a>
+			<a style="color:black;font-size:14px" onclick="show3()"> 피드댓글 신고건</a>
 		</div>
 		<div id=tableData>
 			<div id="notice">
@@ -56,7 +56,7 @@
 				<tbody>
 					<tr th:each="report,st : ${reportList}">
 						 <td th:text="${st.count}">번호</td>
-						 <td><a th:href="@{/challenge/challengeInfo(chalId=${report.categoryNo})}" target='_blank' style="color:black">게시글로 이동</a></td>
+						 <td><a th:href="@{/challenge/challengeInfo(chalId=${report.categoryNo})}" target='_blank' style="color:black">챌린지로 이동</a></td>
 						 <td th:text="${report.memId}" >신고자</td>
 						 <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td>
 						 <td th:if="${report.repReason}=='s01'" >스팸홍보/도배글입니다</td>
@@ -176,26 +176,25 @@
 			function next3(vo){
 				$('#tableData').load(`../MoreReport?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&category=r03 #comm`);
 			}
-		    
 		    function insertComm(){
-		        let code = $('input[name="optionsRadios"]:checked').val();
-		    	let obj = {
-			    		repId : repId,
-			    		reqCode: code
-			    	}
-		        $.ajax({
-		            url: '../updateReport', // 올바른 엔드포인트 URL 확인
-		            type: 'POST', // 서버가 요구하는 메소드 타입 사용 (GET, POST 등)
-		      		data : obj,
-		            
-		            success: function(result) {
-		                location.href="getReportList?category=r01"
-		            },
-		            error: function(xhr, status, error) {
-		                console.error("오류 발생: ",xhr, status, error);
-		                // 오류 발생 시 처리
-		            }
-		        });
+			let code = $('input[name="optionsRadios"]:checked').val();
+	    	let obj = {
+		    		repId : repId,
+		    		reqCode: code
+		    	}
+	        $.ajax({
+	            url: '../updateReport', // 올바른 엔드포인트 URL 확인
+	            type: 'POST', // 서버가 요구하는 메소드 타입 사용 (GET, POST 등)
+	      		data : obj,
+	            
+	            success: function(result) {
+	                location.href="getReportList?category=r01"
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("오류 발생: ",xhr, status, error);
+	                // 오류 발생 시 처리
+	            }
+	        });
 		    }
 		    
 		</script>
