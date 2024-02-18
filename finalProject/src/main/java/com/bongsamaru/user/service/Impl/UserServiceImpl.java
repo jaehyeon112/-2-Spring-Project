@@ -2,6 +2,8 @@ package com.bongsamaru.user.service.Impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bongsamaru.common.VO.AlertVO;
+import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserFacilityVO;
@@ -35,12 +39,21 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserFacilityVO vo = userMapper.login(username);
-		System.out.println("vo 는!" + vo);
-		if(vo == null) {
-			throw new UsernameNotFoundException("no name");
-		}
-		return new UserDetailVO(vo);
+	    UserFacilityVO vo = userMapper.login(username);
+	    System.out.println(vo);
+	    System.out.println("이값이 뭔데!!!!!!!!!!");
+	    
+	    if(vo == null) {
+	        throw new UsernameNotFoundException("로그인에 실패하였습니다. 아이디/비밀번호를 확인해주세요." );
+	    } else if (("0".equals(vo.getMemApp()) && vo.getMemStat()==null )) {
+	        throw new UsernameNotFoundException("회원 가입 심사 중인 아이디 입니다.");
+	    }
+	    
+	    if(vo.getMemStat()==null) {
+	    	vo.setMemStat("M03");
+	    }
+	    
+	    return new UserDetailVO(vo);
 	}
 	
 	@Override
@@ -129,4 +142,13 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		return true;
 	}
 	
+	@Override
+	public List<AlertVO> listAlert(String memId) {
+		return userMapper.listAlert(memId);
+	}
+	
+	@Override
+	public List<CountVO> volKing() {
+		return userMapper.volKing();
+	}
 }

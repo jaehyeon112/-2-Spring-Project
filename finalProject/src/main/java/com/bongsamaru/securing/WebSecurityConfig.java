@@ -19,8 +19,9 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import com.bongsamaru.securing.config.CustomOAuth2UserService;
 import com.bongsamaru.securing.filter.AdditionalInfoFilter;
-import com.bongsamaru.user.service.AuthSuccessHandler;
 import com.bongsamaru.user.service.UserSuccessHandler;
+import com.bongsamaru.user.service.handler.AuthSuccessHandler;
+import com.bongsamaru.user.service.handler.CustomAuthenticationFailureHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,6 +49,8 @@ public class WebSecurityConfig {
 	public AesBytesEncryptor aesBytesEncryptor() {
 	    return new AesBytesEncryptor(secret, "70726574657374");
 	}
+	  @Autowired
+	  private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 	
 	  @Autowired
 	  private UserSuccessHandler success;
@@ -69,6 +72,7 @@ public class WebSecurityConfig {
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
+				.failureHandler(customAuthenticationFailureHandler)
 				.successHandler(success)
 				.usernameParameter("username")
 				.permitAll()
@@ -78,6 +82,7 @@ public class WebSecurityConfig {
 			)
 			.oauth2Login((oauth2Login) -> oauth2Login
 					.loginPage("/login")
+					 .failureHandler(customAuthenticationFailureHandler)
 					.successHandler(authsuccess)
 					.userInfoEndpoint()
 					.userService(customOAuthUserService))

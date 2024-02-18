@@ -6,17 +6,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserSuccessHandler implements AuthenticationSuccessHandler {
+
+    @Autowired
+    private UserService userService; // UserService 주입
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-    	UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
-    	System.out.println(user.getUserVO());
-        response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트
+        UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
+        	System.out.println("로그인성공!");
+        	response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트
+        }
     }
-}
