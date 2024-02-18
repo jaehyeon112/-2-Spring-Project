@@ -67,6 +67,28 @@ public class FeedController {
 
 	}
 	 
+	 @GetMapping("/insertFeed")
+	 public String insertFeed(Model model) {
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 
+		 if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+			 Object principal = auth.getPrincipal();
+			 
+			 if (principal instanceof UserDetails) {
+				 UserDetailVO userDetailVO = (UserDetailVO) principal;
+				 
+				 String memId = userDetailVO.getUserVO().getId();
+				 //회원의 상세정보
+				 List<InterestVO> list3 = feedService.getInterestList(memId);
+				 model.addAttribute("list", list3);
+			 }
+			 return "feed/insertFeed"; 
+		 }else {
+			 return "login/FacilityLogin";
+		 }
+		 
+	 }
+	 
 	 /**
 	  * 상대방 피드 볼수있는 페이지 (상대방아이디이용)
 	  * @param memId

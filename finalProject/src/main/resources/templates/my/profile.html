@@ -53,12 +53,12 @@
 			<ul id="contents">
 				<li>
 					<div class="area_thumb">
-						<h1>프로필</h1>
+						<h1>내 정보 수정</h1>
 						  <span class="profile_thumb">
 						  	<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-							<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+							<img th:if="${item.memProfile} != null" id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
 						  	<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
-							<button class="uploadBtn">Upload</button>
+							<input type="button" class="uploadBtn" value="이미지 저장">
 						  </span>
 					</div>
 				</li>
@@ -68,29 +68,27 @@
 				</li>
 				<li>
 					<div> 닉네임</div>
-					<input type="text" th:value="${item.memNick}" class="form-control">
+					<input type="text" id="nick" th:value="${item.memNick}" class="form-control">
 				</li>
 				<li id="to1">
 					<div>전화번호</div>
-					<input type="text" id="to" name="to" placeholder="변경하실 전화번호를 입력하세요" class="form-control"> <!-- 인증번호 받을사람 휴대폰 번호 -->
-					<button type="button" id="send">인증번호 전송</button><br> <!-- 문자보내는 전송버튼 -->
-					<button id="ChangeTelBtn" class="hidden">변경하기</button>
+					<input type="text" id="to" name="to" th:value="${item.memPhone}" placeholder="변경하실 전화번호를 입력하세요" class="form-control"> <!-- 인증번호 받을사람 휴대폰 번호 -->
+					<input type="button" id="send" value="인증번호 전송"><br> <!-- 문자보내는 전송버튼 -->
 				</li>
 				<li id="to2" class="hidden">
 					<div>전화번호</div>
 					<input type="text" id="userTel" placeholder="인증번호 4자리를 입력하세요" class="form-control">   <!-- 인증번호 입력창 -->
-					<button type="button" id="enterBtn">인증번호 확인</button>  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
+					<input type="button" id="enterBtn" value="인증번호 확인">  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
 				</li>
 				<li id="email1">
 				  <div>이메일</div>
-				  <input type="email" id="recipientEmail" placeholder="변경하실 이메일 주소를 입력하세요" class="form-control" >
-				  <button type="button" id="sendButton">인증번호 전송</button>
-				  <button id="ChangeEmailBtn" class="hidden">변경하기</button>
+				  <input type="email" id="recipientEmail" placeholder="변경하실 이메일 주소를 입력하세요" th:value="${item.memEmail} "class="form-control" >
+				  <input type="button" id="sendButton" value="인증번호 전송">
 				</li>
 				<li id="email2" class="hidden">
 				  <div id="name">이메일</div>
 				  <input type="text" id="verificationCode" placeholder="인증번호 4자리를 입력하세요" class="form-control">
-				  <button type="button" id="verifyButton">인증번호 확인</button>
+				  <inbut type="button" id="verifyButton" value="인증번호 확인">
 				  <div id="message"></div>
 				</li>			
 				<li>
@@ -102,11 +100,11 @@
 					<div>이메일수신동의</div>
 					<div class="select">
 						<span>
-							<input type="radio" id="emailAgreeYes" name="emailAgree" value="예" th:checked="${item.emailAgree} == 1 " >
+							<input type="radio" id="emailAgreeYes" name="emailAgree" value="1" th:checked="${item.emailAgree} == 1 " >
 							<label for="emailAgreeYes">예</label>
 						</span>
 						<span>
-							<input type="radio" id="emailAgreeNo" name="emailAgree" value="아니오" th:checked="${item.emailAgree} == 0">
+							<input type="radio" id="emailAgreeNo" name="emailAgree" value="0" th:checked="${item.emailAgree} == 0">
 							<label for="emailAgreeNo">아니오</label>
 						</span>
 					</div>
@@ -115,17 +113,17 @@
 					<div>문자수신동의</div>
 					<div class="select">
 						<span>
-							<input type="radio" id="smsAgreeYes" name="smsAgree" value="예" th:checked="${item.smsAgree} == 1 ">
+							<input type="radio" id="smsAgreeYes" name="smsAgree" value="1" th:checked="${item.smsAgree} == 1 ">
 							<label for="smsAgreeYes">예</label>
 						</span>
 						<span>
-							<input type="radio" id="smsAgreeNo" name="smsAgree" value="아니오" th:checked="${item.smsAgree} == 0">
+							<input type="radio" id="smsAgreeNo" name="smsAgree" value="0" th:checked="${item.smsAgree} == 0">
 							<label for="smsAgreeNo">아니오</label>
 						</span>
 					</div>
 				</li>
 				<li>
-					<button>저장하기</button>
+					<input type="button" id="updateProfileBtn" value="저장하기">
 				</li>
 			</ul>
 		<th:block th:each="item : ${list}">
@@ -248,27 +246,34 @@ $('#verifyButton').on('click',function() {
 	});
 });
 
-// 이메일 변경
-$('#ChangeEmailBtn').on('click',function() {
-	let recipientEmail = $("#recipientEmail").val();
-	
-	$.ajax({
-		  type: "POST",
-		  url: "/profile",
-		  data: JSON.stringify({
-			  	memId: memId,
-			    memEmail: recipientEmail
-		  }),
-		  contentType: "application/json",
-		  success: function (response) {
-		    alert("이메일 변경 성공");
-		    $("#ChangeEmailBtn").hide();
-		    $("#email1").show();
-		  },
-		  error: function (xhr, status, error) {
-		    alert("이메일 변경 실패");
-		  }
-		});
+// 프로필 수정
+$(document).ready(function() {
+    $("#updateProfileBtn").click(function() {
+        var userVO = {
+            memId: $("#id").val(),
+            memNick: $("#nick").val(),
+            memEmail: $("#recipientEmail").val(),
+            memPhone: $("#to").val(),
+            emailAgree: $("input[name='emailAgree']:checked").val(),
+            smsAgree: $("input[name='smsAgree']:checked").val(),
+            memAddr: $("#addr").val()
+        };
+
+        $.ajax({
+            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
+            success: function(response) {
+                // 성공적으로 업데이트되었을 때의 동작
+                alert("정보가 성공적으로 수정되었습니다.");
+            },
+            error: function(xhr, status, error) {
+                // 업데이트 중에 오류가 발생했을 때의 동작
+                alert("정보수정에 실패하였습니다");
+            }
+        });
+    });
 });
 
 // 이미지 파일 변경

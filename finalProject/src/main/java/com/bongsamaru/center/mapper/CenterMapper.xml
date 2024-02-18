@@ -29,6 +29,24 @@
 	    )
 	  	WHERE RN BETWEEN #{start} AND #{end}
     </select>
+    <!-- 공지사항 상세 페이지 -->
+    <select id="getNoticeDetail" resultType="BoardVO">
+        	SELECT        	
+	        	board_id,
+	        	category,
+	        	title,
+	        	content,
+	        	write_date,
+	        	views,
+	        	priority,
+	        	mem_id,
+	        	mod_date,
+	        	detail_cate
+	        FROM board
+	        WHERE category = 'b01'
+            AND board_id = #{boardId}
+    </select>
+    
     <select id="getNoticeCount" resultType="int">
 		SELECT count(*) 
 		FROM board 

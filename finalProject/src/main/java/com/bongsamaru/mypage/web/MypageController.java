@@ -3,6 +3,7 @@ package com.bongsamaru.mypage.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -118,15 +119,20 @@ public class MypageController {
 	 }
 	 
 	 /**
-	  * 프로필 이메일 수정 아직 하는중
+	  * 프로필 수정 아직 하는중
 	  * @param userVO
 	  */
-	 
+
 	 // 수정
-	 @PostMapping("/profile")
-		public void updateEmail(@RequestBody UserVO userVO) {
-			mypageService.updateEmail(userVO);
-			
-		}
+	 @PostMapping("/updateProFile")
+	 @ResponseBody
+	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO) {
+	     int result = mypageService.updateProFile(userVO);
+	     if (result > 0) {
+	         return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	     } else {
+	         return ResponseEntity.badRequest().body("프로필 업데이트에 실패했습니다.");
+	     }
+	 }
 	 
 }

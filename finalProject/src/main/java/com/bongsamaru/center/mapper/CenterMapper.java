@@ -11,5 +11,6 @@ public interface CenterMapper {
 	public List<FaqVO> getFaqList(PageVO vo);
 	public int getFaqCategoryCount(String category);
 	public List<BoardVO> getNoticeList(PageVO vo);
+	public List<BoardVO> getNoticeDetail(Integer boardId);
 	public int getNoticeCount(PageVO vo);
 }

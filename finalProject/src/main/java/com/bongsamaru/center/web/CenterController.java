@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.center.service.CenterService;
 import com.bongsamaru.common.VO.BoardVO;
+import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.feed.service.FeedVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -103,6 +106,15 @@ public class CenterController {
 		 model.addAttribute("category",category);
 		 model.addAttribute("vo",vo);
 		 return "center/notice";
+	 }
+	 
+	 
+	 @GetMapping("/notice/{boardId}")
+	 public String noticeDetail(@PathVariable Integer boardId, Model model) {
+		 
+		 List<BoardVO> list = centerService.getNoticeDetail(boardId);
+		 model.addAttribute("list", list);
+		 return "center/noticeDetail";
 	 }
 	 
 	 /**

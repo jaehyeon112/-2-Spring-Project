@@ -28,11 +28,11 @@
   }
   
  .contenttext {
-  text-align:right;
+  text-align:left;
  }
  
  .link_thumb{
-  text-align:right;
+  text-align:left;
  }
 
 </style>
@@ -41,7 +41,6 @@
 	<section layout:fragment="content">
 		<th:block th:each="item : ${list}">
 			<div class="container">
-				<a href="/" style="text-align: right;">피드가기</a>
 				<div class="contenttext" id="temperature" title="">
 					<div style="font-size:14px; font-weight: bold;">[[${heart}]]ºC
 						<img alt="마음 온도" src="/userresources/image/banner/heart.jpg" style="width:30px; height: 30px;">
@@ -59,8 +58,10 @@
 				</div>
 				<h1 th:text="${item.memName}">이름</h1>
 				<a data-tiara-layer="profile_img" data-tiara-action-name="프로필수정_클릭" class="link_thumb" href="/pass">설정</a>
-			<div>
-					<input type="button" class="btn btn-seccess" value="기부하러가기">
+			<div>					
+					<input id="feedBtn" type="button" class="btn btn-seccess" value="내 피드가기">
+					<input id="gibuBtn" type="button" class="btn btn-seccess" value="기부하러가기">
+					<input id="bongsaBtn" type="button" class="btn btn-seccess" value="봉사하러가기">
 					<div class="a-tag-container" style="margin-bottom: 50px; margin-top: 50px;">
 					  <a href="/gibuList" class="a-tag">기부내역</a>
 					  <a href="/" class="a-tag">기부영수증</a>
@@ -82,6 +83,18 @@
 사이트 내 활동에 따라 마음온도가 오르거나 내려갑니다.
 여러분의 활발한 참여로 마음온도를 따뜻하게 유지해주세요!
 ` );
+
+	$("#gibuBtn").on('click',function(){
+		window.location.href = "/donaMain";
+	});
+	
+	$("#feedBtn").on('click',function(){
+		window.location.href = "/myfeed";
+	});
+	
+	$("#bongsaBtn").on('click',function(){
+		window.location.href = "/FacilityVol";
+	});
 	</script>
 	</section>
 </body>

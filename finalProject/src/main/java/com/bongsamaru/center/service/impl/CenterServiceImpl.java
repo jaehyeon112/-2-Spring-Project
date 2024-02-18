@@ -41,5 +41,9 @@ public class CenterServiceImpl implements CenterService{
     	return centerMapper.getNoticeCount(vo);
     }
     
-    
+    @Override
+    public List<BoardVO> getNoticeDetail(Integer boardId) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getNoticeDetail(boardId);
+    }
 }

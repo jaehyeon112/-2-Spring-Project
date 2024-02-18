@@ -12,4 +12,5 @@ public interface CenterService {
 	public int getFaqCategoryCount(String category);
 	public List<BoardVO> getNoticeList(PageVO vo);
 	public int getNoticeCount(PageVO vo);
+	public List<BoardVO> getNoticeDetail(Integer boardId);
 }
