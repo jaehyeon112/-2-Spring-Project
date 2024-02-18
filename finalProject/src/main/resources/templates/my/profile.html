@@ -45,6 +45,8 @@
      color: #fff;
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
 	<section layout:fragment="content">
@@ -53,13 +55,18 @@
 			<ul id="contents">
 				<li>
 					<div class="area_thumb">
-						<h1>내 정보 수정</h1>
-						  <span class="profile_thumb">
-						  	<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-							<img th:if="${item.memProfile} != null" id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
-						  	<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
-							<input type="button" class="uploadBtn" value="이미지 저장">
-						  </span>
+					  <h1>내 정보 수정</h1>
+					  <span class="profile_thumb">
+					    <div style="position: relative; display: inline-block;">
+					      <img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
+					      <img th:if="${item.memProfile} != null" id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+					      <label for="imageInput" class="custom-file-upload" style="position: absolute; top: 70px; left: 40px; z-index: 1;">
+					        <i class="fas fa-cloud-upload-alt"></i>
+					      </label>
+					      <input class="form-control" style="display:none;" id="imageInput" name="uploadFiles" type="file" multiple>
+					      <input type="button" id="uploadBtn" class="btn btn-primary" value="이미지 저장">
+					    </div>
+					  </span>
 					</div>
 				</li>
 				<li class="hidden">
@@ -88,7 +95,7 @@
 				<li id="email2" class="hidden">
 				  <div id="name">이메일</div>
 				  <input type="text" id="verificationCode" placeholder="인증번호 4자리를 입력하세요" class="form-control">
-				  <inbut type="button" id="verifyButton" value="인증번호 확인">
+				  <inbut type="button" class id="verifyButton" value="인증번호 확인">
 				  <div id="message"></div>
 				</li>			
 				<li>
