@@ -3,11 +3,17 @@ package com.bongsamaru.center.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.center.service.CenterService;
 import com.bongsamaru.common.VO.BoardVO;
@@ -15,6 +21,7 @@ import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.feed.service.FeedVO;
+import com.bongsamaru.user.service.UserDetailVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -133,8 +140,44 @@ public class CenterController {
 	  */
 	 @GetMapping("receipt")
 	 public String receiptPage() {
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	         Object principal = auth.getPrincipal();
+
+	         if (principal instanceof UserDetails) {
+	             UserDetailVO userDetailVO = (UserDetailVO) principal;
+	             System.out.println(userDetailVO.getUserVO() + " 확인");
+
+			 }
+			 return "center/receipt"; 
+		 }else {
+			 return "login/FacilityLogin";
+		 }
 		 
-		 return "center/receipt";
 	 }
 	 
+	 @PostMapping("/insertInquiry")
+	 @ResponseBody // ajax호출 return 값
+	 public String insertInquiry(@RequestParam String title,@RequestParam String content, Model model) {
+	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	         Object principal = auth.getPrincipal();
+
+	         if (principal instanceof UserDetails) {
+	             UserDetailVO userDetailVO = (UserDetailVO) principal;
+	             System.out.println(userDetailVO.getUserVO() + " 확인");
+
+	             model.addAttribute("userVO", userDetailVO.getUserVO());
+	             String memId = userDetailVO.getUserVO().getId();
+	             
+	             return Integer.toString(centerService.insertInquiry(title,content,memId));
+	             
+	         }
+	         return "1";
+	     }else {
+	    	 return "0";
+	     }
+	 }
 }
