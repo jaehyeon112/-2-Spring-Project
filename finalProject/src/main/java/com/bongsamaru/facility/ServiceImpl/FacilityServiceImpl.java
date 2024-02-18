@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
 import com.bongsamaru.common.VO.LikeVO;
@@ -16,6 +17,7 @@ import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.mapper.FacilityMapper;
+import com.bongsamaru.mypage.service.HeartVO;
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
@@ -128,9 +130,26 @@ public class FacilityServiceImpl implements FacilityService {
 
 		//마음온도
 		@Override
-		public int insertVolHeart(LikeVO likeVO) {
+		public int insertVolHeart(HeartVO heartVO) {
+			return mapper.insertVolHeart(heartVO);
+		}
+
+		@Override
+		public void insertVolReview(BoardVO boardVO) {
+			mapper.insertVolReview(boardVO);
 			
-			return mapper.insertVolHeart(likeVO);
+		}
+		@Override
+		public int updateVolReview(BoardVO boardVO) {
+			return mapper.updateVolReview(boardVO);
+		}
+		@Override
+		public BoardVO getVolReviewInfo(Integer detailCate) {
+			return mapper.getVolReviewInfo(detailCate);
+		}
+		@Override
+		public int getJoinAppCheck(Integer volActId, String memId) {
+			return mapper.getJoinAppCheck(volActId, memId);
 		}
 
 

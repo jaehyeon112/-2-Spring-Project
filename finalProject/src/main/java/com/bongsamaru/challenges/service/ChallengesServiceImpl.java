@@ -87,7 +87,7 @@ public class ChallengesServiceImpl implements ChallengesService{
 	public int reportInsert(ReportVO reportVO) {
 		int result = challengeMapper.reportInsert(reportVO);
 		if(result ==1) {
-			return reportVO.getRepId();
+			return result;
 		}else {
 			return -1;
 		}	

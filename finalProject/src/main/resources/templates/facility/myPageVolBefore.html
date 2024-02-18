@@ -105,18 +105,18 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
    
 	<nav class="blog-pagination justify-content-center d-flex">
 		<ul class="pagination">
-			<li class="page-item"><a th:href="@{/facilityMyPage/volJoin(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
+			<li class="page-item"><a th:href="@{/fac/volJoin(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
 				aria-label="Previous"> <span aria-hidden="true"> <span
 						class="lnr lnr-chevron-left"></span>
 				</span>
 			</a></li>
 			
 			<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-	            <a class="page-link" th:href="@{/facilityMyPage/volJoin(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
+	            <a class="page-link" th:href="@{/fac/volJoin(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
 	               th:text="${pageNum}"></a>
 	        </li>
 			
-			<li class="page-item"><a th:href="@{/facilityMyPage/volJoin(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
+			<li class="page-item"><a th:href="@{/fac/volJoin(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
 				aria-label="Next"> <span aria-hidden="true"> <span
 						class="lnr lnr-chevron-right"></span>
 				</span>

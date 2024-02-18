@@ -6,20 +6,22 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.bongsa.service.BongsaService;
+import com.bongsamaru.challenges.service.ChallengesService;
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
-import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.SubCodeVO;
 import com.bongsamaru.common.VO.VolActVO;
@@ -29,6 +31,8 @@ import com.bongsamaru.common.mapper.CommonMapper;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.file.service.FileService;
+import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.mypage.service.HeartVO;
 
 import lombok.extern.log4j.Log4j2;
 /**
@@ -45,11 +49,12 @@ public class facilityController {
 	FacilityService facilityService;
 	@Autowired
     private FileService fileService;
-
 	@Autowired
 	CommonMapper commonMapper;
 	@Autowired
 	BongsaService bongsaService;
+	@Autowired
+	ChallengesService challengeService;
 	
 	/**
 	 * 사이트에 가입한 시설 리스트
@@ -239,6 +244,8 @@ public class facilityController {
 	  @GetMapping("/facilityVolInfo")
 	  @ResponseBody
 	  public VolActVO getFacVolInfo(Model model, Integer volActId) { 
+		  
+		
 		  VolActVO info = facilityService.getFacVolInfo(volActId);
 		  model.addAttribute("info", info);
 		  return info;
@@ -247,12 +254,22 @@ public class facilityController {
 	//회원이 시설봉사 신청
 	@PostMapping("/joinVol")
 	@ResponseBody
-	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal) {
-		
+	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal){
+		volMemVO.setMemId(principal.getName());
+		model.addAttribute("userId", principal.getName());
+		log.info(principal.getName());
 		int joinVol = facilityService.insertJoinVolunteer(volMemVO);
 		log.info(joinVol);
 		return joinVol;
 	}
+	@GetMapping("/getJoinAppCheck")
+	  @ResponseBody
+	  public int getJoinAppCheck(Model model, @RequestParam(name="volActId") Integer volActId, @RequestParam(name="memId")String memId) { 
+		  int info = facilityService.getJoinAppCheck(volActId,memId);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
+	
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody
@@ -271,12 +288,65 @@ public class facilityController {
 		
 	@PostMapping("/InsertVolHeart")
 	@ResponseBody
-	public int volHeartInsert (LikeVO likeVO, Principal principal) {
-		likeVO.setMemId(principal.getName());
-		int result = facilityService.insertVolHeart(likeVO);
+	public int volHeartInsert (@RequestBody HeartVO heartVO, Principal principal) {
+		int result = facilityService.insertVolHeart(heartVO);
 		return result;
 	}
+	/**
+	 * 봉사후기 등록페이지
+	 * @return
+	 */
+	@GetMapping("volReviewInsert")
+	public String insertVolReview(Model model, Integer volActId) {
+		
+		//model.addAttribute("volActId",volActId);
+		
+		return "facility/volReview";
+	}
+	/**
+	 * 봉사후기 등록 프로세스
+	 * @param boardVO
+	 * @return 
+	 * @return
+	 */
+	@PostMapping("volReviewInsert")
+	@ResponseBody
+	public BoardVO insertVolReview( BoardVO boardVO, Principal principal) {
+		boardVO.setMemId(principal.getName());
+		facilityService.insertVolReview(boardVO);
+		/*
+		 * try { fileService.uploadFiles(uploadFiles,"p16",
+		 * volActId,boardVO.getMemId());
+		 * 
+		 * } catch (IOException e) { e.printStackTrace(); }
+		 */
+		return boardVO;
+	}
+	/**
+	 * 봉사후기 info
+	 * @param category
+	 * @param detailCate
+	 * @param codeNo
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("volReviewInfo")
+	public String getNoticeOne(@RequestParam(name="code") Integer code,@RequestParam(name="detailCate") Integer detailCate,@RequestParam(name="codeNo") String codeNo,Model model) {
+		BoardVO vo = facilityService.getVolReviewInfo(detailCate);
+		List<FilesVO> files = challengeService.getFileList(code, codeNo);
+		model.addAttribute("files",files);
 	
-	
-	
+		model.addAttribute("info",vo);
+		return "facility/volReviewInfo";
+	}
+	/**
+	 * 봉사후기수정
+	 * @param boardVO
+	 * @return
+	 */
+	@PostMapping("updateVolReview")
+	public String updateVolReview(BoardVO boardVO) {
+		facilityService.updateVolReview(boardVO);
+		return "redirect:boardList?category=b03";
+	}
 }

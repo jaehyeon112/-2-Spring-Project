@@ -48,11 +48,20 @@
 		<div class="container">
 			<div class="row">
 				<th:block th:each="list: ${challengesList}">
-				<div class="col-lg-8">
+				<div class="col-lg-4">
 					<div class="blog_left_sidebar">
 						<div class="col-md-4 gallery_item">
-							<img th:each="file : ${list.file}" th:src="${file.filePath}">
-							[[${list.chalDetId}]]
+							
+<!-- 이미지 파일일 경우 -->
+<div th:if="${list.file.extension.startsWith('image')}">
+    <img th:each="file : ${list.file}" th:src="${file.filePath}">
+</div>
+
+<!-- 비디오 파일일 경우 -->
+<div th:if="${list.file.extension.startsWith('video')}">
+    <video controls th:each="video : ${list.file}" th:src="${video.filePath}"></video>
+</div>
+						
 							<svg  onclick="openModal('${list.chalDetId}')" data-toggle="modal" data-target="#myModal3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/></svg>					
 		    			</div>				
 							<div class="hover">
@@ -102,15 +111,15 @@
       <div class="modal-body">
 		 <div class="form-group">
 		    <label class="form-check-label" for="s01">스팸홍보/도배글
-		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" th:attr="onclick='getRadioValue()'"></label>
+		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" checked></label>
 		    <label class="form-check-label" for="s02">음란물
-		    <input class="form-check-input" id="s02" type="radio" name="reason" value="s02" th:attr="onclick='getRadioValue()'"></label>
+		    <input class="form-check-input" id="s02" type="radio" name="reason" value="s02"  ></label>
 		    <label class="form-check-label" for="s03">불법정보 포함
-		    <input class="form-check-input" id="s03" type="radio" name="reason" value="s03" th:attr="onclick='getRadioValue()'"></label>
+		    <input class="form-check-input" id="s03" type="radio" name="reason" value="s03"  ></label>
 		    <label class="form-check-label" for="s04">혐오/차별적 표현
-		    <input class="form-check-input" id="s04" type="radio" name="reason" value="s04" th:attr="onclick='getRadioValue()'"></label>
+		    <input class="form-check-input" id="s04" type="radio" name="reason" value="s04"  ></label>
 		    <label class="form-check-label" for="s05">주제와 상관이 없음
-		    <input class="form-check-input" id="s05" type="radio" name="reason" value="s05" th:attr="onclick='getRadioValue()'"></label>
+		    <input class="form-check-input" id="s05" type="radio" name="reason" value="s05"  ></label>
 		</div>
       </div>
       <div class="modal-footer">
@@ -220,39 +229,38 @@
 
 		});
 
-		function getRadioValue() {
-		    
-			 var reason = $('input[name="reason"]:checked').val();
-			 console.log(reason); 
-			 var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
-			 console.log(boardId);
-			    $('.reportBtn').click(function () {
-			    	let info = {
-			    			categoryNo:boardId, 
-			    			repReason:reason	
-			    			
-			    	}
-			    $.ajax({
-			        url: '/reportInsert', // 실제 서버의 URL로 수정해야 함
-			        type: 'POST',
-					data: info, // JSON 형식으로 데이터 전달
-				    
-			        success: function (result) {
-			            console.log(result);
-			            alert('성공!');
-			        },
-			        error: function (reject) {
-			        
-			            alert('실패!');
-			            console.log(reject);
-			        }
-			    });
-			});
-		} 
+	
+		 reason = $('input[name="reason"]:checked').val();
+		 console.log(reason); 
+		 var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
+		 console.log(boardId);
 function openModal(chalDetId) {
 	
-	getRadioValue();
-}  
+	    $('.reportBtn').click(function () {
+	    	let info = {
+	    			categoryNo:boardId, 
+	    			repReason:reason	
+	    			
+	    	}
+	    	console.log(info);
+	    	$.ajax({
+	    		   url: '/reportInsert', // 실제 서버의 URL로 수정해야 함
+	    		   type: 'POST',
+	    		   contentType: 'application/json', // 컨텐츠 타입을 JSON으로 지정
+	    		   data: JSON.stringify(info), // JavaScript 객체를 JSON 문자열로 변환
+	    		   success: function (result) {
+	    		       console.log(result);
+	    		       alert('성공!');
+	    		   },
+	    		   error: function (reject) {
+	    		       alert('실패!');
+	    		       console.log(reject);
+	    		   }
+	    		}); 
+ 
+	});
+} 
+
 
 
 
