@@ -381,10 +381,10 @@ public class DonaController {
 		donaService.insertReview(donaVO);
 
 		int codeNo = donaVO.getDonId();
-		String code = "p08";
+		String code = "p16";
 		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
 
-		return "redirect:my/mapage";
+		return "후기등록성공!";
 	}
 
 					// 템플릿 놔둔곳... 입니다.. (삭제)

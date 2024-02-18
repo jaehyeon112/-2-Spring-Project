@@ -8,6 +8,23 @@
     <title> 등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
     <!-- 다른 필요한 CSS 파일 여기에 추가 -->
+    
+    <style>
+    .form-select{
+    width: 20%;
+    }
+    
+    .form-control-sm {
+        width: 50%; /* 현재 크기의 1/3로 조정 */
+    }
+    
+    .form-control[type="file"] {
+        width: 33.33%; /* Set to one-third of the current size */
+    }
+
+    
+    </style>
+    
 </head>
 <body>
  <section layout:fragment="content" >
@@ -20,13 +37,13 @@
 
     <div class="form-group">
       <label for="formFile" class="form-label mt-4">영수증 첨부</label>
-      <input class="form-control" type="file" name="file" id="formFile">
+      <input class="form-control" type="file" name="uploadfiles" id="formFile">
     </div>
  
   
     <div class="form-group">
       <label for="execAmt" class="form-label mt-4">총 집행금액</label>
-      <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off">
+      <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
 <!--       
     <div class="form-group">
@@ -37,20 +54,26 @@
     
     <div class="form-group">
       <label for="period" class="form-label mt-4"> 사업집행기간 (DATE)</label>
+       <div class="row">
+        <div class="col-md-3">
       <input type="date" class="form-control" name="startPeriod" th:datetime="${#dates.format(startPeriod, 'yyyy-MM-dd')}" id="startPeriod" placeholder="기부모금시작 " autocomplete="off">
+      </div>
+        <div class="col-md-3">
       <input type="date" class="form-control" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" id="endPeriod" placeholder="기부모금종료기간 " autocomplete="off">
+    </div>
+    </div>
     </div>
 
 
     <div class="form-group">
       <label for="bizCost" class="form-label mt-4">총사업비</label>
-      <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off">
+      <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
     
     
     <div class="form-group">
       <label for="usePlan" class="form-label mt-4">기부금 사업내역(bizcontent, bizAmt)</label>
-      <div id = "dynamicFields" class="mb-3">
+      <div id = "dynamicFields" class="mb-3" style="width: 66.66%;">
       	<div class="input-group">
 	      <input type="text" class="form-control" name="bizContent" id="usePlan" placeholder="구체적사업내용" autocomplete="off"> 
 	      <input type="text" class="form-control" name="bizAmt" placeholder="구체적사업비(원)" autocomplete="off">
@@ -62,12 +85,12 @@
     
     <div class="form-group">
 	  <label for="review" class="form-label mt-4">후기글</label>
-	    <div id="articleContainer" class="mb-3">
+	    <div id="articleContainer" class="mb-3" style="width: 66.66%;">
 	        <div class="input-group">
-	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off">
+	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off" >
 	        </div>
 	        <div class="input-group">
-	            <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+	            <textarea class="form-control" name="content" id="content" rows="3" ></textarea>
 	        </div>
 	        
 	    </div>
@@ -78,28 +101,14 @@
 	    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
 	    <div id="formFile2Container" class="mb-3">
 	        <div class="input-group">
-	            <input class="form-control" type="file" name="uploadfiles" id="formFile2">
+	            <input class="form-control" type="file" name="uploadfiles" id="formFile2" style="width: 66.66%;">
 	            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
 	        </div>
 	    </div>
 	</div>
     
     
-    <fieldset class="form-group">
-      <legend class="mt-4">필수 동의 </legend>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          유의사항을 읽었습니다.
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
-        <label class="form-check-label" for="flexCheckChecked">
-         약관동의합니다.
-        </label>
-      </div>
-    </fieldset>
+
 
     
     <button type="button" class="btn btn-primary" onclick="submitForm()">등록하기 </button>
@@ -160,7 +169,7 @@ console.log(facId);
 	
     
     
-		    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+		    document.querySelectorAll('form[name="reviewForm"] input').forEach(function(input) {
 		        console.log(input.name + ': ' + input.value);
 		    });
     

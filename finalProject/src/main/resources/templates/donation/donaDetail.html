@@ -513,6 +513,10 @@
                for(let i= 0; i < data.length; i++){
                   
                   console.log(data[i]);
+               // 기부자가 익명인 경우 "익명"으로 표시, 그렇지 않으면 memId 값을 표시
+                  let donorName = (data[i].anonCheck === 1) ? "익명" : data[i].memId;
+                  
+                  donerList += "기부자 목록: " + donorName + ", " + data[i].donAmt + ", " + dateFormat(data[i].payDate) + "<br>";
                   donerList += "기부자 목록: " + data[i].memId + ", " + data[i].donAmt + ", " + dateFormat(data[i].payDate) + "<br>";
                    
                }
