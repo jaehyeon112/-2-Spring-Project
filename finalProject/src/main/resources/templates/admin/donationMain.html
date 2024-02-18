@@ -14,7 +14,6 @@
 	margin-top : 50px;
 }
 </style>
-
 <script>
 		function show1(){
 			$('#tableData').load("../donationMain?recStat=0 #current");
@@ -25,12 +24,24 @@
 		
 		//진행중인 프로젝트 상세 장부
 		function aler(id){
-			$('#tableData').load("../facDonationLedgerList?donId="+id+" #fac");
+			$('#tableData').load("../facDonationLedgerList?recStat=0&donId="+id+" #fac");
 		};
 		
 		//종료된 프로젝트 상세 장부
 		function aler2(id){
-			$('#tableData').load("../facDonationLedgerList?donId="+id+" #fac2");
+			$('#tableData').load("../facDonationLedgerList?recStat=1&donId="+id+" #fac2");
+		};
+		
+		function dateFormat(value, format) {
+		    let date = value == "" ? new Date() : new Date(value);
+		    let year = date.getFullYear();
+		    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+		    let day = ("0" + date.getDate()).slice(-2);
+		    let result = format
+		      .replace("yyyy", year)
+		      .replace("MM", month)
+		      .replace("dd", day);
+		    return result;
 		};
 </script>
 </head>
@@ -49,7 +60,7 @@
 		</div>
 		<div id="tableData">
 		<!-- 현재 진행중인 프로젝트 장부 시작-->
-		<div id="current">
+		<div th:if="${vo.recStat}==0" id="current">
 			<div class="btn-group" style="float:right;">
 			  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 			    프로젝트별
@@ -78,11 +89,28 @@
 						</tr>
 				</tbody>
 			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/donationMain(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, recStat=0)}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/donationMain(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage}, recStat=0)}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/donationMain(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage}, recStat=0)}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
 		</div>
 		<!-- 현재 진행중인 프로젝트 장부 종료 -->
 			
 		<!-- 종료된 프로젝트 장부 -->	
-		<div th:if="${recStat}==1" id="ending">
+		<div th:if="${vo.recStat}==1" id="ending">
 			<div class="btn-group" style="float:right;">
 			  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 			    프로젝트별
@@ -111,6 +139,23 @@
 							</tr>
 					</tbody>
 				</table>
+				<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/donationMain(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, recStat=1)}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/donationMain(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage}, recStat=1)}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/donationMain(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage}, recStat=1)}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
 			</div>
 			<!-- 종료된 프로젝트 장부 종료-->	
 			

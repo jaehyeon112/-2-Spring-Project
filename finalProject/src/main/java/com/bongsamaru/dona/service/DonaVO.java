@@ -26,13 +26,15 @@ public class DonaVO {
 	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
-	    private String recStat ="1"; //모집현황(c3)
+	    //private String recStat ="1"; //모집현황(c3)
+	    private Integer recStat;
 	    private String intro; //소개 (v2000) : 젤 위에표시되는 애
 	    private String introTitle;// 소개글제목
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
 
 	    private String category; // 유형
+	    private Integer RN; // 유형
 
 
 	    private String paidCode;

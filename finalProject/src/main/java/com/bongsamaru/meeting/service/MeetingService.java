@@ -17,12 +17,12 @@ public interface MeetingService {
 	public int approveMeeting(VolMemVO vo);
 	public int meetingVolActListCnt(Integer volId);
 	public List<VolActVO> meetingVolActListPaging(PageVO pageVO);
-	public List<VolMemVO> meetingMemList(Integer volId);
+	public List<VolMemVO> meetingMemList(VolMemVO vo);
 	public List<VolMemVO> MemVolActList(Integer volId,String memId);
-	public List<VolMemVO> volCnt(Integer volId);
+	public List<VolMemVO> volCnt(VolMemVO vo);
 	public int volActMemCnt(Integer volActId);
 	public List<VolActVO> volActReviewListPaging(PageVO pageVO);
-	public int volActReviewListCnt(Integer volId);
+	public int volActReviewListCnt(VolActReviewVO vo);
 	public int findMember(Integer volId,String memId);
 	public String findFile(String code,Integer codeNo);
 	public int insertBoard(FreeBoardVO vo);

@@ -51,7 +51,7 @@ xmlns:th="http://www.thymeleaf.org">
               <span class="hide-menu">관리</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" th:href="@{/userList?memStat=m02}" aria-expanded="false">
+              <a class="sidebar-link" href="/userList" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
@@ -59,7 +59,7 @@ xmlns:th="http://www.thymeleaf.org">
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" th:href="@{approve}" aria-expanded="false">
+              <a class="sidebar-link" href="/approve?memApp=0" aria-expanded="false">
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
@@ -127,7 +127,7 @@ xmlns:th="http://www.thymeleaf.org">
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="/donationList" aria-expanded="false">
+              <a class="sidebar-link" href="/donationList?recStat=0" aria-expanded="false">
                 <span>
                   <i class="ti ti-archive"></i>
                 </span>
