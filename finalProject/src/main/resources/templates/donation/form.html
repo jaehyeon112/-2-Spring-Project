@@ -7,6 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
+    
+    <style>
+    .form-select{
+    width: 20%;
+    }
+    
+    .form-control-sm {
+        width: 50%; /* 현재 크기의 1/3로 조정 */
+    }
+    
+    .form-control[type="file"] {
+        width: 33.33%; /* Set to one-third of the current size */
+    }
+
+    
+    </style>
+    
   <!-- jQuery 라이브러리 추가 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -24,7 +41,7 @@
 
 <form name="donaForm" >
   <fieldset>
-    <legend> Donation Regit Form </legend>
+    <legend> 기부등록폼 </legend>
 
     
     
@@ -37,15 +54,25 @@
     
     <div class="form-group">
       <label for="title" class="form-label mt-4"><span style="color:red">*</span>주 제목</label>
-      <input type="text" name="title" class="form-control" id="title"  aria-describedby="titleHelp" placeholder="메인 제목" >
+      <input type="text" name="title"  class="form-control form-control-sm" id="title"  aria-describedby="titleHelp" placeholder="메인 제목" >
       <small id="titleHelp" class="form-text text-muted">메인 화면에 보이는 제목입니다.</small>
     </div>
+
     
     <div class="form-group">
-      <label for="recPeriod" class="form-label mt-4"><span style="color:red">*</span>기부모금기간 (DATE)</label>
-      <input type="date" name="recPeriod" th:datetime="${#dates.format(recPeriod, 'yyyy-MM-dd')}" class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
-      <input type="date" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
+    <label for="recPeriod" class="form-label mt-4"><span style="color:red">*</span>기부모금기간 (DATE)</label>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="date" name="recPeriod" th:datetime="${#dates.format(recPeriod, 'yyyy-MM-dd')}" class="form-control" id="recPeriod"  placeholder="기부모금시작 " autocomplete="off">
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" class="form-control" id="endPeriod"  placeholder="기부모금종료기간 " autocomplete="off">
+        </div>
     </div>
+</div>
+
+
+
 
     <div class="form-group">
       <label for="formFile" class="form-label mt-4"> <span style="color:red">*</span>이미지 첨부파일 </label>
@@ -56,15 +83,15 @@
     
     <div class="form-group">
       <label for="goalAmt" class="form-label mt-4"><span style="color:red">*</span>목표모금액</label>
-      <input name="goalAmt" type="text" class="form-control" id="goalAmt"  placeholder="(원)" autocomplete="off">
+      <input name="goalAmt" type="text" class="form-control" id="goalAmt"  placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
 
     <div class="form-group">
       <label for="usePlan" class="form-label mt-4"><span style="color:red">*</span>기부금사용계획(+)</label>
-      <div id = "dynamicFields" class="mb-3">
-      	<div class="input-group">
-	      <input type="text" name="usePlan" class="form-control" id="usePlan"  placeholder="구체적사업내용" autocomplete="off"> 
-	      <input type="text" name="usePlanAmt" class="form-control" id="usePlanAmt"  placeholder="구체적사업비" autocomplete="off">
+      <div id = "dynamicFields" class="mb-3" style="width: 66.66%;">
+      	<div class="input-group" >
+	      <input type="text" name="usePlan" class="form-control" id="usePlan"  placeholder="구체적사업내용" autocomplete="off" > 
+	      <input type="text" name="usePlanAmt" class="form-control" id="usePlanAmt"  placeholder="구체적사업비" autocomplete="off" >
 	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
@@ -72,25 +99,25 @@
 
     <div class="form-group">
       <label for="projTarget" class="form-label mt-4"><span style="color:red">*</span>사업대상</label>
-      <input type="text" name="projTarget" class="form-control" id="projTarget"  placeholder="기부금 사업대상 입력" autocomplete="off">
+      <input type="text" name="projTarget" class="form-control" id="projTarget"  placeholder="기부금 사업대상 입력" autocomplete="off" style="width: 50%;">
     </div>
 
 
     <div class="form-group">
       <label for="expEffect" class="form-label mt-4"><span style="color:red">*</span>기대효과</label>
-      <textarea name="expEffect" class="form-control" id="expEffect"  rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야."></textarea>
+      <textarea name="expEffect" class="form-control" id="expEffect"  rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야." style="width: 66.66%;"></textarea>
     </div>
     
 
 
     <div class="form-group">
 	  <label for="intro" class="form-label mt-4">소개글</label>
-	    <div id="articleContainer" class="mb-3">
-	        <div class="input-group">
-	        	<input type="text"  name="introTitle" class="form-control" id="introTitle" placeholder="제목" autocomplete="off">
+	    <div id="articleContainer" class="mb-3" style="width: 66.66%;">
+	        <div class="input-group" >
+	        	<input type="text"  name="introTitle" class="form-control" id="introTitle" placeholder="제목" autocomplete="off" >
 	        </div>
 	        <div class="input-group">
-	            <textarea name="intro" class="form-control" id="intro" rows="3"></textarea>
+	            <textarea name="intro" class="form-control" id="intro" rows="3" ></textarea>
 	        </div>
 	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs('articleContainer')">+</button>
 	    </div>
@@ -98,9 +125,9 @@
     
 <div class="form-group">
     <label for="link" class="form-label mt-4">관련링크(+)</label>
-    <div id="relatedLinkContainer" class="mb-3">
+    <div id="relatedLinkContainer" class="mb-3" style="width: 60%;">
         <div class="input-group">
-            <input type="text" class="form-control" id="link" name="link" placeholder="null 가능" autocomplete="off">
+            <input type="text" class="form-control" id="link" name="link" placeholder="null 가능" autocomplete="off" >
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('relatedLinkContainer')">+</button>
         </div>
     </div>
@@ -110,12 +137,13 @@
 <div class="form-group">
     <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
     <div id="formFile2Container" class="mb-3">
-        <div class="input-group">
+        <div class="input-group" style="width: 33.33%;">
             <input class="form-control" type="file" id="formFile2" name="file">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
         </div>
     </div>
 </div>
+
     
     
     <fieldset class="form-group">
@@ -123,14 +151,14 @@
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">
-        <span style="color:red">*</span>
+       
           유의사항을 읽었습니다.
         </label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" >
         <label class="form-check-label" for="flexCheckChecked">
-        <span style="color:red">*</span>
+      
          약관동의합니다.
         </label>
       </div>
@@ -186,7 +214,15 @@ function submitForm() {
     document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
         console.log(input.name + ': ' + input.value);
     });
- 
+ 	
+    // 유의사항과 약관 동의 여부 확인
+    let flexCheckDefault = document.getElementById('flexCheckDefault').checked;
+    let flexCheckDefault2 = document.getElementById('flexCheckDefault2').checked;
+
+    if (!flexCheckDefault && !flexCheckDefault2) {
+        alert('유의사항을 읽고 약관에 동의해야 합니다.');
+        return;
+    }
 
     // FormData 서버전송 
 
@@ -293,7 +329,7 @@ function submitForm() {
                 `</div>`;
         } else if (type === "formFile2Container") {
             newFields.innerHTML =
-                `<div class="input-group">` +
+                `<div class="input-group" style="width: 33.33%;">` +
                 `<input class="form-control" type="file" name="formFiles[${count}]" id="formFile2${count}">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
