@@ -92,6 +92,17 @@ public class DonaServiceImpl implements DonaService {
 		
 	}
 	
+	//기부신청 관리자 알람
+	@Override
+	public int applyAlertDona(DonaVO donaVO) {
+		int result = donaMapper.applyAlertDona(donaVO);
+		if(result == 1) {
+			return donaVO.getAlertId();
+		}else {
+			return -1; 
+		}
+	}
+	
 	//기부등록폼
 	@Transactional
 	@Override
@@ -107,7 +118,8 @@ public class DonaServiceImpl implements DonaService {
 	@Override
 	public int insertReview(DonaVO donaVO) {
 		donaMapper.insertReview(donaVO);
-		return donaMapper.insertReviewDetail(donaVO);
+		donaMapper.insertReviewDetail(donaVO);
+		return donaMapper.reviewAlertDona(donaVO);
 	}
 
 	
@@ -147,7 +159,11 @@ public class DonaServiceImpl implements DonaService {
 		return 0;
 	}
 	
-	
+	@Override
+	public int reviewAlertDona(DonaVO donaVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

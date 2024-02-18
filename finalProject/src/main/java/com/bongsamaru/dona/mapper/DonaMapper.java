@@ -54,13 +54,17 @@ public interface DonaMapper {
 	//기부글등록 관리자 알람
 		public int insertAlertDona(DonaVO donaVO);
 		
+	// 기부신청 관리자알람
+		public int applyAlertDona(DonaVO donaVO);
+		
 	//기부후기등록
 		public int insertReview(DonaVO donaVO);
 		
 	//기부후기등록2
 		public int insertReviewDetail(DonaVO donaVO);
-		
-	//기부후기 개별
+	//후기등록 관리자 알람
+		public int reviewAlertDona(DonaVO donaVO);
+	//기부후기 개별조회
 		public DonaVO getDonaReview(Integer donId);
 	
 	//결제프로세스

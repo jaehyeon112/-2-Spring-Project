@@ -156,7 +156,7 @@
                             <th:block th:each="dona:${donaList1}">
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
-                                     <p th:text="${dona.title}"></p>
+                                     <p><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}"></a></p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -179,7 +179,7 @@
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
                                       
-                                        <a class="book_now_btn button_hover" href="/reviewform">후기작성</a>
+                                        <a class="book_now_btn button_hover" th:attr="data-donId=${dona.donId},data-facId=${dona.facId}" onclick="openReviewForm(this)">후기작성</a>
                                     </div>
                                 </div>
                                 </th:block>   
@@ -305,10 +305,18 @@ function openSuccessModal() {
 
     // 모달이 닫힐 때 이벤트 리스너 등록
     $("#successModal").on("hidden.bs.modal", function () {
-        // 모달 닫힌 후 실행할 동작 작성
-        // 예를 들면 페이지 새로고침 등
-        location.reload(); // 새로고침 예시
+        // 모달 닫힌 후 실행할 동작
+        
+        location.reload(); // 새로고침
     });
+}
+
+function openReviewForm(button) {
+    var donId = button.getAttribute("data-donId");
+    var facId = button.getAttribute("data-facId");
+    // donId와 facId를 이용하여 후기 작성 페이지로 이동
+    var reviewUrl = '/reviewform?donId=' + donId + '&facId=' + facId;
+    window.location.href = reviewUrl;
 }
 
 </script>

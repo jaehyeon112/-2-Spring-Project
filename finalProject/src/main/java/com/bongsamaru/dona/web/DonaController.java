@@ -294,6 +294,13 @@ public class DonaController {
 	public String openapplyform(Model model) {
 		return "donation/forDonaform";
 	}
+	
+	@PostMapping("/applydona")
+	@ResponseBody
+	public String applyDona(DonaVO donaVO, Model model) {
+		donaService.applyAlertDona(donaVO);
+		return "신청완료";
+	}
 
 	/**
 	 * 
