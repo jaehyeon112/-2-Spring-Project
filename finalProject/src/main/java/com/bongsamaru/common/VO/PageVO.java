@@ -20,6 +20,13 @@ public class PageVO {
     
     private int startPage;
     private int endPage;
+    
+    
+    private int memApp;
+    private int donApp;
+    private int donRegApp;
+    private Integer recStat;
+    private int donId;
    
 
     // Getter와 Setter 메서드
@@ -119,7 +126,7 @@ public class PageVO {
 			this.endPage = this.totalPage;
         System.out.println(this.endPage + "스타트");
     }
-    
+    //영희꺼
     public PageVO(int total, int start, int end, Integer volId, String category) {
         this.total = total;
         this.volId = volId;

@@ -84,7 +84,7 @@ public class UserController {
 		List<DonaVO> before = new ArrayList<>();
 		
 		for(DonaVO vo : donaList) {
-			if(vo.getRecStat().equals('0')) {
+			if(vo.getRecStat().equals("0")) {
 				before.add(vo);
 			}
 		}
@@ -107,9 +107,6 @@ public class UserController {
 		List<VolunteerVO> facVol = userService.facVolunteerList();
 		model.addAttribute("facVol", facVol);
 		
-		log.info(facVol);	//sysout 대신에 더 상세하게 어디서 적히는지 알 수 있음
-//		List<AlertVO> alert = userService.alertList();
-//		model.addAttribute("alert", alert);
 		return "admin/adminMain";
 	}
 	
@@ -153,11 +150,18 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("donationMain")
-	public String donationMain(@RequestParam(defaultValue = "0", required = false) String recStat,Model model) {
+	public String donationMain(PageVO vo, Model model
+								, @RequestParam(value="recStat", required = false)Integer recStat
+								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		//기부금 장부 리스트
-		List<DonaVO> ledger = userService.donationLedgerList(recStat);
+		int total = userService.donationLedgerCnt(vo);      
+        vo = new PageVO(total, start, end, null ,10); 
+        vo.setRecStat(recStat);
+        List<DonaVO> ledger = userService.donationLedgerList(vo);
+		
 		model.addAttribute("dona", ledger);
-		model.addAttribute("recStat",recStat);
+		model.addAttribute("vo",vo);
 		
 		//기부금 프로젝트 리스트
 		List<DonaVO> donaList = donaService.getDonaList();
@@ -172,12 +176,22 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("facDonationLedgerList")
-	public String facDonationLedgerList(@RequestParam(name="donId") Integer donId, Model model) {
-		//
-		List<DonaVO> list = userService.facDonLedgerList(donId);
-		model.addAttribute("fac", list);
+	public String facDonationLedgerList(PageVO vo, Model model, @RequestParam(value="recStat", required = false)Integer recStat
+										, @RequestParam(value="donId", required = false)Integer donId
+										, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+										, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		System.out.println("cnt전"+vo);
+		int total = userService.facDonLedgerCnt(vo); 
 		
-		//
+        vo = new PageVO(total, start, end, null ,10);	
+        vo.setDonId(donId);
+        vo.setRecStat(recStat);
+		List<DonaVO> list = userService.facDonLedgerList(vo);
+		
+		System.out.println(vo);
+		model.addAttribute("fac", list);
+		model.addAttribute("vo",vo);
+		
 		List<DonaVO> donaList = donaService.getDonaList();
 		model.addAttribute("facDona", donaList);
 		return "admin/facDonationLedgerList";
@@ -267,10 +281,48 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("userList")
-	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
-		List<UserVO> list = userService.getUserList(memStat);
+	public String getUserlList(PageVO vo, Model model
+						 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		
+		int total = userService.getUserListCnt(vo);
+        
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,10);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,10);
+        }
+     	
+		List<UserVO> list = userService.getUserList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("userList",list);
+		
 		return "admin/userList";
+	}
+	
+	/**
+	 * 시설 리스트
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("userListDetail")
+	public String FacilityList(PageVO vo, Model model
+						 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = userService.getFacilityCnt(vo);
+		
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,10);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,10);
+        }
+		
+		List<FacilityVO> list = userService.getFacilityList(vo);
+		model.addAttribute("vo",vo);
+		model.addAttribute("userListDetail",list);
+		return "admin/userListDetail";
 	}
 	
 	/**
@@ -355,24 +407,29 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("facilityApprove")
-	public String getFacilityList(@RequestParam(name="donRegApp") String donRegApp,Model model) {
-		List<FacilityVO> facilityList = userService.getFacilityList();
-		List<DonationVO> list2 = userService.getDonationList(donRegApp);
+	public String getFacilityList(PageVO vo, Model model
+							 	, @RequestParam(required = false)String searchKeyword
+								, @RequestParam(required = false,defaultValue = "1")Integer start
+								, @RequestParam(required = false,defaultValue = "10")Integer end
+								,@RequestParam(required = false,defaultValue = "2") Integer donRegApp) {
+		if(donRegApp==2) {
+			int total = userService.getFacilityCnt(vo);
+			vo = new PageVO(total, start, end,null,10);
+			System.out.println("현재 없음!!!");
+		}else if(donRegApp==0) {
+			System.out.println("여기는 오니");
+			int totals = userService.getDonationCnt(vo);
+			vo = new PageVO(totals, start, end,null,10);
+			System.out.println("현재 있음!!!");
+		}
+		model.addAttribute("vo",vo);
+		
+		List<FacilityVO> facilityList = userService.getFacilityList(vo);
+		List<DonationVO> list2 = userService.getDonationList(vo);
+		
 		model.addAttribute("facilityList",facilityList);
 		model.addAttribute("donationList",list2);
 		return "admin/facilityApprove";
-	}
-	
-	/**
-	 * 시설 리스트
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("userListDetail")
-	public String FacilityList(Model model) {
-		List<FacilityVO> list = userService.getFacilityList();
-		model.addAttribute("userListDetail",list);
-		return "admin/userListDetail";
 	}
 	
 	/**
@@ -381,8 +438,17 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("approve")
-	public String approveList(Model model) {
-		List<FacilityVO> list = userService.getFacilityList();
+	public String approveList(PageVO vo, Model model
+						 	, @RequestParam(required = false)String searchKeyword
+							, @RequestParam(value="start",required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end",required = false,defaultValue = "10")Integer end) {
+		
+		int total = userService.getFacilityCnt(vo);
+		
+		vo = new PageVO(total, start, end,null,10);
+		
+		List<FacilityVO> list = userService.getFacilityList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("facilityList",list);
 		return "admin/approve";
 	}
@@ -404,16 +470,11 @@ public class UserController {
 							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
 							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		int total = userService.getBoardCnt(vo);
-        
-      
         vo = new PageVO(total, start, end, category,searchKeyword,10);
        
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("boardList",list);
      	model.addAttribute("vo",vo);
-     	
-     	//model.addAttribute("searchKeyword",searchKeyword);
-     	//model.addAttribute("category",category);
      	
 		return "admin/boardList";
 	}
@@ -426,9 +487,16 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("inquireList")
-	public String getinquireList(PageVO vo,@RequestParam(name="category") String category,Model model) {
+	public String getinquireList(PageVO vo, Model model
+							 	, @RequestParam(value="category", required = false) String category
+								, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getBoardCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("inquireList",list);
+		model.addAttribute("vo",vo);
 		return "admin/inquireList";
 	}
 	
@@ -470,8 +538,16 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("getReportList")
-	public String getReportList(@RequestParam String category,Model model) {
-		List<ReportVO> list = userService.getReportList(category);
+	public String getReportList(PageVO vo, Model model
+							 	, @RequestParam(value="category", required = false) String category
+								, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getReportCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
+		List<ReportVO> list = userService.getReportList(vo);
+		
+		model.addAttribute("vo",vo);
 		model.addAttribute("reportList",list);
 		return "admin/reportList";
 	}
@@ -483,8 +559,15 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("MoreReport")
-	public String getReportList1(@RequestParam String category,Model model) {
-		List<ReportVO> list = userService.getReportList(category);
+	public String getReportList1(PageVO vo, Model model
+							, @RequestParam(value="category", required = false) String category
+							, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getReportCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
+		List<ReportVO> list = userService.getReportList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("reportList",list);
 		return "admin/MoreReport";
 	}

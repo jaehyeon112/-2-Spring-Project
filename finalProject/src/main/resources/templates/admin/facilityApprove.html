@@ -1,6 +1,10 @@
-
-		<table class="table" id="fac">
-				<thead>
+			<div id="fac">
+			<th:block th:if="${facilityList.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${facilityList.size} != 0">
+			<table class="table">
+				<thead class="cent">
 					<tr>
 						<th>시설명</th>
 						<th>시설유형</th>
@@ -10,8 +14,8 @@
 						<th>대표번호</th>
 					</tr>
 				</thead>
-				<tbody>
-				 	<th:block th:each="fac : ${facilityList}" th:if="${fac.donApp}==0">
+				<tbody class="body">
+				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.donApp}==0">
 						<tr>
 							<td th:text="${fac.facName}" class="facility" th:onclick="info2([[${fac.facId}]])">시설명</td>
 							<td th:if="${fac.facType}=='f01'" >아동 및 청소년</td>
@@ -29,8 +33,32 @@
 					</th:block>
 				</tbody>
 			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center cur">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:onclick="prev2([[${vo}]])">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:onclick="current2([[${vo}]],[[${pageNum}]])"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:onclick="next2([[${vo}]])">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
+			</div>
 			
-			<table class="table" id="don">
+			<div id="don">
+			<th:block th:if="${donationList.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${donationList.size} != 0">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>시설 아이디</th>
@@ -42,7 +70,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				 	<th:block th:each="don : ${donationList}" th:if="${don.donRegApp}==0">
+				 	<th:block th:each="don : ${donationList}">
 						<tr>
 							 <td th:text="${don.facId}" class="cur" th:onclick="dona([[${don.donId}]])">아이디</td>
 							 <td th:text="${don.title}" >제목</td>
@@ -54,3 +82,22 @@
 					</th:block>
 				</tbody>
 			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center cur">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:onclick="prev3([[${vo}]])">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:onclick="current3([[${vo}]],[[${pageNum}]])"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:onclick="next3([[${vo}]])">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
+			</div>

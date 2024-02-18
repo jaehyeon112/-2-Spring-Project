@@ -37,8 +37,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<UserVO> getUserList(String memStat) {
-		return userMapper.getUserList(memStat);
+	public List<UserVO> getUserList(PageVO pageVO) {
+		return userMapper.getUserList(pageVO);
+	}
+	
+	@Override
+	public int getUserListCnt(PageVO pageVO) {
+		return userMapper.getUserListCnt(pageVO);
 	}
 	
 	@Override
@@ -47,13 +52,23 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<FacilityVO> getFacilityList() {
-		return userMapper.getFacilityList();
+	public List<FacilityVO> getFacilityList(PageVO pageVO) {
+		return userMapper.getFacilityList(pageVO);
 	}
 	
 	@Override
-	public List<DonationVO> getDonationList(String donRegApp) {
-		return userMapper.getDonationList(donRegApp);
+	public int getFacilityCnt(PageVO pageVO) {
+		return userMapper.getFacilityCnt(pageVO);
+	}
+	
+	@Override
+	public List<DonationVO> getDonationList(PageVO vo) {
+		return userMapper.getDonationList(vo);
+	}
+
+	@Override
+	public int getDonationCnt(PageVO pageVO) {
+		return userMapper.getDonationCnt(pageVO);
 	}
 	
 	@Override
@@ -92,8 +107,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int updateFacApp(String facName) {
-		return userMapper.updateFacApp(facName);
+	public int updateFacApp(String facId) {
+		return userMapper.updateFacApp(facId);
 	}
 
 	@Override
@@ -137,8 +152,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<ReportVO> getReportList(String category) {
-		return userMapper.getReportList(category);
+	public List<ReportVO> getReportList(PageVO vo) {
+		return userMapper.getReportList(vo);
+	}
+	
+	@Override
+	public int getReportCnt(PageVO pageVO) {
+		return userMapper.getReportCnt(pageVO);
 	}
 
 	@Override
@@ -197,13 +217,23 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<DonaVO> donationLedgerList(String recStat) {
-		return userMapper.donationLedgerList(recStat);
+	public List<DonaVO> donationLedgerList(PageVO pageVO) {
+		return userMapper.donationLedgerList(pageVO);
 	}
 
 	@Override
-	public List<DonaVO> facDonLedgerList(Integer donId) {
-		return userMapper.facDonLedgerList(donId);
+	public List<DonaVO> facDonLedgerList(PageVO pageVO) {
+		return userMapper.facDonLedgerList(pageVO);
+	}
+
+	@Override
+	public int donationLedgerCnt(PageVO pageVO) {
+		return userMapper.donationLedgerCnt(pageVO);
+	}
+
+	@Override
+	public int facDonLedgerCnt(PageVO pageVO) {
+		return userMapper.facDonLedgerCnt(pageVO);
 	}
 
 	@Override
@@ -244,6 +274,5 @@ public class AdminServiceImpl implements AdminService{
 	public int getFaqCnt(PageVO pageVO) {
 		return userMapper.getFaqCnt(pageVO);
 	}
-
 
 }

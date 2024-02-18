@@ -46,9 +46,20 @@
 			<a style="color:black;font-size:14px" onclick="show2()"> 시설회원</a>
 		</div>
 		<div id="tableData">
-			<table class="table" id="classic">
+		<div id="classic">
+			<div style="float:right;padding:10px">
+				<input class="form-control-sm me-2" onkeypress="handleKeyPress(event)" id="search" type="search" placeholder="이름을 검색하세요" aria-label="Search" th:value="${vo.searchKeyword}">
+				<button class="btn btn-outline-success" onclick="search()" type="button">검색</button>
+				<button class="btn btn-outline-primary" type="button" onclick="show1()">초기화</button>
+			</div>
+			<th:block th:if="${userList.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${userList.size} != 0">
+			<table class="table">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>이름</th>
 						<th>아이디</th>
 						<th>전화번호</th>
@@ -60,6 +71,7 @@
 				<tbody>
 				 	<th:block th:each="user : ${userList}" >
 						<tr>
+							 <td th:text="${user.RN}">이름</td>
 							 <td th:text="${user.memName}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
 							 <td th:text="${user.memId}" >아이디</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
@@ -78,6 +90,25 @@
 					</th:block>
 				</tbody>
 			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/userList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/userList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/userList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
+		</div>
 		</div>
 			<!-- 첫번째 -->
 			<div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
@@ -177,15 +208,58 @@
 			        </div>
 			    </div>
 			</div>
-
+			
 		</div>
 		<script th:inline="javascript">
 			function show1(){
-				$('#tableData').load("../userList?memStat=m02 #classic");
+				$('#tableData').load("../userList #classic");
 			};
+			
 			function show2(){
 				$('#tableData').load("../userListDetail #facility");
 			};
+			
+			function prev(vo){
+				$('#tableData').load(`../userListDetail?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1} #facility`);
+			}
+			
+			function current(vo,pageNum){
+				$('#tableData').load(`../userListDetail?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage} #facility`);
+			}
+			
+			function next(vo){
+				$('#tableData').load(`../userListDetail?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage} #facility`);
+			}
+			
+			function handleKeyPress(event) {
+			    if (event.keyCode === 13) {
+			        search();
+			    }
+			}
+			
+			function handleKeyPress2(event) {
+			    if (event.keyCode === 13) {
+			        search1();
+			    }
+			}
+			
+			function search(){
+				let keyword = $('#search').val();
+				if(keyword == '') {
+					alert('검색하실 내용을 입력하세요');
+					return;
+				}
+				$('#tableData').load(`../userList?searchKeyword=${keyword} #classic`);
+			}
+			
+			function search1(){
+				let keyword = $('#search').val();
+				if(keyword == '') {
+					alert('검색하실 내용을 입력하세요');
+					return;
+				}
+				$('#tableData').load(`../userListDetail?searchKeyword=${keyword} #facility`);
+			}
 			
 			function dateFormat(value, format) {
 			    let date = value == "" ? new Date() : new Date(value);

@@ -9,27 +9,44 @@
       from sub_code
       where main_code_id=#{mainCodeId}
    </select>
-   <select id="getUserList" resultType="UserVO">
-      select MEM_ID,
-            MEM_PWD,
-            MEM_NICK,
-            MEM_PHONE,
-            MEM_ZIP,
-            MEM_ADDR,
-            MEM_BDATE,
-            MEM_DEPT,
-            MEM_EMAIL,
-            DON_RECEIPT,
-            MEM_SSN,
-            EMAIL_AGREE,
-            SMS_AGREE,
-            ACCT_NUM,
-            BANK_NAME,
-            MEM_STAT,
-            MEM_NAME
+   <select id="getUserListCnt" resultType="int">
+      select count(*)
       from member
-      where MEM_STAT = #{memStat}
-      order by MEM_ID
+      where MEM_STAT = 'm02'
+      <if test="searchKeyword!=null and searchKeyword!='' ">
+         AND (MEM_NAME LIKE '%' || #{searchKeyword} || '%')      
+      </if>
+   </select>
+   <select id="getUserList" resultType="UserVO">
+   SELECT * 
+      from(
+         SELECT ROWNUM RN 
+         ,A.* 
+      from(  
+           select MEM_ID,
+	            MEM_PWD,
+	            MEM_NICK,
+	            MEM_PHONE,
+	            MEM_ZIP,
+	            MEM_ADDR,
+	            MEM_BDATE,
+	            MEM_DEPT,
+	            MEM_EMAIL,
+	            DON_RECEIPT,
+	            MEM_SSN,
+	            EMAIL_AGREE,
+	            SMS_AGREE,
+	            ACCT_NUM,
+	            BANK_NAME,
+	            MEM_STAT,
+	            MEM_NAME
+	      from member
+	      where MEM_STAT = 'm02'
+      <if test="searchKeyword!=null and searchKeyword!='' ">
+         AND (MEM_NAME LIKE '%' || #{searchKeyword} || '%')      
+      </if>
+      order by MEM_ID) A)
+        where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="volCount" resultType="VolunteerVO">
       select (select nvl(sum(count(mem_id)),0) 
@@ -40,7 +57,11 @@
    </select>
    
    <select id="donCount" resultType="DonationLedgerVO">
-      select count(mem_id) cnt,sum(don_amt) totals from don_ledger where mem_id=#{memId} group by mem_id
+      select count(mem_id) cnt
+      		,sum(don_amt) totals 
+      from don_ledger 
+      where mem_id=#{memId} 
+      group by mem_id
    </select>
    <select id="getUserOne" resultType="UserVO">
       select MEM_ID,
@@ -64,7 +85,12 @@
       where MEM_ID = #{memId}
    </select>
    <select id="getReportList" resultType="ReportVO">
-      select REP_ID,
+   	SELECT * 
+      from(
+         SELECT ROWNUM RN 
+         ,A.* 
+      from(  
+           select REP_ID,
             CATEGORY,
             MEM_ID,
             REP_DATE,
@@ -73,7 +99,13 @@
             REQ_CODE
       from report
       where CATEGORY = #{category}
-      order by rep_id
+      order by rep_id) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="getReportCnt" resultType="int">
+      select count(*)
+      from report
+      where CATEGORY = #{category}
    </select>
    <update id="updateReport" parameterType="ReportVO">
       update report
@@ -81,26 +113,47 @@
       where REP_Id = #{repId}
    </update>
    <select id="getFacilityList" resultType="FacilityVO">
-      select FAC_ID,
-            BIZ_NUM,
-            FAC_PWD,
-            FAC_NAME,
-            FAC_TYPE,
-            FAC_ZIP,
-            FAC_ADDR,
-            FAC_ADDR_DETAIL,
-            FAC_EST_DATE,
-            FAC_EMAIL,
-            FAC_WEB,
-            FAC_INTRO,
-            REP_NAME,
-            REP_PHONE,
-            FAC_BANK,
-            DON_ACCT,
-            DON_APP,
-            MEM_APP
+   	  SELECT * 
+	      from(
+	         SELECT ROWNUM RN 
+	         ,A.* 
+	      from(  
+	           select FAC_ID,
+		            BIZ_NUM,
+		            FAC_PWD,
+		            FAC_NAME,
+		            FAC_TYPE,
+		            FAC_ZIP,
+		            FAC_ADDR,
+		            FAC_ADDR_DETAIL,
+		            FAC_EST_DATE,
+		            FAC_EMAIL,
+		            FAC_WEB,
+		            FAC_INTRO,
+		            REP_NAME,
+		            REP_PHONE,
+		            FAC_BANK,
+		            DON_ACCT,
+		            DON_APP,
+		            MEM_APP
+		      from facility
+		      where MEM_APP = #{memApp}
+      <if test="donApp!=null and donApp!='' ">
+         and don_app = #{donApp}  
+      </if>
+      <if test="searchKeyword!=null and searchKeyword!='' ">
+         AND (FAC_NAME LIKE '%' || #{searchKeyword} || '%')      
+      </if>
+     	order by FAC_ID) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="getFacilityCnt" resultType="int">
+      select count(*)
       from facility
-      order by FAC_ID
+      where MEM_APP = #{memApp}
+      <if test="searchKeyword!=null and searchKeyword!='' ">
+         AND (FAC_NAME LIKE '%' || #{searchKeyword} || '%')      
+      </if>
    </select>
    <select id="getFacilityInfo" resultType="FacilityVO">
       select FAC_ID,
@@ -125,21 +178,33 @@
       where fac_id = #{facId}
    </select>
    <select id="getDonationList" resultType="DonationVO">
-      select DON_ID,
-            FAC_ID,
-            TITLE,
-            REC_PERIOD,
-            END_PERIOD,
-            EXT_PERIOD,
-            GOAL_AMT,
-            PROJ_TARGET,
-            INTRO,
-            REC_STAT,
-            DON_REG_APP,
-            EXP_EFFECT
+   
+   	  SELECT * 
+	      from(
+	         SELECT ROWNUM RN 
+	         ,A.* 
+	      from(  
+	           select DON_ID,
+		            FAC_ID,
+		            TITLE,
+		            REC_PERIOD,
+		            END_PERIOD,
+		            EXT_PERIOD,
+		            GOAL_AMT,
+		            PROJ_TARGET,
+		            INTRO,
+		            REC_STAT,
+		            DON_REG_APP,
+		            EXP_EFFECT
+		      from donation
+		      where DON_REG_APP = #{donRegApp}
+     	order by rec_period desc) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="getDonationCnt" resultType="int">
+      select count(*)
       from donation
       where DON_REG_APP = #{donRegApp}
-      order by rec_period desc
    </select>
    <select id="getDonOne" resultType="DonationVO">
       select DON_ID,
@@ -309,7 +374,7 @@
       where FAQ_ID = #{faqId}
    </delete>
    <update id="updateFacApp" parameterType="FacilityVO">
-      update facility set mem_app=1 where fac_Name=#{facName}
+      update facility set mem_app=1 where fac_id=#{facId}
    </update>
    <update id="updateDonApp" parameterType="FacilityVO">
       update facility set don_app=1 where fac_id=#{facId}
@@ -389,26 +454,52 @@
       where mem_id=#{memId} and app_code=1
    </select>
    <select id="donationLedgerList" resultType="DonaVO">
-      select l.pay_date
-            ,l.anon_check
-            ,l.mem_id
-            ,l.don_amt
-            ,d.title
+   	SELECT * 
+      from(
+         SELECT ROWNUM RN 
+         ,A.* 
+      from(  
+           select l.pay_date
+	            ,l.anon_check
+	            ,l.mem_id
+	            ,l.don_amt
+	            ,d.title
+	      from don_ledger l join donation d
+	      on  l.don_id=d.don_id
+	      where d.rec_stat=#{recStat}
+     	 order by pay_date) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="donationLedgerCnt" resultType="int">
+      select count(*)
       from don_ledger l join donation d
       on  l.don_id=d.don_id
       where d.rec_stat=#{recStat}
-      order by pay_date
    </select>
    <select id="facDonLedgerList" resultType="DonaVO">
-      select l.pay_date
-      ,l.anon_check
-      ,l.mem_id
-      ,l.don_amt
-      ,d.title
+   	SELECT * 
+      from(
+         SELECT ROWNUM RN 
+         ,A.* 
+      from(  
+          select l.pay_date
+		      ,l.anon_check
+		      ,l.mem_id
+		      ,l.don_amt
+		      ,d.title
+	      from don_ledger l join donation d
+	      on  l.don_id=d.don_id
+	      where d.don_id=#{donId}
+	      and d.rec_stat=#{recStat}
+       order by pay_date) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="facDonLedgerCnt" resultType="int">
+      select count(*)
       from don_ledger l join donation d
       on  l.don_id=d.don_id
       where d.don_id=#{donId}
-      order by pay_date
+      and d.rec_stat=#{recStat}
    </select>
    <select id="donationSettlement" resultType="DonaVO">
       select fac_id

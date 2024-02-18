@@ -23,12 +23,21 @@ import com.bongsamaru.mypage.service.DonledgerVO;
 
 public interface AdminService {
 	public List<CodeVO> subCodeList(String mainCodeId);
-	public List<UserVO> getUserList(String memStat);
+	//회원목록
+	public List<UserVO> getUserList(PageVO pageVO);
+	public int getUserListCnt(PageVO pageVO);
 	public List<BoardVO> getBoardList(PageVO pageVO);
 	public int getBoardCnt(PageVO pageVO);
-	public List<FacilityVO> getFacilityList();
-	public List<DonationVO> getDonationList(String donRegApp);
-	public List<ReportVO> getReportList(String category);
+	//시설회원목록
+	public List<FacilityVO> getFacilityList(PageVO pageVO);
+	public int getFacilityCnt(PageVO pageVO);
+	
+	public List<DonationVO> getDonationList(PageVO vo);
+	public int getDonationCnt(PageVO pageVO);
+	
+	public List<ReportVO> getReportList(PageVO pageVO);
+	public int getReportCnt(PageVO pageVO);
+	
 	public List<DonledgerVO> DonationKing();
 	public void insertNotice(BoardVO boardVO);
 	public List<FaqVO> getFaqList(PageVO pageVO);
@@ -38,7 +47,7 @@ public interface AdminService {
 	public DonationLedgerVO donCount(String memId);
 	public FacilityVO getFacilityInfo(String facId);
 	public DonationVO getDonOne(String donId);
-	public int updateFacApp(String facName);
+	public int updateFacApp(String facId);
 	public int updateDonApp(String facId);
 	public int updateDonRegApp(String donId);
 	public BoardVO getNoticeOne(String category,Integer detailCate);
@@ -57,8 +66,15 @@ public interface AdminService {
 	public List<TagVO> tagList(TagVO vo);
 	public List<VolunteerVO> facVolunteerList();
 	public List<VolunteerVO> memMeetList(String memId);
-	public List<DonaVO> donationLedgerList(String recStat);
-	public List<DonaVO> facDonLedgerList(Integer donId);
+	
+	//기부금 장부 리스트
+	public List<DonaVO> donationLedgerList(PageVO pageVO);
+	public int donationLedgerCnt(PageVO pageVO);
+	
+	//시설별 장부 리스트
+	public List<DonaVO> facDonLedgerList(PageVO pageVO);
+	public int facDonLedgerCnt(PageVO pageVO);
+	
 	public List<DonaVO> donationSettlement();
 	public DonaVO checkFacDonation(Integer donId);
 	public List<RemittanceVO> remittanceList();
