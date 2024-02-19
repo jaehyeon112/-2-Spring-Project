@@ -193,7 +193,7 @@
     </div>
   </div>
 
-      
+</div>      
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
@@ -385,13 +385,11 @@ var facId = '';
         });
        
         $('#joinVolBtn').on('click', function() {
-       	 
-       	 
        	  if ([[${#authentication.principal}]] !== null && [[${#authentication.principal}]] !== 'anonymousUser') {
        		  var memId = [[${#authentication.principal.userVO.id}]];
        		   
        		    console.log(memId);
-       		 console.log(volActId);
+       		 	console.log(volActId);
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',

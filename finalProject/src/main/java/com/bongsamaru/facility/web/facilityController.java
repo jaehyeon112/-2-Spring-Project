@@ -269,6 +269,13 @@ public class facilityController {
 		  model.addAttribute("info", info);
 		  return info;
 	  }
+	@GetMapping("/getFacRevCheck")
+	  @ResponseBody
+	  public int getFacRevCheck(Model model, @RequestParam(name="detailCate") Integer detailCate) { 
+		  int info = facilityService.getFacRevCheck(detailCate);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
 	
 	//시설봉사등록
 	@PostMapping("/InvolJoin")

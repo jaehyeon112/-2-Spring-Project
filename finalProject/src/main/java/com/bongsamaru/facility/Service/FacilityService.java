@@ -36,6 +36,7 @@ public interface FacilityService {
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	public int getJoinAppCheck(Integer volActId, String memId);//중복체크
+	public int getFacRevCheck(Integer detailCate);//시설봉사후기 존재여부
 	public List<VolActVO> getVolunteerJoinList(PageVO pageVO, String facId);
 	public List<VolActVO> getVolunteerFinishList( PageVO pageVO, String facId); //봉사 완료 후 리스트
 	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType);

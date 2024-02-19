@@ -7,178 +7,159 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <title>Insert title here</title>
 </head>
 <body>
-	<section layout:fragment="content">
-		<div class="body-wrapper">
-			
-			<div class="container-fluid">
-				<div class="container">
-					<div class="page_tits">
-						<h3>봉사후기 작성</h3>
-					</div>
-					<br> <br>
-					<div class="content">
-						<section>
-							<form >
-								<div class="col-md-12">
-									<div class="col-md-4">
-										<div class="form-group">
-										</div>
-										<input type="hidden" name="detailCate">
-										<div class="form-group" style="width: 500px">
-											<label for="title">제목</label> <input type="text"
-												class="form-control" name="title" placeholder="제목을 입력하세요">
-										</div><br>
-										<div class="form-group" style="width: 500px">
-											<label for="content"> 내용 </label>
-											<textarea class="form-control" name="content" cols="50"
-												rows="5" placeholder="내용을 입력하세요"></textarea>
-										</div><br>
-										<div class="form-group">
-											<div class="subheading">
-												<em class="highlight"></em>파일첨부
-											</div>
-											<input class="form-control" id="imageInput"
-												name="uploadFiles" type="file" multiple><br>
-												<img id="imagePreview" src="/userresources/image/미리보기.jpg"
-											style="width: 100px; height: 100px;">
-										</div>
-									</div>
-									<p class="btn_set">
-										<button type="button" style="float: right;" id="subm" onclick="checking()" class="btn btn-success m-1">등록</button>
-									</p>
-								</div>
-							<div class="modal" tabindex="-1" id="confirmModal">
-							    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-							        <div class="modal-content">
-							            <div class="modal-header">
-							                <h5 class="modal-title" >등록 확인</h5>
-							            </div>
-							            <div class="modal-body">
-							                <p>정말 등록하시겠습니까?</p>
-							            </div>
-							            <div class="modal-footer">
-							                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">네</button>
-							                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">아니오</button>
-							            </div>
-							        </div>
-							    </div>
-							 </div>
-							</form>
-							<script>
-						    // URL에서 쿼리 파라미터를 파싱
-			                 const urlParams = new URLSearchParams(window.location.search);
-			                 const volActId = urlParams.get('volActId');
-			                 $('input[name=detailCate]').val(volActId);
-			              
-			                 console.log(volActId);
-								document.getElementById('imageInput').addEventListener('change', function (event) {
-									var image = document.getElementById('imagePreview');
-									var file = event.target.files[0];
-									var reader = new FileReader();
-	
-									reader.onloadend = function () {
-										image.src = reader.result;
-									}
-	
-									if (file) {
-										reader.readAsDataURL(file);
-									} else {
-										image.src = "";
-									}
-								});
-								
-								function checking(){
-									let title = $('[name="title"]');
-									let content = $('[name="content"]');
-	
-									if(title.val()==''){
-										alert('제목이 입력되지 않았습니다.');
-										title.focus();
-										return;
-									}
-									if(content.val()==''){
-										alert('내용이 입력되지 않았습니다.');
-										content.focus();
-										return;
-									
-									};
-									
-									$('#confirmModal').modal('show');
-									
-									$("#yesBtn").click(function () {
-										var formDa = $("form").serialize();
-										   
-										    console.log(formDa);
-										$.ajax({
-											url: '/volReviewInsert',
-											type: 'POST',
-											data: formDa,
-											processData: false,  // 필수: FormData 사용시 false로 설정
-										    contentType: false,  // 필수: FormData 사용시 false로 설정
-											success: function (result) {
-												var fileLength = $("input[type='file']");
-												var file2 = fileLength[0].files;
-												if(file2.length==0){
-													//location.href="boardList?category=b01"
-													return;
-												}else{
-													console.log(result);
-													fileSub(result);
-												}
-												
-											},
-											error: function (reject) {
-												alert('실풰!')
-												console.log(reject);
-											}
-										});
-									});
-								};
-								
-								
-								
-								$("#noBtn").on('click',function () {
-								    $("#confimModal").modal("hide");
-								});
-
-							function fileSub(cnt) {
-									var formData = new FormData(); //FormData 객체 생성
-									var inputFile = $("input[type='file']");
-									//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
-									var files = inputFile[0].files;
-									if(files.length==0){
-										return;
-									}
-									//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
-									//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
-									for (var i = 0; i < files.length; i++) {
-										formData.append("uploadFiles", files[i]); //키,값으로 append 
-									}
-									formData.append("code", "p15")
-									formData.append("codeNo", cnt);
-
-									//jQuery.ajax
-									$.ajax({
-										url: '/uploadsAjax',
-										type: 'POST',
-										processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-										contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
-										data: formData,
-										success: function (result) {
-											//location.href="boardList?category=b01"
-										},
-										error: function (reject) {
-											console.log(reject);
-										}
-									});
-								}; 
-							
-							</script>
-						</section>
-					</div>
-				</div>
-			</div>
+<section layout:fragment="content">
+	<div class="body-wrapper" style="width:50%;margin:auto">
+		<div class="container-fluid">
+		<div class="container">
+		<div id="content">
+			<h2 style="text-align: center;">봉사 후기 등록</h2>
+			<br><input type="hidden" name="detailCate">
+		
+			<label>후기 제목</label>
+               <input class='write-1' type="text" name="title" max="30">
+			<hr>
+			<!-- 에디터를 적용할 요소 (컨테이너) -->
+			<hr>
+			<div id="contents"></div>
+			<hr>
+			<button type="button" onClick="modalOpen()" style="float: right;width:80px" class="btn btn-success m-1">등록</button>
+               <a th:href="@{../freeBoardList(category=b03,volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a>
 		</div>
-	</section>
+		<!-- TUI 에디터 JS CDN -->
+		<!-- 모달창 -->
+		<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="deleteConfirmationModalLabel">등록 확인</h5>
+		            </div>
+		            <div class="modal-body">
+		                <p>등록 후 수정이 불가능합니다.<br>등록하시겠습니까?</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">아니오</button>
+		                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">네</button>
+		            </div>
+		        </div>
+		    </div>
+		 </div>
+		 
+		</div>
+	</div>
+</div>		
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const volActId = urlParams.get('volActId');
+
+	const editor = new toastui.Editor({
+		el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
+		height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
+		initialEditType : 'wysiwyg', // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+		previewStyle : 'vertical', // 마크다운 프리뷰 스타일 (tab || vertical)
+		placeholder : "내용을 입력하세요",
+		hooks: {
+	    	addImageBlobHook: (blob, callback) => {
+	    		let url = "http://localhost:8585"
+	    		const formData = new FormData();
+	        	formData.append('uploadFiles', blob);
+	        	formData.append("code", "p16")
+          			formData.append("codeNo", '');
+          			$.ajax({
+	           		url: '/uploadsAjax',
+	           		type: 'POST',
+	           		processData: false,
+	           		contentType: false,
+	           		data: formData,
+	           		success: function(datas) {
+	           			url = url + datas;
+	           			url = url.replace(/\\/g, '/')
+	           			callback(url);
+	           		},
+	           		error: function(e) {
+	           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
+	           		}
+	           	});	
+	        	
+	        }
+	    }
+	});
+	
+
+function modalOpen(){
+	const startDate = $("input[name='startDate']")
+	const expireDate = $("input[name='expireDate']")
+	const volDate = $("input[name='volDate']")
+	const title = $("input[name='title']")
+	const content = editor.getMarkdown();
+	const addr = $('#facAddr2');
+	
+	if(startDate.val()>expireDate.val()){
+		alert('날짜가 올바르지 않습니다.\n기간을 다시 확인해주세요!');
+		return;
+	};
+	
+	if(startDate.val()==''){
+		alert('날짜를 입력하세요!');
+		return;
+	}else if(expireDate.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(volDate.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(title.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(content==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(addr.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}
+	
+	$("#confimModal").modal("show");
+	
+	$("#yesBtn").on('click',function () {
+		checking();
+	});
+};
+
+$("#noBtn").on('click',function () {
+    $("#confimModal").modal("hide");
+});
+
+function checking(){
+	
+	const title = $("input[name='title']").val();
+	const content = editor.getMarkdown();
+    if(title.val()==''){
+		alert('제목을 입력하세요!');
+		return;
+	}else if(content==''){
+		alert('내용을 입력하세요!');
+		return;
+	}
+	var formData = new FormData();
+	formData.append("title",title);
+	formData.append("content",content);
+	$.ajax({
+         		url: 'volReviewInsert',
+         		type: 'POST',
+         		processData: false,
+         		contentType: false,
+         		data: formData,
+         		success: function(data) {
+         			//location.href="volBoardList?volId="+[[${session.id}]]
+         		},
+         		error: function(e) {
+         			console.log('실패');
+         		}
+         	});
+}
+
+	</script>
+</section>
+
 </body>
 </html>
