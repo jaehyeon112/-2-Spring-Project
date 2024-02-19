@@ -19,8 +19,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import com.bongsamaru.securing.config.CustomOAuth2UserService;
 import com.bongsamaru.securing.filter.AdditionalInfoFilter;
-import com.bongsamaru.user.service.UserSuccessHandler;
 import com.bongsamaru.user.service.handler.AuthSuccessHandler;
+import com.bongsamaru.user.service.UserSuccessHandler;
 import com.bongsamaru.user.service.handler.CustomAuthenticationFailureHandler;
 
 import lombok.RequiredArgsConstructor;
