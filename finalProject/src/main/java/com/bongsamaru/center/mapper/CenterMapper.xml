@@ -46,7 +46,6 @@
 	        WHERE category = 'b01'
             AND board_id = #{boardId}
     </select>
-    
     <select id="getNoticeCount" resultType="int">
 		SELECT count(*) 
 		FROM board 
@@ -76,4 +75,5 @@
 	FROM faq 
 	WHERE category = #{category}
 	</select>
+	<!-- 문의 접수 -->
   </mapper>

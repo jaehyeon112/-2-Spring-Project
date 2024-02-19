@@ -157,27 +157,23 @@ public class CenterController {
 		 
 	 }
 	 
-	 @PostMapping("/insertInquiry")
-	 @ResponseBody // ajax호출 return 값
-	 public String insertInquiry(@RequestParam String title,@RequestParam String content, Model model) {
-	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-	         Object principal = auth.getPrincipal();
-
-	         if (principal instanceof UserDetails) {
-	             UserDetailVO userDetailVO = (UserDetailVO) principal;
-	             System.out.println(userDetailVO.getUserVO() + " 확인");
-
-	             model.addAttribute("userVO", userDetailVO.getUserVO());
-	             String memId = userDetailVO.getUserVO().getId();
-	             
-	             return Integer.toString(centerService.insertInquiry(title,content,memId));
-	             
-	         }
-	         return "1";
-	     }else {
-	    	 return "0";
-	     }
-	 }
+		/*
+		 * @PostMapping("/insertInquiry")
+		 * 
+		 * @ResponseBody // ajax호출 return 값 public String insertInquiry(@RequestParam
+		 * BoardVO vo, Model model) { Authentication auth =
+		 * SecurityContextHolder.getContext().getAuthentication();
+		 * 
+		 * if (auth != null && auth.isAuthenticated() && !(auth instanceof
+		 * AnonymousAuthenticationToken)) { Object principal = auth.getPrincipal();
+		 * 
+		 * if (principal instanceof UserDetails) { UserDetailVO userDetailVO =
+		 * (UserDetailVO) principal; System.out.println(userDetailVO.getUserVO() +
+		 * " 확인");
+		 * 
+		 * model.addAttribute("userVO", userDetailVO.getUserVO());
+		 * 
+		 * 
+		 * } return "1"; }else { return "0"; } }
+		 */
 }
