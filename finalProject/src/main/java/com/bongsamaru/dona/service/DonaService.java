@@ -7,7 +7,7 @@ public interface DonaService {
 	//메인페이지 전체리스트
 	List<DonaVO> getDonaList();
 	//모금중
-	List<DonaVO> selectRecruitingItems();
+	List<DonaVO> randomlyShow();
 	//모금완료
 	List<DonaVO> selectCompletedItems();
 	//카테고리별리스트
@@ -39,16 +39,18 @@ public interface DonaService {
 	//모금기한연장-수정
 	public void extendDonationPeriod(DonaVO donaVO);
 	
+	// 기부신청 관리자 알람 insert
+	public int applyAlertDona(DonaVO donaVO);
 	
 	//등록폼 insert
 	public int insertDonation(DonaVO donaVO);
 	public int insertDonDetail(DonaVO donaVO);
-	
+	public int insertAlertDona(DonaVO donaVO);
 	
 	//등록 후기 insert
 	public int insertReview(DonaVO donaVO);
 	public int insertReviewDetail(DonaVO donaVO);
-	
+	public int receiptAlertDona(DonaVO donaVO);
 	//후기 개별
 	public DonaVO getDonaReview(Integer donId);
 	
