@@ -228,9 +228,8 @@ public class LoginController {
 		List<CountVO> volKing = userService.volKing();
 		model.addAttribute("vol", volKing);
 		
-//		List<DonaVO> random = donaService.selectRecruitingItems();
-//		model.addAttribute("randomlist", random);
-//		log.info(random);
+		List<DonaVO> random = donaService.randomlyShow();
+		model.addAttribute("randomlist", random);
 		
 		List<BongsaDTO> group = bongsaService.getVolTagDTO("e02");
 		model.addAttribute("group", group);
