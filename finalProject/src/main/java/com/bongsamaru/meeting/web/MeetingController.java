@@ -42,7 +42,7 @@ public class MeetingController {
 	 * @return
 	 */
 	@GetMapping("meetings")
-	public String meetings(PageVO pvo,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
+	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
 		 if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
 		 } else {
@@ -57,10 +57,10 @@ public class MeetingController {
 		List<VolActVO> list = service.meetingVolActListPaging(pvo);
 		model.addAttribute("act",list);
 		
-		List<VolMemVO> member = service.meetingMemList(volId);
+		List<VolMemVO> member = service.meetingMemList(volVO);
 		model.addAttribute("member",member);
 		
-		List<VolMemVO> cnt = service.volCnt(volId);
+		List<VolMemVO> cnt = service.volCnt(volVO);
 		model.addAttribute("cnt",cnt);
 		
 		
@@ -86,9 +86,10 @@ public class MeetingController {
 		}
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
-		
-		volunteerVO.setRoomStat(1);
-		List<VolunteerVO> randomList = userService.meetingList(volunteerVO);
+		PageVO pageVO = new PageVO();
+		pageVO = new PageVO(3, 1, 3, null ,3);
+		pageVO.setRoomStat(1);
+		List<VolunteerVO> randomList = userService.meetingList(pageVO);
 		model.addAttribute("choose",randomList);
 		return "meeting/meetings";
 	}
@@ -305,10 +306,10 @@ public class MeetingController {
 	
 	//봉사후기
 	@GetMapping("reviewBoardList")
-	public String reviewBoardList(PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req,Principal prin
+	public String reviewBoardList(VolActReviewVO reviewVO,PageVO vo, Model model,@RequestParam Integer volId,HttpServletRequest req,Principal prin
 								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
 								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
-		int total = service.volActReviewListCnt(volId);
+		int total = service.volActReviewListCnt(reviewVO);
 		
 		vo = new PageVO(total, start, end,volId,null);
 		
@@ -371,7 +372,7 @@ public class MeetingController {
 	
 	//동아리 정보
 	@GetMapping("aboutMeeting")
-	public String myInfoPage(@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
+	public String aboutMeeting(@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
 		VolunteerVO vo = service.meetingInfo(volId);
 		model.addAttribute("info",vo);
 		
@@ -380,7 +381,6 @@ public class MeetingController {
 		 } else {
 			model.addAttribute("userId","익명");
 		 }
-		 System.out.println(vo);
 		req.getSession().setAttribute("id",volId);
 		
 		return "meeting/aboutMeeting";
@@ -388,7 +388,27 @@ public class MeetingController {
 	
 	//동아리 마이페이지
 	@GetMapping("myInfoPage")
-	public String myInfoPage() {
+	public String myInfoPage(PageVO pageVO,VolMemVO vo,VolActReviewVO reviewVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
+		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+	        vo.setMemId(prin.getName());
+	        pageVO.setWriter(prin.getName());
+		 } else {
+			model.addAttribute("userId","익명");
+		 }
+		req.getSession().setAttribute("id",volId);
+		List<VolMemVO> cnt = service.volCnt(vo);
+		List<VolMemVO> date = service.meetingMemList(vo);
+		model.addAttribute("date",date.get(0).getAppDate());
+		model.addAttribute("cnt",cnt.get(0).getCnt());
+
+		
+		int total = service.volActReviewListCnt(reviewVO);
+		pageVO = new PageVO(total, 1, 10,volId,null);
+		List<VolActVO> review = service.volActReviewListPaging(pageVO);
+		model.addAttribute("review",review);
+		System.out.println(review);
 		return "meeting/myInfoPage";
 	}
 	

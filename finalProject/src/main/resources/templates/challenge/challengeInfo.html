@@ -12,8 +12,7 @@
 			<section class="blog_area single-post-area">
 				<a
 				th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-			<a
-				th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+				<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
 					<div class="container" style="border: 1px solid black;">
 						<div class="row">
 							<div class="col-lg-8 posts-list">
@@ -35,9 +34,10 @@
 
 									<div class="col-lg-12">
 										<div class="row">
-
+<div class="col-lg-12  mt-25">
 
 									<h3>챌린지 하는 이유</h3>
+									</div>
 											<div class="col-6">
 												<div class="form-group">
 													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].filePath}" alt="">
@@ -53,12 +53,13 @@
 
 											<div class="col-lg-12 mt-25">
 												<div class="form-group">
-													<textarea th:text="${session.challengeInfo.actionReason}"></textarea>
+													<p th:text="${session.challengeInfo.actionReason}"></p>
 												</div>
 
 											</div>
-
+<div class="col-lg-12  mt-25">
 									<h3>기대효과</h3>
+									</div>
 											<div class="col-6">
 												<div class="form-group">
 													<img  th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].filePath}" alt="">
@@ -72,7 +73,7 @@
 
 											<div class="col-lg-12 mt-25">
 												<div class="form-group">
-													<textarea th:text="${session.challengeInfo.expImpact}"></textarea>
+													<p th:text="${session.challengeInfo.expImpact}"></p>
 												</div>
 											</div>
 
@@ -80,7 +81,7 @@
 
 
 
-											<!-- <div class="col-6">
+											 <div class="col-6">
 												<div class="form-group">
 													<input type="text" class="form-control" id="subject"
 														th:readonly placeholder="그외 자유내용 들어갈 자리입니다"> <img
@@ -93,7 +94,7 @@
 														th:readonly placeholder="그외 자유내용 이미지 들어갈 자리입니다"> <img
 														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
 												</div>
-											</div> -->
+											</div> 
 
 
 
@@ -105,7 +106,7 @@
 											</div>
 
 
-						<!-- 					<p>함께할 날짜</p>
+											<p>함께할 날짜</p>
 											<div class="form-group form-inline">
 
 												<div class="form-group col-lg-6 col-md-6 name">
@@ -118,7 +119,7 @@
 
 												</div>
 											</div>
- -->
+ 
 
 											<div class="form-group">
 												<p>HowTo</p>

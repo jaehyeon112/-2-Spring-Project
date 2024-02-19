@@ -8,4 +8,5 @@ public class LikeVO {
 	private String memId;
 	private Integer boardId;
 	private String category;
+	private Integer heartNo;
 }
