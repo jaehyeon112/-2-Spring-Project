@@ -129,9 +129,8 @@
 								    <div id="donaCategory" class="d-flex justify-content-between fruite-name">
 								        <button class="rounded" 
 								                style="background-color: white; border: 2px solid green;  border-radius: 10px; margin-bottom: 10px;"
-								                data-category=""
-								                onclick="filterByCategory(this)">
-								            <a href="#" style="'color: black; font-weight: bold;'">전체</a>
+								                >
+								            <a href="/donaMain" style="'color: black; font-weight: bold;'">전체</a>
 								        </button>
 								    </div>
 								</div>
@@ -168,7 +167,7 @@
                         
                         <!-- 카테고리별 리스트를 표시할 부분 -->
                         
-                           <div th:each="dona : ${list}">
+                           <div th:each="dona : ${clist}">
                                 <div class="col-md-3 col-lg-3 col-xl-3 recruit-list"   >
                                     <!-- 리스트 아이템 표시 -->
                                     <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
@@ -219,18 +218,24 @@
                 </div>
                 <!-- pagination -->
                 <button type="button" class="btn btn-outline-primary m-1">등록</button>
-                          <div class="col-12 mt-5">
-                            <div class="pagination d-flex justify-content-center mt-5">
-                                <a href="#" class="rounded">&laquo;</a>
-                                <a href="#" class="active rounded">1</a>
-                                <a href="#" class="rounded">2</a>
-                                <a href="#" class="rounded">3</a>
-                                <a href="#" class="rounded">4</a>
-                                <a href="#" class="rounded">5</a>
-                                <a href="#" class="rounded">6</a>
-                                <a href="#" class="rounded">&raquo;</a>
-                            </div>
-                        </div>
+               <nav aria-label="Page navigation example" th:if="${clist.size} != 0">
+			    <ul class="pagination justify-content-center">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/donaMain(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a th:if="${vo.category}==null" class="page-link" th:href="@{/donaMain(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"  th:text="${pageNum}"></a>
+			            <a th:if="${vo.category}!=null" class="page-link" th:href="@{/donaMain(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},category=${vo.category},recStat=${vo.recStat})}"  th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a th:if="${vo.category}==null" class="page-link" th:href="@{/donaMain(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}">다음</a>
+			            <a th:if="${vo.category}!=null" class="page-link" th:href="@{/donaMain(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},category=${vo.category},recStat=${vo.recStat})}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
             </div>
         </div>
     </div>
@@ -244,9 +249,8 @@
 
 
     <form action="donaMain" name="mainform">
-    	<input type="hidden" name="category" th:value="${donaVO.category}">
+    	<input type="hidden" name="category" th:value="${pageVO.category}">
     	<input type="hidden" name="recStat" th:value="1">
-    	<input type="hidden" name="page" th:value="1">
     </form>
 
         
@@ -264,7 +268,7 @@
     
     
     <script th:inline="javascript">
-    
+    console.log([[${vo.category}]])
     $(document).ready(function () {
  
 
