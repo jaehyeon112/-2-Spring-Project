@@ -99,7 +99,8 @@ public class facilityController {
 	 * @return
 	 */
 	 @GetMapping("fInfo/facilityInfo")
-		public String getFacilityInfo(@RequestParam(name="facId") String facId, Model model,HttpServletRequest request) {
+		public String getFacilityInfo(@RequestParam(name="facId") String facId,
+										Model model,HttpServletRequest request) {
 		 	FacilityVO findVO =facilityService.getFacilityInfo(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
@@ -116,12 +117,31 @@ public class facilityController {
 	 */
 	 
 	@GetMapping("fInfo/fundingList")
-	public String getFundingList(@RequestParam(name="facId") String facId,  FacilityVO facilityVO, Model model) {
+	public String getFundingList( PageVO vo2,
+								@RequestParam(name="facId") String facId,  
+								FacilityVO facilityVO,
+								Integer recStat,
+								Model model,
+								PageVO vo,
+								@RequestParam(value="category", required = false)String category,
+								@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+								 @RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
+		
+		int total = facilityService.getFacDonCount(1, facId);
+		vo = new PageVO(total,start, end, category ,3);
+     	model.addAttribute("vo",vo);
+     	model.addAttribute("category",category);								
 		//기부중리스트
-		List<FundingVO> list = facilityService.getFundingList(facId);
+		List<FundingVO> list = facilityService.getFundingList(vo,facId);
 		model.addAttribute("fundingList", list);
+		
+		int total2 = facilityService.getFacDonCount(0, facId);
+		vo2 = new PageVO(total2,start, end, category ,3);
+     	model.addAttribute("vo2",vo2);
+     	model.addAttribute("category",category);
+		
 		//기부마감리스트
-		List<FundingVO> listed = facilityService.getFundedList(facId);
+		List<FundingVO> listed = facilityService.getFundedList(vo2,facId);
 		model.addAttribute("fundedList", listed);
 		return "facility/facilityDonation";
 	}
@@ -133,9 +153,22 @@ public class facilityController {
 	 * @return 봉사리스트보는 페이지
 	 */
 	@GetMapping("fInfo/volunteerList")
-	public String getVolunteerList(@RequestParam(name="facId") String facId, Model model) {
-		List<VolunteerVO> list = facilityService.getVolunteerList(facId);
-		model.addAttribute("volList", list);
+	public String getVolunteerList(@RequestParam(name="facId") String facId,
+								 Model model,
+								 PageVO vo, PageVO vo2,
+								@RequestParam(value="category", required = false)String category,
+								@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+								@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
+		int total = facilityService.getVolFCount(facId);
+		vo = new PageVO(total,start, end, category ,3);
+     	model.addAttribute("vo",vo);
+		List<VolunteerVO> listf = facilityService.getVolFList(vo,facId);
+		model.addAttribute("volFList", listf);
+		int total2 = facilityService.getVolICount(facId);
+		vo = new PageVO(total2,start, end, category ,3);
+     	model.addAttribute("vo2",vo2);
+		List<VolunteerVO> list = facilityService.getVolIList(vo2,facId);
+		model.addAttribute("volIList", list);
 		return "facility/facilityVolunteer";
 	}
 	
@@ -255,8 +288,13 @@ public class facilityController {
 	@PostMapping("/joinVol")
 	@ResponseBody
 	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal){
+		if(principal != null && principal.getName() != null) {
+	           model.addAttribute("userId",principal.getName());
+	       } else {
+	           model.addAttribute("userId","없음");
+	       }
 		volMemVO.setMemId(principal.getName());
-		model.addAttribute("userId", principal.getName());
+		
 		log.info(principal.getName());
 		int joinVol = facilityService.insertJoinVolunteer(volMemVO);
 		log.info(joinVol);

@@ -20,9 +20,10 @@ public interface FacilityMapper {
 	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType, @Param("facId") String facId);
 
 	public FacilityVO getFacilityInfo(String facId);
-	public List<FundingVO> getfundingList(String facId);
-	public List<FundingVO> getfundedList(String facId);
-	public List<VolunteerVO> getVolList(String facId);
+	public List<FundingVO> getfundingList(PageVO pageVO,String facId);
+	public List<FundingVO> getfundedList(PageVO pageVO,String facId);
+	public List<VolunteerVO> getVolFList(PageVO pageVO,String facId);
+	public List<VolunteerVO> getVolIList(PageVO pageVO,String facId);
 	
 	
 	public int insertJoinVolunteer(VolMemVO volMemVO);//회원이 시설 봉사 참가하기위한 등록폼
@@ -43,10 +44,13 @@ public interface FacilityMapper {
 	public List<VolActVO> getVolunteerFinishList(@Param("pageVO") PageVO pageVO, @Param("facId")String facId); //봉사 완료 후 리스트
 	public VolunteerVO volunteerFinishInfo(); //봉사 완료 된 후 신청자 리스트
 	
+	//페이지 카운터
 	public int getCategoryCount( @Param("facZip2") String facZip2, @Param("facType") String facType);
 	public int getFVolCategoryCount(String facId);
 	public int getFinishVolCategoryCount(String facId);
-	
+	public int getFacDonCount(@Param("recStat")Integer recStat, @Param("facId")String facId);
+	public int getVolFCount(String facId);
+	public int getVolICount(String facId);
 	//마음온도
 	public int insertVolHeart(HeartVO heartVO);
 	//봉사후기

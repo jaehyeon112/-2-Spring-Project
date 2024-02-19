@@ -37,4 +37,5 @@ public class VolunteerVO {
 	private Date appDate;
 	private String path;
 	private String mainCategory;
+	private String filePath;
 }
