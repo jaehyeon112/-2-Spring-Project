@@ -148,9 +148,13 @@
 			        ,TITLE
 			        ,CONTENT
 			        ,writer
-			        ,WRITE_DATE 
+			        ,WRITE_DATE
+			        ,(select file_path from files where code='p13' and code_no=vol_review.REVIEW_ID) filePath
 			from vol_review
 			where vol_id = #{volId}
+			<if test="writer!=null and writer!=''">
+				and writer = #{writer}
+			</if>
 			order by vol_act_id) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
@@ -158,6 +162,9 @@
        	select count(*)
 		from vol_review
 		where vol_id = #{volId}
+		<if test="writer!=null and writer!=''">
+			and writer = #{writer}
+		</if>
 	</select>
 	<select id="findReviewNo" resultType="int">
 		select REVIEW_SEQ.NEXTVAL
@@ -282,6 +289,9 @@
 		from vol_mem 
 		where app_code='h02'
 		and vol_id = #{volId}
+		<if test="memId!=null and memId!=''">
+			and mem_id = #{memId}
+		</if>
 		order by app_date
 	</select>
 	<select id="findMember" resultType="int">
@@ -323,6 +333,9 @@
 		from vol_Act_mem m join vol_act a 
 		on m.VOL_ACT_ID=a.VOL_ACT_ID
 		where a.vol_id = #{volId}
+		<if test="memId!=null and memId!=''">
+			and m.mem_id = #{memId}
+		</if>
 		group by m.mem_id
 		order by cnt desc
 	</select>
@@ -340,5 +353,4 @@
 		where vol_id=#{volId}
 		and mem_id=#{memId}
 	</update>	
-	
 </mapper>

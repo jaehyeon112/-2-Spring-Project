@@ -19,6 +19,6 @@ public interface BongsaMapper {
 									 ,@Param("endDate")Date endDate
 									 ,@Param("meetType")String meetType);
 	public CountVO countVol(PageVO vo);
-	
+	public List<VolunteerVO> allVol(String meetType);
 	public int cntFacilityList(PageVO vo);
 }

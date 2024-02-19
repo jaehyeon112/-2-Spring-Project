@@ -14,4 +14,6 @@ public interface BongsaService {
 	public int cntFacilityList(PageVO vo);
 	public CountVO cntVol(PageVO vo);
 	public List<BongsaDTO> getVolTagDTO(PageVO vo, Date startDate, Date endDate , String cate);	
+	public List<BongsaDTO> getVolTagDTO(String type);	
+	public List<VolunteerVO> allVol(String type);
 }

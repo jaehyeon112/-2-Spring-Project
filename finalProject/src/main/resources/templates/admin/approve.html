@@ -31,28 +31,32 @@ table th {
 		<div class="container">
 		<h2>승인관리</h2>
 		<div style="float:right;color:black" class="cur">
-			<a style="color:black;font-size:14px" onclick="show()">시설 가입 | </a>
+			<a style="color:black;font-size:14px" onclick="show()">시설 가입 신청| </a>
 			<a style="color:black;font-size:14px" onclick="show1()">시설 기부 신청 | </a>
 			<a style="color:black;font-size:14px" onclick="show2()">기부금 신청 | </a>
 			<a style="color:black;font-size:14px" onclick="show3()">기부금 리뷰</a>
 		</div>
 		<div id="tableData">
-			<table class="table" id="bas">
+		<div id="bas">
+			<th:block th:if="${facilityList.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${facilityList.size} != 0">
+			<table class="table">
 				<thead class="cent">
 					<tr>
 						<th>시설명</th>
 						<th>시설유형</th>
 						<th>사업자등록번호</th>
 						<th>시설 주소</th>
-						<th>이메일</th>
 						<th>대표자명</th>
 						<th>대표번호</th>
 					</tr>
 				</thead>
 				<tbody class="body">
-				 	<th:block th:each="fac,st : ${facilityList}" th:if="${fac.memApp==0}">
+				 	<th:block th:each="fac,st : ${facilityList}" th:if=${fac.memApp}==0>
 						<tr>
-							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])">시설명</td>
+							 <td th:text="${fac.facName}" class="cur" th:onclick="info([[${fac.facId}]])" th:if="${fac.memApp}==0">시설명</td>
 							 <td th:if="${fac.facType}=='f01'" >아동 및 청소년</td>
 							 <td th:if="${fac.facType}=='f02'" >장애인</td>
 							 <td th:if="${fac.facType}=='f03'" >문화,체육</td>
@@ -68,7 +72,26 @@ table th {
 					</th:block>
 				</tbody>
 			</table>
-			</div>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center cur">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:onclick="prev([[${vo}]])">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:onclick="current([[${vo}]],[[${pageNum}]])"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:onclick="next([[${vo}]])">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
+		</div>
+		</div>
 			<!-- 첫번째 모달 -->
 			<div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
 			    <div class="modal-dialog">
@@ -239,16 +262,52 @@ table th {
 		</div>
 			<script th:inline="javascript">
 				function show(){
-					$('#tableData').load("../approve #bas");
+					$('#tableData').load("../approve?memApp=0 #bas");
 				}
 				function show1(){
-					$('#tableData').load("../facilityApprove?donRegApp=0 #fac");
+					$('#tableData').load("../facilityApprove?memApp=1&donApp=0 #fac");
 				}
 				function show2(){
 					$('#tableData').load("../facilityApprove?donRegApp=0 #don");
 				}
 				function show3(){
 					alert('아직 고민중ㅇ');
+				};
+				
+				function prev(vo){
+					$('#tableData').load(`../approve?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1} #bas`);
+				}
+				
+				function current(vo,pageNum){
+					$('#tableData').load(`../approve?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage} #bas`);
+				}
+				
+				function next(vo){
+					$('#tableData').load(`../approve?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage} #bas`);
+				}
+				
+				function prev2(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&donApp=0 #fac`);
+				}
+				
+				function current2(vo,pageNum){
+					$('#tableData').load(`../facilityApprove?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&donApp=0 #fac`);
+				}
+				
+				function next2(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&donApp=0 #fac`);
+				}
+				
+				function prev3(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&donRegApp=0 #don`);
+				}
+				
+				function current3(vo,pageNum){
+					$('#tableData').load(`../facilityApprove?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&donRegApp=0 #don`);
+				}
+				
+				function next3(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&donRegApp=0 #don`);
 				}
 				
 				function dateFormat(value, format) {
@@ -287,7 +346,7 @@ table th {
 			    	$.ajax('../facInfo?facId='+id)
 			       .done(result => {
 			    	   result.facEstDate = dateFormat(result.facEstDate,'yyyy년 MM월 dd일');
-			    	   facN = result.facName;
+			    	   facN = result.facId;
 			    	   if(result.facType=='f01'){
 		    			   result.facType='아동 및 청소년'
 		    		   }else if(result.facType=='f02'){
@@ -408,10 +467,10 @@ table th {
 			    };
 			    
 			    function approveCk(){
-			    	$.ajax('../updateFacApp?facName='+facN)
+			    	$.ajax('../updateFacApp?facId='+facN)
 			        .done(result => {
 			           $("#myModal").modal("hide");
-			           $('#tableData').load("../approve #bas");
+			           $('#tableData').load("../approve?memApp=0 #bas");
 			        })
 			        .fail(err => console.log(err));
 			    }
@@ -420,7 +479,7 @@ table th {
 			    	$.ajax('../updateDonApp?facId='+facI)
 			        .done(result => {
 			           $("#myModal2").modal("hide");
-			           $('#tableData').load("../facilityApprove #fac");
+			           $('#tableData').load("../facilityApprove?memApp=1&donApp=0 #fac");
 			        })
 			        .fail(err => console.log(err));
 			    }
@@ -429,7 +488,7 @@ table th {
 			    	$.ajax('../updateDonRegApp?donId='+facI)
 			        .done(result => {
 			           $("#mys").modal("hide");
-			           $('#tableData').load("../facilityApprove #don");
+			           $('#tableData').load("../facilityApprove?donRegApp=0 #don");
 			        })
 			        .fail(err => console.log(err));
 			    }

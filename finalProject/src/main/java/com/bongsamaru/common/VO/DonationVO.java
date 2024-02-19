@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class DonationVO {
-	private String donId;
+	private Integer donId;
 	private String facId;
 	private String title;
 	private Date recPeriod;

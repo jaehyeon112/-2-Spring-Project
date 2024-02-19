@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -154,32 +155,31 @@ public class challengesController {
 	 * @param likeVO
 	 * @return
 	 */
-	@PostMapping("challengeLike")
-	@ResponseBody
-	public List<LikeVO> getChallengeLike(Model model, Principal principal, LikeVO likeVO, @RequestParam Integer boardId) {
-		likeVO.setMemId(principal.getName());
-		//likeVO.setBoardId(boardId);
-		List<LikeVO> list = challengeService.getChallengeLike(likeVO);
-		model.addAttribute("challengeLikeList", list);
-		boolean isLiked = list.stream()
-                .anyMatch(vo -> vo.getMemId().equals(principal.getName()) && vo.getBoardId().equals(boardId) && vo.getCategory().equals("l02"));
-		if (!isLiked) {
-         
-            challengeService.challengesLikeInsert(likeVO);
-        } else {
-           
-        	challengeService.deleteChallengeLike(boardId);
-        }
-		return list;
-	}
+	/*
+	 * @PostMapping("challengeLike")
+	 * 
+	 * @ResponseBody public List<LikeVO> getChallengeLike(Model model, Principal
+	 * principal, LikeVO likeVO, @RequestParam Integer boardId) {
+	 * likeVO.setMemId(principal.getName()); //likeVO.setBoardId(boardId);
+	 * List<LikeVO> list = challengeService.getChallengeLike(likeVO);
+	 * model.addAttribute("challengeLikeList", list); boolean isLiked =
+	 * list.stream() .anyMatch(vo -> vo.getMemId().equals(principal.getName()) &&
+	 * vo.getBoardId().equals(boardId) && vo.getCategory().equals("l02")); if
+	 * (!isLiked) {
+	 * 
+	 * challengeService.challengesLikeInsert(likeVO); } else {
+	 * 
+	 * challengeService.deleteChallengeLike(boardId); } return list; }
+	 */
 	@PostMapping("/reportInsert")
 	@ResponseBody
-	public int reportInsert(Model model, ReportVO reportVO, Principal principal) {
-		
+	public int reportInsert(Model model, @RequestBody ReportVO reportVO, Principal principal) {
 		reportVO.setMemId(principal.getName());
-		challengeService.reportInsert(reportVO); 
+		reportVO.setCategory("r01");
 		log.info(reportVO);
-		return challengeService.reportInsert(reportVO); 
+		int report = challengeService.reportInsert(reportVO); 
+		
+		return report; 
 	}
 	
 }

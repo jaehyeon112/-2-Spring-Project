@@ -131,4 +131,32 @@
 									)
 	</insert>
 	
+	<select id="listAlert" resultType="AlertVO">
+		select category,
+			   content
+			   ,alert_date
+			   ,read_flag 
+		from alert 
+		where (read_flag = 1 and alert_date + 3 > SYSDATE) 
+		or read_flag = 0
+		and receive_id = #{memId}
+		order by alert_id
+	</select>
+	
+	<select id="volKing" resultType="CountVO">
+		SELECT 
+		    COUNT(act.vol_act_mem_id) AS count,
+		    m.mem_nick AS mNick,
+		    act.mem_id
+		FROM 
+		    vol_act_mem act
+		JOIN 
+		    vol_act va ON act.vol_act_id = va.vol_act_id
+		JOIN 
+		    member m ON act.mem_id = m.mem_id
+		WHERE 
+		    va.vol_date BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)
+		GROUP BY 
+		    act.mem_id, m.mem_nick
+	</select>
 </mapper>

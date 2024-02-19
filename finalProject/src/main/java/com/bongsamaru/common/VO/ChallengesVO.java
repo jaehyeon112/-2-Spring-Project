@@ -14,9 +14,10 @@ public class ChallengesVO {
 	  private String memId;
 	  private String title;
 	  private String content;
-	  private String ExpImpact;
-	  private String ActionReason;
-	  private String RegDate;
+	  private String expImpact;
+	  private String actionReason;
+	  private Date regDate;
+	  private Date endDate;
 	  private String partMethod1;
 	  private String partMethod2;
 	  private String profil;

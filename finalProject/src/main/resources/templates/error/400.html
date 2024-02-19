@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>에러페이지</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <!-- 404 Start -->
+       <div class="container-fluid py-5" style="background: linear-gradient(rgba(19, 53, 123, 0.3), rgba(19, 53, 153, 0.3)); object-fit: cover;">
+           <div class="container py-5 text-center">
+               <div class="row justify-content-center">
+                   <div class="col-lg-6">
+                       <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+                       <h1 class="display-1">400</h1>
+                       <h1 class="mb-4 text-dark">잘못된 요청</h1>
+                       <p class="mb-4 text-dark">죄송합니다! 요청하신 부분에 오류가 있습니다.<br>주소를 다시 확인하시길 바랍니다.</p>
+                       <a class="btn btn-primary rounded-pill py-3 px-5" href="/">메인으로 가기</a>
+                   </div>
+               </div>
+           </div>
+       </div>
+      <!-- 404 End -->
+</section>
+</body>
+</html>

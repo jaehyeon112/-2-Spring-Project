@@ -16,11 +16,11 @@
  			d.rec_stat,
  			d.don_id,
  			c.fac_id,
- 			d.category		
+ 			d.category
  		FROM donation d
  			LEFT JOIN don_ledger f ON d.don_id = f.don_id
  			LEFT JOIN facility c ON d.fac_id = c.fac_id
- 		where d.DON_REG_APP = 1
+		where d.DON_REG_APP = 1
  		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category
  	
  	</select>
@@ -45,10 +45,12 @@
     LEFT JOIN sub_code s ON d.category = s.sub_code_id 
     LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08' 
     WHERE d.DON_REG_APP = 1
+
         AND d.rec_stat = '1' 
     
     GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category, s.sub_code_name, q.file_path
 	
+
 </select>
 
 <!--  ★★ 카테고리별 리스트-->

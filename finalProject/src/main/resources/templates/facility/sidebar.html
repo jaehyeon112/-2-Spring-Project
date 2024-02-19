@@ -3,125 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <title>시설 마이페이지 사이드바</title>
-<style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-}
 
-.sidebar {
-    background-color: #ffebcd;
-    color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-    /* position: fixed; */
-    height: 40vh;
-    overflow-y: auto;
-}
-
-.sidebar a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.btn-toggle {
-    width: 100%;
-    text-align: left;
-    padding: 10px 15px;
-}
-
-.btn-toggle:focus {
-    outline: none;
-}
-
-.btn-toggle:hover,
-.btn-toggle:focus {
-    background-color: #ffebcd;
-}
-
-.btn-toggle.active {
-    background-color: #ffebcd;
-    color: #fff;
-}
-
-.btn-toggle-nav {
-    padding-left: 20px;
-}
-
-.link-dark {
-    color: #343a40 !important;
-}
-
-.p {
-    text-align: center;
-}
-
-.main-content {
-    /* margin-left: 280px; */
-    padding-left: 50px; /* 사이드바의 너비만큼 패딩 추가 */
-    overflow: hidden; /* 내용이 사이드바 아래로 넘치지 않도록 */
-}
-</style>
 </head>
 <body>
 <div th:fragment="side">
   
- 
-      <div class="sidebar-sticky">
-    <ul class="nav flex-column">
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-collapse" aria-expanded="false">
+ <div class="flex-shrink-0 p-3 bg-white">
+    
+    <ul class="list-unstyled ps-0">
+      <li class="mb-2">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-collapse" aria-expanded="true">
           봉사관련
         </button>
-        <div class="collapse" id="volunteer-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+        <div class="collapse pt-2" id="volunteer-collapse">
+          <ul class="btn-toggle-nav list-unstyled font-weight-bold pt-1 small">
             <li>
-              <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">
-                봉사신청중
-              </button>
-              <div class="collapse" id="volunteer-ongoing">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a th:href="@{/facilityMyPage/volJoin}" class="link-dark rounded"><button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">
-              신청하기 & 신청내역</button></a></li>
-                </ul>
-              </div>
+              <a th:href="@{/fac/volJoin}" class="link-dark rounded pt-2 pb-2"><button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="true">
+                신청<br>&신청내역
+              </button></a>
             </li>
             <li>
-              <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-completed" aria-expanded="false">
-                봉사완료
-              </button>
-              <div class="collapse" id="volunteer-completed">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-dark rounded">완료승인</a></li>
-                  <li><a href="#" class="link-dark rounded">후기작성</a></li>
-                </ul>
-              </div>
+             <a th:href="@{/fac/volFinish}" class="link-dark rounded pt-2 pb-2">
+              <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-completed" aria-expanded="true">
+                봉사완료 <br>후기작성
+              </button></a>
+            
             </li>
           </ul>
         </div>
       </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#dashboard-collapse" aria-expanded="false">
+      <li class="mb-2" style="font-size: 1.7em;">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#dashboard-collapse" aria-expanded="true">
           기부관련
         </button>
         <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a th:href="@{/facilityMyPage}" class="link-dark rounded"><button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">기부승인상태</button></a></li>
-            <li><a th:href="@{/facilityMyPage/donaInfo}" class="link-dark rounded"><button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#volunteer-ongoing" aria-expanded="false">기부내역</button></a></li>
+          <ul class="btn-toggle-nav list-unstyled font-weight-bold pt-1 small">
+            <li><a th:href="@{/fac}" class="link-dark rounded pt-2 pb-2" >기부승인</a></li>
             
+            <li><a th:href="@{/fac/donaInfo}" class="link-dark rounded pt-2 pb-2" >기부내역</a></li>
           </ul>
         </div>
       </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#orders-collapse" aria-expanded="false">
+     
+      
+      
+      <li class="mb-2">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-toggle="collapse" data-target="#orders-collapse" aria-expanded="true">
           정보수정
         </button>
       </li>
     </ul>
   </div>
  
-</div>
+
+
+
+
+
+ </div>
 </body>
 </html>

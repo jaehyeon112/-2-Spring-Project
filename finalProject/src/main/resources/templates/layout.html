@@ -28,9 +28,29 @@
 		<link href="https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap" rel="stylesheet">
 		<!-- Bootstrap JS (Popper.js 포함) -->
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		
 		<style>
 		  @import url('https://fonts.googleapis.com/css2?family=Orbit&family=Single+Day&display=swap');
-		  
+		  .cur { cursor: pointer; }
+		  #exampleModal { width: 300px; }
+		  .modal-dialog {
+		    position: fixed;
+		    top: 10%;
+		    left: 30%;
+		    transform: translate(-50%, -50%);
+		  }
+		  .alert-filter {
+		    margin: 0 10px;
+		    cursor: pointer;
+		    color: black; /* 필터 텍스트 색상 */
+		  }
+		  .alert-filter:hover {
+		    text-decoration: underline;
+		  }
+		  .read { color: grey; } /* 읽음 상태의 텍스트 색상 */
+		  .unread { color: black; } /* 안읽음 상태의 텍스트 색상 */
 		</style>
     </head>
 <body>
@@ -62,46 +82,163 @@
                                     <li class="nav-item"><a class="nav-link" th:href="@{/daily}">일일봉사</a></li>
                                     <li class="nav-item"><a class="nav-link" th:href="@{/Group}">동아리</a></li>
                                     <li class="nav-item"><a class="nav-link" th:href="@{/FacilityVol}">시설봉사</a></li>
-                                    <li class="nav-item"><a class="nav-link" th:href="@{/meetings?volId=1}">일일봉사</a></li>
                                 </ul>
                             </li> 
 
                             <li class="nav-item"><a class="nav-link" th:href="@{/donaMain}">기부</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
-
+                 
+							</ul>
+							<ul class="nav navbar-nav menu_nav ml-auto">
                     		<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">로그인</a></li>
 						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li th:if="${session.name}!=null" class="nav-item"><a class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
-						    <li sec:authorize="hasRole('M03')" class="nav-item"><a class="nav-link" th:href="@{/facilityMyPage}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="hasRole('M03')" class="nav-item"><a class="nav-link" th:href="@{/fac}" th:text="|${#authentication.principal.userNickname} 님 환영합니다~|">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
 						        <input type="submit" value="로그아웃" class="nav-link" style="background:none;border:none;padding:0;">
 						    </form>
 							</li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">알람</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">쪽지</a></li>
+							<li sec:authorize="isAuthenticated()" class="nav-item cur"><a id="alertButton" class="nav-link nav-icon-hover" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fas fa-bell"></i>
+                        </a>
+                    </li>
                         </ul>
                     </div> 
                 </nav>
             </div>
         </header>
         <!--================Header Area =================-->
-          <section class="accomodation_area section_gap">
-         	 	
-         	 <div class="container">
 				<section layout:fragment="content">
 				</section>
-       		 </div>
-		</section>
-		<div sec:authorize="isAuthenticated()">
-   		
-			<button type="button" class="btn btn-outline-primary m-1">등록</button>
-		</div>
-	<div class="divfooter" th:insert="~{footer::copy}">
-	</div>
-	
 
+			<div class="divfooter" th:insert="~{footer::copy}"></div>
+			<button type="button" class="btn btn-outline-primary m-1">등록</button>
+
+
+	
+ <div class="modal fade" id="exampleModal" tabindex="-100" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel" style="text-align:center;">알림</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="display:flex;justify-content: flex-end; width: 100%; padding-top:10px; padding-right: 20px;">
+		        <span class="alert-filter" data-filter="all">전체</span> |
+		        <span class="alert-filter" data-filter="read">읽음</span> |
+		        <span class="alert-filter" data-filter="unread">안읽음</span>
+    		</div>
+            <div class="modal-body" style="max-height: calc(100vh - 300px); overflow-x: hidden; overflow-y: auto;">
+                <div id="start">
+                    <!-- 모달 내용 -->
+                  <table class="table">
+				    <thead>
+				        <tr  style="text-align:center">
+				            <th>No</th>
+				            <th>제목</th>
+				            <th>날짜</th>
+				            <th>읽음</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    </tbody>
+				</table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	  $('#alertButton').click(function() {
+    	    var modalBody = $('#exampleModal .modal-body tbody');
+    	    modalBody.empty();
+    	    modalBody.append('<tr><td colspan="4" class="text-center">로딩 중...</td></tr>');
+    	    $('#exampleModal').modal('show');
+
+    	    $.ajax({
+    	      url: '/userAlarm',
+    	      type: 'GET',
+    	      dataType: 'json',
+    	      success: function(alerts) {
+    	        modalBody.empty();
+    	        if (alerts.length > 0) {
+    	          alerts.forEach(function(alert, index) {
+    	            var readStatus = alert.readFlag == '0' ? '안읽음' : '읽음';
+    	            var statusClass = alert.readFlag == '0' ? 'unread' : 'read';
+    	            var formattedDate = formatDate(alert.alertDate);
+    	            var alertContent = `
+    	              <tr class="${statusClass}">
+    	                <td>${index + 1}</td>
+    	                <td>${alert.content}</td>
+    	                <td>${formattedDate}</td>
+    	                <td>${readStatus}</td>
+    	              </tr>
+    	            `;
+    	            modalBody.append(alertContent);
+    	          });
+    	          updateAlertColors(); // 색상 업데이트 함수 호출
+    	        } else {
+    	          modalBody.append('<tr><td colspan="4" class="text-center">새 알림이 없습니다.</td></tr>');
+    	        }
+    	      },
+    	      error: function(error) {
+    	        console.log('알림을 가져오는데 실패했습니다.', error);
+    	      }
+    	    });
+    	  });
+
+    	  // 필터링 기능
+    	  $('.alert-filter').click(function() {
+    	    var filter = $(this).data('filter');
+    	    // 모든 행을 초기 상태로 보이게 합니다.
+    	    $('#exampleModal .modal-body tbody tr').show();
+    	    if (filter !== 'all') {
+    	      $('#exampleModal .modal-body tbody tr').each(function() {
+    	        var isRead = $(this).hasClass('read');
+    	        if ((filter === 'read' && !isRead) || (filter === 'unread' && isRead)) {
+    	          $(this).hide();
+    	        }
+    	      });
+    	    }
+    	  });
+    	});
+
+    	function formatDate(dateString) {
+    	  var date = new Date(dateString);
+    	  return date.getFullYear().toString().substring(2) + '-' 
+    	         + ('0' + (date.getMonth() + 1)).slice(-2) + '-' 
+    	         + ('0' + date.getDate()).slice(-2);
+    	}
+    	// 색상 업데이트 함수
+function updateAlertColors() {
+  $('#exampleModal .modal-body tbody tr').each(function() {
+    var isRead = $(this).hasClass('read');
+    // 각 행의 모든 td 요소의 색상을 변경합니다.
+    $(this).find('td').css('color', isRead ? 'grey' : 'black');
+  });
+}
+    </script>
+    <script src="/userresources/js/jquery-3.2.1.min.js"></script>
+    <script src="/userresources/js/popper.js"></script>
+    <script src="/userresources/js/bootstrap.min.js"></script>
+    <script src="/userresources/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/userresources/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/userresources/js/mail-script.js"></script>
+    <script src="/userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="/userresources/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="/userresources/js/mail-script.js"></script>
+    <script src="/userresources/js/stellar.js"></script>
+    <script src="/userresources/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="/userresources/js/custom.js"></script>
 </body>
 
 </html>
