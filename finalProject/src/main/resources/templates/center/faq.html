@@ -78,7 +78,7 @@ div[th:if] {
 			    <div class="accordion-header" th:id="'heading' + ${item.faqId}">
 			      <h2 class="mb-0">
 			        <button style="color:black;" class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${item.faqId}" th:aria-expanded="true" th:aria-controls="'collapse' + ${item.faqId}">
-			          [[${item.title}]]
+			          Q. [[${item.title}]]
 			        </button>
 			      </h2>
 			    </div>
@@ -89,6 +89,7 @@ div[th:if] {
 			    </div>
 			  </div>
 				<div style="text-align:right;">
+					<span>원하시는 답변을 찾지못하셨다면, 고객센터로 문의해 주세요.</span>
 					<input type="button" class="btn btn-outline-dark m-1 btn-lg" id="receipt" value="문의하기">
 				</div>
 			</div>

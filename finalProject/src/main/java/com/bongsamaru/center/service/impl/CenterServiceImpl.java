@@ -46,4 +46,28 @@ public class CenterServiceImpl implements CenterService{
     	// TODO Auto-generated method stub
     	return centerMapper.getNoticeDetail(boardId);
     }
+    
+    @Override
+    public int insertInquiry(BoardVO boardVO) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.insertInquiry(boardVO);
+    }
+    
+    @Override
+    public List<BoardVO> getInquiryList(PageVO vo) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getInquiryList(vo);
+    }
+    
+    @Override
+    public int getInquiryCount(String memId) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getInquiryCount(memId);
+    }
+    
+    @Override
+    public List<BoardVO> getInquiryDetail(Integer boardId) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.getInquiryDetail(boardId);
+    }
 }

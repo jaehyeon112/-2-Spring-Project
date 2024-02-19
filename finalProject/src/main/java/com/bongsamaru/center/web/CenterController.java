@@ -1,8 +1,10 @@
 package com.bongsamaru.center.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,15 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bongsamaru.center.service.CenterService;
 import com.bongsamaru.common.VO.BoardVO;
-import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.FaqVO;
 import com.bongsamaru.common.VO.PageVO;
-import com.bongsamaru.feed.service.FeedVO;
 import com.bongsamaru.user.service.UserDetailVO;
 
 import lombok.extern.log4j.Log4j2;
@@ -129,9 +130,55 @@ public class CenterController {
 	  * @return center/inquiry
 	  */
 	 @GetMapping("inquiry")
-	 public String inquiryList() {
+	 public String inquiryList(PageVO vo, Model model
+			 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+			 	, @RequestParam(value="start", required = false)String start
+				, @RequestParam(value="end", required = false)String end) {
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	         Object principal = auth.getPrincipal();
+
+	         if (principal instanceof UserDetails) {
+	             UserDetailVO userDetailVO = (UserDetailVO) principal;
+	         String memId = userDetailVO.getUserVO().getId();
+
+			 int total = centerService.getInquiryCount(memId);
+			 System.out.println(total + "숫자");
+			 
+			 
+			 // start와 end가 null일 경우 기본값으로 1과 10을 사용
+	         int startPage = (start == null) ? 1 : Integer.parseInt(start);
+	         int endPage = (end == null) ? 10 : Integer.parseInt(end);
+	         String category = "b02";        
+	         
+	         if(searchKeyword == null) {
+	         	vo = new PageVO(total, startPage, endPage, category, 10);	            	
+	         }else {
+	         	vo = new PageVO(total, startPage, endPage, category,searchKeyword,10);
+	         }
+	         vo.setMemId(memId);
+	         List<BoardVO> list = centerService.getInquiryList(vo);
+	         System.out.println(list + "하이루하이루");
+
+
+			 model.addAttribute("searchKeyword",searchKeyword);
+			 model.addAttribute("list",list);
+			 model.addAttribute("vo",vo);
+	         }
+			 return "center/inquiry"; 
+		 }else {
+			 return "login/FacilityLogin";
+		 }
 		 
-		 return "center/inquiry";
+	 }
+	 
+	 @GetMapping("/inquiry/{boardId}")
+	 public String inquiryDetail(@PathVariable Integer boardId, Model model) {
+		 
+		 List<BoardVO> list = centerService.getInquiryDetail(boardId);
+		 model.addAttribute("list", list);
+		 return "center/inquiryDetail";
 	 }
 	 
 	 /**
@@ -139,7 +186,7 @@ public class CenterController {
 	  * @return center/receipt
 	  */
 	 @GetMapping("receipt")
-	 public String receiptPage() {
+	 public String receiptPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
@@ -148,6 +195,8 @@ public class CenterController {
 	         if (principal instanceof UserDetails) {
 	             UserDetailVO userDetailVO = (UserDetailVO) principal;
 	             System.out.println(userDetailVO.getUserVO() + " 확인");
+	             
+	             model.addAttribute("vo",userDetailVO);
 
 			 }
 			 return "center/receipt"; 
@@ -157,23 +206,25 @@ public class CenterController {
 		 
 	 }
 	 
-		/*
-		 * @PostMapping("/insertInquiry")
-		 * 
-		 * @ResponseBody // ajax호출 return 값 public String insertInquiry(@RequestParam
-		 * BoardVO vo, Model model) { Authentication auth =
-		 * SecurityContextHolder.getContext().getAuthentication();
-		 * 
-		 * if (auth != null && auth.isAuthenticated() && !(auth instanceof
-		 * AnonymousAuthenticationToken)) { Object principal = auth.getPrincipal();
-		 * 
-		 * if (principal instanceof UserDetails) { UserDetailVO userDetailVO =
-		 * (UserDetailVO) principal; System.out.println(userDetailVO.getUserVO() +
-		 * " 확인");
-		 * 
-		 * model.addAttribute("userVO", userDetailVO.getUserVO());
-		 * 
-		 * 
-		 * } return "1"; }else { return "0"; } }
-		 */
+	 @PostMapping("/insertInquiry")
+	 @ResponseBody // ajax호출 return 값
+	 public String insertInquiry(@RequestBody BoardVO vo, Model model) {
+	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	         Object principal = auth.getPrincipal();
+
+	         if (principal instanceof UserDetails) {
+	             UserDetailVO userDetailVO = (UserDetailVO) principal;
+	             System.out.println(userDetailVO.getUserVO() + " 확인");
+
+	             model.addAttribute("userVO", userDetailVO.getUserVO());
+	             
+	             return Integer.toString(centerService.insertInquiry(vo));
+	         }
+	         return "1";
+	     }else {
+	    	 return "0";
+	     }
+	 }
 }

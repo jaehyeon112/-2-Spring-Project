@@ -12,6 +12,9 @@ public interface CenterMapper {
 	public int getFaqCategoryCount(String category);
 	public List<BoardVO> getNoticeList(PageVO vo);
 	public List<BoardVO> getNoticeDetail(Integer boardId);
+	public List<BoardVO> getInquiryDetail(Integer boardId);
+	public List<BoardVO> getInquiryList(PageVO vo);
 	public int getNoticeCount(PageVO vo);
-	
+	public int getInquiryCount(String memId);
+	public int insertInquiry(BoardVO boardVO);
 }

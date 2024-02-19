@@ -56,24 +56,95 @@
 	</select>
    	<!-- FAQList -->
     <select id="getFaqList" resultType="FaqVO">
-        SELECT *  FROM (   SELECT ROWNUM RN, A.*    FROM (
-        
-                SELECT
-                    faq_id,
-                    category,
-                    title,
-                    content 
-                FROM faq
-                WHERE category = #{category} <!-- 카테고리 값 적용 -->
-                ORDER BY faq_id DESC
+        SELECT *  
+        FROM (   
+        		SELECT ROWNUM RN, A.*    
+        		FROM (
+	                SELECT
+	                    faq_id,
+	                    category,
+	                    title,
+	                    content 
+	                FROM faq
+	                WHERE category = #{category} <!-- 카테고리 값 적용 -->
+	                ORDER BY faq_id DESC
                 
                 
-        ) A   )  WHERE RN BETWEEN #{start} AND #{end}
+              ) A   )  WHERE RN BETWEEN #{start} AND #{end}
     </select>
 	<select id="getFaqCategoryCount" resultType="int">
 	SELECT count(*) 
 	FROM faq 
 	WHERE category = #{category}
 	</select>
+	<!-- 회원별 문의 접수내역 갯수조회 -->
+	<select id="getInquiryCount" resultType="int">
+	SELECT count(*) 
+	FROM board
+	WHERE category = 'b02'
+	AND mem_id = #{memId}
+	</select>
+	<!-- 1:1 문의 접수내역보기 -->
+    <select id="getInquiryDetail" resultType="BoardVO">
+    		SELECT	
+					board_id,
+					category,
+					title,
+					a.content as content,
+					write_date,
+					a.mem_id,
+					detail_cate,
+		            comm_id,
+		            b.content as comm_content,
+		            comm_date
+			 FROM 	board a LEFT JOIN comments b
+	         ON 	a.detail_cate = b.detail_code
+             WHERE 	category = 'b02'
+             AND board_id = #{boardId}
+    </select>
+    <!-- 1:1 문의 접수내역보기 -->
+	<select id="getInquiryList" resultType="BoardVO">
+   	    SELECT *  
+        FROM (   
+               SELECT ROWNUM RN, A.* 
+               FROM (
+               		SELECT
+							board_id,
+							category,
+							title,
+							a.content as content,
+							write_date,
+							a.mem_id,
+							detail_cate,
+		                    comm_id,
+		                    b.content as comm_content,
+		                    comm_date
+					FROM 	board a LEFT JOIN comments b
+	                ON 	a.detail_cate = b.detail_code
+                    WHERE 	category = 'b02'
+                    AND a.mem_id = #{memId}
+	                ORDER BY write_date DESC
+              ) A   ) WHERE RN BETWEEN #{start} AND #{end}
+	</select>
 	<!-- 문의 접수 -->
+	<insert id="insertInquiry" parameterType="BoardVO">
+	INSERT INTO board
+		( board_id
+		  ,category
+		  ,title
+		  ,content
+		  ,write_date
+		  ,mem_id
+		  ,detail_cate
+		)
+	VALUES
+		(board_ID.NEXTVAL
+		  ,'b02'
+		  ,#{title}
+		  ,#{content}
+		  ,sysdate
+		  ,#{memId}
+		  ,INQUIRE_SEQ.NEXTVAL
+		)
+	</insert>
   </mapper>

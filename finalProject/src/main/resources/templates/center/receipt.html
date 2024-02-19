@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>a<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
@@ -49,6 +40,10 @@ ul,li{
 	
 	list-style: none;
 }
+
+.hidden {
+	display:none;
+}
 </style>
 <!-- Bootstrap JS (Popper.js 포함) -->
 <!-- 부트스트랩 5.3 버전 CSS 링크 -->
@@ -65,6 +60,10 @@ ul,li{
 		  <p style="text-align: right;">* 필수입력사항</p>
 		  <hr>
 		  <ul>
+		    <li>
+		      <label class="hidden">아이디 *</label>
+		      <input type="text" class="hidden" id="id" value="${vo.memId}">
+		    </li>
 		    <li>
 		      <label>이메일 주소 *</label>
 		      <input type="text" class="form-control" id="email" placeholder="exam@bongsamaru.com">
@@ -119,9 +118,10 @@ ul,li{
 		</div>
 	</div>
 </div>
-<script>
+<script th:inline="javascript">
 	function submitForm() {
   // 필수 입력 사항을 가져옵니다.
+  let id = 'test';
   let email = $("#email").val();
   let phoneNumber = $("#phoneNumber").val();
   let inquiryTitle = $("#inquiryTitle").val();
@@ -158,8 +158,32 @@ ul,li{
     return false; // 접수 제한
   } else {
     // 필수 입력 사항과 체크박스 동의 여부가 모두 충족될 경우 접수를 진행합니다.
-    // 여기에 접수 처리 로직을 추가하세요.
     alert("접수가 완료되었습니다!");
+    
+    let vo = {
+    	memId : id,
+    	title : inquiryTitle,
+    	content : inquiryContent
+    }
+    $.ajax({
+    	url: "/insertInquiry",
+    	type: "POST",
+    	data: JSON.stringify(vo),
+    	contentType: "application/json",
+    	 dataType: "text",
+    	  success: function(response) {
+    	    if (response == "1") {
+    	      // 성공적으로 처리된 경우
+    	      alert("접수 되었습니다.");
+    	    } else {
+    	      alert("실패 되었습니다.");
+    	    }
+    	  },
+    	  error: function(xhr, status, error) {
+    	    console.error("Ajax 오류:", error);
+    	  }
+    })
+    
     return true; // 접수 허용
   }
 }
