@@ -2,8 +2,6 @@ package com.bongsamaru.dona.service;
 
 import java.util.List;
 
-import com.bongsamaru.common.VO.PageVO;
-
 
 public interface DonaService {
 	//메인페이지 전체리스트
@@ -13,9 +11,7 @@ public interface DonaService {
 	//모금완료
 	List<DonaVO> selectCompletedItems();
 	//카테고리별리스트
-	List<DonaVO> getDonaListByCategory(PageVO pageVO);
-	
-	public int getDonaListByCategoryCnt(PageVO pageVO);
+	List<DonaVO> getDonaListByCategory(DonaVO donaVO);
 	
 	
 	//상세페이지 조회 1

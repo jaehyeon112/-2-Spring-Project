@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 등록폼 </title>
+    <title> 후기등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
     <!-- 다른 필요한 CSS 파일 여기에 추가 -->
     
@@ -35,10 +35,7 @@
   <fieldset>
     <legend> Donation Review Form </legend>
 
-    <div class="form-group">
-      <label for="formFile" class="form-label mt-4">영수증 첨부</label>
-      <input class="form-control" type="file" name="uploadfiles" id="formFile">
-    </div>
+   
  
   
     <div class="form-group">
@@ -98,7 +95,7 @@
 	
 
 	<div class="form-group">
-	    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
+	    <label for="formFile2" class="form-label mt-4">이미지 첨부파일(+)</label>
 	    <div id="formFile2Container" class="mb-3">
 	        <div class="input-group">
 	            <input class="form-control" type="file" name="uploadfiles" id="formFile2" style="width: 66.66%;">
@@ -185,7 +182,7 @@ console.log(facId);
             console.log("ajax 안에 success response " + response);
 
             alert("등록성공!");
-            location.href = "my/mypage";
+            location.href = "/donaInfo";
             return;
         },
         error: function(error) {

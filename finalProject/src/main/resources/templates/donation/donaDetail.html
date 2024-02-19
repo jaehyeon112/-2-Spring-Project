@@ -194,7 +194,30 @@
                          </tr>
                      </table>
                   </div>    
-                     </div>
+                  
+                  <!-- 캐러셀 -->
+                  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                  <h3>추가이미지</h3>
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <img src="../image/bonsamaru.png" class="d-block w-100" alt="...">
+					    </div>
+					    <div class="carousel-item">
+					      <img src="../image/kakao.png" class="d-block w-100" alt="...">
+					    </div>
+					  </div>
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>
+                  
+                  
+                   </div>
                                     
                      <!-- Reviews 안의 영역 -->
                      <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
@@ -306,9 +329,11 @@
          </div>
             <!--모금후기 이미지 -->
          <div class="col-lg-6" style="padding: 20px 5px 20px 5px;">
+         	<h4>모금후기이미지</h4>
             <div class="border rounded">
                <a href="#">
-                  <img src="donation/board/img/single-item.jpg" class="img-fluid rounded" alt="Image">
+                  <img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid rounded" alt="Image">
+             		<img th:if="${dona.filePath} == null" src="../image/bonsamaru.png">
                </a>
             </div>
          </div>

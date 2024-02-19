@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.dona.mapper.DonaMapper;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
@@ -34,11 +33,11 @@ public class DonaServiceImpl implements DonaService {
 	public List<DonaVO> selectCompletedItems() {
 		 return donaMapper.selectCompletedItems();
 	}
-
 	@Override
-	public int getDonaListByCategoryCnt(PageVO pageVO) {
-		 return donaMapper.getDonaListByCategoryCnt(pageVO);
+	public List<DonaVO> getDonaListByCategory(DonaVO donaVO) {
+		  return donaMapper.getDonaListByCategory(donaVO);
 	}
+	
 //상세페이지	
 	@Override
 	public DonaVO getDonaDetail(Integer donId, String facId) {
@@ -120,17 +119,7 @@ public class DonaServiceImpl implements DonaService {
 	public int insertReview(DonaVO donaVO) {
 		donaMapper.insertReview(donaVO);
 		return donaMapper.insertReviewDetail(donaVO);
-	}
-	
-	//영수증 알람
-	@Override
-	public int receiptAlertDona(DonaVO donaVO) {
-		int result = donaMapper.receiptAlertDona(donaVO);
-		if(result == 1) {
-			return donaVO.getAlertId();
-		}else {
-			return -1; 
-		}
+		 
 	}
 
 	
@@ -169,13 +158,15 @@ public class DonaServiceImpl implements DonaService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public List<DonaVO> getDonaListByCategory(PageVO pageVO) {
-		return donaMapper.getDonaListByCategory(pageVO);
+	
+@Override
+	public int receiptAlertDona(DonaVO donaVO) {
+	 int result = donaMapper.receiptAlertDona(donaVO);
+	 if(result == 1 ) {
+			return donaVO.getAlertId();
+		}else {
+		return -1;
+		}
 	}
-	
-
-	
 	
 }

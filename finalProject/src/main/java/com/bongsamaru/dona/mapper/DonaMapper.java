@@ -2,7 +2,8 @@ package com.bongsamaru.dona.mapper;
 
 import java.util.List;
 
-import com.bongsamaru.common.VO.PageVO;
+import org.apache.ibatis.annotations.Param;
+
 import com.bongsamaru.dona.service.DonaVO;
 
 
@@ -15,10 +16,8 @@ public interface DonaMapper {
 		//모금완료
 		List<DonaVO> selectCompletedItems();
 		//카테고리별
-		List<DonaVO> getDonaListByCategory(PageVO pageVO);
+		List<DonaVO> getDonaListByCategory(DonaVO donaVO);
 	
-	//paging
-		public int getDonaListByCategoryCnt(PageVO pageVO);
 	// 모금중.모금완료
 	//	List<DonaVO> getRecStat(String recStat);
 		
@@ -63,7 +62,7 @@ public interface DonaMapper {
 		
 	//기부후기등록2
 		public int insertReviewDetail(DonaVO donaVO);
-	//후기등록(영수증) 관리자 알람
+	//후기등록 관리자 알람
 		public int receiptAlertDona(DonaVO donaVO);
 	//기부후기 개별조회
 		public DonaVO getDonaReview(Integer donId);
@@ -73,5 +72,3 @@ public interface DonaMapper {
 		
 		
 }
-
-

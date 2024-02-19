@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.service.MailUtil;
 import com.bongsamaru.common.service.MailVO;
 import com.bongsamaru.dona.service.DonaService;
@@ -89,10 +88,10 @@ public class DonaController {
 	 */
 
 	// 기부 메인페이지 - 전체리스트
-	@GetMapping("/donaMain2")
-	public String openDonaMainPage(DonaVO donaVO , PageVO pageVO, Model model) {
+	@GetMapping("/donaMain")
+	public String openDonaMainPage(DonaVO donaVO , Model model) {
 		
-		List<DonaVO> donaList = donaService.getDonaListByCategory(pageVO);
+		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
 		model.addAttribute("list", donaList);
 //		model.addAttribute("recruitList", recruitList);
 //		model.addAttribute("completedList", completedList);
@@ -111,25 +110,14 @@ public class DonaController {
 	 * @return 메인페이지
 	 */
 	// 카테고리에 따른 리스트 가져오기
-	@GetMapping("/donaMain")
-	public String openDonaMainPageByCategory( PageVO pageVO, Model model, @RequestParam(value="category", required = false) String category
-            , @RequestParam(value="recStat", required = false) Integer recStat
-            , @RequestParam(value="start", required = false,defaultValue = "1") Integer start
-            , @RequestParam(value="end", required = false,defaultValue = "8") Integer end) {
+	@GetMapping("/donaMain/category/{category}")
+	public String openDonaMainPageByCategory(@PathVariable String category, DonaVO donaVO, Model model) {
+		donaVO.setCategory(category);
 		
-		int total = donaService.getDonaListByCategoryCnt(pageVO);
-        pageVO = new PageVO(total, start, end, category,8);
-		pageVO.setRecStat(recStat);
-		
-		
-		List<DonaVO> donaListByCategory = donaService.getDonaListByCategory(pageVO);
+		List<DonaVO> donaListByCategory = donaService.getDonaListByCategory(donaVO);
+		System.out.println("카테고리출력" + donaListByCategory);
 		model.addAttribute("clist", donaListByCategory);
-		model.addAttribute("vo", pageVO);
 
-		
-		String h = "f"; //** 변수이름 기부유형으로 정해놓기
-		List<DonaVO> categoryList = donaService.getCategoryList(h);
-		model.addAttribute("categoryList", categoryList);
 		return "donation/donaMain";
 	}
 
@@ -399,17 +387,12 @@ public class DonaController {
 		return "후기등록성공!";
 	}
 
-	
-	//영수증알람
-	@PostMapping("/recieptAlert")
+	@PostMapping("/receiptAlert")
 	@ResponseBody
-	public String repAlert(DonaVO donaVO, Model model) {
+	public String alertRec(DonaVO donaVO, Model model) {
 		donaService.receiptAlertDona(donaVO);
-		return "영수증신청완료";
+		return "영수증등록완료";
 	}
-	
-	
-	
 	
 					// 템플릿 놔둔곳... 입니다.. (삭제)
 					// 기부신청폼22
