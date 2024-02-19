@@ -69,15 +69,15 @@ public class MeetingController {
 		
 		List<VolActVO> review = service.volActReviewListPaging(pvo);
 		for(VolActVO vo : review) {
-			vo.setFilePath(service.findFile("p12",vo.getVolActId()));
+			vo.setFilePath(service.findFile("p12",review.get(0).getVolActId()));
 		}
 		model.addAttribute("review",review);
 		
 		List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		for(VolActVO vo : list) {
+			vo.setFilePath(service.findFile("p11",list.get(0).getVolActId()));
 			vo.setCnt(service.volActMemCnt(vo.getVolActId()));
-			vo.setFilePath(service.findFile("p11",vo.getVolActId()));
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
 			}else {
@@ -143,7 +143,6 @@ public class MeetingController {
       int total = service.meetingVolActListCnt(volId);
 
       pvo = new PageVO(total, start, end, volId,null);
-
         
       List<VolActVO> list = service.meetingVolActListPaging(pvo);
       req.getSession().setAttribute("id",volId);
