@@ -53,4 +53,5 @@ public interface FacilityMapper {
 	public void insertVolReview(BoardVO boardVO);
 	public int updateVolReview(BoardVO boardVO);
 	public BoardVO getVolReviewInfo(Integer detailCate);
+	public int findBoardNo();
 }

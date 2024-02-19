@@ -156,6 +156,12 @@ public class FacilityServiceImpl implements FacilityService {
 		public BoardVO getVolReviewInfo(Integer detailCate) {
 			return mapper.getVolReviewInfo(detailCate);
 		}
+
+
+		@Override
+		public int findBoardNo() {
+			return mapper.findBoardNo();
+		}
 		
 
 

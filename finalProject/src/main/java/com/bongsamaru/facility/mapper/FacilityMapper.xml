@@ -359,6 +359,10 @@ INSERT INTO HEART
 </insert>
 
 <!-- 봉사후기 -->
+<select id="findBoardNo" resultType="int">
+	select BOARD_ID.NEXTVAL
+	from dual
+</select>
 <insert id="insertVolReview" parameterType="BoardVO">
      
       insert into board(
