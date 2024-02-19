@@ -6,7 +6,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <meta charset="UTF-8">
 <title>시설 마이페이지 - 봉사리스트</title>
  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
-
+<style>
+#showTable {
+  /* background-color : #689f38; */
+  cursor : pointer;
+  color: #689f38;
+  font-weight:bold;
+}
+</style>
 </head>
 <body>
 <section layout:fragment="content">
@@ -21,11 +28,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <div class="col-md-9" style="margin-bottom:30px;">
 <button class="btn btn-outline-warning float-right" type="button" data-toggle="modal" data-target="#myModal">시설봉사 등록</button>
 </div>
-
-
-
-    
-        
             <div class="col-md-2">
                 <div class="book_tabel_item">
                     <p style="color:black; font-size:20px">봉사제목</p>

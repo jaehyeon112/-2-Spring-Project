@@ -109,6 +109,15 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getJoinApp(volActId);
 	}
 
+	@Override
+	public int getJoinAppCheck(Integer volActId, String memId) {
+		return mapper.getJoinAppCheck(volActId, memId);
+	}
+
+	@Override
+	public int getFacRevCheck(Integer detailCate) {
+		return mapper.getFacRevCheck(detailCate);
+	}
 	//페이지네이션하기 위한거
 		@Override
 		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
@@ -147,10 +156,7 @@ public class FacilityServiceImpl implements FacilityService {
 		public BoardVO getVolReviewInfo(Integer detailCate) {
 			return mapper.getVolReviewInfo(detailCate);
 		}
-		@Override
-		public int getJoinAppCheck(Integer volActId, String memId) {
-			return mapper.getJoinAppCheck(volActId, memId);
-		}
+		
 
 
 		

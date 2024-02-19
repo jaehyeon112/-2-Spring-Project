@@ -38,6 +38,7 @@ public interface FacilityMapper {
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	public int getJoinAppCheck(Integer volActId, String memId);
+	public int getFacRevCheck(Integer detailCate);//시설봉사후기 존재여부
 	public List<VolActVO> getVolunteerJoinList(@Param("pageVO") PageVO pageVO, @Param("facId")String facId); //봉사하기 전인 봉사리스트(신청 수락 기다리는 리스트)
 	public List<VolActVO> getVolunteerFinishList(@Param("pageVO") PageVO pageVO, @Param("facId")String facId); //봉사 완료 후 리스트
 	public VolunteerVO volunteerFinishInfo(); //봉사 완료 된 후 신청자 리스트
