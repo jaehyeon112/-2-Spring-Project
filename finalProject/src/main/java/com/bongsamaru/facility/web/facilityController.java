@@ -269,6 +269,13 @@ public class facilityController {
 		  model.addAttribute("info", info);
 		  return info;
 	  }
+	@GetMapping("/getFacRevCheck")
+	  @ResponseBody
+	  public int getFacRevCheck(Model model, @RequestParam(name="detailCate") Integer detailCate) { 
+		  int info = facilityService.getFacRevCheck(detailCate);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
 	
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
@@ -297,10 +304,13 @@ public class facilityController {
 	 * @return
 	 */
 	@GetMapping("volReviewInsert")
-	public String insertVolReview(Model model, Integer volActId) {
-		
-		//model.addAttribute("volActId",volActId);
-		
+	public String insertVolReview(Model model, Integer volActId,Principal principal,HttpServletRequest req) {
+		  if(principal != null && principal.getName() != null) {
+	           model.addAttribute("userId",principal.getName());
+	       } else {
+	           model.addAttribute("userId","없음");
+	       }
+		  log.info(principal.getName());
 		return "facility/volReview";
 	}
 	/**
@@ -322,6 +332,11 @@ public class facilityController {
 		 */
 		return boardVO;
 	}
+	@GetMapping("findBoradNo")
+	   @ResponseBody
+	   public int findBoardtNo() {
+	      return facilityService.findBoardNo();
+	   }
 	/**
 	 * 봉사후기 info
 	 * @param category
