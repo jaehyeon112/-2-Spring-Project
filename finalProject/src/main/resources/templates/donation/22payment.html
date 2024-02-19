@@ -1,0 +1,342 @@
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"
+	 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="image/favicon.png" type="image/png">
+        <title>real결젷페이지</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="userresources/css/bootstrap.css">
+        <link rel="stylesheet" href="userresources/vendors/linericon/style.css">
+        <link rel="stylesheet" href="userresources/css/font-awesome.min.css">
+        <link rel="stylesheet" href="userresources/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="userresources/vendors/nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="userresources/vendors/owl-carousel/owl.carousel.min.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="userresources/css/style.css">
+        <link rel="stylesheet" href="userresources/css/responsive.css">
+    </head>
+		
+		<!-- 아임포트 api -->
+			 <!-- jQuery -->
+			  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+			 <!-- iamport.payment.js -->
+			  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+			  
+
+    <meta charset="UTF-8"/>
+    <title>Payment</title>
+
+	</head>
+
+	<body>
+	 <section layout:fragment="content">
+ 
+        사용자 아이디: <span sec:authentication="name"></span>
+
+	<div class="whole-wrap">
+		<div class="container">
+			
+			
+			
+								<div class="section-top-border">
+						<div class="row">
+							<div class="col-lg-8 col-md-8">
+								<h3 class="mb-30 title_color">Form Element</h3>
+								<form action="#">
+									<div class="mt-10">
+										<input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input">
+									</div>
+								</form>
+							</div>
+							<div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
+
+								<div class="single-element-widget">
+									<h3 class="mb-30 title_color">Checkboxes</h3>
+									<div class="switch-wrap d-flex justify-content-between">
+										<p>01. Sample Checkbox</p>
+										<div class="primary-checkbox">
+											<input type="checkbox" id="default-checkbox">
+											<label for="default-checkbox"></label>
+										</div>
+									</div>
+									<div class="switch-wrap d-flex justify-content-between">
+										<p>02. Primary Color Checkbox</p>
+										<div class="primary-checkbox">
+											<input type="checkbox" id="primary-checkbox" checked>
+											<label for="primary-checkbox"></label>
+										</div>
+									</div>
+
+
+								</div>
+						
+							</div>
+						</div>
+					</div>
+				
+			
+			
+			
+			
+			
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+		<div class="untree_co-section">
+		    <div class="container">
+		      <div class="row mb-5">
+
+		      </div>
+		      <div class="row">
+		        <div class="col-md-6 mb-5 mb-md-0">
+		          <h2 class="h3 mb-3 text-black">기부하기</h2>
+		          <div class="p-3 p-lg-5 border bg-white">
+
+		
+		            <div class="form-group row">
+		              <div class="col-md-12">
+		                <label for="c_address" class="text-black">기부할 금액 <span class="text-danger">*</span></label>
+		                <input type="text"  class="form-control" id="c_address" name="c_address" placeholder="기부할 금액을 입력해주세요">
+		              </div>
+		            </div>
+
+
+	            
+		                <table class="table site-block-order-table mb-5">
+		                  <thead>
+		                    <th>결제금액</th>
+		                    <th></th>
+		                  </thead>
+		                  <tbody>
+
+		                    <tr class="table-success">
+		                      <td class="text-black font-weight-bold" scope="row"><strong></strong></td>
+		                      <td class="text-black font-weight-bold" scope="row"><strong  id="displayAmount">원</strong></td>
+		                    </tr>
+		                    
+	
+		                  </tbody>
+		                </table>
+
+			            <div class="row">
+			                <div class="col-md-3 mb-3">
+			                	<!--  class="btn btn-info btn-block disabled" -->
+			                    <button type="button" class="btn btn-info btn-block " id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</button>
+			                </div>
+			                <div class="col-md-3 mb-3">
+			                    <button type="button" class="btn btn-warning btn-block " id="kakaoPayBtn" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+			                </div>
+			                <div class="col-md-3 mb-3">
+			                    <button type="button" class="btn btn-success btn-block " id="tossPayBtn" onclick="selectPaymentMethod('toss')">토스페이</button>
+			                </div>
+			                <div class="col-md-3 mb-3">
+			                    <button type="button" class="btn btn-danger btn-block " id="cardPayBtn" onclick="selectPaymentMethod('card')">카드결제</button>
+			                </div>
+			            </div>
+
+		            <div class="form-group">
+		              <label for="c_create_account" class="text-black" data-bs-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> 익명으로 기부하겠습니다.</label>
+	
+		            </div>
+
+
+		            <div class="form-group">
+		              <label for="c_ship_different_address" class="text-black" data-bs-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> 동의합니다. (약관)</label>
+		              
+		            </div>
+
+		                <div class="form-group">
+		                  <button class="btn btn-black btn-lg py-3 btn-block"  onclick="requestPay()">결제하기</button>
+		                </div>
+
+		          </div>
+		        </div>
+		        <div class="col-md-6">
+
+	        </div>
+		      </div>
+		      <!-- </form> -->
+		    </div>
+		  </div>
+
+		
+
+		<script src="donation/payment/js/bootstrap.bundle.min.js"></script>
+		<script src="donation/payment/js/tiny-slider.js"></script>
+		<script src="donation/payment/js/custom.js"></script>
+		
+
+		
+
+		
+		
+		<script th:inline="javascript">
+		
+			//DonId 가져오기
+			function getParam(param){
+				let urlParam = new URLSearchParams(window.location.search);
+				console.log("유알엘파람"+ urlParam);
+				
+				return urlParam.get(param);
+			}
+				let donId = getParam("donId");
+				console.log("앞에서 가져온 돈아이디"+ donId);
+			
+		
+		    //입력 -> 표
+		    document.getElementById('c_address').addEventListener('input', function() {
+		        let amountInput = this.value;
+		        // 표 업데이트
+		    	document.getElementById('displayAmount').textContent = amountInput + '원';
+		    });
+		
+		    
+		 
+		//결제결제결제
+		
+			let selectedPaymentMethod = '';  //결제수단 
+			
+			function selectPaymentMethod(paymentMethod){
+				selectedPaymentMethod = paymentMethod;
+				alert('결제수단 :  ' + selectedPaymentMethod + '  선택 ! ');
+			}
+		
+			function getPg(paymentMethod){
+				console.log(paymentMethod, "asdfasdf")
+				switch(paymentMethod){
+					case 'deposit':
+						return '무통장';
+					case 'kakao':
+						console.log('넌 카카오');
+						return 'kakaopay.TC0ONETIME';
+						
+					case 'toss':
+						return 'tosspay';	
+					case 'card':
+						return 'html5_inicis.INIBillTst';
+					default:
+						return '';
+				} 
+			}
+			
+	
+			 
+			 function requestPay() {
+			        	
+			 var IMP = window.IMP;
+			 IMP.init("imp48428178");
+			
+				    let amountInput = document.getElementById('c_address').value;
+				    let agreementCheckbox = document.getElementById('c_ship_different_address');
+				    
+				    if (!amountInput) {
+				        alert('기부할 금액을 입력해주세요.');
+				        return;
+				    }
+				    if (!selectedPaymentMethod) {
+				        alert('결제 수단을 선택해주세요.');
+				        return;
+				    }
+
+				    if (!agreementCheckbox.checked) {
+				        alert('약관에 동의해주세요.');
+				        return;
+				    }
+
+				    // 날짜
+				    let today = new Date();
+				    let year = today.getFullYear();
+				    let month = today.getMonth() + 1;
+				    let day = today.getDate();
+
+				    // 시간 
+				    let hours = today.getHours();
+				    let minutes = today.getMinutes();
+				    let seconds = today.getSeconds();
+
+				    
+				    month = month < 10 ? '0' + month : month;
+				    day = day < 10 ? '0' + day : day;
+				    hours = hours < 10 ? '0' + hours : hours;
+				    minutes = minutes < 10 ? '0' + minutes : minutes;
+				    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+				    let currentDate = year + '-' + month + '-' + day;
+				    let currentTime = hours + ':' + minutes + ':' + seconds;
+
+				    // 결제 일자 , 결제 번호 
+				    let payDate = currentDate 
+				    	console.log("페이데이트")
+				    	console.log(payDate);
+				    let payId = currentDate.replace(/-/g, '') + currentTime.replace(/:/g, '');
+
+				    // **세션에서 회원 아이디를 가져오는 부분
+				  
+				    let memId =  [[${#authentication.name}]];
+				    console.log(memId);
+
+				    // 익명 체크 여부
+				    let anonCheck = document.getElementById('c_create_account').checked; 
+				    let anonCheckVal = anonCheck ? '1' : '0';
+				    console.log(anonCheck);
+				    console.log(anonCheckVal);
+
+				   
+
+				 
+				    IMP.request_pay({
+				        pg: getPg(selectedPaymentMethod),
+				        pay_method: selectedPaymentMethod,
+				        merchant_uid: "ORD" + currentDate.replace(/-/g, '') + '-' + currentTime.replace(/:/g, ''),
+				        name: donId,
+				        amount: parseInt(amountInput),
+				    }, function (rsp ){
+				    	console.log(rsp)
+				    	if(rsp.success){
+				        $.ajax({
+				            type: 'POST',
+				            url: '/paymentProcess',
+				            contentType: 'application/json', 
+				            data: 
+				            	JSON.stringify({
+				                //donLedId: 'DONLEDGER_SEQ.NEXTVAL', 
+				                donAmt: parseInt(amountInput),
+				                payMethod: selectedPaymentMethod,
+				                payDate: payDate,
+				                payStat: 'g01',
+				                payId: payId,
+				                anonCheck: anonCheckVal,
+				                memId: memId,
+				                donId: donId
+				            	})
+				            
+			         }).done(function(data) {
+			        	 console.log(data);
+			        	 window.location.href = "/paymentComplete";
+			          });
+				    	}else{
+				    		alert("실패실패실패!")
+				    	}
+			       });
+			     }
+			 
+			 
+   		 </script>
+   	</section>
+	</body>
+
+</html>

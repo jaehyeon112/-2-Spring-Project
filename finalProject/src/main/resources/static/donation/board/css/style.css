@@ -315,9 +315,7 @@
     transition: 0.5s;
 }
 
-.fruite .fruite-item .fruite-img img:hover {
-    transform: scale(1.3);
-}
+
 /*** Fruits End ***/
 
 
@@ -341,9 +339,7 @@
     transition: 0.5s;
 }
 
-.vesitable .vesitable-item .vesitable-img img:hover {
-    transform: scale(1.2);
-}
+
 
 .vesitable .owl-stage {
     margin: 50px 0;
