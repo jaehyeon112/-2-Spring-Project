@@ -509,10 +509,24 @@ public class UserController {
 		
 		List<FacilityVO> facilityList = userService.getFacilityList(vo);
 		model.addAttribute("facilityList",facilityList);
+		
 		List<DonationVO> list2 = userService.getDonationList(vo);
 		model.addAttribute("donationList",list2);
+		
+		int reviewTotal = userService.donaReviewCnt(vo);
+		vo = new PageVO(reviewTotal, start, end,null,10);
+		
+		List<DonaVO> review = userService.donaReviewList(vo);
+		model.addAttribute("review",review);
+		
 		model.addAttribute("vo",vo);
 		return "admin/facilityApprove";
+	}
+	
+	@GetMapping("reviewInfo")
+	@ResponseBody
+	public DonaVO reviewInfo(@RequestParam(required=false) Integer donRevId) {
+		return userService.donaReviewInfo(donRevId);
 	}
 	
 	/**

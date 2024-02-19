@@ -170,4 +170,9 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.withdrawalMeeting(vo);
 	}
 
+	@Override
+	public int deleteMeeting(Integer volId) {
+		return mapper.deleteMeeting(volId);
+	}
+
 }

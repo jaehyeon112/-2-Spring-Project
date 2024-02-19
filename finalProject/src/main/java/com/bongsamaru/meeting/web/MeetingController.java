@@ -45,6 +45,7 @@ public class MeetingController {
 	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
 		 if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
+	        req.getSession().setAttribute("userId",prin.getName());
 		 } else {
 			model.addAttribute("userId","익명");
 		 }
@@ -57,6 +58,7 @@ public class MeetingController {
 		List<VolActVO> list = service.meetingVolActListPaging(pvo);
 		model.addAttribute("act",list);
 		
+		volVO.setAppCode("h02");
 		List<VolMemVO> member = service.meetingMemList(volVO);
 		model.addAttribute("member",member);
 		
@@ -388,27 +390,73 @@ public class MeetingController {
 	//동아리 마이페이지
 	@GetMapping("myInfoPage")
 	public String myInfoPage(PageVO pageVO,VolMemVO vo,VolActReviewVO reviewVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
-		
 		if(prin != null && prin.getName() != null) {
 	        model.addAttribute("userId",prin.getName());
 	        vo.setMemId(prin.getName());
 	        pageVO.setWriter(prin.getName());
+	        List<VolMemVO> MemVolActList = service.MemVolActList(volId, prin.getName());
+	        model.addAttribute("MemVolActList",MemVolActList);
 		 } else {
 			model.addAttribute("userId","익명");
 		 }
 		req.getSession().setAttribute("id",volId);
 		List<VolMemVO> cnt = service.volCnt(vo);
+		if(cnt.size()!=0) {
+			model.addAttribute("cnt",cnt.get(0).getCnt());
+		}else {
+			model.addAttribute("cnt",0);
+		}
+		
+		vo.setAppCode("h02");
 		List<VolMemVO> date = service.meetingMemList(vo);
 		model.addAttribute("date",date.get(0).getAppDate());
-		model.addAttribute("cnt",cnt.get(0).getCnt());
+		
 
 		
 		int total = service.volActReviewListCnt(reviewVO);
 		pageVO = new PageVO(total, 1, 10,volId,null);
 		List<VolActVO> review = service.volActReviewListPaging(pageVO);
 		model.addAttribute("review",review);
-		System.out.println(review);
 		return "meeting/myInfoPage";
+	}
+	
+	//방장 마이페이지
+	@GetMapping("managerPage")
+	public String managerPage(@RequestParam Integer volId,VolMemVO volVO,Model model,HttpServletRequest req,Principal prin) {
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+			model.addAttribute("userId","익명");
+		 }
+		PageVO pvo = new PageVO(10, 1, 10, volId,null);
+		req.getSession().setAttribute("id",volId);
+	    List<VolActVO> list = service.meetingVolActListPaging(pvo);
+	    model.addAttribute("volAct",list);
+	    
+	    volVO.setAppCode("h02");
+	    List<VolMemVO> member = service.meetingMemList(volVO);
+		model.addAttribute("member",member);
+		
+		volVO.setAppCode("h01");
+		List<VolMemVO> whobo = service.meetingMemList(volVO);
+		model.addAttribute("whobo",whobo);
+
+		List<VolActVO> after = new ArrayList<>();
+		List<VolActVO> before = new ArrayList<>();
+		Date today = new Date();
+		
+		for(VolActVO vo : list) {
+			if(vo.getVolDate().compareTo(today) >= 0) {
+				after.add(vo);
+			}else {
+				before.add(vo);
+			}
+		}
+		model.addAttribute("after",after);
+		model.addAttribute("before",before);
+		
+		
+		return "meeting/managerInfo";
 	}
 	
 	//모임 탈퇴 페이지
@@ -427,5 +475,17 @@ public class MeetingController {
 	@ResponseBody
 	public int WithdrawalProcess(VolMemVO vo) {
 		return service.withdrawalMeeting(vo);
+	}
+	
+	//모임 삭제 프로세스
+	@GetMapping("delMeet")
+	@ResponseBody
+	public int delMeet(@RequestParam Integer volId) {
+		return service.deleteMeeting(volId);
+	}
+	
+	@GetMapping("goodbye")
+	public String goodbye() {
+		return "meeting/goodbye";
 	}
 }

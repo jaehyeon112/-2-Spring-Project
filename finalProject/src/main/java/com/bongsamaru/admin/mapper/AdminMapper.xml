@@ -660,4 +660,45 @@
       from alert
       where mem_id='ADMIN'
    </select>
+   <select id="donaReviewList" resultType="DonaVO">
+   		SELECT * 
+      from(
+         SELECT ROWNUM RN 
+         ,A.* 
+      from(  
+          select DON_REV_ID
+				,DON_ID
+				,EXEC_AMT
+				,START_PERIOD
+				,END_PERIOD
+				,TITLE
+				,CONTENT
+		from don_review
+		where REV_APP = 0
+       order by DON_REV_ID) A)
+        where RN BETWEEN #{start} AND #{end}
+   </select>
+   <select id="donaReviewCnt" resultType="int">
+      select count(*)
+	  from don_review
+	  where REV_APP = 0
+   </select>
+   <update id="updateDonReview" parameterType="DonaVO">
+   	  update don_review
+      set REV_APP = 1
+      where DON_REV_ID = #{donRevId}
+   </update>
+   <select id="donaReviewInfo" resultType="DonaVO">
+      select DON_REV_EXP_ID
+			,DON_REV_ID
+			,BIZ_COST
+			,BIZ_CONTENT
+			,BIZ_AMT
+			,BIZ_AMT3
+			,BIZ_AMT2
+			,BIZ_CONTENT2
+			,BIZ_CONTENT3
+	  from don_review_exp
+	  where DON_REV_ID = #{donRevId}
+   </select>
 </mapper>

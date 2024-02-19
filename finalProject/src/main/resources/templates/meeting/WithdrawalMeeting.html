@@ -38,10 +38,10 @@
 	    <div class="modal-dialog" role="document">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h5 class="modal-title" id="deleteConfirmationModalLabel">삭제 확인</h5>
+	                <h5 class="modal-title" id="deleteConfirmationModalLabel">탈퇴 확인</h5>
 	            </div>
 	            <div class="modal-body">
-	                <p>삭제되었습니다.</p>
+	                <p>탈퇴되었습니다.<br>모임에 참여해주셔서 감사합니다:)</p>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">닫기</button>
@@ -54,7 +54,6 @@
     <script>
     	const volId = [[${session.id}]];
     	const volMemId = "[[${userId}]]";
-    	console.log(volMemId)
     	function outMeeting(){
     		$.ajax({
            		url: "/WithdrawalProcess?volId="+volId+"&memId="+volMemId,
