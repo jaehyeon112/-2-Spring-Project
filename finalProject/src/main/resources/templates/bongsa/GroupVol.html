@@ -104,12 +104,12 @@
 	</div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+      <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>

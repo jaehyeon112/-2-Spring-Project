@@ -3,39 +3,59 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
 <head>
+<style>
+.chal{
+<!--background-color: rgba(104, 159, 56, 0.3);-->
+border: double 2px solid #689f38;
+}
+</style>
 <meta charset="UTF-8">
 <title>챌린지리스트</title>
 </head>
 <body>
 	<section layout:fragment="content">
+	<div class="chal text-center" style="margin:20px">
+	<br>
+	<br>
 		<h1 style="color:#689f38 ">나의 사소한 노력이 모여 <br>우리의 긍정적인 영향을 더해줍니다!</h1>
 		<p th:text="'봉사마루 챌린지 총 ' +${challengeList[0].allParticipants}+'명 참여중'" style="color:black; font-size:15px;"></p>
 		<h4 ><a th:href="@{/challengeInsert}" style="color:#689f38 ">함께하고싶은 챌린지가 있으신가요?</a></h4>
 		<br>
 		<br>
 		<br>
-		
-		<th:block th:each="challenge:${challengeList}">
-			<div class="row">
-				<div class="col-md-6 gallery_item">
-					<div class="gallery_img">
-						<img th:src="${challenge.file.filePath}" alt="">
-						<p th:text="${challenge.participants}+'명 참여중'"></p>
-						<div class="hover">
-							<a class="light"
-								th:href="@{/challenge/challengeInfo(chalId=${challenge.chalId})}"><i
-								class="fa fa-expand"></i></a>
-						</div>
-						<div>
-						<img th:src="${challenge.profil}"> <p th:text="${challenge.title}"></p>
-						</div>
-						<p th:text="${challenge.memId}"></p>
-
-					</div>
-
-				</div>
-			</div>
-		</th:block>
+		</div>
+<div class="container ">		
+<div class="row">
+<th:block th:each="challenge:${challengeList}">
+<div class="col-6">
+<div class="hover">
+<a class="light"
+			th:href="@{/challenge/challengeInfo(chalId=${challenge.chalId})}">
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row">
+    <div class="col-md-7" style="position: relative;">
+      <img th:if="${challenge.file.filePath}!=null" th:src="${challenge.file.filePath}" alt="" onError="this.src='../image/기본이미지.jpg'" class=" img-fluid rounded-start" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div class="col-md-5">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${challenge.title}"></h5>
+        <div class="text-right">
+       	<img class="img-zoomin img-fluid rounded-circle w-50" style="border-radius: 50%;" th:if="${challenge.file.filePath}!=null"  th:src="${challenge.profil}" onError="this.src='../image/기본이미지.jpg'">
+        <p class="card-text" th:text="${challenge.memId}" ></p>
+        </div>
+        <div class="text-left">
+        <p class="card-text" th:text="${challenge.participants}+'명 참여중'" ></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</a>
+</div>
+</div>
+</th:block>
+</div>
+</div>	
 	</section>
 </body>
 </html>

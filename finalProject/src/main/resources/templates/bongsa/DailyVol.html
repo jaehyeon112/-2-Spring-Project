@@ -88,7 +88,6 @@
 	    <div style="display: flex; justify-content: space-between; width: 100%;">
 	    <!-- 왼쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div>
-	        <button style="opacity: 0.8;" type="button" class="btn btn-success">등록</button>
 	    </div>
 	    <!-- 오른쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div style="display: flex; gap: 10px;">
@@ -99,12 +98,12 @@
 	</div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div style="display: flex; gap:10px ">
-	            <select id="location" onchange="search()" >
+	        <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" >
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -213,7 +212,6 @@ $(document).ready(function() {
     if (startDateParam) $('#startDate').val(startDateParam);
     if (endDateParam) $('#endDate').val(endDateParam);
 	
-    alert(location, category);
     // 페이지네이션 링크 업데이트 함수 호출 수정
     updatePaginationLinks();
 });

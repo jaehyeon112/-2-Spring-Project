@@ -94,12 +94,12 @@
 	    </div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" >
+	        <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -191,8 +191,7 @@
     </div>
   </div>
 
-	</div>
-      
+</div>      
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
@@ -384,13 +383,11 @@ var facId = '';
         });
        
         $('#joinVolBtn').on('click', function() {
-       	 
-       	 
        	  if ([[${#authentication.principal}]] !== null && [[${#authentication.principal}]] !== 'anonymousUser') {
        		  var memId = [[${#authentication.principal.userVO.id}]];
        		   
        		    console.log(memId);
-       		 console.log(volActId);
+       		 	console.log(volActId);
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',

@@ -277,6 +277,13 @@ FROM VOL_MEM
 WHERE VOL_ACT_ID=#{volActId}
 AND MEM_ID=#{memId}
 </select>
+<!-- 시설봉사 후기 여부체크 -->
+<select id="getFacRevCheck" parameterType="BoardVO">
+SELECT  COUNT(*)
+  FROM  BOARD 
+ WHERE  CATEGORY='b03' 
+   AND  DETAIL_CATE=#{detailCate}
+ </select>
 <!-- 시설이 봉사 승인시 확인할 참여자 신청서 -->
 <select id="getJoinApp" parameterType="VolMemVO">
 SELECT  MEM_ID,
@@ -385,7 +392,6 @@ INSERT INTO HEART
    <update id="updateVolReview" parameterType="BoardVO">
       update board
       set
-         
          TITLE=#{title},
          CONTENT=#{content},
          mod_date=sysdate
