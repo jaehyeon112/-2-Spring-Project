@@ -349,7 +349,7 @@
                    
                     <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
-                     <div class="col-lg-12" th:if="${dona.recStat == '1'}">
+                     <div class="col-lg-12" >
                          
                          <div class="info-item">목표금액 : <strong><span th:text="${dona.goalAmt}"></span> 원 </strong></div>
                          
@@ -375,10 +375,10 @@
                          <p class="mb-4"><span style="background-color: #FFFF00; ">&#9888;</span> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
                      </div>
                      <!-- 버튼 부분 유지 -->
-                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
-                             th:if="${dona.recStat == '1'}" onclick="redirectToPayment()">
+                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio == 100 or dona.recStat == '0'}"
+                              onclick="redirectToPayment()">
                          <i class="fa fa-shopping-bag me-2 text-primary"></i> 
-                         <span th:text="${dona.recStat == '1' ? '기부하기' : '모금완료'}"></span>
+                         <span th:text="${dona.recStat == '1' ? (dona.donationRatio == 100 ? '모금완료' : '기부하기') : '모금완료'}"></span>
                      </button>
 
 

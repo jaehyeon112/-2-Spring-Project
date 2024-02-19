@@ -88,7 +88,12 @@ public class DonaVO {
 	    private String payId; // 결제번호
 	    private String anonCheck; // 익명체크 (c3)
 	    private String memId; // 회원아이디 
-    
+	    
+	    //익명처리
+	    public String getMemId() {
+	    	 return ("1".equals(anonCheck)) ? "익명" : memId;
+	    }
+	    
     
     //don_review(기부후기) 테이블
 	    private Integer donRevId; //기부후기등록번호 (not null)
