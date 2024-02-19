@@ -83,7 +83,8 @@
 
 
   <section layout:fragment="content">
-
+	<div th:insert="~{banner/group::banner}"></div>
+	  <div class="container">
   <div class="row">
   	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
 	<div class="col-10">
@@ -191,6 +192,7 @@
 
 </div>
 </div>
+	  </div>
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
