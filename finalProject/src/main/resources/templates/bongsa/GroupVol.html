@@ -8,8 +8,8 @@
 .page-item.active .page-link {
     z-index: 2;
     color: #fff;
-    background-color: #ffb524;
-    border-color: #ffb524;
+    background-color: #689f38;
+    border-color: #689f38;
 }
 .page-link {
     position: relative;
@@ -74,7 +74,7 @@
 }
 
 .date-input {
-    margin-left: 10px; /* 날짜 입력 필드 간 간격 */
+    margin-right: 10px; /* 날짜 입력 필드 간 간격 */
 }
 </style>
 </head>
@@ -84,10 +84,8 @@
 
   <section layout:fragment="content">
 	<div th:insert="~{banner/group::banner}"></div>
+  	<div  th:insert="~{bongsa/sidebar::side}"></div>
 	  <div class="container">
-  <div class="row">
-  	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
-	<div class="col-10">
   <div>
   <div class="search-container">
 	 <div style="display: flex; justify-content: space-between; width: 100%;">
@@ -191,8 +189,6 @@
 </nav>
 
 </div>
-</div>
-	  </div>
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
