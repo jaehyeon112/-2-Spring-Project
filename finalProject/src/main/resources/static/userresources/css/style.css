@@ -556,7 +556,7 @@ button:focus {
 
 /*============= End banner_area css =============*/
 .hotel_booking_table {
-  background: white;
+   background: rgba(104, 159, 56, 0.4);
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -564,7 +564,7 @@ button:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border: 7px groove #9cfd68;
+  border: 7px double #689f38;
   border-radius: 20px;
 }
 
@@ -1471,7 +1471,7 @@ button:focus {
 }
 
 .blog-pagination .page-item.active .page-link {
-  background-color: #f3c300;
+  background-color: #689f38;
   border-color: transparent;
   color: #fff;
 }
@@ -1498,7 +1498,7 @@ button:focus {
 .blog-pagination .page-link:hover {
   color: #fff;
   text-decoration: none;
-  background-color: #f3c300;
+  background-color: #689f38;
   border-color: #eee;
 }
 

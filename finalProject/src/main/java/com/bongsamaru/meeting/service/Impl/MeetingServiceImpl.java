@@ -29,13 +29,13 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public List<VolMemVO> meetingMemList(Integer volId) {
-		return mapper.meetingMemList(volId);
+	public List<VolMemVO> meetingMemList(VolMemVO vo) {
+		return mapper.meetingMemList(vo);
 	}
-
+	
 	@Override
-	public List<VolMemVO> volCnt(Integer volId) {
-		return mapper.volCnt(volId);
+	public List<VolMemVO> volCnt(VolMemVO vo) {
+		return mapper.volCnt(vo);
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public int volActReviewListCnt(Integer volId) {
-		return mapper.volActReviewListCnt(volId);
+	public int volActReviewListCnt(VolActReviewVO vo) {
+		return mapper.volActReviewListCnt(vo);
 	}
 
 	@Override
@@ -169,6 +169,5 @@ public class MeetingServiceImpl implements MeetingService{
 	public int withdrawalMeeting(VolMemVO vo) {
 		return mapper.withdrawalMeeting(vo);
 	}
-
 
 }

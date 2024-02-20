@@ -21,5 +21,6 @@ public class DonledgerVO {
 	private String memId;
 	private String title;
 	private String mName;
+	private String mNick;
 	private Integer total;
 }

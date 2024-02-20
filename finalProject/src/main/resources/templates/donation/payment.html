@@ -5,17 +5,7 @@
 	 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="favicon.png">
-  <meta name="description" content="" />
-  <meta name="keywords" content="bootstrap, bootstrap4" />
 
-		<!-- Bootstrap CSS -->
-		<link href="donation/payment/css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="donation/payment/css/tiny-slider.css" rel="stylesheet">
-		<link href="donation/payment/css/style.css" rel="stylesheet">
 		
 		<!-- 아임포트 api -->
 			 <!-- jQuery -->
@@ -28,120 +18,144 @@
     <title>Sample Payment</title>
     
 		<title>Payment</title>
+		<style>
+		  .section-top-border{
+		    background-color:  rgba(250, 250, 250, 0.9) !important;
+		    
+		  }
+		
+		  .container {
+		    max-width: 1000px; /* 폼의 최대 너비를 1000px로 설정 */
+		  }
+		  
+		      .mt-10 {
+        margin-top: 10px; /* 버튼과 텍스트 입력란 간격 조절 */
+    }
+		</style>
+
 	</head>
 
 	<body>
 	 <section layout:fragment="content">
  
         사용자 아이디: <span sec:authentication="name"></span>
-    
+		
+		
+		
+			<h3 class="mb-20 title_color">기부하기</h3>
+	<div class="whole-wrap">
+		<div class="container">
 
-		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1>기부금결제화면</h1>
-							</div>
-						</div>
-						<div class="col-lg-7">
+			
+			
+			<div class="section-top-border ">
+			<div class="row justify-content-center">
+			<div class="col-lg-8 col-md-8">
+				<form action="#">
+					<h6> 기부금  </h6>
+					<div class="mt-10" style="display: flex; align-items: baseline;">
+					    <input type="text" id="c_address" name="c_address" class="single-input mb-10" placeholder="기부할 금액을 입력해주세요" style="flex: 0.5;" required>
+					    <input type="button" id="valBtn" name="valBtn" class="genric-btn primary-border small valBtn" value="입력하기" onclick="valbtn()" style="width : 100px;  margin-left: 5px;  padding: 5px 10px;  color: black;">
+					</div>
+
+
+									
+											
+					<div class="button-group-area mt-40 mb-30">
+						<a href="#" class="genric-btn warning circle medium" id="kakaoPayBtn" onclick="selectPaymentMethod('kakao')">카카오페이</a>
+						<a href="#" class="genric-btn success circle medium" onclick="selectPaymentMethod('card')">카드결제</a>
+						<a href="#" class="genric-btn info circle medium" onclick="selectPaymentMethod('toss')">토스페이</a>
+						<a href="#" class="genric-btn primary circle medium"  id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</a>
+					</div>
+									
+					<div class="single-element-widget mt-10" style="display: flex; flex-direction: column;">
+					    <div class="switch-wrap d-flex justify-content-start align-items-center" style="margin-bottom: 10px;">
+					        <div class="primary-checkbox">
+					            <input type="checkbox" id="default-checkbox" value="1" style="margin: 0;">
+					            <label for="default-checkbox"></label>
+					        </div>
+					        <p style="margin-left: 10px;"> <b>'익명'</b>으로 기부하겠습니다.</p>
+					    </div>
+					    <div class="switch-wrap d-flex justify-content-start align-items-center">
+					        <div class="primary-checkbox">
+					            <input type="checkbox" id="primary-checkbox" style="margin: 0;">
+					            <label for="primary-checkbox"></label>
+					        </div>
+					        <p style="margin-left: 10px;"> 약관에 동의합니다.</p> 
+					        <a href="#" data-toggle="modal" data-target="#termsModal">보기</a>
+					    </div>
+					</div>
+
+	
 							
-						</div>
+					<div class="button-group-area mt-10 text-center">
+						<a href="#" class="genric-btn default-border radius">이전으로</a>
+						<a href="javascript:history.back()" class="genric-btn info-border radius" onclick="requestPay()">결제하기</a>
+					</div>	
+											
+					</form>
 					</div>
 				</div>
 			</div>
-		<!-- End Hero Section -->
-
-		<div class="untree_co-section">
-		    <div class="container">
-		      <div class="row mb-5">
-
-		      </div>
-		      <div class="row">
-		        <div class="col-md-6 mb-5 mb-md-0">
-		          <h2 class="h3 mb-3 text-black">기부하기</h2>
-		          <div class="p-3 p-lg-5 border bg-white">
-
+		</div>
+	</div>
 		
-		            <div class="form-group row">
-		              <div class="col-md-12">
-		                <label for="c_address" class="text-black">기부할 금액 <span class="text-danger">*</span></label>
-		                <input type="text"  class="form-control" id="c_address" name="c_address" placeholder="기부할 금액을 입력해주세요">
-		              </div>
-		            </div>
+		
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">서비스 이용 약관 </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 약관내용 -->
+              <h6>1. 결제 취소 정책</h6>
+				<p>1-1. 기부금 결제 후에는 결제 취소가 불가능합니다.</p>
+				<p>1-2. 결제 취소는 특별한 사유가 없는 한 일절적으로 제공되지 않습니다. 결제 전에 신중한 결정 부탁드립니다.</p>
+				
+				<h6>2. 기부금 미달 시 사업 변경 정책</h6>
+				<p>2-1. 기부금이 시설의 목표금액에 미달할 경우, 사업의 성격과 목적을 고려하여 명시한 사업을 변경하여 기부금을 적절하게 사용할 수 있습니다.</p>
+				<p>2-2. 변경된 사업의 내용과 목적은 투명하게 공개됩니다.</p>
+				<p>2-3. 기부자는 변경된 사업에 대한 이해를 바탕으로 추가 기부를 지원할수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-	            
-		                <table class="table site-block-order-table mb-5">
-		                  <thead>
-		                    <th>결제금액</th>
-		                    <th></th>
-		                  </thead>
-		                  <tbody>
-
-		                    <tr class="table-success">
-		                      <td class="text-black font-weight-bold" scope="row"><strong></strong></td>
-		                      <td class="text-black font-weight-bold" scope="row"><strong  id="displayAmount">원</strong></td>
-		                    </tr>
-		                    
 	
-		                  </tbody>
-		                </table>
-
-			            <div class="row">
-			                <div class="col-md-3 mb-3">
-			                	<!--  class="btn btn-info btn-block disabled" -->
-			                    <button type="button" class="btn btn-info btn-block " id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</button>
-			                </div>
-			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-warning btn-block " id="kakaoPayBtn" onclick="selectPaymentMethod('kakao')">카카오페이</button>
-			                </div>
-			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-success btn-block " id="tossPayBtn" onclick="selectPaymentMethod('toss')">토스페이</button>
-			                </div>
-			                <div class="col-md-3 mb-3">
-			                    <button type="button" class="btn btn-danger btn-block " id="cardPayBtn" onclick="selectPaymentMethod('card')">카드결제</button>
-			                </div>
-			            </div>
-
-		            <div class="form-group">
-		              <label for="c_create_account" class="text-black" data-bs-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> 익명으로 기부하겠습니다.</label>
-	
-		            </div>
 
 
-		            <div class="form-group">
-		              <label for="c_ship_different_address" class="text-black" data-bs-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> 동의합니다. (약관)</label>
-		              
-		            </div>
-
-		                <div class="form-group">
-		                  <button class="btn btn-black btn-lg py-3 btn-block"  onclick="requestPay()">결제하기</button>
-		                </div>
-
-		          </div>
-		        </div>
-		        <div class="col-md-6">
-
-	        </div>
-		      </div>
-		      <!-- </form> -->
-		    </div>
-		  </div>
-
-		
-
-		<script src="donation/payment/js/bootstrap.bundle.min.js"></script>
-		<script src="donation/payment/js/tiny-slider.js"></script>
-		<script src="donation/payment/js/custom.js"></script>
-		
-
-		
-
-		
-		
 		<script th:inline="javascript">
+		
+			function valbtn(){
+				let amountInput = document.getElementById('c_address').value;
+				console.log(amountInput);
+				
+				 // 유효성 검사: 숫자이면서 100원 이상인지 확인
+			    if (amountInput == '' || isNaN(amountInput) || parseInt(amountInput) < 100) {
+			        alert('100원 이상의 금액을 입력해주세요.');
+			        return;
+			    }
+
+			    // 입력된 금액이 100원 단위가 아니면 경고창 띄우고 수정
+			    if (amountInput % 100 !== 0) {
+			        alert('100원 단위로 기부가 가능합니다.');
+			        
+			        // 100원 단위로 내림
+			        let roundedAmount = Math.floor(amountInput / 100) * 100;
+
+			        // 입력 상자에 내림된 금액 설정
+			        document.getElementById('c_address').value = roundedAmount;
+			        return;
+			    }
+			}
+		
+		
+		
 		
 			//DonId 가져오기
 			function getParam(param){
@@ -150,16 +164,9 @@
 				
 				return urlParam.get(param);
 			}
+			
 				let donId = getParam("donId");
 				console.log("앞에서 가져온 돈아이디"+ donId);
-			
-		
-		    //입력 -> 표
-		    document.getElementById('c_address').addEventListener('input', function() {
-		        let amountInput = this.value;
-		        // 표 업데이트
-		    	document.getElementById('displayAmount').textContent = amountInput + '원';
-		    });
 		
 		    
 		 
@@ -193,12 +200,13 @@
 	
 			 
 			 function requestPay() {
-			        	
+				 
+				 
 			 var IMP = window.IMP;
 			 IMP.init("imp48428178");
 			
 				    let amountInput = document.getElementById('c_address').value;
-				    let agreementCheckbox = document.getElementById('c_ship_different_address');
+				    let agreementCheckbox = document.getElementById('primary-checkbox');
 				    
 				    if (!amountInput) {
 				        alert('기부할 금액을 입력해주세요.');
@@ -247,7 +255,7 @@
 				    console.log(memId);
 
 				    // 익명 체크 여부
-				    let anonCheck = document.getElementById('c_create_account').checked; 
+				    let anonCheck = document.getElementById('default-checkbox').checked; 
 				    let anonCheckVal = anonCheck ? '1' : '0';
 				    console.log(anonCheck);
 				    console.log(anonCheckVal);
@@ -264,6 +272,10 @@
 				    }, function (rsp ){
 				    	console.log(rsp)
 				    	if(rsp.success){
+				    		// 로컬 스토리지에 데이터 저장
+				            localStorage.setItem('donationAmount', amountInput);
+				           
+				            localStorage.setItem('memId', memId);
 				        $.ajax({
 				            type: 'POST',
 				            url: '/paymentProcess',

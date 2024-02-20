@@ -33,6 +33,7 @@ public class UserVO implements Serializable {
 	private String memName;
 	// 파일테이블의 프로필 정보 때문에 넣음
 	private String memProfile;
+	private Integer RN;
 	
 	
 	@Builder

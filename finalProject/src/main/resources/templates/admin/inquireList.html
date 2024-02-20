@@ -21,6 +21,10 @@
 		<div class="container">
 		<h2>문의사항 관리</h2>
 		<div id=tableData>
+			<th:block th:if="${inquireList.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${inquireList.size} != 0">
 			<table class="table" id="notice">
 				<thead>
 					<tr>
@@ -44,6 +48,24 @@
 					</th:block>
 				</tbody>
 			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center cur">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:href="@{/inquireList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},category='b02')}">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:href="@{/inquireList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},category='b02')}"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:href="@{/inquireList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},category='b02')}">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
 		</div>
 		</div>
       </div>

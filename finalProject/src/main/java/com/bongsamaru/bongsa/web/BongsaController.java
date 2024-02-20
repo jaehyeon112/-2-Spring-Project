@@ -16,7 +16,6 @@ import com.bongsamaru.bongsa.service.BongsaService;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.service.CommonService;
-import com.bongsamaru.facility.Service.FacilityService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -32,8 +31,6 @@ public class BongsaController {
 	@Autowired
 	CommonService commonService;
 	
-	@Autowired
-	FacilityService facilityService;
 	
 	@GetMapping("/daily")
 	public String goToDaily(PageVO vo, Model model,

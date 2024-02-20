@@ -1,4 +1,4 @@
-package com.bongsamaru.user.service;
+package com.bongsamaru.user.service.handler;
 
 import java.io.IOException;
 
@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.bongsamaru.user.User;
 
 @Component
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
@@ -39,6 +38,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         // userDetail를 사용하는 로직 구현
         // 예: 세션에 사용자 정보 저장, 추가 정보 입력 페이지로 리디렉션 등
         System.out.println(oAuth2User+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        response.sendRedirect("/signup"); // 로그인 성공 후 리디렉션할 페이지
+        response.sendRedirect("/"); // 로그인 성공 후 리디렉션할 페이지
     }
 }

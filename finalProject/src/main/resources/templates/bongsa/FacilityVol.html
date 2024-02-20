@@ -71,10 +71,6 @@
 .search-button:hover, .reset-button:hover {
     opacity: 0.8;
 }
-.btn.dropdown-toggle {
-    display: inline-block; /* 드롭다운을 인라인 블록 요소로 설정 */
-    margin-right: 10px; /* 드롭다운 간 간격 */
-}
 
 .date-input {
     margin-left: 10px; /* 날짜 입력 필드 간 간격 */
@@ -84,7 +80,8 @@
 
 <body>
   <section layout:fragment="content">
-
+	<div th:insert="~{banner/fac::banner}"></div>
+	<div class="container">
   <div class="row">
   	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
 	<div class="col-10">
@@ -97,12 +94,12 @@
 	    </div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	        <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -112,7 +109,7 @@
 	            <input type="date" id="startDate" class="date-input" onchange="search()">
 	            <span class="date-label">종료 날짜:</span>
 	            <input type="date" id="endDate" class="date-input" onchange="search()">
-<input id="userData" type="hidden"  th:value="|${#authentication.principal.userVO.id}">
+<!-- <input id="userData" type="hidden"  th:value="|${#authentication.principal.userVO.id}"> -->
 	        </div>
 	    </div>
 	</div>
@@ -160,6 +157,7 @@
 	        </div>
         </div>
       </div>
+      </div>
       <!-- 봉사정보 모달 -->
       <div class="modal" tabindex="-1" id="myModal2">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -184,13 +182,16 @@
 	    </div>
       
       <div class="modal-footer">
+     
         <button type="button" id="joinVolBtn" class="btn btn-outline-warning btn-sm " style="color:black;" data-toggle="modal" data-target="#myModal"  >봉사신청하기</button>
+ 
+      
       </div>
       </div>
     </div>
   </div>
 
-      
+</div>      
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
@@ -224,6 +225,33 @@
 
 	</div>
 </div> 
+
+      <!-- 봉사신청 모달 -->
+          <div class="modal" tabindex="-1" id="myModal3">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<div class="write_item user">
+					 <h4>해당 봉사신청을 이미 진행하였습니다 ^^</h4>
+					</div>
+			</div> <!-- class="modal-body" -->
+			<div class="modal-footer">
+			
+			</div>
+		</div>
+
+	</div>
+</div> 
  </div>     
       
       <nav style="margin-top:50px;" aria-label="Page navigation example" th:if="${fac.size} != 0">
@@ -247,6 +275,9 @@
 </div>
 
 <script th:inline="javascript">
+
+ 
+	
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
 	        // 엔터 키 코드는 13입니다.
@@ -352,26 +383,53 @@ var facId = '';
         });
        
         $('#joinVolBtn').on('click', function() {
-
+       	  if ([[${#authentication.principal}]] !== null && [[${#authentication.principal}]] !== 'anonymousUser') {
+       		  var memId = [[${#authentication.principal.userVO.id}]];
+       		   
+       		    console.log(memId);
+       		 	console.log(volActId);
+       		    $.ajax({
+       		        url: '/getJoinAppCheck',
+       		        type: 'GET',
+       		        data: {
+       		            memId: memId,
+       		            volActId: volActId
+       		        },
+       		        success: function(response) {
+       		            if(response > 0) {
+       		               
+       		             $('#myModal').modal('hide');
+       		             $('#myModal3').modal('show');
+       		            } else {
+       		                // 봉사 등록 가능
+       		                // 추가적인 봉사 등록 처리 로직을 구현
+       		                // 예: 봉사 등록 폼 제출 등
+       		            }
+       		        },
+       		        error: function(xhr, status, error) {
+       		            // 오류 처리
+       		        }
+       		    });
+       	    } else {
+       	      window.location.href='/login';
+       	    }
+       	       
             // 모달 닫기
             $('#myModal2').modal('hide');
         });
     });
    
-
+   
 $('.uploadBtn').click(function (){
 	console.log(facId);
-    var userId = $('#userData').val();
-  
-   
+   // var userId = $('#userData').val();
 
-	console.log(userId)
 	let appReason = $('[name="content"]').val();
 	console.log(appReason);
 	var formData= new FormData();
 	formData.append('appReason',appReason);
 	formData.append('facId',facId);
-	formData.append('memId', userId );
+	//formData.append('memId', userId );
 	formData.append('volActId',volActId);
 	console.log(formData);
 	$.ajax({
