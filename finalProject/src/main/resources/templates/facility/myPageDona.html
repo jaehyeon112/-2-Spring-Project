@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:20px">후기작성</p>
+                                       <p style="color:black; font-size:20px">영수증등록</p>
                                        
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@ function openReviewForm(button) {
     var donId = button.getAttribute("data-donId");
     var facId = button.getAttribute("data-facId");
     // donId와 facId를 이용하여 후기 작성 페이지로 이동
-    var reviewUrl = '/reviewform?donId=' + donId + '&facId=' + facId;
+    var reviewUrl = '/fac/reviewform?donId=' + donId + '&facId=' + facId;
     window.location.href = reviewUrl;
 }
 

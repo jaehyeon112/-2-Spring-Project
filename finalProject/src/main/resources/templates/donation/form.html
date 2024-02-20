@@ -20,6 +20,10 @@
     .form-control[type="file"] {
         width: 33.33%; /* Set to one-third of the current size */
     }
+    
+ #goalAmt ::placeholder {
+    text-align: right;
+  }
 
     
     </style>
@@ -38,10 +42,12 @@
 
 
 
-
+<div class="container" style="margin:200px 0px 0px 100px;">
 <form name="donaForm" >
   <fieldset>
-    <legend> 기부등록 폼 </legend>
+    <legend> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+  <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+</svg> <strong>기부글 등록</strong> </legend>
 
     
     
@@ -54,7 +60,7 @@
     
     <div class="form-group">
       <label for="title" class="form-label mt-4"><span style="color:red">*</span>주 제목</label>
-      <input type="text" name="title"  class="form-control form-control-sm" id="title"  aria-describedby="titleHelp" placeholder="메인 제목" >
+      <input type="text" name="title"  class="form-control form-control-sm" id="title"  aria-describedby="titleHelp" placeholder="제목을 입력해주세요." maxlength="100">
       <small id="titleHelp" class="form-text text-muted">메인 화면에 보이는 제목입니다.</small>
     </div>
 
@@ -87,11 +93,11 @@
     </div>
 
     <div class="form-group">
-      <label for="usePlan" class="form-label mt-4"><span style="color:red">*</span>기부금사용계획(+)</label>
+      <label for="usePlan" class="form-label mt-4"><span style="color:red">*</span>기부금사용계획</label>
       <div id = "dynamicFields" class="mb-3" style="width: 66.66%;">
       	<div class="input-group" >
 	      <input type="text" name="usePlan" class="form-control" id="usePlan"  placeholder="구체적사업내용" autocomplete="off" > 
-	      <input type="text" name="usePlanAmt" class="form-control" id="usePlanAmt"  placeholder="구체적사업비" autocomplete="off" >
+	      <input type="text" name="usePlanAmt" class="form-control" id="usePlanAmt"  placeholder="구체적사업비 (원)" autocomplete="off" maxlength="7" >
 	      <button type="button" class="btn btn-outline-secondary" onclick="addInputs('dynamicFields')">+</button>
       	</div>
       </div>
@@ -99,14 +105,17 @@
 
     <div class="form-group">
       <label for="projTarget" class="form-label mt-4"><span style="color:red">*</span>사업대상</label>
-      <input type="text" name="projTarget" class="form-control" id="projTarget"  placeholder="기부금 사업대상 입력" autocomplete="off" style="width: 50%;">
+      <input type="text" name="projTarget" class="form-control" id="projTarget"  autocomplete="off" style="width: 50%;">
     </div>
 
 
     <div class="form-group">
       <label for="expEffect" class="form-label mt-4"><span style="color:red">*</span>기대효과</label>
-      <textarea name="expEffect" class="form-control" id="expEffect"  rows="3" placeholder="varchar2(2000)이니까 제한하는거 처리해라 현아야." style="width: 66.66%;"></textarea>
+      <textarea name="expEffect" class="form-control" id="expEffect"  rows="3" placeholder="500자 이내로 작성해주세요." style="width: 66.66%;" maxlength="600"></textarea>
+      
     </div>
+      
+  
     
 
 
@@ -114,20 +123,20 @@
 	  <label for="intro" class="form-label mt-4">소개글</label>
 	    <div id="articleContainer" class="mb-3" style="width: 66.66%;">
 	        <div class="input-group" >
-	        	<input type="text"  name="introTitle" class="form-control" id="introTitle" placeholder="제목" autocomplete="off" >
+	        	<input type="text"  name="introTitle" class="form-control" id="introTitle" placeholder="제목" autocomplete="off" maxlength="100" >
 	        </div>
 	        <div class="input-group">
-	            <textarea name="intro" class="form-control" id="intro" rows="3" ></textarea>
+	            <textarea name="intro" class="form-control" id="intro" rows="3" placeholder="600자 이내로 작성해주세요 "maxlength="600"></textarea>
 	        </div>
 	        <button type="button" class="btn btn-outline-secondary" onclick="addInputs('articleContainer')">+</button>
 	    </div>
 	</div>
     
 <div class="form-group">
-    <label for="link" class="form-label mt-4">관련링크(+)</label>
+    <label for="link" class="form-label mt-4">관련링크</label>
     <div id="relatedLinkContainer" class="mb-3" style="width: 60%;">
         <div class="input-group">
-            <input type="text" class="form-control" id="link" name="link" placeholder="null 가능" autocomplete="off" >
+            <input type="text" class="form-control" id="link" name="link"  autocomplete="off"  placeholder="(ex) www.">
             <button type="button" class="btn btn-outline-secondary" onclick="addInputs('relatedLinkContainer')">+</button>
         </div>
     </div>
@@ -135,7 +144,7 @@
 
 
 <div class="form-group">
-    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
+    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일</label>
     <div id="formFile2Container" class="mb-3">
         <div class="input-group" style="width: 33.33%;">
             <input class="form-control" type="file" id="formFile2" name="file">
@@ -147,19 +156,12 @@
     
     
     <fieldset class="form-group">
-      <legend class="mt-4"><span style="color:red">*</span>필수 동의 </legend>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-       
-          유의사항을 읽었습니다.
-        </label>
-      </div>
+      <legend class="mt-4"><span style="color:red">*</span> 필수동의 </legend>
+   
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" >
         <label class="form-check-label" for="flexCheckChecked">
-      
-         약관동의합니다.
+         약관동의합니다. <a href="#" data-toggle="modal" data-target="#termsModal">보기</a>
         </label>
       </div>
     </fieldset>
@@ -169,12 +171,39 @@
     
   </fieldset>
 </form>
+</div>
 
+<!-- 약관 모달  -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">서비스 이용 약관 </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 약관내용 -->
+              <h6>1. 기부관련</h6>
+				<p>1-1. 기부 모금 글 등록 후 자유로운 수정과 삭제가 불가합니다</p>
+				<p>1-2. 목표금액에 기부모금액이 미달할 경우, 1회 한정으로 기한을 연장할 수 있습니다.</p>
+				<p>1-3. 연장하지않고 모금완료가 될 경우, 기부금 액수에 상관없이 송금됩니다.</p>
+				<p>1-4. 목표액 미달시 계획했던 사업을 변경하여 사업을 진행할 수 있습니다.</p>
+				<p>1-5. 등록글은 관리자의 승인 후 등록됩니다.</p>
+				<p>1-6. 등록글의 내용이 사실과 다를 시 사이트 정책에 따른 조치가 취해질 수 있습니다.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script th:inline="javascript">
 
+// 글자수
 
 
+	
 function submitForm() {
 	
 	console.log("버튼눌렀다!");
@@ -216,11 +245,11 @@ function submitForm() {
     });
  	
     // 유의사항과 약관 동의 여부 확인
-    let flexCheckDefault = document.getElementById('flexCheckDefault').checked;
+    //let flexCheckDefault = document.getElementById('flexCheckDefault').checked;
     let flexCheckDefault2 = document.getElementById('flexCheckDefault2').checked;
 
-    if (!flexCheckDefault && !flexCheckDefault2) {
-        alert('유의사항을 읽고 약관에 동의해야 합니다.');
+    if (!flexCheckDefault2) {
+        alert('약관을 읽고 체크해주세요.');
         return;
     }
 
@@ -309,7 +338,7 @@ function submitForm() {
             newFields.innerHTML =
                 `<div class="input-group">` +
                 `<input type="text" class="form-control" name="usePlan${count + 1}" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control" name="usePlanAmt${count + 1}" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="usePlanAmt${count + 1}" placeholder="구체적사업비(원)" autocomplete="off"  maxlength="7">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "articleContainer") {
@@ -318,7 +347,7 @@ function submitForm() {
                 `<input type="text" class="form-control" name="addIntroTitle" placeholder="제목" autocomplete="off">` +
                 `</div>` +
                 `<div class="input-group">` +
-                `<textarea class="form-control" name="addIntro" rows="3"></textarea>` +
+                `<textarea class="form-control" name="addIntro" rows="3" maxlength="600"></textarea>` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "relatedLinkContainer") {

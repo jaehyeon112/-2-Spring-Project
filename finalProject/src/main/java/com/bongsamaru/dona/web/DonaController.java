@@ -290,7 +290,7 @@ public class DonaController {
 	 * @return 기부신청폼으로 이동
 	 */
 	// 기부신청폼
-	@GetMapping("/applyform")
+	@GetMapping("/fac/applyform")
 	public String openapplyform(Model model) {
 		return "donation/forDonaform";
 	}
@@ -308,7 +308,7 @@ public class DonaController {
 	 * @return 기부 게시글 등록폼
 	 */
 	// 등록폼 이동
-	@GetMapping("/form")
+	@GetMapping("/fac/form")
 	public String openRegitform(Model model) {
 		String h = "f";
 		List<DonaVO> categoryList = donaService.getCategoryList(h);
@@ -327,7 +327,7 @@ public class DonaController {
 	 */
 
 	// 등록폼 INSERT
-	@PostMapping(value = "/regitForm", consumes = "multipart/form-data")
+	@PostMapping(value = "/fac/regitForm", consumes = "multipart/form-data")
 	@ResponseBody
 	public String registerDona(DonaVO donaVO,
 			                   @RequestPart("uploadfiles") MultipartFile[] uploadfiles, 
@@ -358,7 +358,7 @@ public class DonaController {
 //	}
 	
 	////임시
-	@GetMapping("/reviewform")
+	@GetMapping("/fac/reviewform")
 	public String openRevform( Model model) {
 
 		
@@ -374,7 +374,7 @@ public class DonaController {
 	 * @throws IOException
 	 */
 	// 후기폼 Insert
-	@PostMapping(value = "/reviewForm", consumes = "multipart/form-data")
+	@PostMapping(value = "/fac/reviewForm", consumes = "multipart/form-data")
 	@ResponseBody
 	public String registerReview(DonaVO donaVO,
 			@RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
