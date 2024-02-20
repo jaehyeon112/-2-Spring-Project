@@ -5,6 +5,18 @@
   
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
+<select id="allFacilityList" resultType="FacilityVO">
+	         select FAC_ID,
+					FAC_NAME,
+					FAC_ADDR,
+					select_sub(FAC_ZIP2) AS region,
+					FAC_ZIP2,
+					FAC_ZIP,
+					FAC_TYPE,
+					select_sub(fac_Type) category,
+					(select file_Path from files where code='p02' and code_user=fac_Id) as filePath
+              from facility
+</select>
 <select id="getFacilityList" resultType="FacilityVO">
 	SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
 	
@@ -15,6 +27,7 @@
 					FAC_ZIP2,
 					FAC_ZIP,
 					FAC_TYPE,
+					select_sub(fac_Type) category,
 					(select file_Path from files where code='p02' and code_user=#{facId}) as filePath
     FROM FACILITY
 	       <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
@@ -55,28 +68,33 @@
  		FAC_INTRO,
  		REP_NAME,
  		REP_PHONE,
-		(Select Sum(T1.Don_Amt) 
+        FI.FILE_PATH,
+		(Select nvl(Sum(T1.Don_Amt),0 )
 		   From Don_Ledger T1 
 		   Left Join Donation T2 
 		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id=#{facId})          As donaitonAmt,
+		  Where T2.Fac_Id='toyFacility')          As donaitonAmt,
 		(Select Count(Distinct(T1.Mem_Id)) 
 		   From Don_Ledger T1 
 		   Left Join Donation T2 
 		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id=#{facId})          As donors
-	From Facility 
+		  Where T2.Fac_Id='toyFacility')          As donors
+	From Facility F LEFT JOIN FILES FI
+    ON F.FAC_ID = FI.CODE_USER
    Where Fac_Id=#{facId}
+   AND FI.CODE='p02'
 </select>
 
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">
-	SELECT D1.DON_ID                       		  AS donId,           
-	       D1.TITLE                        		  AS title, 
-	       D1.GOAL_AMT                     		  AS goalAmt, 
-		   D1.REC_STAT                     		  AS state,
-		   SUM(NVL(D2.DON_AMT,0))          		  AS donationAmt, 
-		   COUNT(DISTINCT D2.MEM_ID)     		  AS donors,
+SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
+	SELECT D1.DON_ID ,                      		             
+	       D1.TITLE  ,                      		   
+	       D1.GOAL_AMT ,                    		  
+		   D1.REC_STAT ,
+		   FILE_PATH,                    		  
+		   SUM(NVL(D2.DON_AMT,0))          	      AS donationAmt, 
+		   COUNT(DISTINCT D2.MEM_ID)    		  AS donors,
 		   (SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio
 		   
 	  FROM DONATION D1 
@@ -87,16 +105,30 @@
 	   AND D1.FAC_ID=#{facId}
 	   
 	 GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
+	 
+) A )
+	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
 </select>
+
+<select id="getFacDonCount" resultType="int">
+SELECT    COUNT(*)
+  FROM    DONATION
+ WHERE    REC_STAT =#{recStat} 
+   AND    DON_REG_APP='1'
+   AND    FAC_ID=#{facId}
+</select>
+
+
 
 <!-- 시설에서 진행마감인 모금정보 List-->
 <select id="getfundedList" resultType="FundingVO">
+SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
 	SELECT  D1.DON_ID,
 		 	D1.TITLE    , 
 			D1.GOAL_AMT , 
 			D1.REC_STAT ,
-			SUM(NVL(D2.DON_AMT,0)) AS donationAmt, 
-			COUNT(DISTINCT D2.MEM_ID) AS donors,
+			SUM(NVL(D2.DON_AMT,0))                 AS donationAmt, 
+			COUNT(DISTINCT D2.MEM_ID)              AS donors,
 			(SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio 
 			
 	  FROM  DONATION D1 
@@ -107,23 +139,67 @@
 	   AND  D1.FAC_ID=#{facId}
 	   
 	 GROUP  BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
+) A )
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
 </select>
 
-<select id="getVolList" resultType="VolunteerVO">
-SELECT  T1.VOL_ACT_ID, 
-		T1.REV_TITLE,
-		T1.CONTENT, 
-		T1.WRITE_DATE, 
-		T2.FAC_ID, 
-		T2.CATEGORY, 
-		T2.TITLE, 
-		T2.LOCATION, 
-		T2.VOL_DATE 
-  FROM  FAC_VOL_REV T1 
-  LEFT  JOIN VOL_ACT T2 ON T1.VOL_ACT_ID = T2.VOL_ACT_ID
- WHERE  FAC_ID=#{facId}
+
+<!-- 이미 진행한 시설의 봉사리스트  -->
+<select id="getVolFList" resultType="VolunteerVO">
+SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
+ SELECT    CATEGORY, 
+ 		   TITLE, 
+ 		   CONTENT, 
+ 		   LOCATION,
+ 		   CAP, 
+ 		   VOL_DATE, 
+ 		   EXPIRE_DATE, 
+ 		   VOL_ACT_ID,
+ 		   F.FILE_PATH
+ FROM      VOL_ACT V LEFT JOIN FILES F 
+ ON        V.VOL_ACT_ID = F.CODE_NO 
+ WHERE     V.FAC_ID=#{facId}
+  AND      SYSDATE > VOL_DATE 
+ AND       F.CODE='p14'
+ ) A )
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
 </select>
 
+
+<select id="getVolFCount" resultType="int">
+SELECT    COUNT(*)
+  FROM    VOL_ACT
+  WHERE   FAC_ID=#{facId}  
+     AND  SYSDATE > VOL_DATE 
+</select>
+
+<!-- 앞으로 진행한 시설의 봉사리스트  -->
+<select id="getVolIList" resultType="VolunteerVO">
+SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
+ SELECT    CATEGORY, 
+ 		   TITLE, 
+ 		   CONTENT, 
+ 		   LOCATION,
+ 		   CAP, 
+ 		   VOL_DATE, 
+ 		   EXPIRE_DATE, 
+ 		   VOL_ACT_ID,
+ 		   F.FILE_PATH
+ FROM      VOL_ACT V LEFT JOIN FILES F 
+ ON        V.VOL_ACT_ID = F.CODE_NO 
+ WHERE     V.FAC_ID=#{facId}
+  AND      VOL_DATE >  SYSDATE
+ AND       F.CODE='p14'
+ ) A )
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
+</select>
+
+<select id="getVolICount" resultType="int">
+SELECT    COUNT(*)
+  FROM    VOL_ACT
+  WHERE   FAC_ID=#{facId}  
+AND      VOL_DATE >  SYSDATE
+</select>
 <!-- MyPage쪽 -->
 <!-- dona정보 -->
 <select id="getDonaList" resultType="DonaVO">
@@ -361,6 +437,10 @@ INSERT INTO HEART
 </insert>
 
 <!-- 봉사후기 -->
+<select id="findBoardNo" resultType="int">
+	select BOARD_ID.NEXTVAL
+	from dual
+</select>
 <insert id="insertVolReview" parameterType="BoardVO">
      
       insert into board(

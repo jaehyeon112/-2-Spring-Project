@@ -41,8 +41,8 @@
 				 	<th:block th:each="board,st : ${board}" >
 						<tr>
 							 <td th:text="${st.count}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}==${board.writer}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}!=${board.writer}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${session.userId}==${board.writer}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${session.userId}!=${board.writer}">제목</td>
 							 <td th:text="${board.writer}" >작성자</td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy/MM/dd')}" >날짜</td>
 							 <td th:text="${board.viewCnt}" >조회수</td>

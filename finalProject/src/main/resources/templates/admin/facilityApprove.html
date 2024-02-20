@@ -101,3 +101,55 @@
 			</nav>
 			</th:block>
 			</div>
+			
+			
+			<div id="review">
+			<th:block th:if="${review.size} == 0" style="text-align:center">
+				<p>데이터가 존재하지 않습니다<p>
+			</th:block>
+			<th:block th:if="${review.size} != 0">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>기부번호</th>
+						<th>제목</th>
+						<th>집행금액</th>
+						<th>모금 시작일</th>
+						<th>모금 마감일</th>
+						<th>영수증</th>
+					</tr>
+				</thead>
+				<tbody>
+				 	<th:block th:each="don,st : ${review}">
+						<tr>
+							 <td th:text="${st.count}"></td>
+							 <td th:text="${don.donId}">아이디</td>
+							 <td th:text="${don.title}" >제목</td>
+							 <td data-th-text="${#numbers.formatInteger(don.execAmt, 3, 'COMMA') + '원'}" class="cur" th:onclick="moreDetail([[${don.donRevId}]])">목표금액</td>
+							 <td th:text="${#dates.format(don.startPeriod, 'yyyy년 MMM dd일')}" >모금 시작일</td>
+							 <td th:text="${#dates.format(don.endPeriod, 'yyyy년 MMM dd일')}">모금 마감일</td>
+							 <td>다운받기</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			<nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center cur">
+			        <!-- 이전 버튼 -->
+			        <li class="page-item" th:if="${vo.prev}">
+			            <a class="page-link" th:onclick="prev4([[${vo}]])">이전</a>
+			        </li>
+			        <!-- 페이지 번호 출력 -->
+			        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			            <a class="page-link" th:onclick="current4([[${vo}]],[[${pageNum}]])"
+			               th:text="${pageNum}"></a>
+			        </li>
+			        <!-- 다음 버튼 -->
+			        <li class="page-item" th:if="${vo.next}">
+			            <a class="page-link" th:onclick="next4([[${vo}]])">다음</a>
+			        </li>
+			    </ul>
+			</nav>
+			</th:block>
+			</div>

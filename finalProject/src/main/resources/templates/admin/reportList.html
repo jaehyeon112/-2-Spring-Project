@@ -56,7 +56,7 @@
 				<tbody>
 					<tr th:each="report,st : ${reportList}">
 						 <td th:text="${st.count}">번호</td>
-						 <td><a th:href="@{/challenge/challengeInfo(chalId=${report.categoryNo})}" target='_blank' style="color:black">챌린지로 이동</a></td>
+						 <td><a th:href="@{/challenge/challengesList(chalId=${report.categoryNo})}" target='_blank' style="color:black">챌린지로 이동</a></td>
 						 <td th:text="${report.memId}" >신고자</td>
 						 <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td>
 						 <td th:if="${report.repReason}=='s01'" >스팸홍보/도배글입니다</td>

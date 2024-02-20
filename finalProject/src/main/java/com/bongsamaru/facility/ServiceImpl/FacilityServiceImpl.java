@@ -29,26 +29,34 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
 	}
 	
-	
+	@Override
+	public List<FacilityVO> allFacilityList() {
+		return mapper.allFacilityList();
+	}
 	@Override
 	public FacilityVO getFacilityInfo(String facId) {
 		return mapper.getFacilityInfo(facId);
 	}
 
 	@Override
-	public List<FundingVO> getFundingList(String facId) {
-		return mapper.getfundingList(facId);
+	public List<FundingVO> getFundingList(PageVO pageVO,String facId) {
+		return mapper.getfundingList(pageVO,facId);
 	}
 
 	@Override
-	public List<FundingVO> getFundedList(String facId) {
-		return mapper.getfundedList(facId);
+	public List<FundingVO> getFundedList(PageVO pageVO,String facId) {
+		return mapper.getfundedList(pageVO,facId);
 	}
 
 	@Override
-	public List<VolunteerVO> getVolunteerList(String facId) {
+	public List<VolunteerVO> getVolFList(PageVO pageVO,String facId) {
 		
-		return mapper.getVolList(facId);
+		return mapper.getVolFList(pageVO,facId);
+	}
+	@Override
+	public List<VolunteerVO> getVolIList(PageVO pageVO,String facId) {
+		
+		return mapper.getVolIList(pageVO,facId);
 	}
 	
 	@Override
@@ -118,25 +126,7 @@ public class FacilityServiceImpl implements FacilityService {
 	public int getFacRevCheck(Integer detailCate) {
 		return mapper.getFacRevCheck(detailCate);
 	}
-	//페이지네이션하기 위한거
-		@Override
-		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
-			
-			return mapper.getCategoryCount(facZip2, facType);
-		}
-
-
-		@Override
-		public int getFVolCategoryCount(String facId) {
-			
-			return mapper.getFVolCategoryCount(facId);
-		}
-
-		@Override
-		public int getFinishVolCategoryCount(String facId) {
-			return mapper.getFinishVolCategoryCount(facId);
-		}
-
+	
 		//마음온도
 		@Override
 		public int insertVolHeart(HeartVO heartVO) {
@@ -155,6 +145,44 @@ public class FacilityServiceImpl implements FacilityService {
 		@Override
 		public BoardVO getVolReviewInfo(Integer detailCate) {
 			return mapper.getVolReviewInfo(detailCate);
+		}
+
+
+		@Override
+		public int findBoardNo() {
+			return mapper.findBoardNo();
+		}
+
+		//페이지네이션하기 위한거
+		@Override
+		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
+			
+			return mapper.getCategoryCount(facZip2, facType);
+		}
+
+
+		@Override
+		public int getFVolCategoryCount(String facId) {
+			
+			return mapper.getFVolCategoryCount(facId);
+		}
+
+		@Override
+		public int getFinishVolCategoryCount(String facId) {
+			return mapper.getFinishVolCategoryCount(facId);
+		}
+
+		@Override
+		public int getFacDonCount(Integer recStat, String facId) {
+			return mapper.getFacDonCount(recStat, facId);
+		}
+		@Override
+		public int getVolFCount(String facId) {
+			return mapper.getVolFCount(facId);
+		}
+		@Override
+		public int getVolICount(String facId) {
+			return mapper.getVolICount(facId);
 		}
 		
 

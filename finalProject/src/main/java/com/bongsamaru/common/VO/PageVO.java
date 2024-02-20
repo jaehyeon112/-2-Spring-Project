@@ -21,7 +21,6 @@ public class PageVO {
     
     private int startPage;
     private int endPage;
-    
 
    
   //영희
@@ -32,7 +31,7 @@ public class PageVO {
     private Integer donId;
     private Integer reqCode;
     private String writer;
-    
+
     // Getter와 Setter 메서드
 
     

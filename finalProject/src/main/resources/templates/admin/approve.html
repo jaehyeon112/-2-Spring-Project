@@ -12,9 +12,6 @@
 .facility{
 	cursor:pointer;
 }
-#tableData{
-	margin-top : 50px;
-}
 table th {
 	width : 120px;
 }
@@ -36,6 +33,8 @@ table th {
 			<a style="color:black;font-size:14px" onclick="show2()">기부금 신청 | </a>
 			<a style="color:black;font-size:14px" onclick="show3()">기부금 리뷰</a>
 		</div>
+		<br>
+		<hr>
 		<div id="tableData">
 		<div id="bas">
 			<th:block th:if="${facilityList.size} == 0" style="text-align:center">
@@ -258,8 +257,37 @@ table th {
 			        </div>
 			    </div>
 			</div>
-		
-		</div>
+			
+				<!-- 네번째 모달창 -->
+			<div class="modal fade" id="reviewInfo" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="deleteConfirmationModalLabel">봉사활동 내역</h5>
+			            </div>
+			            <div class="modal-body">
+			                <table class="table" id="reviewInfos">
+									<tr>
+										<th>총 사업비</th>
+										<td id="bizCost"></td>
+									</tr>
+									<tr>
+										<th>사업내용</th>
+										<td id="bizContent"></td>
+									</tr>
+									<tr>
+										<th>상세지출내역</th>
+										<td id="bizAmt"></td>
+									</tr>
+							</table>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-danger" id="closing" data-dismiss="modal" aria-hidden="false">닫기</button>
+			            </div>
+			        </div>
+			    </div>
+		 	</div>
+			</div>
 			<script th:inline="javascript">
 				function show(){
 					$('#tableData').load("../approve?memApp=0 #bas");
@@ -271,7 +299,7 @@ table th {
 					$('#tableData').load("../facilityApprove?donRegApp=0 #don");
 				}
 				function show3(){
-					alert('아직 고민중ㅇ');
+					$('#tableData').load("../facilityApprove #review");
 				};
 				
 				function prev(vo){
@@ -310,6 +338,18 @@ table th {
 					$('#tableData').load(`../facilityApprove?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&donRegApp=0 #don`);
 				}
 				
+				function prev4(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&donRegApp=0 #review`);
+				}
+				
+				function current4(vo,pageNum){
+					$('#tableData').load(`../facilityApprove?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&donRegApp=0 #review`);
+				}
+				
+				function next4(vo){
+					$('#tableData').load(`../facilityApprove?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&donRegApp=0 #review`);
+				}
+				
 				function dateFormat(value, format) {
 				    let date = value == "" ? new Date() : new Date(value);
 				    let year = date.getFullYear();
@@ -328,6 +368,32 @@ table th {
 				    }
 				    return number.toLocaleString();
 				};
+				
+				function moreDetail(donRevId){
+					$('#bizCost').empty();
+			        $("#bizContent").empty();
+			        $("#bizAmt").empty();
+			        
+					$.ajax('../reviewInfo?donRevId='+donRevId)
+			        .done(result => {
+			           $("#bizCost").append(result.bizCost)
+			           $("#bizContent").append(result.bizContent)
+			           $("#bizAmt").append(result.bizAmt)
+			        })
+			        .fail(err => console.log(err));
+					
+					$("#reviewInfo").modal("show");
+				}
+				
+				$(".btn-secondary").click(function () {
+				      $("#myModal").modal("hide");
+				      $("#mymodals").modal("hide");
+				      $("#reviewInfo").modal("hide");
+			    });
+				
+				$("#closing").click(function () {
+				      $("#reviewInfo").modal("hide");
+			    });
 				
 				var facN = '';
 				var facI = '';

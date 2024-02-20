@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -228,9 +229,9 @@ public class LoginController {
 		List<CountVO> volKing = userService.volKing();
 		model.addAttribute("vol", volKing);
 		
-//		List<DonaVO> random = donaService.selectRecruitingItems();
-//		model.addAttribute("randomlist", random);
-//		log.info(random);
+		DonaVO donaVO = new DonaVO();
+		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		model.addAttribute("list", donaList);
 		
 		List<BongsaDTO> group = bongsaService.getVolTagDTO("e02");
 		model.addAttribute("group", group);
@@ -245,7 +246,26 @@ public class LoginController {
 	@GetMapping("/userAlarm")
 	@ResponseBody
 	public List<AlertVO> getAlerts(Principal principal) {
-	    return userService.listAlert(principal.getName());
+		List<AlertVO> vo = userService.listAlert(principal.getName());
+		log.info(vo);
+		return vo;
 	}
+	
+	@GetMapping("/alarmCount")
+	@ResponseBody
+	public int getAlarm(Principal principal) {
+		log.info(principal.getName());
+	    return userService.countAlarm(principal.getName());
+	}
+	
+	@PostMapping("/updateAlarm")
+	@ResponseBody
+	public int updateAlarm(@RequestBody AlertVO vo,Principal principal) {
+		log.info(vo);
+		vo.setReceiveId(principal.getName());
+	    userService.updateAlarm(vo);
+	    return userService.countAlarm(principal.getName());
+	}
+	
 	
 }

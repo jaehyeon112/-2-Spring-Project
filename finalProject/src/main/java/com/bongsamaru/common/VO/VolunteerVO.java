@@ -17,6 +17,7 @@ public class VolunteerVO {
 	private Date volDate;
 	private Integer cap;
 	private String facName; 
+	private String filePath; 
 	//영희
 	private Integer vol;
 	private Integer capCnt;
