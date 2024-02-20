@@ -673,6 +673,8 @@
 				,END_PERIOD
 				,TITLE
 				,CONTENT
+				,(select file_path from files where code='p06' and code_no=don_review.DON_REV_ID) filePath
+				,(select file_name from files where code='p06' and code_no=don_review.DON_REV_ID) fileName
 		from don_review
 		where REV_APP = 0
        order by DON_REV_ID) A)
