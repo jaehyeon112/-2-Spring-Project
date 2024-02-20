@@ -195,9 +195,7 @@ $.ajax('../meetingInfo?volId='+[[${session.id}]])
   	}else if(result.meetType=='e02'){
 	  $("#meetingType").text('동아리모임');
   	}
-  	console.log('[[${session.userId}]]');
-  	console.log(result.memId);
-  	if(result.memId=='[[${userId}]]'){
+  	if(result.memId=='[[${session.userId}]]'){
   		$('#showing2').css('display','block')
   	}
 })

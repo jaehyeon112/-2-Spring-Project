@@ -1,9 +1,12 @@
 package com.bongsamaru.meeting.web;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.velocity.runtime.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +43,10 @@ public class MeetingController {
 	 * @param req
 	 * @param prin
 	 * @return
+	 * @throws IOException 
 	 */
 	@GetMapping("meetings")
-	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) {
-		 if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-	        req.getSession().setAttribute("userId",prin.getName());
-		 } else {
-			model.addAttribute("userId","익명");
-		 }
-		 
+	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
 		req.getSession().setAttribute("id",volId);
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
@@ -160,25 +157,13 @@ public class MeetingController {
          }
       }
       
-      if(prin != null && prin.getName() != null) {
-           model.addAttribute("userId",prin.getName());
-       } else {
-           model.addAttribute("userId","없음");
-       }
-      
       return "meeting/volBoardList";
    }
    
    //봉사게시판 작성폼
    @GetMapping("insertVolActPage")
    public String insertVolActPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
-      if(prin != null && prin.getName() != null) {
-           model.addAttribute("userId",prin.getName());
-       } else {
-           model.addAttribute("userId","없음");
-       }
       req.getSession().setAttribute("id",volId);
-      
       return "meeting/volActBoardInsert";
    }
    
@@ -208,12 +193,6 @@ public class MeetingController {
       model.addAttribute("info",info);
       req.getSession().setAttribute("id",volId);
       
-      if(prin != null && prin.getName() != null) {
-           model.addAttribute("userId",prin.getName());
-       } else {
-           model.addAttribute("userId","없음");
-       }
-      
       VolunteerVO vo = service.meetingInfo(volId);
       model.addAttribute("meeting",vo.getMemId());
       
@@ -237,23 +216,12 @@ public class MeetingController {
 	      model.addAttribute("vo",vo);
 	      System.out.println(list);
 	      
-	      if(prin != null && prin.getName() != null) {
-	           model.addAttribute("userId",prin.getName());
-	       } else {
-	           System.out.println("User is not logged in.");
-	       }
-	      
 	      return "meeting/freeBoardList";
 	   }
 	
 	//자유게시판 작성폼
 	@GetMapping("freeBoardInsertPage")
 	public String freeBoardInsertPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-	    } else {
-	    	 model.addAttribute("userId","없음");
-	    }
 		req.getSession().setAttribute("id",volId);
 		
 		return "meeting/freeBoardInsert";
@@ -318,12 +286,6 @@ public class MeetingController {
 		req.getSession().setAttribute("id",volId);
 		model.addAttribute("board",list);
 		model.addAttribute("vo",vo);
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-		 } else {
-	        System.out.println("User is not logged in.");
-		 }
-		
 		return "meeting/reviewBoardList";
 	}
 	
@@ -336,7 +298,6 @@ public class MeetingController {
 	    	 model.addAttribute("userId","익명");
 	    }
 		req.getSession().setAttribute("id",volId);
-		
 		
 		VolActVO volVO = service.volActInfo(vo);
 		model.addAttribute("volVO",volVO);
@@ -351,12 +312,6 @@ public class MeetingController {
 	
 	@GetMapping("ReviewInfo")
 	public String ReviewInfo(Principal prin,Model model,VolActReviewVO vo,HttpServletRequest req,@RequestParam Integer reviewId,@RequestParam Integer volId) {
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-		 } else {
-			 model.addAttribute("userId","익명");
-		 }
-		
 		vo.setReviewId(reviewId);
 		req.getSession().setAttribute("id",volId);
 		
@@ -377,11 +332,6 @@ public class MeetingController {
 		VolunteerVO vo = service.meetingInfo(volId);
 		model.addAttribute("info",vo);
 		
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-		 } else {
-			model.addAttribute("userId","익명");
-		 }
 		req.getSession().setAttribute("id",volId);
 		
 		return "meeting/aboutMeeting";
@@ -389,16 +339,13 @@ public class MeetingController {
 	
 	//동아리 마이페이지
 	@GetMapping("myInfoPage")
-	public String myInfoPage(PageVO pageVO,VolMemVO vo,VolActReviewVO reviewVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-	        vo.setMemId(prin.getName());
-	        pageVO.setWriter(prin.getName());
-	        List<VolMemVO> MemVolActList = service.MemVolActList(volId, prin.getName());
-	        model.addAttribute("MemVolActList",MemVolActList);
-		 } else {
-			model.addAttribute("userId","익명");
-		 }
+	public String myInfoPage(HttpSession session ,PageVO pageVO,VolMemVO vo,VolActReviewVO reviewVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
+		vo.setMemId((String) session.getAttribute("userId"));
+		pageVO.setWriter((String) session.getAttribute("userId"));
+		List<VolMemVO> MemVolActList = service.MemVolActList(volId, (String) session.getAttribute("userId"));
+		model.addAttribute("MemVolActList",MemVolActList);
+		
+		System.out.println("여기!!!"+session.getAttribute("userId"));
 		req.getSession().setAttribute("id",volId);
 		List<VolMemVO> cnt = service.volCnt(vo);
 		if(cnt.size()!=0) {
@@ -423,11 +370,6 @@ public class MeetingController {
 	//방장 마이페이지
 	@GetMapping("managerPage")
 	public String managerPage(@RequestParam Integer volId,VolMemVO volVO,Model model,HttpServletRequest req,Principal prin) {
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-		 } else {
-			model.addAttribute("userId","익명");
-		 }
 		PageVO pvo = new PageVO(10, 1, 10, volId,null);
 		req.getSession().setAttribute("id",volId);
 	    List<VolActVO> list = service.meetingVolActListPaging(pvo);
@@ -462,11 +404,6 @@ public class MeetingController {
 	//모임 탈퇴 페이지
 	@GetMapping("WithdrawalMeeting")
 	public String WithdrawalMeeting(@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin) {
-		if(prin != null && prin.getName() != null) {
-	        model.addAttribute("userId",prin.getName());
-		 } else {
-			model.addAttribute("userId","익명");
-		 }
 		req.getSession().setAttribute("id",volId);
 		return "meeting/WithdrawalMeeting";
 	}

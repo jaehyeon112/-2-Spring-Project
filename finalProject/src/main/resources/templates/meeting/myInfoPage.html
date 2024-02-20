@@ -54,7 +54,7 @@
 				<div class="col-lg-7"><h2 class="section-title text-center">작성한 봉사후기</h2></div>
 			</div>
 			<div class="owl-carousel owl-3-slider">
-				<th:block th:if="${review.size}==0">
+				<th:block th:if="${review} == null">
 					<p>작성한 후기가 없습니다! 봉사 후 첫 후기를 작성해보세요:)</p>
 				</th:block>
 				<div class="item" th:each="review : ${review}">
@@ -78,10 +78,10 @@
 	                <h5 class="modal-title" id="deleteConfirmationModalLabel">봉사활동 내역</h5>
 	            </div>
 	            <div class="modal-body">
-	            <th:block th:if="${MemVolActList.size} == 0">
+	            <th:block th:if="${MemVolActList} == null">
 	            	<h6 style="text-align:center">활동한 봉사내역이 없습니다. 첫 봉사를 참여해보세요!</h6>
 	            </th:block>
-	            <th:block th:if="${MemVolActList.size} != 0">
+	            <th:block th:unless="${MemVolActList} == null">
 	                <table class="table">
 						<thead>
 							<tr>

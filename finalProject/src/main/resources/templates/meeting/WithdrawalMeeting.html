@@ -53,7 +53,7 @@
     </main>
     <script>
     	const volId = [[${session.id}]];
-    	const volMemId = "[[${userId}]]";
+    	const volMemId = "[[${session.userId}]]";
     	function outMeeting(){
     		$.ajax({
            		url: "/WithdrawalProcess?volId="+volId+"&memId="+volMemId,
