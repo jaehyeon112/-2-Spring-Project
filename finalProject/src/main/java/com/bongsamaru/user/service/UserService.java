@@ -22,4 +22,5 @@ public interface UserService {
 	public List<AlertVO> listAlert(String memId);
 	public List<CountVO> volKing();
 	public int countAlarm(String memid);
+	public int updateAlarm(AlertVO vo);
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class AlertVO {
-	private Integer alterId;
+	private Integer alertId;
 	private String category;
 	private String content;
 	private Date alertDate;

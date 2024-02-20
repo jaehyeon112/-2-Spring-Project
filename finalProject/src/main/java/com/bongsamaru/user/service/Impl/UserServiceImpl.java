@@ -156,4 +156,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	public int countAlarm(String memid) {
 		return userMapper.CountAlarm(memid);
 	}
+	
+	@Override
+	public int updateAlarm(AlertVO vo) {
+		return userMapper.updateAlarm(vo);
+	}
 }
