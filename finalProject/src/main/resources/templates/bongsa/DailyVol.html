@@ -126,7 +126,7 @@
 	          <div class="col-sm-6 col-xl-3" style="color:black; width:25%;" th:each="list ,stat : ${list}">
 	            <div class="card overflow-hidden rounded-2" style=" margin-bottom: 20px;">
 	              <div class="position-relative" >
-	                <a><img th:src="@{${list.vol.path}}" class="card-img-top rounded-0"onerror="this.onerror=null; this.src='/userresources/image/nonono.png';"style="height:200px;"></a>
+	                <a th:onclick="newMeet([[${list.vol.volId}]])"><img th:src="@{${list.vol.path}}" class="card-img-top rounded-0"onerror="this.onerror=null; this.src='/userresources/image/nonono.png';"style="height:200px;"></a>
 	              </div>
 	              <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 				    <span>모집중</span>
@@ -136,7 +136,7 @@
 					</div>
 	               <div class="d-flex align-items-center justify-content-between">
 		            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
-		                <h4><a th:text="${list.vol.meetName}">동아리명</a></h4>
+		                <h4><a th:text="${list.vol.meetName}" th:href="@{meetings(volId=${list.vol.volId})}" target='_blank'>동아리명</a></h4>
 		                <a href="#" style="color:gray">
 						   <span th:text="|#${list.vol.region}|">지역할거임</span>
 						</a>
@@ -250,6 +250,12 @@ function search() {
 
 function resetSearch() {
     window.location.href = '/daily';
+}
+
+function newMeet(id){
+	src_width = screen.availWidth*0.1;
+	src_height = screen.availHeight*0.1;
+	window.open("meetings?volId="+id, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1300, height=800, top="+src_height+",left="+src_width+",location=no");
 }
 </script>
   </section>
