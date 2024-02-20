@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -254,8 +255,17 @@ public class LoginController {
 	@ResponseBody
 	public int getAlarm(Principal principal) {
 		log.info(principal.getName());
-		log.info("으아아악!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	    return userService.countAlarm(principal.getName());
 	}
+	
+	@PostMapping("/updateAlarm")
+	@ResponseBody
+	public int updateAlarm(@RequestBody AlertVO vo,Principal principal) {
+		log.info(vo);
+		vo.setReceiveId(principal.getName());
+	    userService.updateAlarm(vo);
+	    return userService.countAlarm(principal.getName());
+	}
+	
 	
 }

@@ -32,6 +32,7 @@ public class FacilityVO {
 	private String memApp;
 	private String facZip2;  //지역(우편번호 앞 2)
 	private Integer RN;
+	private String category;
 	
 	//join문으로 생긴 별칭
 	 private String filePath;
