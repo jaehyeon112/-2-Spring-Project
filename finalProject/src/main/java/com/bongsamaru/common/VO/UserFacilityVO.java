@@ -41,4 +41,5 @@ public class UserFacilityVO {
 	    private String donAcct;
 	    private String donApp;
 	    private String memApp;
+	    private String profile;
 }
