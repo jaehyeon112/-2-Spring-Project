@@ -252,12 +252,13 @@
 
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">시설소개</span> <span class="bottom-line" ></span></p>
-	       		<th:block th:each="facility:${facilityList}" id="filteredFacilities">
-						<div class="col-lg-4 col-md-6" style="text-align:center">
-							
-								<div class="thumb" style="position: relative;">
-									<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 60%; ">
-									<div class="text-white px-1 rounded position-absolute" style="top: 10px; right: 80px;background-color:#28a745;">
+	       		<div class="vesitable" >
+					<div class="owl-carousel club-carousel justify-content-center">
+	       		<th:block th:each="facility:${facilityList}" class="item" id="filteredFacilities">
+						<div class="card" style="text-align:center">
+								<div class="card-body thumb" style="position: relative;">
+									<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 200px; height:180px; ">
+									<div class="text-white px-1 rounded position-absolute" style="top: 30px; right: 50px;background-color:#28a745;">
 						                    <span th:text="${facility.category}">관심분야</span>
 						                </div>
 									<br>
@@ -267,12 +268,14 @@
 									</div>
 									<br>
 									<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
-											th:text="${facility.facName}" style="width: 60%;"></a>
+											th:text="${facility.facName}" style="width: 150px;"></a>
 								</div>
 									<p th:text="${facility.facAddr}"></p>
 									<p style="display:none" th:text="${facility.region}" id="regions"></p>
 						</div>
 					</th:block>
+				</div>
+			</div>
        	</div>
 <script>
 $(document).ready(function(){

@@ -30,6 +30,7 @@ import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
+import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.DonledgerVO;
@@ -60,6 +61,9 @@ public class LoginController {
 	
 	@Autowired
 	EncryptService encrypt;
+	
+	@Autowired
+	FacilityService facilityService;
 	
 	@Autowired
 	BongsaService bongsaService;
@@ -238,7 +242,10 @@ public class LoginController {
 		
 		List<BongsaDTO> daily = bongsaService.getVolTagDTO("e01");
 		model.addAttribute("daily", daily);
-		log.info(daily);
+		
+		List<FacilityVO> facility = facilityService.allFacilityList();
+		model.addAttribute("facilityList" , facility);
+		
 		return "home"; 
 	}
 	
@@ -254,8 +261,17 @@ public class LoginController {
 	@GetMapping("/alarmCount")
 	@ResponseBody
 	public int getAlarm(Principal principal) {
-		log.info(principal.getName());
-	    return userService.countAlarm(principal.getName());
+	    // 사용자가 로그인하지 않았을 경우, 즉 principal이 null일 경우 0을 반환
+	    if (principal == null) {
+	        return 0;
+	    }
+	    
+	    // principal이 null이 아닌 경우, 즉 사용자가 로그인한 상태일 경우
+	    String userName = principal.getName(); // 사용자 이름을 가져옴
+	    log.info(userName);
+	    
+	    // 사용자 이름을 기반으로 알림 개수를 조회
+	    return userService.countAlarm(userName);
 	}
 	
 	@PostMapping("/updateAlarm")
