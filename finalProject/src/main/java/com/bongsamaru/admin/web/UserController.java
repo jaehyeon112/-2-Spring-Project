@@ -1,7 +1,8 @@
 package com.bongsamaru.admin.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,19 +57,22 @@ public class UserController {
 	
 	//@Scheduled(cron = "0 0 0 * * *")
 	public void sendMailing() {
+		Date today = new Date();
 		List<RemittanceVO> remList = userService.remittanceList();
 		for(RemittanceVO vo : remList) {
 			if(vo.getChecking()==null) {
-				MailVO mailvo = new MailVO();
-				// 이메일 내용
-	    		String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
-	    				+ "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
-	    				+ "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
-	    				+ "빠른 시일 내에 영수증 첨부 부탁드립니다. 감사합니다.</p>"
-	    				+ "</div>";
-	    		mailvo.setEmailContent(emailContent);
-	    		mailvo.setRecipientEmail(vo.getEmail());
-	    		mail.sendMail(mailvo);
+				if(vo.getDeadlineDate().compareTo(today) >= 0) {
+					MailVO mailvo = new MailVO();
+					// 이메일 내용
+					String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
+							+ "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
+							+ "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
+							+ "빠른 시일 내에 영수증 첨부 부탁드립니다. 감사합니다.</p>"
+							+ "</div>";
+					mailvo.setEmailContent(emailContent);
+					mailvo.setRecipientEmail(vo.getEmail());
+					mail.sendMail(mailvo);
+				}
 			}
 		}
 	}
@@ -78,38 +82,44 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("AdminMain")
-	public String AdminMain(Model model,VolunteerVO volunteerVO) {
+	public String AdminMain(PageVO vo, Model model
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "5")Integer end,VolunteerVO volunteerVO) {
 		//기부 전체 리스트
-		List<DonaVO> donaList = donaService.getDonaList();
-		List<DonaVO> before = new ArrayList<>();
+		int total = userService.getDonaCnt(vo);
 		
-		for(DonaVO vo : donaList) {
-			if(vo.getRecStat().equals('0')) {
-				before.add(vo);
-			}
-		}
+		vo = new PageVO(total, start, end, null ,5);
+		vo.setRecStat(1);
+		
+		List<DonaVO> donaList = userService.getDonaList(vo);
+		model.addAttribute("vo",vo);
 		//진행중인 기부 리스트
-		model.addAttribute("before", before);
+		model.addAttribute("before", donaList);
 		
 		//상위 기부랭킹 3개
 		List<DonledgerVO> king = userService.DonationKing();
 		model.addAttribute("king", king);
 		
 		//진행중인 모임 리스트
-		volunteerVO.setRoomStat(1);
-		List<VolunteerVO> list = userService.meetingList(volunteerVO);
-		model.addAttribute("meet", list);		
+		int totals = userService.meetingCnt(vo);
+		
+		vo = new PageVO(totals, start, end, null ,5);
+		vo.setRoomStat(1);
+		
+		List<VolunteerVO> list = userService.meetingList(vo);
+		model.addAttribute("meet", list);
+		
 		//모임의 태그
 		List<TagVO> tags = userService.tagList(null);
 		model.addAttribute("tag", tags);
 		
 		//진행중인 시설봉사 리스트
-		List<VolunteerVO> facVol = userService.facVolunteerList();
+		int total2 = userService.facVolunteerCnt(vo);
+		vo = new PageVO(total2, start, end, null ,5);
+		
+		List<VolunteerVO> facVol = userService.facVolunteerList(vo);
 		model.addAttribute("facVol", facVol);
 		
-		log.info(facVol);	//sysout 대신에 더 상세하게 어디서 적히는지 알 수 있음
-//		List<AlertVO> alert = userService.alertList();
-//		model.addAttribute("alert", alert);
 		return "admin/adminMain";
 	}
 	
@@ -139,12 +149,55 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("donationList")
-	public String donationList(Model model) {
-		List<DonaVO> donaList = donaService.getDonaList();
+	public String donationList(PageVO vo, Model model
+							, @RequestParam(value="recStat", required = false,defaultValue = "0")Integer recStat
+							, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = userService.getDonaCnt(vo);
+		
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,8);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,8);
+        }
+		
+		vo.setRecStat(recStat);
+		
+		List<DonaVO> donaList = userService.getDonaList(vo);
+		System.out.println("여기@@@"+donaList.size());
+		model.addAttribute("vo",vo);
 		model.addAttribute("dona", donaList);
 		return "admin/donationList";
 	}
 	
+	/**
+	 * 종료된 기부금 프로젝트 페이지
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("donationDone")
+	public String donationDone(PageVO vo, Model model
+							, @RequestParam(value="recStat", required = false,defaultValue = "0")Integer recStat
+							, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = userService.getDonaCnt(vo);
+		
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,8);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,8);
+        }
+		
+		vo.setRecStat(recStat);
+		
+		List<DonaVO> donaList = userService.getDonaList(vo);
+		
+		model.addAttribute("dona", donaList);
+		model.addAttribute("vo",vo);
+		return "admin/donationDone";
+	}
 	
 	/**
 	 * 기부금장부 메인(첫페이지)
@@ -153,14 +206,24 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("donationMain")
-	public String donationMain(@RequestParam(defaultValue = "0", required = false) String recStat,Model model) {
+	public String donationMain(PageVO vo, Model model
+								, @RequestParam(value="recStat", required = false)Integer recStat
+								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		//기부금 장부 리스트
-		List<DonaVO> ledger = userService.donationLedgerList(recStat);
+		int total = userService.donationLedgerCnt(vo);      
+        vo = new PageVO(total, start, end, null ,10); 
+        vo.setRecStat(recStat);
+        List<DonaVO> ledger = userService.donationLedgerList(vo);
+		
 		model.addAttribute("dona", ledger);
-		model.addAttribute("recStat",recStat);
+		model.addAttribute("vo",vo);
 		
 		//기부금 프로젝트 리스트
-		List<DonaVO> donaList = donaService.getDonaList();
+		int total2 = userService.getDonaCnt(vo);
+		vo = new PageVO(total2, 1, 20, null ,20); 
+		vo.setRecStat(recStat);
+		List<DonaVO> donaList = userService.getDonaList(vo);
 		model.addAttribute("facDona", donaList);
 		return "admin/donationMain";
 	}
@@ -172,14 +235,33 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("facDonationLedgerList")
-	public String facDonationLedgerList(@RequestParam(name="donId") Integer donId, Model model) {
-		//
-		List<DonaVO> list = userService.facDonLedgerList(donId);
-		model.addAttribute("fac", list);
+	public String facDonationLedgerList(PageVO vo, Model model, @RequestParam(value="recStat", required = false)Integer recStat
+										, @RequestParam(value="donId", required = false)Integer donId
+										, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+										, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = userService.facDonLedgerCnt(vo); 
 		
-		//
-		List<DonaVO> donaList = donaService.getDonaList();
+        vo = new PageVO(total, start, end, null ,10);	
+        vo.setDonId(donId);
+        vo.setRecStat(recStat);
+		List<DonaVO> list = userService.facDonLedgerList(vo);
+		int totals = 0;
+		for(DonaVO donavo : list) {
+			totals += donavo.getDonAmt();
+		}
+		model.addAttribute("totals",totals);
+		
+		model.addAttribute("fac", list);
+		model.addAttribute("vo",vo);
+		
+		int total2 = userService.getDonaCnt(vo);
+		vo = new PageVO(total2, 1, 20, null ,20); 
+		vo.setRecStat(recStat);
+		List<DonaVO> donaList = userService.getDonaList(vo);
 		model.addAttribute("facDona", donaList);
+		
+		DonationVO info = userService.getDonOne(donId);
+		model.addAttribute("info", info);
 		return "admin/facDonationLedgerList";
 	}
 	
@@ -207,28 +289,28 @@ public class UserController {
 	}
 	
 	/**
-	 * 종료된 기부금 프로젝트 페이지
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("donationDone")
-	public String donationDone(Model model) {
-		List<DonaVO> donaList = donaService.getDonaList();
-		model.addAttribute("dona", donaList);
-		return "admin/donationDone";
-	}
-	
-	/**
 	 * 봉사 리스트
 	 * @param model
 	 * @param volId
 	 * @return
 	 */
 	@GetMapping("volunteerList")
-	public String volunteerList(Model model,VolunteerVO vo) {
+	public String volunteerList(PageVO vo, Model model
+								, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+								, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "8")Integer end) {
+		int totals = userService.meetingCnt(vo);
 		
+		if(searchKeyword == null) {
+        	vo = new PageVO(totals, start, end, null ,8);	            	
+        }else {
+        	vo = new PageVO(totals, start, end, null,searchKeyword,8);
+        }
+		
+		vo.setRoomStat(1);
 		List<VolunteerVO> list = userService.meetingList(vo);
 		model.addAttribute("meet", list);
+		model.addAttribute("vo", vo);
 		
 		List<TagVO> tags = userService.tagList(null);
 		model.addAttribute("tag", tags);
@@ -242,9 +324,22 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("facVolList")
-	public String facVolList(Model model) {
-		List<VolunteerVO> facVol = userService.facVolunteerList();
+	public String facVolList(PageVO vo, Model model
+							, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "8")Integer end) {
+		int total = userService.facVolunteerCnt(vo);
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,8);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,8);
+        }
+		System.out.println(vo);
+		System.out.println(total);
+		List<VolunteerVO> facVol = userService.facVolunteerList(vo);
 		model.addAttribute("facVol", facVol);
+		model.addAttribute("vo", vo);
+		
 		return "admin/facVolList";
 	}
 	
@@ -267,10 +362,49 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("userList")
-	public String getUserlList(@RequestParam(name="memStat") String memStat,Model model) {
-		List<UserVO> list = userService.getUserList(memStat);
+	public String getUserlList(PageVO vo, Model model
+						 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		
+		int total = userService.getUserListCnt(vo);
+        
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,10);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,10);
+        }
+     	
+		List<UserVO> list = userService.getUserList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("userList",list);
+		
 		return "admin/userList";
+	}
+	
+	/**
+	 * 시설 리스트
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("userListDetail")
+	public String FacilityList(PageVO vo, Model model
+						 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
+						 	, @RequestParam(value="memApp", required = false)String memApp
+							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
+		int total = userService.getFacilityCnt(vo);
+		
+		if(searchKeyword == null) {
+        	vo = new PageVO(total, start, end, null ,10);	            	
+        }else {
+        	vo = new PageVO(total, start, end, null,searchKeyword,10);
+        }
+		vo.setMemApp(memApp);
+		List<FacilityVO> list = userService.getFacilityList(vo);
+		model.addAttribute("vo",vo);
+		model.addAttribute("userListDetail",list);
+		return "admin/userListDetail";
 	}
 	
 	/**
@@ -320,7 +454,7 @@ public class UserController {
 	 */
 	@GetMapping("donInfo")
 	@ResponseBody
-	public DonationVO getDonInfo(@RequestParam(name="donId") String donId,Model model) {
+	public DonationVO getDonInfo(@RequestParam(name="donId") Integer donId,Model model) {
 		DonationVO vo = userService.getDonOne(donId);
 		return vo;
 	}
@@ -355,24 +489,44 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("facilityApprove")
-	public String getFacilityList(@RequestParam(name="donRegApp") String donRegApp,Model model) {
-		List<FacilityVO> facilityList = userService.getFacilityList();
-		List<DonationVO> list2 = userService.getDonationList(donRegApp);
+	public String getFacilityList(PageVO vo, Model model
+							 	, @RequestParam(required = false)String searchKeyword
+							 	, @RequestParam(required = false,defaultValue = "0")String memApp
+							 	, @RequestParam(required = false,defaultValue = "0")String donApp
+								, @RequestParam(required = false,defaultValue = "1")Integer start
+								, @RequestParam(required = false,defaultValue = "10")Integer end
+								,@RequestParam(required = false,defaultValue = "2") String donRegApp) {
+		if(donRegApp.equals("2")) {
+			int total = userService.getFacilityCnt(vo);
+			vo = new PageVO(total, start, end,null,10);
+			vo.setMemApp(memApp);
+			vo.setDonApp(donApp);
+		}else if(donRegApp.equals("0")) {
+			int totals = userService.getDonationCnt(vo);
+			vo = new PageVO(totals, start, end,null,10);
+			vo.setDonRegApp(donRegApp);
+		}
+		
+		List<FacilityVO> facilityList = userService.getFacilityList(vo);
 		model.addAttribute("facilityList",facilityList);
+		
+		List<DonationVO> list2 = userService.getDonationList(vo);
 		model.addAttribute("donationList",list2);
+		
+		int reviewTotal = userService.donaReviewCnt(vo);
+		vo = new PageVO(reviewTotal, start, end,null,10);
+		
+		List<DonaVO> review = userService.donaReviewList(vo);
+		model.addAttribute("review",review);
+		
+		model.addAttribute("vo",vo);
 		return "admin/facilityApprove";
 	}
 	
-	/**
-	 * 시설 리스트
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("userListDetail")
-	public String FacilityList(Model model) {
-		List<FacilityVO> list = userService.getFacilityList();
-		model.addAttribute("userListDetail",list);
-		return "admin/userListDetail";
+	@GetMapping("reviewInfo")
+	@ResponseBody
+	public DonaVO reviewInfo(@RequestParam(required=false) Integer donRevId) {
+		return userService.donaReviewInfo(donRevId);
 	}
 	
 	/**
@@ -381,8 +535,18 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("approve")
-	public String approveList(Model model) {
-		List<FacilityVO> list = userService.getFacilityList();
+	public String approveList(PageVO vo, Model model
+						 	, @RequestParam(required = false)String searchKeyword
+						 	, @RequestParam(required = false,defaultValue = "0")String memApp
+							, @RequestParam(value="start",required = false,defaultValue = "1")Integer start
+							, @RequestParam(value="end",required = false,defaultValue = "10")Integer end) {
+		
+		int total = userService.getFacilityCnt(vo);
+		
+		vo = new PageVO(total, start, end,null,10);
+		vo.setMemApp(memApp);
+		List<FacilityVO> list = userService.getFacilityList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("facilityList",list);
 		return "admin/approve";
 	}
@@ -404,16 +568,11 @@ public class UserController {
 							, @RequestParam(value="start", required = false,defaultValue = "1")Integer start
 							, @RequestParam(value="end", required = false,defaultValue = "10")Integer end) {
 		int total = userService.getBoardCnt(vo);
-        
-      
         vo = new PageVO(total, start, end, category,searchKeyword,10);
        
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("boardList",list);
      	model.addAttribute("vo",vo);
-     	
-     	//model.addAttribute("searchKeyword",searchKeyword);
-     	//model.addAttribute("category",category);
      	
 		return "admin/boardList";
 	}
@@ -426,9 +585,16 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("inquireList")
-	public String getinquireList(PageVO vo,@RequestParam(name="category") String category,Model model) {
+	public String getinquireList(PageVO vo, Model model
+							 	, @RequestParam(value="category", required = false) String category
+								, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getBoardCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
 		List<BoardVO> list = userService.getBoardList(vo);
 		model.addAttribute("inquireList",list);
+		model.addAttribute("vo",vo);
 		return "admin/inquireList";
 	}
 	
@@ -470,8 +636,16 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("getReportList")
-	public String getReportList(@RequestParam String category,Model model) {
-		List<ReportVO> list = userService.getReportList(category);
+	public String getReportList(PageVO vo, Model model
+							 	, @RequestParam(value="category", required = false) String category
+								, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+								, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getReportCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
+		List<ReportVO> list = userService.getReportList(vo);
+		
+		model.addAttribute("vo",vo);
 		model.addAttribute("reportList",list);
 		return "admin/reportList";
 	}
@@ -483,9 +657,23 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("MoreReport")
-	public String getReportList1(@RequestParam String category,Model model) {
-		List<ReportVO> list = userService.getReportList(category);
+	public String getReportList1(PageVO vo, Model model,Principal prin
+							, @RequestParam(value="category", required = false) String category
+							, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
+							, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
+		int total = userService.getReportCnt(vo);
+        vo = new PageVO(total, start, end, category,10);
+        
+		List<ReportVO> list = userService.getReportList(vo);
+		model.addAttribute("vo",vo);
 		model.addAttribute("reportList",list);
+		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+			model.addAttribute("userId","익명");
+		 }
+		
 		return "admin/MoreReport";
 	}
 	
@@ -508,7 +696,6 @@ public class UserController {
 	@ResponseBody
 	public BoardVO insertNoticePro(BoardVO boardVO) {
 		userService.insertNotice(boardVO);
-		System.out.println(boardVO);
 		return boardVO;
 	}
 	
@@ -573,8 +760,8 @@ public class UserController {
 	 */
 	@GetMapping("updateFacApp")
 	@ResponseBody
-	public int updateFacApp(@RequestParam(name="facName") String facName) {
-		return userService.updateFacApp(facName);
+	public int updateFacApp(@RequestParam(name="facId") String facId) {
+		return userService.updateFacApp(facId);
 	}
 	
 	/**

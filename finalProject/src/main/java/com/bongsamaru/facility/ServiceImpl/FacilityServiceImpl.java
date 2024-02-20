@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.FundingVO;
+import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.common.VO.PageVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -15,6 +17,7 @@ import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.mapper.FacilityMapper;
+import com.bongsamaru.mypage.service.HeartVO;
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
@@ -26,26 +29,34 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
 	}
 	
-	
+	@Override
+	public List<FacilityVO> allFacilityList() {
+		return mapper.allFacilityList();
+	}
 	@Override
 	public FacilityVO getFacilityInfo(String facId) {
 		return mapper.getFacilityInfo(facId);
 	}
 
 	@Override
-	public List<FundingVO> getFundingList(String facId) {
-		return mapper.getfundingList(facId);
+	public List<FundingVO> getFundingList(PageVO pageVO,String facId) {
+		return mapper.getfundingList(pageVO,facId);
 	}
 
 	@Override
-	public List<FundingVO> getFundedList(String facId) {
-		return mapper.getfundedList(facId);
+	public List<FundingVO> getFundedList(PageVO pageVO,String facId) {
+		return mapper.getfundedList(pageVO,facId);
 	}
 
 	@Override
-	public List<VolunteerVO> getVolunteerList(String facId) {
+	public List<VolunteerVO> getVolFList(PageVO pageVO,String facId) {
 		
-		return mapper.getVolList(facId);
+		return mapper.getVolFList(pageVO,facId);
+	}
+	@Override
+	public List<VolunteerVO> getVolIList(PageVO pageVO,String facId) {
+		
+		return mapper.getVolIList(pageVO,facId);
 	}
 	
 	@Override
@@ -87,6 +98,10 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getVolunteerAppList(volActId);
 	}
 	
+	@Override
+	public List<VolActVO> getVolunteerFinishList(PageVO pageVO, String facId) {
+		return mapper.getVolunteerFinishList(pageVO,facId);
+	}
 	//시설이 회원봉사 승인하면 업데이트
 	@Override
 	public int volAppUpdate(Integer volActId, String memId) {
@@ -102,7 +117,43 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getJoinApp(volActId);
 	}
 
-	//페이지네이션하기 위한거
+	@Override
+	public int getJoinAppCheck(Integer volActId, String memId) {
+		return mapper.getJoinAppCheck(volActId, memId);
+	}
+
+	@Override
+	public int getFacRevCheck(Integer detailCate) {
+		return mapper.getFacRevCheck(detailCate);
+	}
+	
+		//마음온도
+		@Override
+		public int insertVolHeart(HeartVO heartVO) {
+			return mapper.insertVolHeart(heartVO);
+		}
+
+		@Override
+		public void insertVolReview(BoardVO boardVO) {
+			mapper.insertVolReview(boardVO);
+			
+		}
+		@Override
+		public int updateVolReview(BoardVO boardVO) {
+			return mapper.updateVolReview(boardVO);
+		}
+		@Override
+		public BoardVO getVolReviewInfo(Integer detailCate) {
+			return mapper.getVolReviewInfo(detailCate);
+		}
+
+
+		@Override
+		public int findBoardNo() {
+			return mapper.findBoardNo();
+		}
+
+		//페이지네이션하기 위한거
 		@Override
 		public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType) {
 			
@@ -115,6 +166,25 @@ public class FacilityServiceImpl implements FacilityService {
 			
 			return mapper.getFVolCategoryCount(facId);
 		}
+
+		@Override
+		public int getFinishVolCategoryCount(String facId) {
+			return mapper.getFinishVolCategoryCount(facId);
+		}
+
+		@Override
+		public int getFacDonCount(Integer recStat, String facId) {
+			return mapper.getFacDonCount(recStat, facId);
+		}
+		@Override
+		public int getVolFCount(String facId) {
+			return mapper.getVolFCount(facId);
+		}
+		@Override
+		public int getVolICount(String facId) {
+			return mapper.getVolICount(facId);
+		}
+		
 
 
 		

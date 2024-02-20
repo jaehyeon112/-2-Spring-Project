@@ -51,6 +51,7 @@ div[th:if] {
 .content{
 	margin-top: 30px;
 	text-align: left;
+	margin-bottom: 50px;
 }
 .a-tag {
     color: black;
@@ -67,17 +68,18 @@ div[th:if] {
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="color: black;">
-  	<div class="side col-2" th:insert="~{center/sidebar::side}"></div>
+<div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="color: black;">
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
 	<div class="col-10">
 		<div class="container">
-			<div>
-				<h2>공지사항</h2>
-			    <input class="form-control-sm me-2" id="search" type="search" placeholder="Search" aria-label="Search">
+			<div style="text-align:center; display:flex; gap:10px;">
+			    <input class="form-control me-2" id="search" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">
 			    <button class="btn btn-outline-success" id="searchBtn" type="button">검색</button>
+			    <button class="btn btn-outline-dark" id="resetBtn" type="button">초기화</button>
 			</div>
-				<th:block th:each="item : ${list}">
-					<div class="content" th:if="${list.size} != 0">
+				<th:block th:each="item : ${list}" >
+					<div class="content" th:if="${list.size} != 0" >
 						<span class="ico_pin" th:if="${item.priority == 1}"></span>
 						<a class="a-tag" th:text="${item.title}" th:onclick="noticeDetail('[[${item.boardId}]]')"></a>
 						<p style="font-size:14px;">작성일 [[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</p>
@@ -87,7 +89,7 @@ div[th:if] {
 					<p>검색결과가 존재하지 않습니다<p>
 				</div>
 				
-			<nav aria-label="Page navigation example">
+			<nav aria-label="Page navigation example" style="text-align:center;">
 			    <ul class="pagination justify-content-center">
 			        <!-- 이전 버튼 -->
 			        <li class="page-item" th:if="${vo.prev}">
@@ -111,6 +113,10 @@ div[th:if] {
 $('#search').on('change',function(){
 	let keyword = $('#search').val();
 	window.location.href = `/notice?searchKeyword=${keyword}`;		
+});
+
+$('#resetBtn').on('click',function(){
+	window.location.href = `/notice`;		
 });
 
 $('#searchBtn').on('click',function(){

@@ -49,55 +49,48 @@
 		<div class="divFooter" th:insert="~{admin/adminHeader :: head}"></div>
       <!--  Header End -->
       <div class="container-fluid">
-        <div class="row justify-content-between">
-          <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="card w-70">
-              <div class="card-body p-4">
-                <h5 class="card-title fw-semibold mb-4">이달의 기부왕</h5>
-                <div class="table-responsive">
-                  <table class="table text-nowrap mb-0 align-middle">
-                    <thead class="text-dark fs-4">
-                      <tr>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">No</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Id</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Name</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Donation Amount</h6>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="king,st : ${king}">
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${st.count}+'.'"></h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="mb-0 fw-normal" th:text="${king.memId}"></h6>
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal" th:text="${king.mName}"></p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="fw-semibold mb-1" data-th-text="${#numbers.formatInteger(king.total, 1, 'COMMA') + '원'}"></span>
-                          </div>
-                        </td>
-                      </tr> 
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="row justify-content-center" style="text-align:center">
+           <h3 class="fw-semibold mb-4">이달의 기부리스트</h3>
+           <div class="table-responsive">
+             <table class="table">
+               <thead class="text-dark fs-4">
+                 <tr>
+                   <th class="border-bottom-0">
+                     <h6 class="fw-semibold mb-0">No</h6>
+                   </th>
+                   <th class="border-bottom-0">
+                     <h6 class="fw-semibold mb-0">Id</h6>
+                   </th>
+                   <th class="border-bottom-0">
+                     <h6 class="fw-semibold mb-0">Name</h6>
+                   </th>
+                   <th class="border-bottom-0">
+                     <h6 class="fw-semibold mb-0">Donation Amount</h6>
+                   </th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr th:each="king,st : ${king}" th:if="${st.count}<=10">
+                   <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${st.count}+'.'"></h6></td>
+                   <td class="border-bottom-0">
+                       <h6 class="mb-0 fw-normal" th:text="${king.memId}"></h6>
+                   </td>
+                   <td class="border-bottom-0">
+                     <p class="mb-0 fw-normal" th:text="${king.mName}"></p>
+                     <p class="mb-0 fw-normal" th:if="${king.mName}==null">익명</p>
+                   </td>
+                   <td class="border-bottom-0">
+                       <span class="fw-semibold mb-1" data-th-text="${#numbers.formatInteger(king.total, 1, 'COMMA') + '원'}"></span>
+                   </td>
+                 </tr> 
+               </tbody>
+             </table>
+           </div>
         </div>
        	<h3>현재 진행중인 기부 프로젝트</h3>
        	<br>
         <div class="row" th:classappend="${before.size>3} ? 'center' : ''">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${before}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="dona,st : ${before}" th:if="${st.count}<6">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
                 <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="image/초록개구리.png" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
@@ -128,7 +121,7 @@
        	<h3>현재 진행중인 모임봉사 프로젝트</h3>
        	<br>
         <div class="row" th:classappend="${meet.size>3} ? 'center' : ''">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="meet : ${meet}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="meet : ${meet}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
                 <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
@@ -158,7 +151,7 @@
        	<h3>현재 진행중인 시설봉사 프로젝트</h3>
        	<br>
         <div class="row" th:classappend="${facVol.size>3} ? 'center' : ''">
-          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="facVol : ${facVol}">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="facVol : ${facVol}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
                 <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
@@ -188,25 +181,21 @@
 		     var $jq = jQuery.noConflict();
 		     $jq('.center').slick({
 		    	  centerMode: true,
+		    	  dots: true,
 		    	  centerPadding: '60px',
 		    	  slidesToShow: 3,
+		    	  autoplay : true,
+		    	  autoplaySpeed : 3000,
+		    	  pauseOnHover : true,
+		    	  speed : 1000,
 		    	  responsive: [
 		    	    {
-		    	      breakpoint: 768,
+		    	      breakpoint: 500,
 		    	      settings: {
 		    	        arrows: false,
 		    	        centerMode: true,
-		    	        centerPadding: '40px',
+		    	        centerPadding: '100px',
 		    	        slidesToShow: 3
-		    	      }
-		    	    },
-		    	    {
-		    	      breakpoint: 480,
-		    	      settings: {
-		    	        arrows: false,
-		    	        centerMode: true,
-		    	        centerPadding: '40px',
-		    	        slidesToShow: 1
 		    	      }
 		    	    }
 		    	  ]

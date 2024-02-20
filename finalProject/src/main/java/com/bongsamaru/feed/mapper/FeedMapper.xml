@@ -89,7 +89,8 @@
 			WHERE a.code = 'c03'
 			  AND a.detail_code = 100
 	</select>
-	
+	<!-- 댓글 작성 -->
+
  	<insert id="insertLike" parameterType="LikeVO">
 		INSERT INTO likes(
 			like_id,

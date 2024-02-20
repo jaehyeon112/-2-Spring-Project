@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
+import com.bongsamaru.common.VO.AlertVO;
+import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserFacilityVO;
@@ -19,4 +21,8 @@ public interface UserMapper {
 	public UserFacilityVO login(String id);
 	public int checkBizNum(String num);
 	public int facilitySignUp(FacilityVO vo);
+	public List<AlertVO> listAlert(String memId);
+	public List<CountVO> volKing();
+	public int CountAlarm(String mem);
+	public int updateAlarm(AlertVO vo);
 }

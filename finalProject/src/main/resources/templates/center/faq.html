@@ -63,11 +63,10 @@ div[th:if] {
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="color: black;">
-  	<div class="side col-2" th:insert="~{center/sidebar::side}"></div>
-	<div class="col-10">
+<div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="color: black; margin:0 auto;">
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
 		<div>
-		  	<h2 style="">자주하는질문</h2>
 			<div class="title_cont">
 			    <span id="a01" onclick="select('a01')" th:class="${category == 'a01' ? 'active' : ''}">기부</span>
 			    <span id="a02" onclick="select('a02')" th:class="${category == 'a02' ? 'active' : ''}">봉사</span>
@@ -110,7 +109,6 @@ div[th:if] {
 			        </li>
 			    </ul>
 			</nav>
-		</div>
 	</div>
 </div>
 <script th:inline="javascript">

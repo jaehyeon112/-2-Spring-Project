@@ -1,8 +1,11 @@
 package com.bongsamaru.dona.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.bongsamaru.file.service.FilesVO;
 
 import lombok.Data;
 
@@ -48,7 +51,17 @@ public class DonaVO {
 	    //상세페이지
 	    private String dday; //디데이
 	    
-    
+   //연장관련 날짜 수저 오버라이딩
+	    public Date getEndPeriod() {
+	    	if(extPeriod != null) {
+	    		return extPeriod;
+	    	}else {
+	    		return endPeriod;
+	    	}
+	    }
+	    
+	    
+	    
     //Don_Detail(기부상세) 테이블
 	    private Integer donDetId; //기부등록상세번호 (notnull)
 	    //private Integer donId; 
@@ -75,7 +88,12 @@ public class DonaVO {
 	    private String payId; // 결제번호
 	    private String anonCheck; // 익명체크 (c3)
 	    private String memId; // 회원아이디 
-    
+	    
+	    //익명처리
+	    public String getMemId() {
+	    	 return ("1".equals(anonCheck)) ? "익명" : memId;
+	    }
+	    
     
     //don_review(기부후기) 테이블
 	    private Integer donRevId; //기부후기등록번호 (not null)
@@ -135,5 +153,14 @@ public class DonaVO {
 	    
 	//파일 - 이미지 넣도록! 
 	    private String filePath;
+	    //private String code; p08
+	    private Integer codeNo;
+	    
+	
+	//알람
+	    private Integer alertId;
+	    //private String category; //o04(기부등록신청), 05(기부글등록), 06(기부후기등록)
+	    //private String content;
+	    private String receiveId; //ADMIN
 	    
 }

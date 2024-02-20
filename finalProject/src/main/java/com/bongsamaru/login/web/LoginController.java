@@ -1,6 +1,7 @@
 package com.bongsamaru.login.web;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bongsamaru.admin.service.AdminService;
+import com.bongsamaru.bongsa.service.BongsaDTO;
+import com.bongsamaru.bongsa.service.BongsaService;
+import com.bongsamaru.common.VO.AlertVO;
+import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.dona.service.DonaService;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.mypage.mapper.MypageMapper;
+import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.securing.EncryptService;
 import com.bongsamaru.user.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,7 +53,16 @@ public class LoginController {
 	UserService userService;
 	
 	@Autowired
+	DonaService donaService;
+
+	@Autowired
+	AdminService adminService;
+	
+	@Autowired
 	EncryptService encrypt;
+	
+	@Autowired
+	BongsaService bongsaService;
 	
 	@Autowired
 	MypageMapper mypageMapper;
@@ -199,11 +218,53 @@ public class LoginController {
 	}
 	
 	@GetMapping("/")
+	public String firstPage(Model model, Principal prin) {
+		
+		boolean isLogin = prin != null;
+		model.addAttribute("isLogin",isLogin);
+		
+		List<DonledgerVO> king = adminService.DonationKing();
+		model.addAttribute("king", king);
+		
+		List<CountVO> volKing = userService.volKing();
+		model.addAttribute("vol", volKing);
+		
+		DonaVO donaVO = new DonaVO();
+		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		model.addAttribute("list", donaList);
+		
+		List<BongsaDTO> group = bongsaService.getVolTagDTO("e02");
+		model.addAttribute("group", group);
+		
+		List<BongsaDTO> daily = bongsaService.getVolTagDTO("e01");
+		model.addAttribute("daily", daily);
+		log.info(daily);
+		return "home"; 
+	}
 	
-	public String firstPage() {
-		String arr = "test";
-		log.info(arr);
-		return "layout"; 
+	
+	@GetMapping("/userAlarm")
+	@ResponseBody
+	public List<AlertVO> getAlerts(Principal principal) {
+		List<AlertVO> vo = userService.listAlert(principal.getName());
+		log.info(vo);
+		return vo;
+	}
+	
+	@GetMapping("/alarmCount")
+	@ResponseBody
+	public int getAlarm(Principal principal) {
+		log.info(principal.getName());
+	    return userService.countAlarm(principal.getName());
+	}
+	
+	@PostMapping("/updateAlarm")
+	@ResponseBody
+	public int updateAlarm(@RequestBody AlertVO vo,Principal principal) {
+		log.info(vo);
+		vo.setReceiveId(principal.getName());
+	    userService.updateAlarm(vo);
+	    return userService.countAlarm(principal.getName());
 	}
 	
 	

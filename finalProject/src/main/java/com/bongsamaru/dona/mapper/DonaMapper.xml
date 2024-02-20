@@ -25,7 +25,7 @@
  	
  	</select>
 <!--  메인페이지 전체조회 : 모금중 -->
-<select id="selectRecruitingItems" resultType="DonaVO">
+<select id="randomlyShow" resultType="DonaVO">
     SELECT 
         d.title,
         d.goal_amt,
@@ -36,14 +36,19 @@
         d.rec_stat,
         d.don_id,
         c.fac_id,
-        d.category
+        d.category,
+        s.sub_code_name,
+        q.file_path
     FROM donation d
-        LEFT JOIN don_ledger f ON d.don_id = f.don_id
-        LEFT JOIN facility c ON d.fac_id = c.fac_id
+    LEFT JOIN don_ledger f ON d.don_id = f.don_id
+    LEFT JOIN facility c ON d.fac_id = c.fac_id
+    LEFT JOIN sub_code s ON d.category = s.sub_code_id 
+    LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08' 
     WHERE d.DON_REG_APP = 1
-      AND d.rec_stat = '1'
-
-    GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category
+        AND d.rec_stat = '1' 
+    
+    GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id, c.fac_id, d.category, s.sub_code_name, q.file_path
+	
 </select>
 
 <!--  ★★ 카테고리별 리스트-->
@@ -64,14 +69,18 @@
         d.rec_stat,
         d.don_id,
         d.category,
-        
+        d.ext_period,
         d.end_period,
         NVL(f.donation_count, 0) as donation_count,
         NVL( f.total, 0) as total,
-        (ROUND(f.total / goal_amt, 2)*100) as donation_ratio
+        (ROUND(f.total / goal_amt, 2)*100) as donation_ratio,
+        s.sub_code_name,
+        q.file_path
     FROM facility c
     LEFT JOIN  donation d ON d.fac_id = c.fac_id
-    LEFT JOIN  f  ON d.don_id = f.don_id     
+    LEFT JOIN  f  ON d.don_id = f.don_id 
+     LEFT JOIN sub_code s ON d.category = s.sub_code_id 
+     LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08'   
     <where>
     <if test = "donRegApp !=  null and donRegApp != ''">
      d.DON_REG_APP = #{donRegApp }
@@ -86,6 +95,11 @@
     ORDER BY end_period desc
   ) A ) B  	WHERE RN BETWEEN #{start} AND #{end}
 </select>
+
+
+
+
+
 
 
 <!--  메인페이지 전체조회 : 모금완료 (recStat = 0)-->
@@ -142,14 +156,20 @@
     z.add_intro_title,
     z.add_intro,
     d.proj_target,
-    d.exp_effect
+    d.exp_effect,
+    s.sub_code_name,
+    q.file_path,
+    f.anon_check
 FROM donation d 
     LEFT JOIN don_ledger f ON d.don_id = f.don_id
     LEFT JOIN facility e ON d.fac_id = e.fac_id
     LEFT JOIN don_detail z ON d.don_id = z.don_id
+     LEFT JOIN sub_code s ON d.category = s.sub_code_id 
+     LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08'   
 WHERE  d.don_id = #{donId} and e.fac_id=#{facId}
 GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e.fac_id, e.fac_name, e.fac_intro, e.fac_est_date, d.rec_stat, d.intro_title, d.intro,
-    z.don_det_id, z.use_plan, z.link, z.link2, z.use_plan, z.use_plan2, z.use_plan3, z.use_plan_amt, z.use_plan_amt2, z.use_plan_amt3, z.add_intro_title, z.add_intro, d.proj_target, d.exp_effect, d.ext_period
+    z.don_det_id, z.use_plan, z.link, z.link2, z.use_plan, z.use_plan2, z.use_plan3, z.use_plan_amt, z.use_plan_amt2, z.use_plan_amt3, z.add_intro_title, z.add_intro, d.proj_target, d.exp_effect, 
+    d.ext_period, s.sub_code_name, q.file_path, f.anon_check
 
 </select>
 
@@ -196,12 +216,19 @@ GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e
     </update>
  	
 <!-- 기부자목록(don_id) -->
+	<resultMap id="donerListResultMap" type="DonaVO">
+	<result property="donAmt" column="don_amt"/>
+    <result property="payDate" column="pay_date"/>
+    <result property="memId" column="anon_check" />
+     <result property="donId" column="don_id"/>
+	</resultMap>
 	<select id="getDonerList" resultType="DonaVO">
 		SELECT
 			 don_amt
 			 , pay_date
 			 , mem_id
 			 , don_id
+			 , anon_check
 		FROM don_ledger
 		WHERE don_id = #{donId}
 		ORDER BY pay_date
@@ -265,7 +292,29 @@ GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e
  	
 
 
-
+ <!-- 기부신청 후 관리자 알림 -->	
+ 	<insert id="applyAlertDona" parameterType="DonaVO">
+ 	 	<selectKey keyProperty="alertId" resultType="int" order="BEFORE">
+		SELECT 
+			ALERT_SEQ.nextval
+		FROM DUAL
+	</selectKey>
+	      INSERT INTO ALERT
+	       (
+	       alert_id
+	       , category
+	       , content
+	       , mem_id
+	       , receive_id
+	       ) 
+      VALUES (
+      	#{alertId},
+      	 'o04'
+      	 , '새로운 기부신청이 등록되었습니다.'
+      	 , #{memId}
+      	 , 'ADMIN'
+      	 )
+ 	</insert>
  	
  <!-- 기부등록폼 -->
  	<insert id="insertDonation" parameterType="DonaVO">
@@ -348,7 +397,30 @@ GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e
 		        , #{addIntro}
 	        )
  	</insert>
- 	
+ 
+ <!-- 기부글 등록 후 관리자 알림 -->	
+ 	<insert id="insertAlertDona" parameterType="DonaVO">
+ 	 	<selectKey keyProperty="alertId" resultType="int" order="BEFORE">
+		SELECT 
+			ALERT_SEQ.nextval
+		FROM DUAL
+	</selectKey>
+	      INSERT INTO ALERT
+	       (
+	       alert_id
+	       , category
+	       , content
+	       , mem_id
+	       , receive_id
+	       ) 
+      VALUES (
+      	#{alertId},
+      	 'o05'
+      	 , '새로운 기부등록 글이 등록되었습니다.'
+      	 , #{memId}
+      	 , 'ADMIN'
+      	 )
+ 	</insert>
  	
  <!-- 기부후기등록하기 -->
  <insert id="insertReview" parameterType="DonaVO">
@@ -416,6 +488,30 @@ GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e
 	        )
  	</insert>
  
+  <!-- 기부영수증 관리자 알림 -->	
+ 	<insert id="receiptAlertDona" parameterType="DonaVO">
+ 	 	<selectKey keyProperty="alertId" resultType="int" order="BEFORE">
+		SELECT 
+			ALERT_SEQ.nextval
+		FROM DUAL
+	</selectKey>
+	      INSERT INTO ALERT
+	       (
+	       alert_id
+	       , category
+	       , content
+	       , mem_id
+	       , receive_id
+	       ) 
+      VALUES (
+      	#{alertId},
+      	 'o06'
+      	 , '새로운 기부영수증이 등록되었습니다.'
+      	 , #{memId}
+      	 , 'ADMIN'
+      	 )
+ 	</insert>
+ 
  <!-- 기부후기 개별리스트 불러오기 -->
  <select id = "getDonaReview" resultType="DonaVO">
      SELECT 
@@ -436,9 +532,11 @@ GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e
 	        ,  e.biz_content
 	        ,  e.biz_content2
 	        ,  e.biz_content3
+	        , q.file_path 
     FROM don_review r
     LEFT JOIN donation d ON r.don_id = d.don_id
     LEFT JOIN don_review_exp e ON r.don_rev_id = e.don_rev_id
+    LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p07' 
     WHERE d.don_id = #{donId}
  </select>
  

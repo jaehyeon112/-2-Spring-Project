@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class DonationVO {
-	private String donId;
+	private Integer donId;
 	private String facId;
 	private String title;
 	private Date recPeriod;
@@ -18,4 +18,13 @@ public class DonationVO {
 	private String recStat;
 	private String donRegApp;
 	private String expEffect;
+	
+	
+	 public Date getEndPeriod() {
+	    	if(extPeriod != null) {
+	    		return extPeriod;
+	    	}else {
+	    		return endPeriod;
+	    	}
+	    }
 }

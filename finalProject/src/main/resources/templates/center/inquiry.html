@@ -127,9 +127,9 @@ a {
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="color: black;">
-  	<div class="side col-2" th:insert="~{center/sidebar::side}"></div>
-	<div class="col-10">
+<div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="color: black;">
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
 		<div class="container">
 		  	<h2 style="font-family: 'Orbit', sans-serif;">1:1문의내역</h2>
 		  			  <table>
@@ -180,7 +180,6 @@ a {
 			        </li>
 			    </ul>
 			</nav>
-		</div>
 	</div>
 </div>
 <script>

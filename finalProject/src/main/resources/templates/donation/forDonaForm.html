@@ -160,23 +160,36 @@
                 formData.append("uploadFiles", fileInputs[i]); 
              }
 
-		$.ajax({
-			type : 'POST',
-			url : '/uploadsAjax',
-			data : formData,
-		       processData: false,
-		        contentType: false,
-		        success: function(response) {
-		            
-		            console.log("ajax 안에 success response " + response);
-		            alert("등록성공!");
-		            location.href = "donaMain";
-		            return;
-		        },
-		        error: function(error) {
-		            console.error(error);
-		        }
-		});
+		 // 첫 번째 AJAX 요청
+			$.ajax({
+				type : 'POST',
+				url : '/uploadsAjax',
+				data : formData,
+				processData: false,
+				contentType: false,
+				success: function(response) {
+					console.log("첫 번째 AJAX 성공: " + response);
+					
+					// 두 번째 AJAX 요청
+					$.ajax({
+						type: 'POST',
+						url: '/applydona',
+						data: {memId : facId},
+						
+						success: function (applyResponse) {
+							console.log("두 번째 AJAX 성공: " + applyResponse);
+							alert("두번째 등록 성공!");
+							location.href = "donaMain";
+						},
+						error: function (applyError) {
+							console.error("두 번째 AJAX 실패: " + applyError);
+						}
+					});
+				},
+				error: function(error) {
+					console.error("첫 번째 AJAX 실패: " + error);
+				}
+			});
 	}
 	
 	

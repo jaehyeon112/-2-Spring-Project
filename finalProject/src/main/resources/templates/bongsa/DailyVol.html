@@ -8,8 +8,8 @@
 .page-item.active .page-link {
     z-index: 2;
     color: #fff;
-    background-color: #ffb524;
-    border-color: #ffb524;
+    background-color: #689f38;
+    border-color: #689f38;
 }
 .page-link {
     position: relative;
@@ -71,39 +71,37 @@
 
 
 .date-input {
-    margin-left: 10px; /* 날짜 입력 필드 간 간격 */
+    margin-right: 10px; /* 날짜 입력 필드 간 간격 */
 }
 </style>
 </head>
 
 <body>
-  <section layout:fragment="content">
-
-  <div class="row">
-  	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
-	<div class="col-10">
+	  <section layout:fragment="content">
+	<div th:insert="~{banner/daily::banner}"></div>
+  	<div  th:insert="~{bongsa/sidebar::side}"></div>
+	  <div class="container">
   <div>
   <div class="search-container">
 	    <div style="display: flex; justify-content: space-between; width: 100%;">
 	    <!-- 왼쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div>
-	        <button style="opacity: 0.8;" type="button" class="btn btn-success">등록</button>
 	    </div>
 	    <!-- 오른쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div style="display: flex; gap: 10px;">
 	        <input type="text" id="searchKeyword" class="search-input" placeholder="검색어 입력...">
-	        <button onclick="search()" class="search-button">검색</button>
-	        <button onclick="resetSearch()" class="reset-button">초기화</button>
+	        <button onclick="search()" class="btn btn-outline-secondary m-1">검색</button>
+	        <button onclick="resetSearch()" class="btn btn-outline-dark m-1">초기화</button>
 	    </div>
 	</div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	        <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -185,7 +183,6 @@
 </nav>
 
 </div>
-</div>
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {
@@ -204,14 +201,13 @@ $(document).ready(function() {
     const searchKeyword = urlParams.get('searchKeyword');
     const startDateParam = urlParams.get('startDate');
     const endDateParam = urlParams.get('endDate');
-    
     // 드롭다운 값 설정
     if (category) $('#cate').val(category);
     if (location) $('#location').val(location);
     if (searchKeyword) $('#searchKeyword').val(searchKeyword);
     if (startDateParam) $('#startDate').val(startDateParam);
     if (endDateParam) $('#endDate').val(endDateParam);
-
+	
     // 페이지네이션 링크 업데이트 함수 호출 수정
     updatePaginationLinks();
 });
@@ -225,7 +221,7 @@ function updatePaginationLinks() {
     document.querySelectorAll('.page-link').forEach(link => {
         let href = link.getAttribute('href');
         let newHref = new URL(href, window.location.origin);
-
+		
         // URL에 카테고리, 위치, 검색어 추가
         if (category) newHref.searchParams.set('category', category);
         if (location) newHref.searchParams.set('location', location);

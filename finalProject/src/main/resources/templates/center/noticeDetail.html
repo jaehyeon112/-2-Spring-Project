@@ -67,25 +67,22 @@ div[th:if] {
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="color: black;">
-  	<div class="side col-2" th:insert="~{center/sidebar::side}"></div>
-	<div class="col-10">
+<div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="color: black;">
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
 		<div class="container">
-				<th:block th:each="item : ${list}">
-					<div class="content" th:if="${list.size} != 0">
-						<h1 th:text="${item.title}"></h1>
-						<span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>
-						<hr>
-						<div style="width:1000px; height: 500px; margin: 30px;">
-							<div th:text="${item.content}"></div>
-						</div>
-						<hr>
-						<div class="lw-go-back only-pc"><a href="/notice" title="목록으로" data-list="^/notice/$">목록으로</a></div>
+			<th:block th:each="item : ${list}">
+				<div class="content" th:if="${list.size} != 0">
+					<h1 th:text="${item.title}"></h1>
+					<span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>
+					<hr>
+					<div style="width:1000px; height: 500px; margin: 30px;">
+						<div th:text="${item.content}"></div>
 					</div>
-					
-					
-				</th:block>
-		</div>
+					<hr>
+					<div class="lw-go-back only-pc"><a href="/notice" title="목록으로" data-list="^/notice/$">목록으로</a></div>
+				</div>
+			</th:block>
 	</div>
 </div>
 <script>

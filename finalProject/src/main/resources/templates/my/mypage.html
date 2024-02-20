@@ -39,6 +39,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
+		<div th:insert="~{banner/group::banner}"></div>
 		<th:block th:each="item : ${list}">
 			<div class="container">
 				<div class="contenttext" id="temperature" title="">
