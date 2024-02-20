@@ -371,16 +371,19 @@
    </insert>
    <insert id="inquireComments" parameterType="CommentsVO">
       insert into comments(
-         COMM_ID,
-         MEM_ID,
-         CONTENT,
-         COMM_DATE,
-         CODE)
+		         COMM_ID,
+		         MEM_ID,
+		         CONTENT,
+		         COMM_DATE,
+		         CODE,
+		         DETAIL_CODE
+      )
       values(COMMENTS_SEQ.NEXTVAL
             ,'ADMIN'
             ,#{content}
             ,sysdate
-            ,'c02')
+            ,'c02'
+            ,#{detailCode})
    </insert>
    <select id="getFaqList" resultType="FaqVO">
       SELECT * 
@@ -424,16 +427,25 @@
       where FAQ_ID = #{faqId}
    </delete>
    <update id="updateFacApp" parameterType="FacilityVO">
-      update facility set mem_app=1 where fac_id=#{facId}
+      update facility 
+      set mem_app=1 
+      where fac_id=#{facId}
    </update>
    <update id="updateDonApp" parameterType="FacilityVO">
-      update facility set don_app=1 where fac_id=#{facId}
+      update facility 
+      set don_app=1 
+      where fac_id=#{facId}
    </update>
    <update id="updateDonRegApp" parameterType="FacilityVO">
-      update donation set don_reg_app=1 where don_id=#{donId}
+      update donation 
+      set don_reg_app=1 
+      where don_id=#{donId}
    </update>
-   <update id="updateInquire" parameterType="Integer">
-      update board set PRIORITY=1 where board_id=#{boardId}
+   <update id="updateInquire" parameterType="CommentsVO">
+      update board 
+      set PRIORITY=1 
+      where category='b02' 
+      and detail_cate=#{detailCate}
    </update>
    <select id="inquireCommentOne" resultType="CommentsVO">
       select COMM_ID,

@@ -36,10 +36,11 @@
 			<a style="color:black;font-size:14px" onclick="show2()"> 모임 신고건 |</a>
 			<a style="color:black;font-size:14px" onclick="show3()"> 피드댓글 신고건</a>
 		</div>
+		<br><hr>
 		<div id=tableData>
 			<div id="notice">
-			<th:block th:if="${reportList.size} == 0" style="text-align:center">
-				<p>데이터가 존재하지 않습니다<p>
+			<th:block th:if="${reportList.size} == 0">
+				<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>
 			</th:block>
 			<th:block th:if="${reportList.size} != 0">
 			<table class="table">

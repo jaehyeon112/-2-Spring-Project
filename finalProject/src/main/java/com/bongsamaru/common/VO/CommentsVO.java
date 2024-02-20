@@ -15,6 +15,7 @@ public class CommentsVO {
 	private String code;
 	private Integer detailCate;
 	private Integer detailCode;
+	private Integer boardId;
 	  
 	private Integer replyId;
 	private String replyMemId;

@@ -32,6 +32,9 @@
 					</th:block>
 				</tbody>
 			</table>
+			<div class="content" th:if="${faqList.size} == 0">
+				<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>
+			</div>
 			<a type="button" style="float:right;" class="btn btn-dark m-1" th:href="@{faqInsert}">등록</a>
 			<nav aria-label="Page navigation example" th:if="${faqList.size} != 0" class="cur">
 			    <ul class="pagination justify-content-center">

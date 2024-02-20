@@ -61,7 +61,6 @@ public interface AdminService {
 	public int delFaq(Integer faqId);
 	public int updateNotice(BoardVO boardVO);
 	public int inquireComments(CommentsVO commentsVO);
-	public int updateInquire(Integer boardId);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
