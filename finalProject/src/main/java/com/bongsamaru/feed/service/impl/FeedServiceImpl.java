@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.InterestVO;
 import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.feed.mapper.FeedMapper;
@@ -64,6 +65,12 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<FeedVO> getFeedDetail(String memId, Integer boardId) {
 		return feedmapper.getFeedDetail(memId, boardId);
+	}
+	
+	@Override
+	public List<CommentsVO> getFeedCommentsList(Integer detailCode) {
+		// TODO Auto-generated method stub
+		return feedmapper.getFeedCommentsList(detailCode);
 	}
 }
 

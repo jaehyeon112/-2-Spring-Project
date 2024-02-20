@@ -17,4 +17,6 @@ public class BoardVO {
 	private Date modDate;
 	private Integer detailCate;
 	private Integer RN;
+	
+	private String commContent;
 }
