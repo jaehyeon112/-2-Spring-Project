@@ -16,7 +16,10 @@
 	          <div class="col-sm-6 col-xl-3" style="color:black;width:25%;height:30%" th:each="facVol : ${facVol}">
 	            <div class="card overflow-hidden rounded-2">
 	              <div class="position-relative">
-	                <a th:href="@{fInfo/facilityInfo(facId=${facVol.facId})}" target='_blank'><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+	                <a th:href="@{fInfo/facilityInfo(facId=${facVol.facId})}" target='_blank'>
+	                <img th:if="${facVol.filePath}!=null" th:src="@{${facVol.filePath}}" onError="this.src='donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
+					<img th:if="${facVol.filePath}==null" src="donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px">
+	                </a>
 	              </div>
 	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px;left: 10px;background-color:#ffb524">
 				    <span>모집중</span><br>

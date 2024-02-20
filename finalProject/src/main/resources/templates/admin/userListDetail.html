@@ -1,11 +1,11 @@
 			<div id="facility">
-			<div style="float:right;padding:10px">
+			<div style="float:right">
 				<input class="form-control-sm me-2" onkeypress="handleKeyPress2(event)" id="search" type="search" placeholder="시설을 검색하세요" aria-label="Search" th:value="${vo.searchKeyword}">
 				<button class="btn btn-outline-success" onclick="search1()" type="button">검색</button>
 				<button class="btn btn-outline-primary" type="button" onclick="show2()">초기화</button>
 			</div>
 			<th:block th:if="${userListDetail.size} == 0" style="text-align:center">
-				<p>데이터가 존재하지 않습니다<p>
+				<h3>데이터가 존재하지 않습니다</h3>
 			</th:block>
 			<th:block th:if="${userListDetail.size} != 0">
 			<table class="table">

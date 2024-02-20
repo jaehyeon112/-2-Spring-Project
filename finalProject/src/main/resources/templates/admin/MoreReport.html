@@ -70,7 +70,7 @@
 				<tbody>
 					<tr th:each="report,st : ${reportList}">
 						 <td th:text="${st.count}">번호</td>
-						 <td><a href="/feed/test/1" target='_blank' style="color:black">게시글으로 이동</a></td>
+						 <td><a th:href="@{/feed/${userId}/1}" target='_blank' style="color:black">게시글으로 이동</a></td>
 						 <td th:text="${report.memId}" >신고자</td>
 						 <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td>
 						 <td th:if="${report.repReason}=='s01'" >스팸홍보/도배글입니다</td>
@@ -78,7 +78,7 @@
 						 <td th:if="${report.repReason}=='s03'" >불법정보를 포함하고 있습니다</td>
 						 <td th:if="${report.repReason}=='s04'" >혐오/차별적 표현입니다</td>
 						 <td th:if="${report.repReason}=='s05'" >주제와 상관이 없음</td>
-						 <td th:if="${report.reqCode}==0" class="cur" th:onclick="openModal([[${report.repId}]])">처리하기</td>
+						 <td th:if="${report.reqCode}==0" class="cur" th:onclick="openModal([[${report.repId}]])">[[${userId}]]</td>
 						 <td th:if="${report.reqCode}==1">처리완료</td>
 						 <td th:if="${report.reqCode}==2">반려된 신고건</td>
 					</tr>

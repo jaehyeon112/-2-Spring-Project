@@ -295,4 +295,24 @@ public class AdminServiceImpl implements AdminService{
 		return userMapper.facVolunteerCnt(pageVO);
 	}
 
+	@Override
+	public List<DonaVO> donaReviewList(PageVO pageVO) {
+		return userMapper.donaReviewList(pageVO);
+	}
+
+	@Override
+	public int donaReviewCnt(PageVO pageVO) {
+		return userMapper.donaReviewCnt(pageVO);
+	}
+
+	@Override
+	public int updateDonReview(DonaVO vo) {
+		return userMapper.updateDonReview(vo);
+	}
+
+	@Override
+	public DonaVO donaReviewInfo(Integer donRevId) {
+		return userMapper.donaReviewInfo(donRevId);
+	}
+
 }
