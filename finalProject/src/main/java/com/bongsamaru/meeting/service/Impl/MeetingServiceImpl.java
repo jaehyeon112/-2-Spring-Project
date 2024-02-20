@@ -64,8 +64,8 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public int findMember(Integer volId, String memId) {
-		return mapper.findMember(volId, memId);
+	public int findMember(Integer volId, String memId,String appCode) {
+		return mapper.findMember(volId, memId,appCode);
 	}
 
 	@Override
