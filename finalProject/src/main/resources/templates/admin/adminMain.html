@@ -71,7 +71,12 @@
                </thead>
                <tbody>
                  <tr th:each="king,st : ${king}" th:if="${st.count}<=10">
-                   <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${st.count}+'.'"></h6></td>
+                 	<td>
+			            <img th:if="${st.count} == 1" th:src="@{/image/gold.png}" alt="Gold Medal" style="width: 20px; height: 20px;"/>
+			            <img th:if="${st.count} == 2" th:src="@{/image/silver.png}" alt="Silver Medal" style="width: 20px; height: 20px;"/>
+			            <img th:if="${st.count} == 3" th:src="@{/image/bronze.png}" alt="Bronze Medal" style="width: 20px; height: 20px;"/>
+			            <span th:unless="${st.count} == 1 or ${st.count} == 2 or ${st.count} == 3" th:text="${st.count}+'.'"></span>
+			        </td>
                    <td class="border-bottom-0">
                        <h6 class="mb-0 fw-normal" th:text="${king.memId}"></h6>
                    </td>
