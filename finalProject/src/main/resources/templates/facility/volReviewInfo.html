@@ -22,13 +22,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 								<div class="col-md-12">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label for="priority">중요도</label>
-											<select name="priority" id="priority" class="nav-item dropdown form-control">
-												<option class="dropdown-item" selected th:if="${info.priority}==0" th:text="일반" hidden value="0"></option>
-												<option class="dropdown-item" selected th:if="${info.priority}==1" th:text="중요" hidden value="1"></option>
-												<option class="dropdown-item" value="0">일반</option>
-												<option class="dropdown-item" value="1">중요</option>
-											</select>
+										
 											<input name="category" value="b01" type="hidden">
 											<input name="detailCate" th:value="${info.detailCate}" type="hidden">
 										</div>

@@ -20,8 +20,7 @@
  	<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
     <div class="col-md-10 main-content">
 		<div class="row justify-content-center hotel_booking_table">
-        
-        		<div class="row" style="text-align:center;">
+        	
             		<div class="col-md-2">
                 		<div class="book_tabel_item">
                     	<p style="color:black; font-size:20px">봉사제목</p>
@@ -47,8 +46,8 @@
               			<p style="color:black; font-size:20px" >후기작성</p>
        	    			</div>
        				</div>
-       [[${volList}]]
    				   <th:block th:each="list: ${volList}">
+   				   <input type="hidden" id="volActId" th:data-vol-act-id="${list.volActId}" >
 			       <div class="col-md-2">
 			           <div class="book_tabel_item">
 			            <p style="color:black; font-size:15px" th:text="${list.title}"></p>
@@ -79,7 +78,6 @@
 			      
 			      <div class="col-md-2">
                       <div class="book_tabel_item">
-                       <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
                         
                        <a th:href="@{/volReviewInsert(volActId=${list.volActId})}"><button id="reviewButton" class="btn" >후기작성</button></a>
                       </div>
@@ -87,7 +85,7 @@
 			         </th:block>
 	
 
-				</div>
+			
 				
 <!-- 시설이 신청자의 등록내용을 보기위한 모달 -->			
 	
@@ -121,13 +119,6 @@
 	  </div>
   </div>				
 				
-				
-				
-				
-				
-				
-				
-					       		         
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -147,17 +138,30 @@
 </div>
 
 <script th:inline="javascript">
+var volActId='';
 window.onload = function() {
     // 봉사 후기가 작성되었는지 확인
-    var reviewWritten = isReviewWritten();
+	 var volActId = $('#volActId').data('vol-act-id');
+	   console.log(volActId);
+  		    $.ajax({
+  		        url: '/getFacRevCheck',
+  		        type: 'GET',
+  		        data: {
+  		        	detailCate: volActId
+  		        },
+  		        success: function(response) {
+  		            if(response > 0) {
+  		            	 var button = document.getElementById("reviewButton");
+  		            	 button.disabled = true;
+  		            } else {
+  		              
+  		            }
+  		        },
+  		        error: function(xhr, status, error) {
+  		            // 오류 처리
+  		        }
+  		    });
 
-    // 버튼 요소 가져오기
-    var button = document.getElementById("reviewButton");
-
-    // 만약 봉사 후기가 작성되었다면 버튼을 디스에이블
-    if (reviewWritten) {
-        button.disabled = true;
-    }
 };
 
 function good(memId,volActId) {
@@ -207,14 +211,12 @@ function bad(memId,volActId) {
         }
     });
 };
- 
+
 $(document).ready(function() {
   
 	$('#myModal').on('show.bs.modal', function(e) {
       // 클릭된 요소에서 vol-act-id 가져오기
-        var volActId = $(e.relatedTarget).data('vol-act-id');
-        // 모달 열기
-        //$('#myModal').modal('show');
+      
 
         // 참여자 목록 초기화
         $("#showTableBody").empty();
@@ -253,11 +255,6 @@ $(document).ready(function() {
         });
     })
     
-    
-   
-
-
-
 });
 </script>
 </section>

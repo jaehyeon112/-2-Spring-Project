@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-
+    <style>
+    	.banner_content h4,
+		.banner_content h2,
+		.banner_content p {
+		    color: black; /* 기존 텍스트 색상 */
+		    text-shadow: 2px 2px 4px #FFFFFF; /* 흰색 그림자 */
+		}	
+    </style>
         <title>봉사마루</title>
     </head>
     <body>
 	<div th:fragment="banner">
-         <section class="banner-home" style=" background-image: url(banner/home2.png); background-repeat: no-repeat; background-size:cover;">
+         <section class="banner-home" style="height:300px; background-color: #689f38; ">
         <div class=" d_flex align-items-center" style="min-height: 800px;">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0"
                 data-background=""></div>
             <div class="container" style="margin-bottom:300px;">
-                <div  style="color:black;"class="banner_content text-center">
-                    <h4>봉사마루</h4>
-                    <h2>당신의 선한 영향력을 보여주세요</h2>
-                    <p>주변을 살펴보면 도움의 손길이 필요한 곳이 아직도 많습니다.</p>
+                <div  style="color:#fff; "class="banner_content text-center">
+                <h1>일일 봉사</h1>
                 </div>
             </div>
         </div>
     </section>
-                    </div>
+   </div>
     </body>
 </html>

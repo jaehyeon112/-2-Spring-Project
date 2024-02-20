@@ -22,9 +22,10 @@ public interface FacilityService {
 	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType,@Param("facId") String facId); //시설페이지 리스트
 	
 	public FacilityVO getFacilityInfo(String facId);//시설상세페이지
-	public List<FundingVO> getFundingList(String facId);//모금진행중 List
-	public List<FundingVO> getFundedList(String facId);//모금마감 List
-	public List<VolunteerVO> getVolunteerList(String facId);
+	public List<FundingVO> getFundingList(PageVO pageVO,String facId);//모금진행중 List
+	public List<FundingVO> getFundedList(PageVO pageVO,String facId);//모금마감 List
+	public List<VolunteerVO> getVolFList(PageVO pageVO,String facId);
+	public List<VolunteerVO> getVolIList(PageVO pageVO,String facId);
 	
 	public int insertJoinVolunteer(VolMemVO volMemVO);//회원이 시설봉사 신청
 	public VolActVO getFacVolInfo(Integer volActId);
@@ -36,12 +37,18 @@ public interface FacilityService {
 	public int volAppInsert(VolMemVO volMemVO);//참여 승인되서 인서트
 	public VolMemVO getJoinApp(Integer volActId);//시설이 승인하려고 보는 신청서
 	public int getJoinAppCheck(Integer volActId, String memId);//중복체크
+	public int getFacRevCheck(Integer detailCate);//시설봉사후기 존재여부
 	public List<VolActVO> getVolunteerJoinList(PageVO pageVO, String facId);
 	public List<VolActVO> getVolunteerFinishList( PageVO pageVO, String facId); //봉사 완료 후 리스트
-	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType);
 	
+	public int getCategoryCount(@Param("facZip2") String facZip2, @Param("facType") String facType);
 	public int getFVolCategoryCount(String facId);
 	public int getFinishVolCategoryCount(String facId);
+	public int getFacDonCount(@Param("recStat")Integer recStat, @Param("facId")String facId);
+	public int getVolFCount(String facId);
+	public int getVolICount(String facId);
+	
+	
 	//마음온도
 	public int insertVolHeart(HeartVO heartVO);
 	
@@ -49,6 +56,6 @@ public interface FacilityService {
 	public void insertVolReview(BoardVO boardVO);
 	public int updateVolReview(BoardVO boardVO);
 	public BoardVO getVolReviewInfo(Integer detailCate);
-
+	public int findBoardNo();
 
 }

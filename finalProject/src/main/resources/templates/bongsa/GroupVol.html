@@ -83,7 +83,8 @@
 
 
   <section layout:fragment="content">
-
+	<div th:insert="~{banner/group::banner}"></div>
+	  <div class="container">
   <div class="row">
   	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
 	<div class="col-10">
@@ -103,12 +104,12 @@
 	</div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+      <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -191,6 +192,7 @@
 
 </div>
 </div>
+	  </div>
 <script th:inline="javascript">
 $(document).ready(function() {
 	 $('#searchKeyword').keypress(function(event) {

@@ -71,10 +71,6 @@
 .search-button:hover, .reset-button:hover {
     opacity: 0.8;
 }
-.btn.dropdown-toggle {
-    display: inline-block; /* 드롭다운을 인라인 블록 요소로 설정 */
-    margin-right: 10px; /* 드롭다운 간 간격 */
-}
 
 .date-input {
     margin-left: 10px; /* 날짜 입력 필드 간 간격 */
@@ -84,7 +80,8 @@
 
 <body>
   <section layout:fragment="content">
-
+	<div th:insert="~{banner/fac::banner}"></div>
+	<div class="container">
   <div class="row">
   	<div class="side col-2" style="margin-top:200px;" th:insert="~{bongsa/sidebar::side}"></div>
 	<div class="col-10">
@@ -97,12 +94,12 @@
 	    </div>
 	    <!-- 드롭다운 및 날짜 입력 -->
 	    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-	        <div>
-	            <select id="location" class="btn dropdown-toggle" onchange="search()" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	        <div style="display: flex; gap:10px; ">
+	            <select  class="date-input" id="location" onchange="search()" style="text-align: center" >
 	                <option value="">==지역==</option>
 	                <option th:each="location:${location}" th:text="${location.value}"th:value="${location.subCode}"> </option>
 	            </select>
-	            <select id="cate" onchange="search()" class="btn dropdown-toggle" style="padding:0.5rem; background-color: #ffCC23; color:white;">
+	            <select class="date-input" id="cate" onchange="search()" style="text-align: center">
 	                <option value="">==봉사유형==</option>
 	                <option th:each="cate:${cate}" th:text="${cate.value}" th:value="${cate.subCode}"> </option>
 	            </select>
@@ -160,6 +157,7 @@
 	        </div>
         </div>
       </div>
+      </div>
       <!-- 봉사정보 모달 -->
       <div class="modal" tabindex="-1" id="myModal2">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -193,7 +191,7 @@
     </div>
   </div>
 
-      
+</div>      
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
@@ -383,15 +381,11 @@ var facId = '';
             });
            
         });
-       
+        var memId = [[${userId}]];
         $('#joinVolBtn').on('click', function() {
-       	 
-       	 
-       	  if ([[${#authentication.principal}]] !== null && [[${#authentication.principal}]] !== 'anonymousUser') {
-       		  var memId = [[${#authentication.principal.userVO.id}]];
+				if([[${userId}]]!=null){
+       		  
        		   
-       		    console.log(memId);
-       		 console.log(volActId);
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',

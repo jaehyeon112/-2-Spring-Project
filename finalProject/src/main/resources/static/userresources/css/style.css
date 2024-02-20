@@ -169,16 +169,16 @@ button:focus {
   text-transform: uppercase;
   color: #fff;
   font-weight: 600;
-  background: #f3c300;
+  background: #689f38;
   padding: 5px 30px;
 }
 
 .theme_btn:before {
-  background: #f8b100;
+  background: #689f38;
 }
 
 .theme_btn:hover {
-  color: #fff;
+  color: #4b8f29;
 }
 
 .white_btn {
@@ -223,7 +223,7 @@ button:focus {
 }
 
 .button_hover:hover {
-  color: #fff;
+  color: #4b8f29;
 }
 
 .button_hover:hover:before {
