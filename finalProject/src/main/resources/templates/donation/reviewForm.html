@@ -30,8 +30,11 @@
     
 </head>
 <body>
+
  <section layout:fragment="content" >
-<div class="container" style="margin:200px 0px 0px 100px;">
+ 
+ <div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="margin:0 auto;">
 <form name="reviewForm">
 
 
@@ -266,6 +269,6 @@ console.log(facId);
     }
 </script>
 
-
+</div>
 </section>
 </body>
