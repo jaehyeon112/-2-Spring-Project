@@ -21,4 +21,5 @@ public interface UserService {
 	public Boolean insertFac(FacilityVO vo);
 	public List<AlertVO> listAlert(String memId);
 	public List<CountVO> volKing();
+	public int countAlarm(String memid);
 }

@@ -51,6 +51,20 @@
 		  }
 		  .read { color: grey; } /* 읽음 상태의 텍스트 색상 */
 		  .unread { color: black; } /* 안읽음 상태의 텍스트 색상 */
+				  #alertButton {
+		  opacity: 1; /* 기본 상태에서의 불투명도 */
+		}
+		#alertButton .red-dot {
+		    display: none; /* 초기 상태는 숨김으로 설정 */
+		    position: absolute;
+		    top: 22px;
+		    left: 10px;
+		    width: 10px; /* 빨간 점의 크기 */
+		    height: 10px; /* 빨간 점의 크기 */
+		    background-color: red;
+		    border-radius: 50%;
+		}
+		
 		</style>
     </head>
 <body>
@@ -100,9 +114,11 @@
 						        <input type="submit" value="로그아웃" class="nav-link" style="background:none;border:none;padding:0;font-size: 16px">
 						    </form>
 							</li>
-							<li sec:authorize="isAuthenticated()" class="nav-item cur"><a id="alertButton" class="nav-link nav-icon-hover" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-bell"></i>
-                        </a>
+							<li sec:authorize="isAuthenticated()" class="nav-item cur">
+							<a id="alertButton" style="position: relative; display: inline-block;  text-align: center;" class="nav-link nav-icon-hover" data-toggle="modal" data-target="#exampleModal">
+							    <i style="font-size:18px" class="fas fa-bell"></i>
+							       <span class="red-dot"></span> <!-- 빨간 점 추가 --> <!-- 뱃지 추가 -->
+							</a>
                     </li>
                         </ul>
                     </div> 
@@ -114,7 +130,6 @@
 				</section>
 
 			<div class="divfooter" th:insert="~{footer::copy}"></div>
-			<button type="button" class="btn btn-outline-primary m-1">등록</button>
 
 
 	
@@ -157,7 +172,30 @@
     </div>
 </div>
     <script type="text/javascript">
+    let alarmCount;
+    
+    function alarm(){
+        $.ajax({
+            url: '/alarmCount',
+            type: 'GET',
+            dataType: 'json',
+            success: function(result){
+                alarmCount = result;
+                 if (alarmCount > 0) {
+	                $('#alertButton .red-dot').show(); // 알림이 있으면 빨간 점 표시
+	            } else {
+	                $('#alertButton .red-dot').hide(); // 알림이 없으면 빨간 점 숨김
+	            }
+            }
+        });
+    }
+    	
+    
+    
     $(document).ready(function() {
+    	alarm();
+    	
+    	
     	  $('#alertButton').click(function() {
     	    var modalBody = $('#exampleModal .modal-body tbody');
     	    modalBody.empty();
@@ -169,6 +207,7 @@
     	      type: 'GET',
     	      dataType: 'json',
     	      success: function(alerts) {
+    	    	  console.log(alerts)
     	        modalBody.empty();
     	        if (alerts.length > 0) {
     	          alerts.forEach(function(alert, index) {

@@ -151,4 +151,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	public List<CountVO> volKing() {
 		return userMapper.volKing();
 	}
+	
+	@Override
+	public int countAlarm(String memid) {
+		return userMapper.CountAlarm(memid);
+	}
 }

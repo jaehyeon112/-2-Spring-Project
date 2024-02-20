@@ -159,4 +159,11 @@
 		GROUP BY 
 		    act.mem_id, m.mem_nick
 	</select>
+	
+	<select id="CountAlarm" resultType="int">
+		select count(*) 
+		from alert 
+		where read_flag = 0
+		and receive_id = #{memId}
+	</select>
 </mapper>

@@ -228,8 +228,9 @@ public class LoginController {
 		List<CountVO> volKing = userService.volKing();
 		model.addAttribute("vol", volKing);
 		
-		List<DonaVO> random = donaService.randomlyShow();
-		model.addAttribute("randomlist", random);
+		DonaVO donaVO = new DonaVO();
+		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		model.addAttribute("list", donaList);
 		
 		List<BongsaDTO> group = bongsaService.getVolTagDTO("e02");
 		model.addAttribute("group", group);
@@ -244,7 +245,17 @@ public class LoginController {
 	@GetMapping("/userAlarm")
 	@ResponseBody
 	public List<AlertVO> getAlerts(Principal principal) {
-	    return userService.listAlert(principal.getName());
+		List<AlertVO> vo = userService.listAlert(principal.getName());
+		log.info(vo);
+		return vo;
+	}
+	
+	@GetMapping("/alarmCount")
+	@ResponseBody
+	public int getAlarm(Principal principal) {
+		log.info(principal.getName());
+		log.info("으아아악!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	    return userService.countAlarm(principal.getName());
 	}
 	
 }
