@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,33 @@ public class DonaController {
 	@Autowired
 	MailUtil mail;
 	
-	
+	@GetMapping("/test")
+	public String test(@RequestParam("id") Integer donId,
+			@RequestParam(name = "facId", required = true) String facId, Model model) {
+		// 상세페이지
+		DonaVO dona = donaService.getDonaDetail(donId, facId);
+		model.addAttribute("dona", dona);
+
+		// 기부자목록
+		List<DonaVO> donaList = donaService.getDonerList(donId);
+		model.addAttribute("list", donaList);
+
+		// 댓글리스트
+		List<DonaVO> commentList = donaService.getCommentList(donId);
+		model.addAttribute("comment", commentList);
+		
+		//후기글
+		DonaVO rev = donaService.getDonaReview(donId);
+		System.out.println("======================");
+		System.out.println(rev);
+		model.addAttribute("rlist", rev);
+		
+		// 랜덤
+		List<DonaVO> random = donaService.randomlyShow();
+		model.addAttribute("randomlist", random);
+
+		return "donation/donaDetail";
+	}
 	
 	
 
@@ -106,6 +133,11 @@ public class DonaController {
 	@GetMapping("/donaDetail")
 	public String donaDetailPage2(@RequestParam("id") Integer donId,
 			@RequestParam(name = "facId", required = true) String facId, Model model) {
+		
+		//날자 
+		DonaVO donaVO = new DonaVO();
+		 Date endPeriod = donaVO.getEndPeriod();
+		 
 		// 상세페이지
 		DonaVO dona = donaService.getDonaDetail(donId, facId);
 		model.addAttribute("dona", dona);
@@ -125,7 +157,7 @@ public class DonaController {
 		model.addAttribute("rlist", rev);
 		
 		// 랜덤
-		List<DonaVO> random = donaService.selectRecruitingItems();
+		List<DonaVO> random = donaService.randomlyShow();
 		model.addAttribute("randomlist", random);
 
 		return "donation/donaDetail";
@@ -199,13 +231,22 @@ public class DonaController {
 	 * @return 시설 마이페이지로 이동 예정. 
 	 */
 	// 기한연장하기
+//	@PutMapping("/facilityMyPage/donaInfo/extension")
+//	@ResponseBody
+//	public String extendDonationPeriod(@RequestBody DonaVO donaVO) {
+//		log.info(donaVO);		
+//		
+//		donaService.extendDonationPeriod(donaVO);
+//		return "facility/myPageDona"; 
+//	}
+	
 	@PutMapping("/facilityMyPage/donaInfo/extension")
 	@ResponseBody
-	public String extendDonationPeriod(@RequestBody DonaVO donaVO) {
-		log.info(donaVO);		
-		
-		donaService.extendDonationPeriod(donaVO);
-		return "facility/myPageDona"; 
+	public ResponseEntity<String> extendDonationPeriod(@RequestBody DonaVO donaVO) {
+	    log.info(donaVO);
+
+	    donaService.extendDonationPeriod(donaVO);
+	    return ResponseEntity.ok("연장 성공!");
 	}
 
 	/**
@@ -252,6 +293,13 @@ public class DonaController {
 	@GetMapping("/applyform")
 	public String openapplyform(Model model) {
 		return "donation/forDonaform";
+	}
+	
+	@PostMapping("/applydona")
+	@ResponseBody
+	public String applyDona(DonaVO donaVO, Model model) {
+		donaService.applyAlertDona(donaVO);
+		return "신청완료";
 	}
 
 	/**
@@ -333,12 +381,19 @@ public class DonaController {
 		donaService.insertReview(donaVO);
 
 		int codeNo = donaVO.getDonId();
-		String code = "p08";
+		String code = "p07";
 		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
 
-		return "redirect:my/mapage";
+		return "후기등록성공!";
 	}
 
+	@PostMapping("/receiptAlert")
+	@ResponseBody
+	public String alertRec(DonaVO donaVO, Model model) {
+		donaService.receiptAlertDona(donaVO);
+		return "영수증등록완료";
+	}
+	
 					// 템플릿 놔둔곳... 입니다.. (삭제)
 					// 기부신청폼22
 					@GetMapping("/applyform2")

@@ -66,16 +66,13 @@
 				<span><a>아이디 찾기</a></span>
 				<span><a>비밀번호 찾기</a></span>
 				</div>
-            <script type="text/javascript">
+            <script th:inline="javascript">
+            var loginErrorMessage = [[${session.loginErrorMessage}]]; // Thymeleaf 예시
+         
                 let user = true;
                 let facility = false;
                 $('#user').addClass('active-click');
-                window.onload = function () {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has('error')) {
-                        alert('로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.');
-                    }
-                };
+
 
                 $('#user').on('click', function (e) {
                     user = true;
@@ -105,7 +102,19 @@
                 })
                 
                 
-                
+			        // URL에서 쿼리 파라미터를 파싱
+			        const urlParams = new URLSearchParams(window.location.search);
+			        const error = urlParams.get('error'); // 'error' 쿼리 파라미터의 값을 가져옴
+					const logout = urlParams.get('logout')
+					console.log(error)
+					console.log(logout)
+			        // error 파라미터가 'no'인 경우, 경고창 표시
+			        if(error==''){
+			            alert(loginErrorMessage);
+			        }else if(logout==''){
+			        }
+			        
+			        
                 
             </script>
 

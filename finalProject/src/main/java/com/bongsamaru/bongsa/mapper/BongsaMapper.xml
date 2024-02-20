@@ -44,6 +44,26 @@
 	WHERE rn BETWEEN #{pageVO.start} and #{pageVO.end}
 	</select>
 
+	<select id="allVol" resultType="VolunteerVO">
+		SELECT * FROM (
+	    SELECT  ROWNUM rn,
+	            vol_id,
+	            meet_name,
+	            cap,
+	            select_sub(region) region,
+	            REC_PERIOD,
+	            end_period,
+	            (select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') meetingCnt,
+	            select_file(vol_id,'p11') path,
+	            select_sub(category) mainCategory
+	    FROM volunteer
+	    WHERE END_PERIOD > sysdate
+	    	  AND meet_type = #{meetType} 
+	          AND room_stat = '1'
+        order by DBMS_RANDOM.RANDOM)	
+	</select>
+	
+	
 	
 	<select id="tagList" resultType="TagVO">
 		select tag_content,

@@ -449,7 +449,7 @@
       select * from files where code='p05' and code_no=#{codeNo}
    </select>
    <select id="DonationKing" resultType="DonledgerVO">
-      select sum(don_amt) as total,mem_id,(select mem_name from member where mem_id=don_ledger.mem_id) as mName
+      select sum(don_amt) as total,mem_id,(select mem_name from member where mem_id=don_ledger.mem_id) as mName,(select mem_nick from member where mem_id=don_ledger.mem_id) as mNick 
         from don_ledger 
         where pay_date BETWEEN (SELECT TRUNC(SYSDATE, 'MM')
         FROM   DUAL) and (SELECT LAST_DAY(SYSDATE) from dual)

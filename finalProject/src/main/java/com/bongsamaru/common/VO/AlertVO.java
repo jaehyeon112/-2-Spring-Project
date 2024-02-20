@@ -12,4 +12,5 @@ public class AlertVO {
 	private Date alertDate;
 	private String readFlag;
 	private String memId;
+	private String receiveId;
 }
