@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bongsamaru.user.service.UserDetailVO;
 
+import lombok.extern.log4j.Log4j2;
+
 /**
  * 프로필 수정을 위한 비밀번호 인증
  * @author 나채현
  *
  */
+@Log4j2
 @Controller
 public class PasswordController {
 	@Autowired
@@ -31,6 +34,7 @@ public class PasswordController {
 	 */
 	@GetMapping("/pass")
 	public String getPasswordForm() {
+		log.info("하이");
 	    return "my/pass";
 	}
 

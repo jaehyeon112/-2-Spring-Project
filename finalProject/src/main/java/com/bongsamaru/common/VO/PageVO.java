@@ -17,6 +17,7 @@ public class PageVO {
     private int	currentPage;
     private int pageSize = 5; // 한페이지보여줄 버튼수
     private Integer volId;
+    private String memId;
     private Integer roomStat;
     
     private int startPage;

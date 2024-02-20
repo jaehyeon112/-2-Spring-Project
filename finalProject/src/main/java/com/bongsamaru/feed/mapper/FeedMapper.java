@@ -2,6 +2,7 @@ package com.bongsamaru.feed.mapper;
 
 import java.util.List;
 
+import com.bongsamaru.common.VO.CommentsVO;
 import com.bongsamaru.common.VO.InterestVO;
 import com.bongsamaru.common.VO.LikeVO;
 import com.bongsamaru.feed.service.FeedVO;
@@ -23,6 +24,8 @@ public interface FeedMapper {
 	public int deleteLike(String memId, Integer boardId);
 	// 해당하는 피드 게시글 불러오기
 	public List<FeedVO> getFeedDetail(String memId,Integer boardId);
+	// 해당하는 피드 댓글 불러오기
+	public List<CommentsVO> getFeedCommentsList(Integer detailCode);
 }
 
 

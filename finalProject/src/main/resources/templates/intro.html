@@ -63,12 +63,6 @@ a {
 <body>
 <section layout:fragment="content">
 	<div class="container">
-		<div class="tab_line_area">
-			<ul>
-				<li><a href="/intro">행복마루 소개</a></li>
-				<li><a href="/intro2">센터 소개</a></li>
-			</ul>
-		</div>
 		<div class="main1">
 			<h1>100%</h1>
 			<h1 style="text-decoration: underline;">곧장기부</h1>
@@ -90,34 +84,8 @@ a {
 		    <br>
 		    <img src="/userresources/image/banner/logo2.png" alt="" style="width:324px; height: 240px;">
 		</div>
-		  <input type="text" id="inputField">
-  		  <button id="confirmButton">확인</button>
-  		  <input type="text" id="inputField2" class="hidden">
-  		  <button id="sendButton" class="hidden">보내기</button>
-  		  <input type="text" id="inputTel" class="hidden">
-  		  <button class="hidden" id="changeTel">변경</button>
 	</div>
   <script>
-
-    $('#confirmButton').on('click', function() {
-    	$("input").remove("#inputField");
-    	$("button").remove("#confirmButton");
-        $("#sendButton").removeClass('hidden');
-        $("#inputField2").removeClass('hidden');
-      
-    });
-
-    $("#sendButton").on('click', function() {
-      $("button").remove("#sendButton");
-      $("input").remove("#inputField2");
-      $("#inputTel").removeClass('hidden');
-      $("#changeTel").removeClass('hidden');
-      alert('인증 완료');
-      
-    $("#changeTel").on('click', function(){
-    	alert('변경 완료');
-    })
-    });
   </script>
 </section>
 </body>
