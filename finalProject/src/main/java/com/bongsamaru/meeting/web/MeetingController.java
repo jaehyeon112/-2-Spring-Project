@@ -58,7 +58,6 @@ public class MeetingController {
 		volVO.setAppCode("h02");
 		List<VolMemVO> member = service.meetingMemList(volVO);
 		model.addAttribute("member",member);
-		
 		List<VolMemVO> cnt = service.volCnt(volVO);
 		model.addAttribute("cnt",cnt);
 		
@@ -122,8 +121,8 @@ public class MeetingController {
 	//레이아웃에서 아작스로 받기
 	@GetMapping("findMember")
 	@ResponseBody
-	public int findMember(@RequestParam(name="volId") Integer volId,@RequestParam(name="memId",required = false) String memId) {
-		return service.findMember(volId,memId);
+	public int findMember(@RequestParam Integer volId,@RequestParam(required = false) String memId,@RequestParam(required = false) String appCode) {
+		return service.findMember(volId,memId,appCode);
 	}
 	
 	@GetMapping("meetingInfoPage")
@@ -192,7 +191,7 @@ public class MeetingController {
       VolActVO info = service.volActBoardInfo(volActId);
       model.addAttribute("info",info);
       req.getSession().setAttribute("id",volId);
-      
+      //모임의 방장 아이디
       VolunteerVO vo = service.meetingInfo(volId);
       model.addAttribute("meeting",vo.getMemId());
       
