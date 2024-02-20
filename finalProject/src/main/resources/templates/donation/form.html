@@ -219,7 +219,22 @@
 
 <script th:inline="javascript">
 
-// 글자수
+	//textarea 처리
+	function processTextareaContent() {
+	    let textareaElements = document.querySelectorAll('textarea');
+	    textareaElements.forEach(function (textarea) {
+	        let content = textarea.value;
+	        // Replace newline characters with <br> tags
+	        content = content.replace(/\n/g, '<br>');
+	        // Set the processed content back to the textarea
+	        textarea.innerHTML = content;
+	    });
+	}
+
+// Call the function after the document is ready
+document.addEventListener("DOMContentLoaded", function () {
+    processTextareaContent();
+});
 
 
 	
@@ -284,7 +299,7 @@ function submitForm() {
             
             console.log("ajax 안에 success response " + response);
 
-            alert("등록성공!");
+            
             showDonationConfirmationModal();
             location.href = "donaMain";
             return;
