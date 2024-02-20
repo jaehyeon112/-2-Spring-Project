@@ -347,16 +347,19 @@ function openSuccessModal() {
 function openReviewForm(button) {
 	// 후기글이 존재하면 이미 후기글이 존재한다고 경고창 띄우기
 	var revStat = button.getAttribute("data-hasrev");
-	alert(revStat);
+	nsole.log("revStat:", revStat); // 콘솔에 revStat 출력
+
 	if(revStat === '1'){
 		alert("이미 후기글이 존재합니다.");
 		return;
-	}
+	}else{
+		
     var donId = button.getAttribute("data-donId");
     var facId = button.getAttribute("data-facId");
     // donId와 facId를 이용하여 후기 작성 페이지로 이동
     var reviewUrl = '/reviewform?donId=' + donId + '&facId=' + facId;
     window.location.href = reviewUrl;
+	}
 }
 
 
