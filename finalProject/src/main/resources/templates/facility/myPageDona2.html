@@ -39,29 +39,32 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                     </div>
                     <div class="col-md-9">
                         <div class="boking_table">
-                       
                             <div class="row">
-                                <div class="col-md-4">
+                            <div class="col-md-3">
+                                    <div class="book_tabel_item">
+                                     <p style="color:black; font-size:26px">기부제목</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p style="color:black; font-size:26px">목표금액</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                       <p style="color:black; font-size:26px">모집기간</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="book_tabel_item">
                                        <p style="color:black; font-size:26px">승인상태</p>
                                        
                                     </div>
                                 </div>
                             </div>
-                          
                         </div>
-                    </div>
-                    
+                   </div>
+                    <th:block th:each="dona:${donaList}">
                     <div class="col-md-3">
                         <h2>기부신청<br>진행상황</h2>
                     </div>
@@ -69,28 +72,38 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                         <div class="boking_table">
                        
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                     <p  ></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                      <p ></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                       <p ></p>
-                                       
-                                    </div>
-                                </div>
-                            </div>
+              <div class="col-md-3">
+                 <div class="book_tabel_item">
+                  <p><a  th:text="${dona.title}"></a></p>
+                 
+                 </div>
+             </div>
+             <div class="col-md-3">
+                 <div class="book_tabel_item">
+                  <p><a  th:text="${dona.goalAmt}"></a></p>
+                 
+                 </div>
+             </div>
+             <div class="col-md-3">
+                 <div class="book_tabel_item">
+                  <p><a  th:text="${#dates.format(dona.recPeriod,'yyyy-MM-dd')} +'~'+${#dates.format(dona.endPeriod,'yyyy-MM-dd')}"></a></p>
+                 
+                 </div>
+             </div>
+             <div class="col-md-3">
+                 <div class="book_tabel_item">
+                  <p><a  th:text="${dona.donRegApp}"></a></p>
+                 
+                 </div>
+             </div>
+         </div>
                            
                         </div>
                     </div>
+               </th:block>
                 </div>
-                </div>
+                
+     </div>           
 </div>                
 </section>                
 </body>

@@ -381,11 +381,10 @@ var facId = '';
             });
            
         });
-        var memId = [[${userId}]];
+        var memId = '[[${session.id}]]';
+        console.log(memId);
         $('#joinVolBtn').on('click', function() {
 				if([[${userId}]]!=null){
-       		  
-       		   
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',

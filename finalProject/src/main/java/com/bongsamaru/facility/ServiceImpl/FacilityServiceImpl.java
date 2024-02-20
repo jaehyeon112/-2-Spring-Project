@@ -68,8 +68,8 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 	
 	@Override
-	public List<DonaVO> getDonaList(String facId,Integer recStat) {
-		return mapper.getDonaList(facId,recStat);
+	public List<DonaVO> getDonaList(PageVO pageVO,String facId,char donRegApp, char recStat) {
+		return mapper.getDonaList(pageVO,facId,donRegApp,recStat);
 	}
 	
 	
@@ -180,6 +180,11 @@ public class FacilityServiceImpl implements FacilityService {
 		@Override
 		public int getVolICount(String facId) {
 			return mapper.getVolICount(facId);
+		}
+
+		@Override
+		public int getVolDonCount(String facId, char donRegApp, char recStat) {
+			return mapper.getVolDonCount(facId, donRegApp, recStat);
 		}
 		
 

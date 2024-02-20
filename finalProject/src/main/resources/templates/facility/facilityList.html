@@ -48,7 +48,7 @@
 					<div class="col-lg-4 col-md-6" style="text-align:center">
 						
 							<div class="thumb">
-								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 60%;">
+								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 30%;">
 								<br>
 							</div>
 							<div class="details">
@@ -56,7 +56,7 @@
 								</div>
 								<br>
 								<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
-										th:text="${facility.facName}" style="width: 60%;"></a>
+										th:text="${facility.facName}" style="width: 30%;"></a>
 							</div>
 								<p th:text="${facility.facAddr}"></p>
 								<p style="display:none" th:text="${facility.region}" id="regions"></p>

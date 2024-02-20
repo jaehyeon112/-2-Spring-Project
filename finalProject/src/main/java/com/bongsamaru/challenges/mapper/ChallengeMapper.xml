@@ -110,7 +110,14 @@ SELECT  C.CHAL_DET_ID,
  
   
 </select>
-
+<!-- 오늘 등록한적 있는지 체크 -->
+<select id="getChallCheck" parameterType="int">
+  Select count(*)
+    FROM CHAL_DETAIL
+   WHERE MEM_ID=#{memId}
+     AND PART_DATE=#{partDate}
+     AND CHAL_ID=chalId 
+</select>
 <!-- 챌린지 등록-->
 <insert id="getChallengeInsert" parameterType="ChallengesVO">
 	<selectKey keyProperty="chalId" resultType="int"	order="BEFORE">

@@ -154,21 +154,23 @@ public class facilityController {
 	 */
 	@GetMapping("fInfo/volunteerList")
 	public String getVolunteerList(@RequestParam(name="facId") String facId,
-								 Model model,
-								 PageVO vo, PageVO vo2,
-								@RequestParam(value="category", required = false)String category,
-								@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
-								@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
+								 	Model model,
+								 	PageVO vo, PageVO vo2,
+								 	@RequestParam(value="category", required = false)String category,
+								 	@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+								 	@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		int total = facilityService.getVolFCount(facId);
 		vo = new PageVO(total,start, end, category ,3);
      	model.addAttribute("vo",vo);
 		List<VolunteerVO> listf = facilityService.getVolFList(vo,facId);
 		model.addAttribute("volFList", listf);
 		int total2 = facilityService.getVolICount(facId);
-		vo = new PageVO(total2,start, end, category ,3);
+		log.info(total2);
+		vo2 = new PageVO(total2,start, end, category ,3);
      	model.addAttribute("vo2",vo2);
 		List<VolunteerVO> list = facilityService.getVolIList(vo2,facId);
 		model.addAttribute("volIList", list);
+		log.info(list);
 		return "facility/facilityVolunteer";
 	}
 	
@@ -177,20 +179,42 @@ public class facilityController {
 	//시설 마이페이지	
 	//마이페이지 (기부)
 	@GetMapping("/fac")
-	public String getFacilityMyPage(Model model,Integer recStat,Principal principal) {
+	public String getFacilityMyPage(Model model,Integer recStat,Principal principal,
+									String facId,
+									PageVO vo, 
+									@RequestParam(value="category", required = false)String category,
+									@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+									@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		
+		int total = facilityService.getVolDonCount(facId,'0','0');
+		  vo = new PageVO(total,start, end, category ,5);
+	      model.addAttribute("vo",vo);
+	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), '0','0'); // 모금완료
+	      model.addAttribute("donaList", list);
 		return "facility/myPageDona2";
 	}
 	
 	
 	  @GetMapping("/fac/donaInfo")
-	   public String getFacilityMyPageDona(Model model,Integer recStat,Principal principal) {
-	      
-	      List<DonaVO> list1 = facilityService.getDonaList(principal.getName(), 0); // 모금완료
+	   public String getFacilityMyPageDona(Model model,
+			   								String facId,
+			   								Principal principal,
+			   								PageVO vo, PageVO vo2,
+											@RequestParam(value="category", required = false)String category,
+											@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
+											@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
+		  int total = facilityService.getVolDonCount(facId,'1','0');
+		  vo = new PageVO(total,start, end, category ,5);
+	      model.addAttribute("vo",vo);
+	      List<DonaVO> list1 = facilityService.getDonaList(vo, principal.getName(), '1','0'); // 모금완료
 	      model.addAttribute("donaList1", list1);
 	      log.info(list1);
 	      
-	      List<DonaVO> list0 = facilityService.getDonaList(principal.getName(), 1); //모금중
+	      
+	      int total2 = facilityService.getVolDonCount(facId,'1','1');
+	      vo2 = new PageVO(total2,start, end, category ,3);
+	      model.addAttribute("vo2",vo);
+	      List<DonaVO> list0 = facilityService.getDonaList(vo2, principal.getName(),'1', '1'); //모금중
 	      model.addAttribute("donaList0", list0);
 	      log.info(list0);
 	      return "facility/myPageDona";
@@ -202,7 +226,6 @@ public class facilityController {
 	                                     Principal principal,
 	                                     PageVO vo, 
 	                                     Integer cntPerPage,
-	                                     
 	                                     @RequestParam(value="category", required = false)String category,
 	                                     @RequestParam(value="start", required = false, defaultValue = "1") Integer start,
 	                                     @RequestParam(value="end", required = false, defaultValue = "10") Integer end)
@@ -287,12 +310,8 @@ public class facilityController {
 	//회원이 시설봉사 신청
 	@PostMapping("/joinVol")
 	@ResponseBody
-	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal){
-		if(principal != null && principal.getName() != null) {
-	           model.addAttribute("userId",principal.getName());
-	       } else {
-	           model.addAttribute("userId","없음");
-	       }
+	public int getJoinVol(Model model,VolMemVO volMemVO,Principal principal,HttpServletRequest req){
+		req.getSession().getAttributeNames();
 		volMemVO.setMemId(principal.getName());
 		
 		log.info(principal.getName());

@@ -17,7 +17,15 @@ display:inline-block;
 <h3>시설정보</h3>
 <hr>
 <p th:text="${'시설명'+facilityInfo.facName}"></p>
-<p th:text="${'사업유형'+facilityInfo.facType}"></p>
+
+<!-- <p  th:if="${facility.facType}=='f01'">아동 및 청소년</p>
+<p  th:if="${facility.facType}=='f02'">장애인</p>
+<p  th:if="${facility.facType}=='f03'">문화,체육</p>
+<p  th:if="${facility.facType}=='f04'">캠페인</p>
+<p  th:if="${facility.facType}=='f05'">보건의료</p>
+<p  th:if="${facility.facType}=='f06'">환경정리</p>
+<p  th:if="${facility.facType}=='f07'">동물</p>
+<p  th:if="${facility.facType}=='f08'">기타</p> -->
 <p th:text="기부금공제구분"></p>
 <p th:text="${'대표자명'+facilityInfo.repName}"></p>
 <p th:text="${'사업자번호'+facilityInfo.bizNum}"></p>
