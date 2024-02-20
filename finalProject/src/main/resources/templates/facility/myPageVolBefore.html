@@ -17,9 +17,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="text-align:center;">
-<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
-<div class="col-md-10 main-content">
+ <div class="container">
+ 	<div th:insert="~{banner/empty::banner}"></div>
+ 	<div th:insert="~{facility/sidebar::side}"></div>
 
 <div class="row justify-content-center hotel_booking_table">
 <div class="row">

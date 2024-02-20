@@ -64,8 +64,8 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public int findMember(Integer volId, String memId) {
-		return mapper.findMember(volId, memId);
+	public int findMember(Integer volId, String memId,String appCode) {
+		return mapper.findMember(volId, memId,appCode);
 	}
 
 	@Override
@@ -168,6 +168,11 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
 	public int withdrawalMeeting(VolMemVO vo) {
 		return mapper.withdrawalMeeting(vo);
+	}
+
+	@Override
+	public int deleteMeeting(Integer volId) {
+		return mapper.deleteMeeting(volId);
 	}
 
 }

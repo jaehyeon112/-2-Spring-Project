@@ -8,7 +8,7 @@ import com.bongsamaru.common.VO.UserVO;
 public interface MypageService {
 	
 	public Double getHeart(String memId);
-	public int updateEmail(UserVO userVO);
+	public int updateProFile(UserVO userVO);
 	public Integer getSumAmt(String memId);
 	public Integer getGibuCount(String memId);
 	public List<DonledgerVO> getGibuList(String memId);

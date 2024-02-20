@@ -5,6 +5,18 @@
   
 <mapper namespace="com.bongsamaru.facility.mapper.FacilityMapper">
 <!-- 시설리스트 -->
+<select id="allFacilityList" resultType="FacilityVO">
+	         select FAC_ID,
+					FAC_NAME,
+					FAC_ADDR,
+					select_sub(FAC_ZIP2) AS region,
+					FAC_ZIP2,
+					FAC_ZIP,
+					FAC_TYPE,
+					select_sub(fac_Type) category,
+					(select file_Path from files where code='p02' and code_user=fac_Id) as filePath
+              from facility
+</select>
 <select id="getFacilityList" resultType="FacilityVO">
 	SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
 	
@@ -15,7 +27,8 @@
 					FAC_ZIP2,
 					FAC_ZIP,
 					FAC_TYPE,
-					(select file_Path from files where code='p02' and code_user=#{facId}) as filePath
+					select_sub(fac_Type) category,
+					(select file_Path from files where code='p02' and code_user=fac_id) as filePath
     FROM FACILITY
 	       <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
         <if test="facZip2 != null and facZip2 !=''">
@@ -48,7 +61,8 @@
  Select Fac_ID,
  		Fac_Name,
  		BIZ_NUM,
- 		Fac_Type, 
+ 		Fac_Type,
+ 		select_sub(fac_Type) category, 
  		FAC_ADDR,
  		FAC_ADDR_DETAIL,
  		Fac_Web,
@@ -217,7 +231,8 @@ SELECT    COUNT(*)
   		  NVL(SUM(CASE WHEN DL.PAY_STAT ='g01' THEN DL.DON_AMT ELSE 0 END), 0)     AS TARGETOK,
   		  NVL((SUM(DL.DON_AMT) / D.GOAL_AMT) * 100, 0)                             AS donationRatio,
   		  D.DON_ID,
-  		  F.FAC_ID
+  		  F.FAC_ID,
+  		  D.HASREVIEW
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
@@ -228,9 +243,9 @@ LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
      
     
       AND REC_STAT=#{recStat}
-    
 
- GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID, F.FAC_ID, D.EXT_PERIOD
+ GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID, F.FAC_ID, D.EXT_PERIOD, D.HASREVIEW
+
 ) A )
 WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	
 </select>

@@ -1,17 +1,23 @@
 package com.bongsamaru.admin.web;
 
-import java.util.ArrayList;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriUtils;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.AlertVO;
@@ -88,7 +94,7 @@ public class UserController {
 		int total = userService.getDonaCnt(vo);
 		
 		vo = new PageVO(total, start, end, null ,5);
-		vo.setRecStat(0);
+		vo.setRecStat(1);
 		
 		List<DonaVO> donaList = userService.getDonaList(vo);
 		model.addAttribute("vo",vo);
@@ -164,7 +170,7 @@ public class UserController {
 		vo.setRecStat(recStat);
 		
 		List<DonaVO> donaList = userService.getDonaList(vo);
-		
+		System.out.println("여기@@@"+donaList.size());
 		model.addAttribute("vo",vo);
 		model.addAttribute("dona", donaList);
 		return "admin/donationList";
@@ -508,10 +514,30 @@ public class UserController {
 		
 		List<FacilityVO> facilityList = userService.getFacilityList(vo);
 		model.addAttribute("facilityList",facilityList);
+		
 		List<DonationVO> list2 = userService.getDonationList(vo);
 		model.addAttribute("donationList",list2);
+		
+		int reviewTotal = userService.donaReviewCnt(vo);
+		vo = new PageVO(reviewTotal, start, end,null,10);
+		
+		List<DonaVO> review = userService.donaReviewList(vo);
+		model.addAttribute("review",review);
+		
 		model.addAttribute("vo",vo);
 		return "admin/facilityApprove";
+	}
+	
+	@GetMapping("reviewInfo")
+	@ResponseBody
+	public DonaVO reviewInfo(@RequestParam(required=false) Integer donRevId) {
+		return userService.donaReviewInfo(donRevId);
+	}
+	
+	@GetMapping("updateDonReview")
+	@ResponseBody
+	public int updateDonReview(DonaVO vo) {
+		return userService.updateDonReview(vo);
 	}
 	
 	/**
@@ -642,7 +668,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("MoreReport")
-	public String getReportList1(PageVO vo, Model model
+	public String getReportList1(PageVO vo, Model model,Principal prin
 							, @RequestParam(value="category", required = false) String category
 							, @RequestParam(value="start", required = false,defaultValue = "1") Integer start
 							, @RequestParam(value="end", required = false,defaultValue = "10") Integer end) {
@@ -652,6 +678,13 @@ public class UserController {
 		List<ReportVO> list = userService.getReportList(vo);
 		model.addAttribute("vo",vo);
 		model.addAttribute("reportList",list);
+		
+		if(prin != null && prin.getName() != null) {
+	        model.addAttribute("userId",prin.getName());
+		 } else {
+			model.addAttribute("userId","익명");
+		 }
+		
 		return "admin/MoreReport";
 	}
 	

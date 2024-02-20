@@ -36,7 +36,7 @@ public class DonaVO {
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
 
 	    private String category; // 유형
-
+	    private String hasreview; //리뷰유무
 
 	    private String paidCode;
 	    private String backName;
@@ -153,6 +153,7 @@ public class DonaVO {
 	    
 	//파일 - 이미지 넣도록! 
 	    private String filePath;
+	    private String fileName;
 	    //private String code; p08
 	    private Integer codeNo;
 	    

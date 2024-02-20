@@ -23,4 +23,6 @@ public interface UserMapper {
 	public int facilitySignUp(FacilityVO vo);
 	public List<AlertVO> listAlert(String memId);
 	public List<CountVO> volKing();
+	public int CountAlarm(String mem);
+	public int updateAlarm(AlertVO vo);
 }

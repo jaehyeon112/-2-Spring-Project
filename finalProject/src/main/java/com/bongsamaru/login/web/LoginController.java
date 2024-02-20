@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
+import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.DonledgerVO;
@@ -59,6 +61,9 @@ public class LoginController {
 	
 	@Autowired
 	EncryptService encrypt;
+	
+	@Autowired
+	FacilityService facilityService;
 	
 	@Autowired
 	BongsaService bongsaService;
@@ -228,16 +233,19 @@ public class LoginController {
 		List<CountVO> volKing = userService.volKing();
 		model.addAttribute("vol", volKing);
 		
-//		List<DonaVO> random = donaService.selectRecruitingItems();
-//		model.addAttribute("randomlist", random);
-//		log.info(random);
+		DonaVO donaVO = new DonaVO();
+		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		model.addAttribute("list", donaList);
 		
 		List<BongsaDTO> group = bongsaService.getVolTagDTO("e02");
 		model.addAttribute("group", group);
 		
 		List<BongsaDTO> daily = bongsaService.getVolTagDTO("e01");
 		model.addAttribute("daily", daily);
-		log.info(daily);
+		
+		List<FacilityVO> facility = facilityService.allFacilityList();
+		model.addAttribute("facilityList" , facility);
+		
 		return "home"; 
 	}
 	
@@ -245,7 +253,35 @@ public class LoginController {
 	@GetMapping("/userAlarm")
 	@ResponseBody
 	public List<AlertVO> getAlerts(Principal principal) {
-	    return userService.listAlert(principal.getName());
+		List<AlertVO> vo = userService.listAlert(principal.getName());
+		log.info(vo);
+		return vo;
 	}
+	
+	@GetMapping("/alarmCount")
+	@ResponseBody
+	public int getAlarm(Principal principal) {
+	    // 사용자가 로그인하지 않았을 경우, 즉 principal이 null일 경우 0을 반환
+	    if (principal == null) {
+	        return 0;
+	    }
+	    
+	    // principal이 null이 아닌 경우, 즉 사용자가 로그인한 상태일 경우
+	    String userName = principal.getName(); // 사용자 이름을 가져옴
+	    log.info(userName);
+	    
+	    // 사용자 이름을 기반으로 알림 개수를 조회
+	    return userService.countAlarm(userName);
+	}
+	
+	@PostMapping("/updateAlarm")
+	@ResponseBody
+	public int updateAlarm(@RequestBody AlertVO vo,Principal principal) {
+		log.info(vo);
+		vo.setReceiveId(principal.getName());
+	    userService.updateAlarm(vo);
+	    return userService.countAlarm(principal.getName());
+	}
+	
 	
 }

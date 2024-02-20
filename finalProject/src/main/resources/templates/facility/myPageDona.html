@@ -16,9 +16,10 @@
 <body>
 
    <section layout:fragment="content"  class="d-flex">
-   <div class="row" >
-       <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
-         <div class="col-md-10 main-content">
+   <div class="container" >
+    <div th:insert="~{banner/empty::banner}"></div>
+       <div class="side" th:insert="~{facility/sidebar::side}"></div>	
+         <div class=" main-content">
                       
 
                 <div class="row hotel_booking_table">
@@ -137,7 +138,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:20px">후기작성</p>
+                                       <p style="color:black; font-size:20px">영수증등록</p>
                                        
                                     </div>
                                 </div>
@@ -170,10 +171,10 @@
                          <div class="col-md-1">
                                     <div class="book_tabel_item">
                                      <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
-                                        <button class="btn" onclick="openReviewForm(this)" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}">후기작성</button>
+                                        <button class="btn" onclick="openReviewForm(this)" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}, data-hasrev=${dona.hasreview}">후기작성</button>
 
 
-                                      <!--  <a class="book_now_btn button_hover" style="font-size: 14px; padding: 8px 12px;" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}" onclick="openReviewForm(this)">후기</a> -->
+                                      <!--  <a class="book_now_btn button_hover" style="font-size: 14px; padding: 8px 12px;" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}" th:onclick="openReviewForm(this)">후기</a> -->
 
                                     </div>
                                 </div>
@@ -182,7 +183,7 @@
                                      <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
                                         <button class="btn" onclick="openReceiptModal(this)" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}">영수증</button>
 
-                                        <!-- <a class="book_now_btn button_hover" style="font-size: 14px; padding: 8px 12px;" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}" onclick="openReceiptModal(this)">영수증</a> -->
+                                        <!-- <a class="book_now_btn button_hover" style="font-size: 14px; padding: 8px 12px;" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}" th:onclick="openReceiptModal(this)">영수증</a> -->
                    
                                     </div>
                                 </div>
@@ -345,11 +346,21 @@ function openSuccessModal() {
 
 // 리뷰창
 function openReviewForm(button) {
+	// 후기글이 존재하면 이미 후기글이 존재한다고 경고창 띄우기
+	var revStat = button.getAttribute("data-hasrev");
+	nsole.log("revStat:", revStat); // 콘솔에 revStat 출력
+
+	if(revStat === '1'){
+		alert("이미 후기글이 존재합니다.");
+		return;
+	}else{
+		
     var donId = button.getAttribute("data-donId");
     var facId = button.getAttribute("data-facId");
     // donId와 facId를 이용하여 후기 작성 페이지로 이동
     var reviewUrl = '/reviewform?donId=' + donId + '&facId=' + facId;
     window.location.href = reviewUrl;
+	}
 }
 
 

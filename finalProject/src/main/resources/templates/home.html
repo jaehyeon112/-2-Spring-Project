@@ -24,6 +24,7 @@
     font-size: 24px;
     color: black; /* 또는 원하는 색상 */
     margin-bottom: 20px;
+    margin-top: 30px;
     display: inline-block;
     padding-bottom: 5px; /* 조정이 필요할 수 있음 */
     position: relative;
@@ -114,26 +115,38 @@
        				</div>       		
 					</div>
 				</div>       			
-       		
+       			
+       			
        		<p class="section-title"><span style="font-weight:700;">모금중인</span> 기부 목록<span class="bottom-line" ></span></p>
        		<div class="vesitable" >
 				    <div class="owl-carousel donation-carousel justify-content-center" >
-				        <div class="border border-primary rounded position-relative item" th:each="dona : ${randomlist}"  style="border: none !important;">
-				            <div class="vesitable-img">
-				                <img src="donation/board/img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-				            </div>
-				            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-				                <span th:text="${dona.recStat} == '1' ? '모금중' : '모금완료'"></span>
-				            </div>
-				            <div class="p-4 pb-0 rounded-bottom" >
-				                <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
-				                <div class="info-item">
-				                    목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
-				                </div>
-				                <div class="info-item">
-				                    <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
-				                </div>
-				               	<div class="progress">
+                           <div th:each="dona : ${list}" class="item">
+                                <div class="recruit-list"   >
+                                    <!-- 리스트 아이템 표시 -->
+                                    <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
+                                        <div class="fruite-img">
+                                            <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
+                                            <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} == null" src="../image/bonsamaru.png" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
+                                        </div>
+
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: #ffb524; filter: grayscale(0%);">
+                                            <span th:text="${dona.recStat} == '1' ? '모금중' : '모금완료'"></span>
+                                        </div>
+
+                                        <!-- 테두리 없애부분 -->
+                                        <div class="p-4 border-top-0 rounded-bottom" style="color: black;">
+                                            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
+											<div class="info-item" style="color: darkgreen;">
+                                                # <strong><span th:text="${dona.subCodeName}"></span></strong>
+                                            </div>
+                                            <div class="info-item">
+                                                목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
+                                            </div>
+                                            <div class="info-item">
+                                                <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
+                                            </div>
+
+                                            <div class="progress">
 											    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
 											<div class="info-item" style="display: flex; justify-content: space-between;">
@@ -144,13 +157,14 @@
 											        <strong><span th:text="${dona.total}"></span></strong>원
 											    </div>
 											</div>
-				                <div class="d-flex justify-content-center flex-lg-wrap">
-				                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
-				                        <span th:text="${dona.facilityName}" style="color: black;"></span>
-				                    </a>
-				                </div>
-				            </div>
-				        </div>
+
+                                            <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 				    </div>
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">일일봉사</span><span class="bottom-line" ></span></p>
@@ -238,6 +252,30 @@
 
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">시설소개</span> <span class="bottom-line" ></span></p>
+	       		<div class="vesitable" >
+					<div class="owl-carousel club-carousel justify-content-center">
+	       		<th:block th:each="facility:${facilityList}" class="item" id="filteredFacilities">
+						<div class="card" style="text-align:center">
+								<div class="card-body thumb" style="position: relative;">
+									<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 200px; height:180px; ">
+									<div class="text-white px-1 rounded position-absolute" style="top: 30px; right: 50px;background-color:#28a745;">
+						                    <span th:text="${facility.category}">관심분야</span>
+						                </div>
+									<br>
+								</div>
+								<div class="details">
+									<div class="tags">
+									</div>
+									<br>
+									<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
+											th:text="${facility.facName}" style="width: 150px;"></a>
+								</div>
+									<p th:text="${facility.facAddr}"></p>
+									<p style="display:none" th:text="${facility.region}" id="regions"></p>
+						</div>
+					</th:block>
+				</div>
+			</div>
        	</div>
 <script>
 $(document).ready(function(){

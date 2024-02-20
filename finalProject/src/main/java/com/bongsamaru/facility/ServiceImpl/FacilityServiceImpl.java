@@ -29,7 +29,10 @@ public class FacilityServiceImpl implements FacilityService {
 		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
 	}
 	
-	
+	@Override
+	public List<FacilityVO> allFacilityList() {
+		return mapper.allFacilityList();
+	}
 	@Override
 	public FacilityVO getFacilityInfo(String facId) {
 		return mapper.getFacilityInfo(facId);

@@ -183,7 +183,7 @@
 
                                         <!-- 테두리 없애부분 -->
                                         <div class="p-4 border-top-0 rounded-bottom" style="color: black;">
-                                            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
+                                            <h6><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h6>
 											<div class="info-item" style="color: darkgreen;">
                                                 # <strong><span th:text="${dona.subCodeName}"></span></strong>
                                             </div>
@@ -207,7 +207,7 @@
 											</div>
 
                                             <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;"></span></a>
                                             </div>
                                         </div>
                                     </div>

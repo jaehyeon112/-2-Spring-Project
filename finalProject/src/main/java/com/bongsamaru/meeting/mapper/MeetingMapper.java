@@ -21,7 +21,7 @@ public interface MeetingMapper {
 	public int approveMeeting(VolMemVO vo);
 	public List<VolActVO> volActReviewListPaging(PageVO pageVO);
 	public int volActReviewListCnt(VolActReviewVO vo);
-	public int findMember(Integer volId,String memId);
+	public int findMember(Integer volId,String memId,String appCode);
 	public String findFile(String code,Integer codeNo);
 	public int findBoardNo();
 	public int findReviewNo();
@@ -45,5 +45,7 @@ public interface MeetingMapper {
 	public int insertVolAct(VolActVO vo);
 	public int delVolActBoard(Integer volActId);
 	public int findVolActNo();
+	//모임 삭제
+	public int deleteMeeting(Integer volId);
 	
 }

@@ -22,11 +22,11 @@
 		<div style="text-align:center;">
 			<h5>현재 등록된 게시글이 없습니다. 첫글을 등록해보세요!</h5>
 			<br>
-			<button class="btn btn-outline-secondary m-1" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button>
+			<button class="btn btn-outline-secondary m-1 regBtnMod" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button>
 		</div>
 		</th:block >
 		<th:block th:if="${board.size} != 0">
-		<div style="float:right"><button class="btn btn-outline-secondary m-1" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button></div>
+		<div style="float:right"><button class="btn btn-outline-secondary m-1 regBtnMod" th:onclick="location.href='../freeBoardInsertPage?volId=[[${session.id}]]'">등록하기</button></div>
 			<table class="table" id="classic">
 				<thead>
 					<tr>
@@ -41,8 +41,8 @@
 				 	<th:block th:each="board,st : ${board}" >
 						<tr>
 							 <td th:text="${st.count}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}==${board.writer}">제목</td>
-							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${userId}!=${board.writer}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../updateFreeBoard?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${session.userId}==${board.writer}">제목</td>
+							 <td class="cur" th:text="${board.title}" th:onclick="location.href='../freeBoardInfo?volId=[[${session.id}]]&boardNo=[[${board.boardNo}]]'" th:if="${session.userId}!=${board.writer}">제목</td>
 							 <td th:text="${board.writer}" >작성자</td>
 							 <td th:text="${#dates.format(board.writeDate, 'yyyy/MM/dd')}" >날짜</td>
 							 <td th:text="${board.viewCnt}" >조회수</td>
@@ -71,6 +71,16 @@
 		</div>
       </div>
     </div>
+    <script>
+  	//모임회원 목록
+    $.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02')
+    .done(result => {
+    	if(result==0){
+    		$('.regBtnMod').css('display','none')
+    	}
+    })
+    .fail(err => console.log(err));
+    </script>
 	</section>
 </body>
 </html>

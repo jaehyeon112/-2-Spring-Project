@@ -25,7 +25,7 @@
 
 
 
-		<div style="text-align:right;">
+		<div class="container" style="margin: 0 auto;text-align:right;">
 		<br>
 		<br>
 		<select  id="selRegion" style="width: 200px; height: 40px; bolder-radious:20px; text-align:center; background-color:rgba(104, 159, 56, 0.3)" onchange="filterFacilities()">
@@ -43,12 +43,16 @@
 		<br>
 		</div>
 
-			<div class="row mb_30" >
+			<div class="row mb_30 container" style="margin: 0 auto;"  >
 				<th:block th:each="facility:${facilityList}" id="filteredFacilities">
 					<div class="col-lg-4 col-md-6" style="text-align:center">
-						
-							<div class="thumb">
-								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 30%;">
+
+							<div class="thumb" style="position: relative;">
+								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 60%; ">
+								<div class="text-white px-1 rounded position-absolute" style="top: 10px; right: 80px;background-color:#28a745;">
+					                    <span th:text="${facility.category}">관심분야</span>
+					                </div>
+
 								<br>
 							</div>
 							<div class="details">
@@ -60,15 +64,6 @@
 							</div>
 								<p th:text="${facility.facAddr}"></p>
 								<p style="display:none" th:text="${facility.region}" id="regions"></p>
-							
-							 <p  th:if="${facility.facType}=='f01'">아동 및 청소년</p>
-							 <p  th:if="${facility.facType}=='f02'">장애인</p>
-							 <p  th:if="${facility.facType}=='f03'">문화,체육</p>
-							 <p  th:if="${facility.facType}=='f04'">캠페인</p>
-							 <p  th:if="${facility.facType}=='f05'">보건의료</p>
-							 <p  th:if="${facility.facType}=='f06'">환경정리</p>
-							 <p  th:if="${facility.facType}=='f07'">동물</p>
-							 <p  th:if="${facility.facType}=='f08'">기타</p>
 					</div>
 				</th:block>
 			</div>
