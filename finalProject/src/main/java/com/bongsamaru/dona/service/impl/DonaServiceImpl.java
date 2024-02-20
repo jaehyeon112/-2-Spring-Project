@@ -118,8 +118,8 @@ public class DonaServiceImpl implements DonaService {
 	@Override
 	public int insertReview(DonaVO donaVO) {
 		donaMapper.insertReview(donaVO);
-		return donaMapper.insertReviewDetail(donaVO);
-		 
+		donaMapper.insertReviewDetail(donaVO);
+		return donaMapper.updateRevStat(donaVO);
 	}
 
 	
@@ -168,5 +168,12 @@ public class DonaServiceImpl implements DonaService {
 		return -1;
 		}
 	}
+
+@Override
+public int updateRevStat(DonaVO donaVO) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 	
 }
+

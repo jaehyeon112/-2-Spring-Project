@@ -39,7 +39,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
-		<div th:insert="~{banner/group::banner}"></div>
+		<div th:insert="~{banner/empty::banner}"></div>
 			<div class="container">
 				<th:block th:each="item : ${list}">
 				<div class="contenttext" id="temperature" title="">
@@ -52,8 +52,8 @@
 					<a data-tiara-layer="profile_img" data-tiara-action-name="프로필수정_클릭" class="link_thumb" href="/pass">
 						<span class="profile_thumb">
 						[[${userVO}]]
-						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
+						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 200px; height: 200px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
 						</span>
 					</a>
 				</div>
