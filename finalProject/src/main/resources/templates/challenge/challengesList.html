@@ -122,7 +122,7 @@
       <div class="modal-body">
 		 <div class="form-group">
 		    <label class="form-check-label" for="s01">스팸홍보/도배글
-		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" checked></label>
+		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" ></label>
 		    <label class="form-check-label" for="s02">음란물
 		    <input class="form-check-input" id="s02" type="radio" name="reason" value="s02"  ></label>
 		    <label class="form-check-label" for="s03">불법정보 포함
@@ -265,7 +265,7 @@
 		});
 
 	
-		 reason = $('input[name="reason"]:checked').val();
+		var reason = $('input[name="reason"]:checked').val();
 		 console.log(reason); 
 		 var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
 		 console.log(boardId);

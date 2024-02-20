@@ -1,186 +1,193 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<style>
-textarea{width:500px; height:100px;resize:none;}
-.p{
-	font-size:17px;
-	
-}
-</style>	 
+
 <head>
 <meta charset="UTF-8">
-<title>챌린지등록</title>
+<title>챌린지 등록</title>
+
+<style>
+textarea {
+	width: 100%;
+	height: 100px;
+	resize: none;
+}
+p {
+	font-size: 15px;
+	font-weith:800;
+	color:#689f38;
+}
+h3{
+	color:#689f38;
+}
+</style>
 </head>
+
 <body>
 
-
 	<section layout:fragment="content">
-	<h2>챌린지 등록</h2>
-		<div class="form-group">
-			<section class="blog_area single-post-area">
-			<!-- <span sec:authentication="principal.userVO"></span> -->
-				<form name="insertForm" action="challengeInsert" method="post" enctype="multipart/form-data">
-					<div class=" hotel_booking_table" >
-						<div class="row col-md-6 offset-md-3">
-							<div class="col-lg-8 posts-list">
-								<div class="single-post row">
-									<div class="col-lg-12">
-										<div class="feature-img">
-
-											<img src="/image/초록개구리.png" alt="메인사진 예시"> <br>
-											<p>"메인 이미지 들어갈 자리입니다"</p>
-										</div>
+	<div th:insert="~{banner/empty::banner}"></div>
+		<h2 class="text-center mb-4">챌린지 등록</h2>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-10" style="background-color:#689f38">
+			
+					<form name="insertForm" action="challengeInsert" method="post" enctype="multipart/form-data" >
+						<div class="card">
+							<div class="card-body" style="background-color:fff">
+							<h3>챌린지 제목</h3>
+							<div class="form-group">
+									<input class="form-control" type="text" name="title" placeholder="챌린지 제목을 작성해 주세요" required>
+								</div>
+								<div class="col-lg-12 feature-img">
+								<div class="row justify-content-center" >
+								<div class="col-6" >
+								
+									<div class="image-container">
+									<div class="showimg-container">
+										<img id="imagePreview" src="/image/초록개구리.png"
+											style="width: 420px; height: 200px;">
+									<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
 									</div>
-
-									<div class="col-lg-12 col-md-12 blog_details">
-										<div class="form-group">
-											<p>"챌린지 제목을 작성해 주세요"</p>
-											<input class="form-control plus-bnt  " type="text" name="title" placeholder="챌린지 제목을 작성해 주세요">
-
-										</div>
 									</div>
-
-									<div class="col-lg-12">
-										<div class="row">
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control " id="subject"
-														th:readonly placeholder="행동이유 이미지 들어갈 자리입니다"> <img
-														class="img-fluid  " src="image/blog/post-img1.jpg" alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control" id="subject"
-														th:readonly placeholder="행동이유 이미지 들어갈 자리입니다"> <img
-														class="img-fluid  " src="image/blog/post-img2.jpg" alt="">
-												</div>
-											</div>
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<textarea name="actionReason" class="form-control plus-bnt  " placeholder="행동이유를 작성해 주세요"></textarea>
-												</div>
-
-											</div>
-
-
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control plus-bnt  "  id="subject"
-														th:readonly placeholder="기대효과과 이미지 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control plus-bnt  " id="subject"
-														th:readonly placeholder="기대효과 이미지 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
-												</div>
-											</div>
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<textarea class="form-control plus-bnt  "  name="expImpact"
-														placeholder="기대효과를 작성해 주세요"></textarea>
-												</div>
-											</div>
-
-
-
-
-
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control plus-bnt  " id="subject"
-														th:readonly placeholder="그외 자유내용 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control plus-bnt  " id="subject"
-														th:readonly placeholder="그외 자유내용 이미지 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
-												</div>
-											</div>
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<textarea class="form-control plus-bnt  " name="content "
-														placeholder="그 외 내용(인증안되는 사례 등)을 자유롭게 작성해 주세요"></textarea>
-												</div>
-
-											</div>
-
-											<p>함께할 날짜</p>
-											<div class="form-group form-inline">
-
-												<div class="form-group col-lg-6 col-md-6 name">
-													<input type="date" id="regDate" name="regDate">
-													<p>"챌린지를 시작하는 날짜는 오늘입니다"</p>
-												</div>
-												<div class="form-group col-lg-6 col-md-6 name">
-													<input type="date" id="endDate" name="endDate">
-													<p>챌린지를 마감할 날짜오늘부터 최소 한달, 최대 6개월까지 참여가능합니다</p>
-
-												</div>
-											</div>
-
-
-											<div class="form-group">
-												<p>HowTo</p>
-
-
-												<input type="text" class="form-control plus-bnt  " name="partMethod1"
-													placeholder="1.텀블러 사진 혹은 영상을 인증한다" style="width: 500px">
-												<hr>
-												<input type="text" class="form-control plus-bnt" name="partMethod2" placeholder="2.제출"
-													style="width: 500px">
-											</div >
-										<div class="col-lg-12 mt-25">
-											<div class="form-group">
-												<img id="imagePreview" src="/userresources/image/심사방법.png"
-													style="border-radius: 100%; width: 100px; height: 100px;">
-
-												<label for="file-image" class="input-file-button">이미지첨부
-													<input type="file" class="form-control plus-bnt  " name="uploadFiles" id="file-image"
-													style="display: none" multiple>
-												</label>
-											</div>
-											</div>
+									<p>"메인 이미지 들어갈 자리입니다"</p>
+									</div>
+									
+									</div>
+								</div>
+								</div>
+								<h3>행동이유</h3>
+								<div class="row">
+								<div class="col-6">
+									<div class="form-group">
+									
+									<div class="image-container">
+									<div class="showimg-container">
+										<img id="imagePreview" src="/image/초록개구리.png"
+											style="width: 420px; height: 200px;">
+									<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
+									</div>
+									</div>
+									<p>"행동이유 들어갈 자리입니다"</p>
+									</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group">
+									<div class="image-container">
+									<div class="showimg-container">
+										<img id="imagePreview" src="/image/초록개구리.png"
+											style="width: 420px; height: 200px;">
+									<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
+									</div>
+									</div>
+									<p>"행동이유 들어갈 자리입니다"</p>
+									</div>
+									</div>
+								</div>
+								</div>
+								
+								<div class="form-group">
+									<textarea class="form-control" name="actionReason" placeholder="행동이유를 작성해 주세요" required></textarea>
+								</div>
+								<h3>기대효과</h3>
+								<div class="row">
+								<div class="col-6">
+									<div class="form-group">
+									<div class="image-container">
+									<div class="showimg-container">
+										<img id="imagePreview" src="/image/초록개구리.png"
+											style="width: 420px; height: 200px;">
+									<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
+									</div>
+									</div>
+									<p>"기대효과이미지 들어갈 자리입니다"</p>
+									</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group">
+								<div class="image-container">
+									<div class="showimg-container">
+										<img id="imagePreview" src="/image/초록개구리.png"
+											style="width: 420px; height: 200px;">
+									<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
+									</div>
+									</div>
+									<p>"기대효과 이미지 들어갈 자리입니다"</p>
+									</div>
+									</div>
+								</div>
+								</div>
+								<div class="form-group">
+									<textarea class="form-control" name="expImpact" placeholder="기대효과를 작성해 주세요" required></textarea>
+								</div>
+								
+								<h3>자유내용</h3>
+								<div class="form-group">
+									<textarea class="form-control" name="content" placeholder="그 외 내용(인증안되는 사례 등)을 자유롭게 작성해 주세요" required></textarea>
+								</div>
+								
+								<h3>챌린지일시</h3>
+								<div class="form-group">
+									<div class="row">
+										<div class="col">
+											<input type="date" class="form-control" id="start" name="regDate" >
+											<small class="text-muted">챌린지 시작일</small>
+										</div>
+										<div class="col">
+											<input type="date" class="form-control" name="endDate" >
+											<small class="text-muted">챌린지 종료일 (오늘부터 최소 한 달, 최대 6개월까지)</small>
 										</div>
 									</div>
 								</div>
-								<button type="submit" id="challengeInsert">작성하기</button>
-
+								
+								<h3>HOW TO</h3>
+								<div class="form-group">
+									<input type="text" class="form-control" name="partMethod1" placeholder="방법 1을 입력해주세요" required>
+								</div>
+								
+								
+								<div class="form-group">
+									<input type="text" class="form-control" name="partMethod2" placeholder="방법 2을 입력해주세요" required>
+								</div>
+							
+								<div class="text-center">
+								<br>
+									<button type="submit" class="btn btn-primary">작성하기</button>
+								<br>	
+								</div>
 							</div>
-
-							<div class="col-lg-4"></div>
 						</div>
-
-					</div>
-				</form>
-			</section>
-
+					</form>
+				</div>
+			</div>
 		</div>
+	
+
 		<script th:inline="javascript">
 			
 
 			//시작날짜 오늘로 설정
 			document.getElementById('start').value = new Date().toISOString().substring(0, 10);			
-			$('input[name=start]').attr("readonly", true);
+			$('input[name=regDate]').attr("readonly", true);
 
 			//종료일자 6개월 제한
 			let minDate = new Date();
@@ -204,7 +211,8 @@ textarea{width:500px; height:100px;resize:none;}
 				let actionReason = $('[name="actionReason"]');
 				let impact = $('[name="expImpact"]');
 				let content = $('[name="content"]');
-				let end = $('[name="regDate"]');
+				let start = $('[name="regDate"]');
+				let end = $('[name="endDate"]');
 				let howTo1 = $('[name="partMethod1"]');
 				let howTo2 = $('[name="partMethod2"]');
 
@@ -228,7 +236,12 @@ textarea{width:500px; height:100px;resize:none;}
 					content.focus();
 					return;
 				}
-				if (endDate.val() == '') {
+				if (start.val() == '') {
+					alert('챌린지 종료 날짜가 입력되지 않았습니다');
+					start.focus();
+					return;
+				}
+				if (end.val() == '') {
 					alert('챌린지 종료 날짜가 입력되지 않았습니다');
 					end.focus();
 					return;
@@ -267,6 +280,34 @@ textarea{width:500px; height:100px;resize:none;}
 			    });
 
 			}
+			
+			document.querySelectorAll('.file-input').forEach(function(input) {
+			    input.addEventListener('change', function(event) {
+			        var label = input.nextElementSibling;
+			        var fileChosen = input.nextElementSibling.nextElementSibling;
+			        var files = event.target.files;
+
+			        if (files.length > 0) {
+			            label.textContent = '파일 선택';
+			            fileChosen.textContent = files[0].name; // 파일명을 업데이트
+			        } else {
+			            label.textContent = '파일 선택';
+			            fileChosen.textContent = '파일명'; // 파일이 선택되지 않았을 때의 텍스트
+			        }
+
+			        // 이미지 미리보기 기능
+			        var image = input.closest('.image-container').querySelector('.showimg-container img');
+			        var reader = new FileReader();
+			        reader.onloadend = function() {
+			            image.src = reader.result;
+			        };
+			        if (files.length > 0) {
+			            reader.readAsDataURL(files[0]);
+			        } else {
+			            image.src = "";
+			        }
+			    });
+			});
 		</script>
 
 	</section>

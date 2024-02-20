@@ -30,6 +30,7 @@
                     </div>
                 </div> 
 </th:block>
+  <th:block th:if="${#lists.size(volunteerF)}!=0"> 
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -51,7 +52,7 @@
         </li>
     </ul>
 </nav>
-
+</th:block>
 </div>
 
 <div class="facilities_item">
@@ -76,6 +77,7 @@
                     </div>
                 </div> 
 </th:block>
+  <th:block th:if="${#lists.size(volunteerI)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -97,7 +99,7 @@
         </li>
     </ul>
 </nav>
-
+</th:block>
 </div>
 </section>
 </body>

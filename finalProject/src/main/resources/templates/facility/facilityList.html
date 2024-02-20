@@ -75,7 +75,7 @@
 <br>
 <br>
 <br>
-
+ <th:block th:if="${#lists.size(facility)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -85,7 +85,7 @@
 		<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
 	</ul>
 </nav>
-
+</th:block>
 		</div>
 
 <script th:inline="javascript">
