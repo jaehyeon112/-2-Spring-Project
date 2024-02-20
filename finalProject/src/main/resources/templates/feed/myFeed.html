@@ -72,7 +72,7 @@
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				</div>
-				<h5 th:if="${feedList.size} == null" style="margin-top: 250px; color: gray;">아직 작성 된 피드가 없어요. 🌱</h5>
+				<h5 th:if="${feedList == null || feedList.size() == 0}" style="margin-top: 250px; color: gray;">아직 작성된 피드가 없어요. 🌱</h5>
 			</div>
 		</div>
 	<script>

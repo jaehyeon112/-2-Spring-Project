@@ -5,34 +5,31 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<style>
-.box-container{
-   
-    }
-</style>
 </head>
 <body>
 <!-- 마이페이지 사이드바 -->
 <div th:fragment="side">
+
   <div style="background-color: #fff;
     margin-bottom: 40px;
         border-bottom: 1px solid #dcdcdc;">
+        
       <ul id="myList" class="container" style="display: flex;justify-content: center; list-style: none; margin-bottom:0"> 
-        <li style="cursor: pointer;" > <a id="/notice" style="display: inline-block;
+        <li style="cursor: pointer;" > <a id="/daily" style="display: inline-block;
     padding: 30px 45px;
     color: #797979;
     font-size: 1.125rem;
-    font-weight: 500;">공지사항</a></li>
-        <li style="cursor: pointer;" > <a  id="/faq" style="display: inline-block;
+    font-weight: 500;">일일봉사</a></li>
+        <li style="cursor: pointer;" > <a  id="/Group" style="display: inline-block;
     padding: 30px 45px;
     color: #797979;
     font-size: 1.125rem;
-    font-weight: 500;">자주하는 질문</a></li>
-        <li style="cursor: pointer;" > <a  id="/inquiry" style="display: inline-block;
+    font-weight: 500;">동아리</a></li>
+        <li style="cursor: pointer;" > <a  id="/FacilityVol" style="display: inline-block;
     padding: 30px 45px;
     color: #797979;
     font-size: 1.125rem;
-    font-weight: 500;">1:1문의</a></li>
+    font-weight: 500;">시설봉사</a></li>
       </ul>
 </div>
 <script th:inline="javascript">
@@ -52,7 +49,7 @@
             // 현재 페이지와 id 속성 값이 일치하는 경우 해당 항목에 스타일을 적용합니다.
             if (currentUrl.indexOf(href) > -1) {
                 $(this).css({
-                    'color': 'black', // 글씨 색상을 파란색으로 변경
+                    'color': 'black',
                     'font-size' : '24px',
                     'font-weight': 'bold', 
                     	'box-shadow': '0 1px 0 0 #689f38'

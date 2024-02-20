@@ -2,6 +2,8 @@ package com.bongsamaru.feed.service;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,7 @@ public class FeedVO {
 	private String filePath;
 	private Integer likes;
 	private Date createdAt;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writeDate;
 	
 }

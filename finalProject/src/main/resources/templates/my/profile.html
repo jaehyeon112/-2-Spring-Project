@@ -12,7 +12,7 @@
 * {
 	list-style: none;
 }
-.div-centered {
+.div-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,22 +44,31 @@
      background-color: #fbb200;
      color: #fff;
 }
+li{
+	display: flex;
+}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
 	<section layout:fragment="content">
-	<div class="div-centered">
+	<div th:insert="~{banner/empty::banner}"></div>
+	<div class="div-container">
 		<th:block th:each="item : ${list}">
 			<ul id="contents">
 				<li>
 					<div class="area_thumb">
-						<h1>프로필</h1>
-						  <span class="profile_thumb">
-						  	<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-							<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
-						  	<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
-							<button class="uploadBtn">Upload</button>
-						  </span>
+					  <span class="profile_thumb">
+					    <div style="position: relative; display: inline-block;">
+					      <img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
+					      <img th:if="${item.memProfile} != null" id="profileImage" style="border-radius: 50%; width: 200px; height: 200px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+					      <label for="imageInput" class="custom-file-upload" style="position: absolute; top: 180px; left: 100px; z-index: 1;">
+					        <i class="fas fa-cloud-upload-alt"></i>
+					      </label>
+					      <input class="form-control" style="display:none;" id="imageInput" name="uploadFiles" type="file" multiple>
+					    </div>
+					  </span>
 					</div>
 				</li>
 				<li class="hidden">
@@ -68,29 +77,27 @@
 				</li>
 				<li>
 					<div> 닉네임</div>
-					<input type="text" th:value="${item.memNick}" class="form-control">
+					<input type="text" id="nick" th:value="${item.memNick}" class="form-control">
 				</li>
 				<li id="to1">
 					<div>전화번호</div>
-					<input type="text" id="to" name="to" placeholder="변경하실 전화번호를 입력하세요" class="form-control"> <!-- 인증번호 받을사람 휴대폰 번호 -->
-					<button type="button" id="send">인증번호 전송</button><br> <!-- 문자보내는 전송버튼 -->
-					<button id="ChangeTelBtn" class="hidden">변경하기</button>
+					<input type="text" id="to" name="to" th:value="${item.memPhone}" placeholder="변경하실 전화번호를 입력하세요" class="form-control"> <!-- 인증번호 받을사람 휴대폰 번호 -->
+					<input type="button" class="btn btn-primary" id="send" value="인증번호 전송"><br> <!-- 문자보내는 전송버튼 -->
 				</li>
 				<li id="to2" class="hidden">
 					<div>전화번호</div>
 					<input type="text" id="userTel" placeholder="인증번호 4자리를 입력하세요" class="form-control">   <!-- 인증번호 입력창 -->
-					<button type="button" id="enterBtn">인증번호 확인</button>  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
+					<input type="button" class="btn btn-primary" id="enterBtn" value="인증번호 확인">  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
 				</li>
 				<li id="email1">
 				  <div>이메일</div>
-				  <input type="email" id="recipientEmail" placeholder="변경하실 이메일 주소를 입력하세요" class="form-control" >
-				  <button type="button" id="sendButton">인증번호 전송</button>
-				  <button id="ChangeEmailBtn" class="hidden">변경하기</button>
+				  <input type="email" id="recipientEmail" placeholder="변경하실 이메일 주소를 입력하세요" th:value="${item.memEmail} "class="form-control" >
+				  <input type="button" id="sendButton" class="btn btn-primary" value="인증번호 전송">
 				</li>
 				<li id="email2" class="hidden">
 				  <div id="name">이메일</div>
 				  <input type="text" id="verificationCode" placeholder="인증번호 4자리를 입력하세요" class="form-control">
-				  <button type="button" id="verifyButton">인증번호 확인</button>
+				  <inbut type="button" class="btn btn-primary" id="verifyButton" value="인증번호 확인">
 				  <div id="message"></div>
 				</li>			
 				<li>
@@ -102,11 +109,11 @@
 					<div>이메일수신동의</div>
 					<div class="select">
 						<span>
-							<input type="radio" id="emailAgreeYes" name="emailAgree" value="예" th:checked="${item.emailAgree} == 1 " >
+							<input type="radio" id="emailAgreeYes" name="emailAgree" value="1" th:checked="${item.emailAgree} == 1 " >
 							<label for="emailAgreeYes">예</label>
 						</span>
 						<span>
-							<input type="radio" id="emailAgreeNo" name="emailAgree" value="아니오" th:checked="${item.emailAgree} == 0">
+							<input type="radio" id="emailAgreeNo" name="emailAgree" value="0" th:checked="${item.emailAgree} == 0">
 							<label for="emailAgreeNo">아니오</label>
 						</span>
 					</div>
@@ -115,17 +122,17 @@
 					<div>문자수신동의</div>
 					<div class="select">
 						<span>
-							<input type="radio" id="smsAgreeYes" name="smsAgree" value="예" th:checked="${item.smsAgree} == 1 ">
+							<input type="radio" id="smsAgreeYes" name="smsAgree" value="1" th:checked="${item.smsAgree} == 1 ">
 							<label for="smsAgreeYes">예</label>
 						</span>
 						<span>
-							<input type="radio" id="smsAgreeNo" name="smsAgree" value="아니오" th:checked="${item.smsAgree} == 0">
+							<input type="radio" id="smsAgreeNo" name="smsAgree" value="0" th:checked="${item.smsAgree} == 0">
 							<label for="smsAgreeNo">아니오</label>
 						</span>
 					</div>
 				</li>
 				<li>
-					<button>저장하기</button>
+					<input type="button" id="updateProfileBtn" value="저장하기">
 				</li>
 			</ul>
 		<th:block th:each="item : ${list}">
@@ -248,27 +255,66 @@ $('#verifyButton').on('click',function() {
 	});
 });
 
-// 이메일 변경
-$('#ChangeEmailBtn').on('click',function() {
-	let recipientEmail = $("#recipientEmail").val();
-	
-	$.ajax({
-		  type: "POST",
-		  url: "/profile",
-		  data: JSON.stringify({
-			  	memId: memId,
-			    memEmail: recipientEmail
-		  }),
-		  contentType: "application/json",
-		  success: function (response) {
-		    alert("이메일 변경 성공");
-		    $("#ChangeEmailBtn").hide();
-		    $("#email1").show();
-		  },
-		  error: function (xhr, status, error) {
-		    alert("이메일 변경 실패");
-		  }
-		});
+// 프로필 수정
+$(document).ready(function() {
+    $("#updateProfileBtn").click(function() {
+    	var formData = new FormData(); //FormData 객체 생성
+    	var inputFile = $("input[type='file']");
+    	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+    	var files = inputFile[0].files;
+    	//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+    	//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+    	for (var i = 0; i < files.length; i++) {
+    		console.log(files[i]);
+    		formData.append("uploadFiles", files[i]); //키,값으로 append 
+    	}
+    	formData.append("code", "p01")
+    	formData.append("codeUser", $('#id').val());
+    	console.log($('#id').val(),'밸류')
+
+    	//jQuery.ajax
+    	$.ajax({
+    		url: '/uploadsAjax',
+    		type: 'POST',
+    		processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+    		contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+    		data: formData,
+    		success: function (result) {
+    			console.log(result)
+    			alert('성공!')
+
+    		},
+    		error: function (reject) {
+    			alert('실풰!')
+    			console.log(reject);
+    		}
+    	});
+    	
+        var userVO = {
+            memId: $("#id").val(),
+            memNick: $("#nick").val(),
+            memEmail: $("#recipientEmail").val(),
+            memPhone: $("#to").val(),
+            emailAgree: $("input[name='emailAgree']:checked").val(),
+            smsAgree: $("input[name='smsAgree']:checked").val(),
+            memAddr: $("#addr").val()
+        };
+
+        $.ajax({
+            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
+            success: function(response) {
+                // 성공적으로 업데이트되었을 때의 동작
+                alert("정보가 성공적으로 수정되었습니다.");
+            },
+            error: function(xhr, status, error) {
+                // 업데이트 중에 오류가 발생했을 때의 동작
+                alert("정보수정에 실패하였습니다");
+            }
+        });
+    });
 });
 
 // 이미지 파일 변경
@@ -287,9 +333,9 @@ $('#imageInput').on('change', function (event) {
         image.src = "";
     }
 });
-
+/* 
 // 이미지 파일 업로드
-$('.uploadBtn').click(function () {
+$('#uploadBtn').click(function () {
 	var formData = new FormData(); //FormData 객체 생성
 	var inputFile = $("input[type='file']");
 	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
@@ -321,7 +367,7 @@ $('.uploadBtn').click(function () {
 			console.log(reject);
 		}
 	});
-});
+}); */
 </script>
 </section>
 	

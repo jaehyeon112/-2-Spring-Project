@@ -51,6 +51,7 @@ public interface DonaMapper {
 		
 	//기부등록폼2  - donation 상세
 		public int insertDonDetail(DonaVO donaVO);
+		
 	//기부글등록 관리자 알람
 		public int insertAlertDona(DonaVO donaVO);
 		
@@ -59,6 +60,9 @@ public interface DonaMapper {
 		
 	//기부후기등록
 		public int insertReview(DonaVO donaVO);
+		
+	//기부후기상태 업데이트
+	public int updateRevStat(DonaVO donaVO);
 		
 	//기부후기등록2
 		public int insertReviewDetail(DonaVO donaVO);

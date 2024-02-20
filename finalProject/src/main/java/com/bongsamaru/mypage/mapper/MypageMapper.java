@@ -23,8 +23,8 @@ public interface MypageMapper {
 	// 기부 총횟수 조회
 	public Integer getGibuCount(String memId);
 	
-	// 이메일 변경
-	public int updateEmail(UserVO userVO);
+	// 프로필 수정
+	public int updateProFile(UserVO userVO);
 	
 	// insert Heart
 	public int insertHeart(HeartVO vo);
