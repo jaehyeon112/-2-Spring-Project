@@ -4,27 +4,31 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>봉사마루</title>
 <style>
   .a-tag-container {
     text-align: center;
     background-color: #007bff;
     padding: 15px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
   }
 
   .a-tag {
     font-size: 20px;
-    padding: 20px ;
+    padding: 20px;
     color: white;
     font-weight: bold;
-    
+    margin: 0 10px;
+    text-decoration: none;
+    transition: font-size 0.3s, color 0.3s;
   }
-  
-    .a-tag:hover {
+
+  .a-tag:hover {
     font-size: 25px;
-    padding: 20px ;
     color: black;
-    
   }
   
  .contenttext {
@@ -34,13 +38,38 @@
  .link_thumb{
   text-align:left;
  }
+.num_title {
+	display: block;
+	font-weight: 400; 
+	font-size: 15px; 
+	color: #666; 
+	text-align: right;
+}
+.num_total {
+    display: block;
+    overflow: hidden;
+    height: 48px;
+    font-size: 32px;
+    font-family: KakaoBig Bold,sans-serif;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    text-align: right;
+}
+
+.link_setting {
+    font-size: 14px;
+    border-bottom: 1px solid #444;
+    background-color: initial;
+    color: #444;
+}
 
 </style>
 </head>
 <body>
 	<section layout:fragment="content">
 		<div th:insert="~{banner/empty::banner}"></div>
-			<div class="container">
+			<div class="container title">
 				<th:block th:each="item : ${list}">
 				<div class="contenttext" id="temperature" title="">
 					<div style="font-size:14px; font-weight: bold;">[[${heart}]]ºC
@@ -58,15 +87,19 @@
 					</a>
 				</div>
 				<h1 th:text="${item.memName}">이름</h1>
-				<a data-tiara-layer="profile_img" data-tiara-action-name="프로필수정_클릭" class="link_thumb" href="/pass">설정</a>
-				<a href="/pass">회원탈퇴</a>
+				<a data-tiara-layer="profile_img" data-tiara-action-name="프로필 수정_클릭" class="link_setting" href="/pass">설정</a>
+				<a class="link_setting" href="/withdrawal">탈퇴</a>
 			<div>					
 					<input id="feedBtn" type="button" class="btn btn-seccess" value="내 피드가기">
 					<input id="gibuBtn" type="button" class="btn btn-seccess" value="기부하러가기">
 					<input id="bongsaBtn" type="button" class="btn btn-seccess" value="봉사하러가기">
+			<div>
+				<span class="num_title">총 기부금</span>
+				<span class="num_total" th:text="${#numbers.formatInteger(sumAmt, 1, 'COMMA') + '원'}"></span>
+			</div>
 					<div class="a-tag-container" style="margin-bottom: 50px; margin-top: 50px;">
 					  <a href="/gibuList" class="a-tag">기부내역</a>
-					  <a href="/" class="a-tag">기부영수증</a>
+					  <a href="/gibuReceipt" class="a-tag">기부영수증</a>
 					  <a href="/" class="a-tag">활동증서</a>
 					</div>
 			</div>

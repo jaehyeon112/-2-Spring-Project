@@ -59,6 +59,14 @@ public class MypageController {
 	        		Double heart = mypageService.getHeart(memId);
 	        		Integer sumamt = mypageService.getSumAmt(memId);
 	        		Integer gibuCount = mypageService.getGibuCount(memId);
+	        		
+	        		if (sumamt == null) {
+	        		    sumamt = 0;
+	        		}
+	        		
+	        		if (gibuCount == null) {
+	        			gibuCount = 0;
+	        		}
 	        		model.addAttribute("list",list);
 	        		model.addAttribute("heart",heart);
 	        		model.addAttribute("gibuCount",gibuCount);
@@ -82,11 +90,21 @@ public class MypageController {
 	            
 	         if (principal instanceof UserDetails) {
 	                UserDetailVO userDetailVO = (UserDetailVO) principal;
-
 	         }
 	      }
 
 	      return "my/withdrawal"; 
+	}
+	 
+	 /**
+	  * 회원탈퇴 성공 페이지
+	  * @param model
+	  * @return my/bye
+	  */
+	 @GetMapping("/bye")
+	 public String byePage() {
+
+	      return "my/bye"; 
 	}
 	 
 	 /**
@@ -119,7 +137,8 @@ public class MypageController {
 	        }
 
 	        return "my/profile";
-	    }
+	        
+	 }
 	 
 	 /**
 	  * CoolSMS 이용한 프로필에서 휴대폰 인증번호
@@ -136,7 +155,7 @@ public class MypageController {
 	 }
 	 
 	 /**
-	  * 프로필 수정 아직 하는중
+	  * 프로필 수정
 	  * @param userVO
 	  */
 
@@ -152,4 +171,19 @@ public class MypageController {
 	     }
 	 }
 	 
+	 
+	 @PostMapping("/deleteMember")
+	 @ResponseBody
+	 public ResponseEntity<String> deleteMember(@RequestBody UserVO userVO) {
+	     int result = mypageService.deleteMember(userVO);
+	     if (result > 0) {
+	    	 // 현재 사용자 로그아웃 처리
+	    	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	         authentication.setAuthenticated(false);
+	         SecurityContextHolder.clearContext();
+	         return ResponseEntity.ok("회원탈퇴 성공");
+	     } else {
+	         return ResponseEntity.badRequest().body("회원탈퇴실패");
+	     }
+	 }
 }

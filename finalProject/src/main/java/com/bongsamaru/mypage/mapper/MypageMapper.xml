@@ -66,7 +66,7 @@
 			FROM don_ledger
 			WHERE mem_id = #{memId}
 	</select>
- 	<!-- 이메일 변경 -->
+ 	<!-- 프로필 수정 -->
 	<update id="updateProFile" parameterType="UserVO">
 		UPDATE MEMBER
 		SET 
@@ -77,6 +77,28 @@
 		    mem_zip = #{memZip},
 		    mem_addr = #{memAddr},
 			sms_agree = #{smsAgree}
+		WHERE mem_Id = #{memId}
+	</update>
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember" parameterType="UserVO">
+		UPDATE MEMBER
+		SET 
+			mem_pwd = null,
+			mem_nick = null,
+		    mem_phone = null,
+		    mem_zip = null,
+		    mem_addr = null,
+		    mem_bdate = null,
+		    don_receipt = null,
+		    mem_ssn = null,
+		    email_agree = null,
+			sms_agree = null,
+		    acct_num = null,
+		    bank_name = null,
+		    mem_stat = null,
+		    mem_name = null,
+            mem_dept = null,
+		    SOCIAL = null
 		WHERE mem_Id = #{memId}
 	</update>
 	
