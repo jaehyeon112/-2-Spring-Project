@@ -2,6 +2,7 @@ package com.bongsamaru.user.service;
 
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,9 +20,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
 
+import groovy.transform.ToString;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@ToString
 public class UserDetailVO implements UserDetails,AuthenticationSuccessHandler {
 	
 	final UserFacilityVO userVO;

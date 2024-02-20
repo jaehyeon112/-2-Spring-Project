@@ -93,4 +93,12 @@ public interface AdminMapper {
 	public int updatePaidCode(Integer donId);
 	public int insertRemittance(RemittanceVO remittanceVO);
 	public List<AlertVO> alertList();
+	
+	//기부영수증 후기 승인처리리스트
+	public List<DonaVO> donaReviewList(PageVO pageVO);
+	public int donaReviewCnt(PageVO pageVO);
+	public DonaVO donaReviewInfo(Integer donRevId);
+	
+	//기부후기 승인처리
+	public int updateDonReview(DonaVO vo);
 }

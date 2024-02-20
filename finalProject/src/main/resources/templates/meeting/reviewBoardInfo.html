@@ -44,7 +44,7 @@
 	                <div class='write-2' id="viewer"></div> 
 					<!-- 에디터를 적용할 요소 (컨테이너) -->
 					<br>
-	                <a th:if="${info.writer}==${userId}" onclick="modalOpen()" type="button" style="float: right;width:90px" class="btn btn-primary m-1" >삭제</a>
+	                <a th:if="${info.writer}==${session.userId}" onclick="modalOpen()" type="button" style="float: right;width:90px" class="btn btn-primary m-1" >삭제</a>
 	                <a th:href="@{../reviewBoardList(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a>
 					<!-- 모달창 -->
 					<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

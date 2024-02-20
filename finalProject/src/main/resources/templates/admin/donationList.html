@@ -13,10 +13,10 @@
 </style>
 <script>
 function show1(){
-	$('#tableData').load("../donationList?recStat=0 #donationing");
+	$('#tableData').load("../donationList?recStat=1 #donationing");
 };
 function show2(){
-	$('#tableData').load("../donationDone?recStat=1 #donationDone");
+	$('#tableData').load("../donationDone?recStat=0 #donationDone");
 };
 
 function handleKeyPress(event) {
@@ -31,7 +31,7 @@ function search(){
 		alert('검색하실 내용을 입력하세요');
 		return;
 	}
-	$('#tableData').load(`../donationList?recStat=0&searchKeyword=${keyword} #donationing`);
+	$('#tableData').load(`../donationList?recStat=1&searchKeyword=${keyword} #donationing`);
 };
 
 function handleKeyPress2(event) {
@@ -46,8 +46,20 @@ function search2(){
 		alert('검색하실 내용을 입력하세요');
 		return;
 	}
-	$('#tableData').load(`../donationDone?recStat=1&searchKeyword=${keyword} #donationDone`);
+	$('#tableData').load(`../donationDone?recStat=0&searchKeyword=${keyword} #donationDone`);
 };
+//모금완료 recStat=0
+function prev(vo){
+	$('#tableData').load(`../donationDone?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&recStat=0 #donationDone`);
+}
+
+function current(vo,pageNum){
+	$('#tableData').load(`../donationDone?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&recStat=0 #donationDone`);
+}
+
+function next(vo){
+	$('#tableData').load(`../donationDone?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&recStat=0 #donationDone`);
+}
 </script>
 </head>
 <body>
@@ -109,19 +121,19 @@ function search2(){
 		    <ul class="pagination justify-content-center">
 		        <!-- 이전 버튼 -->
 		        <li class="page-item" th:if="${vo.prev}">
-		            <a class="page-link" th:href="@{/donationList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},recStat=0)}">이전</a>
+		            <a class="page-link" th:href="@{/donationList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},recStat=1)}">이전</a>
 		        </li>
 		        <!-- 페이지 번호 출력 -->
 		        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-		            <a class="page-link" th:href="@{/donationList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},recStat=0)}"
+		            <a class="page-link" th:href="@{/donationList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},recStat=1)}"
 		               th:text="${pageNum}"></a>
 		        </li>
 		        <!-- 다음 버튼 -->
 		        <li class="page-item" th:if="${vo.next}">
-		            <a class="page-link" th:href="@{/donationList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},recStat=0)}">다음</a>
+		            <a class="page-link" th:href="@{/donationList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},recStat=1)}">다음</a>
 		        </li>
 		    </ul>
-		</nav>
+			</nav>
         </div>
       	</div>
       </div>

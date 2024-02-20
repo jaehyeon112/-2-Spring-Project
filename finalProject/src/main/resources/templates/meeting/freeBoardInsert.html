@@ -134,7 +134,7 @@
 							formData.append("volId","[[${session.id}]]");
 							formData.append("title",title.val());
 							formData.append("content",content);
-							formData.append("writer",'[[${userId}]]');
+							formData.append("writer",'[[${session.userId}]]');
 							$.ajax({
 				           		url: '/freeBoardInsert',
 				           		type: 'POST',

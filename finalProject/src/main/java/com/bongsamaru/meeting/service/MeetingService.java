@@ -41,4 +41,6 @@ public interface MeetingService {
 	public int findVolActNo();
 	public List<FreeBoardVO> getBoardList(PageVO pageVO);
 	public int getBoardListCnt(Integer volId);
+	//모임 삭제
+	public int deleteMeeting(Integer volId);
 }

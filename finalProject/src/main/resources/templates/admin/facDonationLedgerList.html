@@ -2,14 +2,14 @@
 		<h5 th:each="ledger,st : ${fac}" th:if="${st.count}<2">프로젝트명 : [[${ledger.title}]]</h5>
 		<h5>주최 시설 : [[${info.facId}]]</h5>
 		<h5 th:text="'모집 기간 : '+${#dates.format(info.recPeriod, 'yy년 MM월 dd일')}+' ~ '+${#dates.format(info.endPeriod, 'yy년 MM월 dd일')}"></h5>
-		<h5 data-th-text="${#numbers.formatInteger(info.goalAmt, 1, 'COMMA') + '원'}"></h5>
+		<h5 data-th-text="'목표 금액 : '+${#numbers.formatInteger(info.goalAmt, 1, 'COMMA') + '원'}"></h5>
 		<div class="btn-group" style="float:right;">
 		  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 		    프로젝트별
 		  </button>
 		  <ul class="dropdown-menu">
 		  	<li><a class="dropdown-item cur" onclick="show1()">전체보기</a></li>
-		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==0"><a class="dropdown-item cur" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  	<li th:each="ledger,st : ${facDona}" th:if="${ledger.recStat}==0 and ${st.count}<11"><a class="dropdown-item cur" th:onclick="aler([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
 		  </ul>
 		</div>
 		<th:block th:if="${fac.size} == 0" style="text-align:center">
@@ -38,16 +38,16 @@
 		    <ul class="pagination justify-content-center">
 		        <!-- 이전 버튼 -->
 		        <li class="page-item" th:if="${vo.prev}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, donId=${vo.donId})}">이전</a>
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1}, donId=${vo.donId},recStat=1)}">이전</a>
 		        </li>
 		        <!-- 페이지 번호 출력 -->
 		        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},donId=${vo.donId})}"
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},donId=${vo.donId},recStat=1)}"
 		               th:text="${pageNum}"></a>
 		        </li>
 		        <!-- 다음 버튼 -->
 		        <li class="page-item" th:if="${vo.next}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},donId=${vo.donId})}">다음</a>
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},donId=${vo.donId},recStat=1)}">다음</a>
 		        </li>
 		    </ul>
 		</nav>
@@ -59,14 +59,14 @@
 		<h5 th:each="ledger,st : ${fac}" th:if="${st.count}<2">프로젝트명 : [[${ledger.title}]]</h5>
 		<h5>주최 시설 : [[${info.facId}]]</h5>
 		<h5 th:text="'모집 기간 : '+${#dates.format(info.recPeriod, 'yy년 MM월 dd일')}+' ~ '+${#dates.format(info.endPeriod, 'yy년 MM월 dd일')}"></h5>
-		<h5 data-th-text="${#numbers.formatInteger(info.goalAmt, 1, 'COMMA') + '원'}"></h5>
+		<h5 data-th-text="'목표 금액 : '+${#numbers.formatInteger(info.goalAmt, 1, 'COMMA') + '원'}"></h5>
 		<div class="btn-group" style="float:right;">
 		  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 		    프로젝트별
 		  </button>
 		  <ul class="dropdown-menu">
 		  	<li><a class="dropdown-item cur" onclick="show2()">전체보기</a></li>
-		  	<li th:each="ledger : ${facDona}" th:if="${ledger.recStat}==1"><a class="dropdown-item cur" th:onclick="aler2([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
+		  	<li th:each="ledger,st : ${facDona}" th:if="${ledger.recStat}==1 and ${st.count}<11"><a class="dropdown-item cur" th:onclick="aler2([[${ledger.donId}]])">[[${ledger.title}]]</a></li>
 		  </ul>
 		</div>
 		<th:block th:if="${fac.size} == 0" style="text-align:center">
@@ -95,16 +95,16 @@
 		    <ul class="pagination justify-content-center">
 		        <!-- 이전 버튼 -->
 		        <li class="page-item" th:if="${vo.prev}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},donId=${vo.donId})}">이전</a>
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1},donId=${vo.donId},recStat=0)}">이전</a>
 		        </li>
 		        <!-- 페이지 번호 출력 -->
 		        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},donId=${vo.donId})}"
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage},donId=${vo.donId},recStat=0)}"
 		               th:text="${pageNum}"></a>
 		        </li>
 		        <!-- 다음 버튼 -->
 		        <li class="page-item" th:if="${vo.next}">
-		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},donId=${vo.donId})}">다음</a>
+		            <a class="page-link" th:href="@{/facDonationLedgerList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage},donId=${vo.donId},recStat=0)}">다음</a>
 		        </li>
 		    </ul>
 		</nav>
