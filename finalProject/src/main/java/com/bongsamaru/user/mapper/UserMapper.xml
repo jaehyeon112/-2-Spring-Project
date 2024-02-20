@@ -132,7 +132,8 @@
 	</insert>
 	
 	<select id="listAlert" resultType="AlertVO">
-		select category,
+		select alert_id,
+			   category,
 			   content
 			   ,alert_date
 			   ,read_flag 
@@ -166,4 +167,8 @@
 		where read_flag = 0
 		and receive_id = #{memId}
 	</select>
+	
+	<update id="updateAlarm" parameterType="AlertVO">
+		update alert set read_flag = 1 where alert_id = #{alertId} and receive_id = #{receiveId}
+	</update>
 </mapper>
