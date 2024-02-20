@@ -14,9 +14,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <body>
 <section layout:fragment="content">
  <div th:insert="~{banner/empty::banner}"></div>
-<div class="row container" style=" text-align:center;">
-<div class="side col-2" th:insert="~{facility/sidebar::side}"></div>	
- <div class="col-md-10 main-content" th:if="${#authentication.principal.userVO.donApp} == 0">
+<div class="container" style=" text-align:center;">
+<div class="side " th:insert="~{facility/sidebar::side}"></div>	
+ <div class="main-content" th:if="${#authentication.principal.userVO.donApp} == 0">
 
 <p onclick="openapplyform()">기부신청하기</p>
 <div class="row hotel_booking_table"  >
