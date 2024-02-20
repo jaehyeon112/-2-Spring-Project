@@ -9,33 +9,30 @@
 <body>
 	<section layout:fragment="content">
 <div class="comment-form">
-			<section class="blog_area single-post-area">
-				<div class="hotel">
-				<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-				<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+<section class="blog_area single-post-area">
+	<div class="hotel">
+	<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
+	<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+	</div>
+	<section class="blog_area">
+		<div class="container" style="border: 1px solid black;">
+			<div class="row">
+				<div class="col-lg-8 posts-list">
+					<div class="single-post row">
+					<div class="col-lg-12">
+					<div class="feature-img">
+                                <br>
+					<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].filePath}" width="300" height="200"alt=""><br>
 					</div>
-					<div class="container" style="border: 1px solid black;">
-						<div class="row">
-							<div class="col-lg-8 posts-list">
-								<div class="single-post row">
-									<div class="col-lg-12">
-										<div class="feature-img">
-<br>
-											<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].filePath}" width="300" height="200"alt=""><br>
-											
-										</div>
-									</div>
-
-									<div class="col-lg-12 col-md-12 blog_details">
-										<div class="form-group">
-											<p th:text="${session.challengeInfo.title}"></p>
-
-										</div>
-									</div>
-
-									<div class="col-lg-12">
-										<div class="row">
-<div class="col-lg-12  mt-25">
+					</div>
+			<div class="col-lg-12 col-md-12 blog_details">
+				<div class="form-group">
+					<p th:text="${session.challengeInfo.title}"></p>
+				</div>
+			</div>
+			<div class="col-lg-12">
+		       <div class="row">
+                    <div class="col-lg-12  mt-25">
 
 									<h3>챌린지 하는 이유</h3>
 									</div>
@@ -58,7 +55,7 @@
 												</div>
 
 											</div>
-<div class="col-lg-12  mt-25">
+						<div class="col-lg-12  mt-25">
 									<h3>기대효과</h3>
 									</div>
 											<div class="col-6">
@@ -138,7 +135,7 @@
 
 							</div>
 
-							
+								<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
 					<div class="col-lg-4">
 						<div class="blog_right_sidebar">
 							<aside class="single_sidebar_widget popular_post_widget">
@@ -162,7 +159,7 @@
 
 					</div>
 			
-					<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
+				
 
 			<div class="modal" tabindex="-1" id="myModal">
 				<div
@@ -270,7 +267,7 @@
 			});
 		});
 	</script>
-			
+			</section>
 		</section>
 		</div>
 	</section>
