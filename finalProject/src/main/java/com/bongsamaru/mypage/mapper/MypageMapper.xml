@@ -16,7 +16,7 @@
 			       mem_id,
 			       mem_pwd,
 			       mem_nick,
-			       mem_phone
+			       mem_phone,
 			       mem_zip,
 			       mem_addr,
 			       mem_bdate,
@@ -74,6 +74,7 @@
 			mem_email = #{memEmail},
 		    mem_phone = #{memPhone},
 		    email_agree = #{emailAgree},
+		    mem_zip = #{memZip},
 		    mem_addr = #{memAddr},
 			sms_agree = #{smsAgree}
 		WHERE mem_Id = #{memId}

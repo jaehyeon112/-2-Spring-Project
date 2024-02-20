@@ -53,7 +53,6 @@ public class MypageController {
 	         if (principal instanceof UserDetails) {
 	                UserDetailVO userDetailVO = (UserDetailVO) principal;
 	                String memId = userDetailVO.getUsername();
-	                System.out.println(userDetailVO.getUserVO() + "확인");
 	                
 	                List<UserVO> list = mypageService.getProfile(memId);
 
@@ -68,6 +67,26 @@ public class MypageController {
 	      }
 
 	      return "my/mypage"; 
+	}
+	 /**
+	  * 회원탈퇴 페이지
+	  * @param model
+	  * @return my/withDrawal
+	  */
+	 @GetMapping("/withdrawal")
+	 public String withDrawal(Model model) {
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	    	 Object principal = auth.getPrincipal();
+	            
+	         if (principal instanceof UserDetails) {
+	                UserDetailVO userDetailVO = (UserDetailVO) principal;
+
+	         }
+	      }
+
+	      return "my/withdrawal"; 
 	}
 	 
 	 /**
@@ -90,12 +109,10 @@ public class MypageController {
 	                // 또는 userDetailVO에 있는 다른 메서드를 호출하여 추가 정보를 얻을 수 있습니다.
 	                
 	                // 예시: 사용자 이름을 모델에 추가
-	                System.out.println(userDetailVO.getUserVO() + "확인로그인로그인");
 	                List<UserVO> list = mypageService.getProfile(userDetailVO.getUsername());
 	                
 	                
 	                model.addAttribute("list", list);
-	                System.out.println(list+ "리스트");
 	                
 	                // 필요한 경우, 여기에서 userDetailVO의 다른 정보를 모델에 추가할 수 있습니다.
 	            }

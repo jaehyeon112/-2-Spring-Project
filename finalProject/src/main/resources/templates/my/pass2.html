@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 검증</title>
+<style>
+.container {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+<div th:insert="~{banner/empty::banner}"></div>
+	  <div class="container">
+	    <div class="title">현재 비밀번호</div>
+	    <input type="password" id="currentPassword" name="currentPassword">
+	    <button id="submitBtn" type="button">인증</button>
+	    <input type="button" id="cancelBtn" class="btn btn-danger btn-lg btn-lg" data-toggle="modal" data-target="#staticBackdrop" value="탈퇴하기" style="text-align: right; display:none;" />
+	  </div>
+	  <!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴 창</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        정말로 탈퇴하시겠습니까?
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-danger">탈퇴하기</button>
+		        <button type="button" class="btn btn-dark" data-dismiss="modal">창 닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<script>
+	// 현재 비밀번호 검증
+		$("#submitBtn").on('click', function() {
+		  let currentPassword = $("#currentPassword").val();
+
+		  $.ajax({
+		    url: "/passwordCheck",
+		    type: "POST",
+		    data: { currentPassword: currentPassword },
+		    success: function(response) {
+		    	$("#cancelBtn").removeAttr("style");
+		    	$("#currentPassword").hide();
+		    	$("#submitBtn").hide();
+		    	$(".title").hide();
+		    	
+		    },
+		    error: function(xhr, status, error) {
+		      console.log(error);
+		      alert("비밀번호가 일치하지 않습니다.");
+		    }
+		  });
+		});
+	
+        $("#cancelBtn").on('click',function () {
+            $("#staticBackdrop").modal("show");
+        
+        });
+	</script>
+</section>
+</body>
+</html>

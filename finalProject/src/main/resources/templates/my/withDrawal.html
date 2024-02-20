@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 검증</title>
+<style scoped="scoped">
+.title {
+	height: 1000px;
+}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+<div th:insert="~{banner/empty::banner}"></div>
+  <div class="container">
+	  <div class="title">
+	    	<h1>회원탈퇴</h1>
+	    	<p>봉사 마루 회원탈퇴가 완료되었습니다.</p>
+	   		<h2>그 동안 봉사마루를 이용해주셔서 감사합니다.</h2>
+	   		<input type="button" class="btn btn-dark-lg" value="확인">
+	  </div>
+  
+  </div>
+<script>
+</script>
+</section>
+</body>
+</html>
