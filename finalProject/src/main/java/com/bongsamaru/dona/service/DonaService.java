@@ -51,6 +51,8 @@ public interface DonaService {
 	public int insertReview(DonaVO donaVO);
 	public int insertReviewDetail(DonaVO donaVO);
 	public int receiptAlertDona(DonaVO donaVO);
+	public int updateRevStat(DonaVO donaVO);
+	
 	//후기 개별
 	public DonaVO getDonaReview(Integer donId);
 	

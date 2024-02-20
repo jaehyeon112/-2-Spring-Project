@@ -327,7 +327,7 @@ public class DonaController {
 	 */
 
 	// 등록폼 INSERT
-	@PostMapping(value = "/regitForm", consumes = "multipart/form-data")
+	@PostMapping(value = "regitForm", consumes = "multipart/form-data")
 	@ResponseBody
 	public String registerDona(DonaVO donaVO,
 			                   @RequestPart("uploadfiles") MultipartFile[] uploadfiles, 
@@ -374,7 +374,7 @@ public class DonaController {
 	 * @throws IOException
 	 */
 	// 후기폼 Insert
-	@PostMapping(value = "/reviewForm", consumes = "multipart/form-data")
+	@PostMapping(value = "reviewForm", consumes = "multipart/form-data")
 	@ResponseBody
 	public String registerReview(DonaVO donaVO,
 			@RequestParam("uploadfiles") MultipartFile[] uploadfiles, Model model) throws IOException {
