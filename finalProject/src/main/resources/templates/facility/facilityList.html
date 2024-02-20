@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>시설리스트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
 	<section layout:fragment="content">
@@ -24,69 +25,71 @@
 
 
 
-		<div>
-		<select id="selRegion" style="weight:100;"onchange="filterFacilities()">
-			<option value="">==지역==</option>
+		<div style="text-align:right;">
+		<br>
+		<br>
+		<select  id="selRegion" style="width: 200px; height: 40px; bolder-radious:20px; text-align:center; background-color:rgba(104, 159, 56, 0.3)" onchange="filterFacilities()">
+			<option value="">===지역===</option>
 		    <option th:each="sub : ${subZ}"  th:value="${sub.subCode}" th:text="${sub.value}" th:selected="${#strings.equals(sub.subCode, param.facZip2)}"></option>
 		</select>
 		
-		<select id= "selFacType"  style="weight:100;"onchange="filterFacilities()">
-			<option value="">==봉사유형==</option>
+		<select id= "selFacType" style="width: 200px; height: 40px; bolder-radious:20px; text-align:center; background-color:rgba(104, 159, 56, 0.3)" onchange="filterFacilities()">
+			<option value="">===봉사유형===</option>
 			<option th:each="subf : ${subF}" th:value="${subf.subCode}" th:text="${subf.value}" th:selected="${#strings.equals(subf.subCode, param.facType)}"></option>
 		</select>
+		<br>
+		<br>
+		<br>
+		<br>
 		</div>
 
-			<div class="row mb_30">
+			<div class="row mb_30" >
 				<th:block th:each="facility:${facilityList}" id="filteredFacilities">
-					<div class="col-lg-4 col-md-6">
-						<div class="single-recent-blog-post">
+					<div class="col-lg-4 col-md-6" style="text-align:center">
+						
 							<div class="thumb">
-								<!-- <img class="img-fluid" src="../image/초록개구리.png" alt="post"> -->
-								<img th:src="${facility.filePath}" alt="">
-							<!-- 	 <a class="btn theme_btn button_hover" th:href="@{/facilityInfo/{facId}(facId=${facility.facId})}"></a> -->
-								<a class="btn theme_btn button_hover" th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
-										th:text="${facility.facName}"></a>
+								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 60%;">
+								<br>
 							</div>
 							<div class="details">
 								<div class="tags">
-									<!-- 								<a href="#" class="button_hover tag_btn">Travel</a> <a href="#"
-									class="button_hover tag_btn">Life Style</a> -->
-									
 								</div>
-								<h3  style="display:none" th:text="${facility.facId}"></h3>
-								<h4 class="sec_h4" th:text="${facility.facName}"></h4>
+								<br>
+								<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
+										th:text="${facility.facName}" style="width: 60%;"></a>
+							</div>
 								<p th:text="${facility.facAddr}"></p>
 								<p style="display:none" th:text="${facility.region}" id="regions"></p>
-								<h6 class="date title_color" th:text="${facility.facType}"></h6>
-							</div>
-						</div>
+							
+							 <p  th:if="${facility.facType}=='f01'">아동 및 청소년</p>
+							 <p  th:if="${facility.facType}=='f02'">장애인</p>
+							 <p  th:if="${facility.facType}=='f03'">문화,체육</p>
+							 <p  th:if="${facility.facType}=='f04'">캠페인</p>
+							 <p  th:if="${facility.facType}=='f05'">보건의료</p>
+							 <p  th:if="${facility.facType}=='f06'">환경정리</p>
+							 <p  th:if="${facility.facType}=='f07'">동물</p>
+							 <p  th:if="${facility.facType}=='f08'">기타</p>
 					</div>
 				</th:block>
 			</div>
 
 
-<button type="button" th:onclick="pagingReq()"></button>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <nav class="blog-pagination justify-content-center d-flex">
-				<ul class="pagination">
-					<li class="page-item"><a th:href="@{/facilityList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
-						aria-label="Previous"> <span aria-hidden="true"> <span
-								class="lnr lnr-chevron-left"></span>
-						</span>
-					</a></li>
-					
-					<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-			            <a class="page-link" th:href="@{/facilityList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}"
-			               th:text="${pageNum}"></a>
-			        </li>
-					
-					<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link"
-						aria-label="Next"> <span aria-hidden="true"> <span
-								class="lnr lnr-chevron-right"></span>
-						</span>
-					</a></li>
-				</ul>
-			</nav>
+	<ul class="pagination">
+		<li class="page-item">
+			<a th:href="@{/facilityList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
+		<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			 <a class="page-link" th:href="@{/facilityList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a></li>
+		<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
+	</ul>
+</nav>
 
 		</div>
 

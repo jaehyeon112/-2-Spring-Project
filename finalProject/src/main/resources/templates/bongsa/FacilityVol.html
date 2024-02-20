@@ -381,13 +381,11 @@ var facId = '';
             });
            
         });
-       
+        var memId = [[${userId}]];
         $('#joinVolBtn').on('click', function() {
-       	  if ([[${#authentication.principal}]] !== null && [[${#authentication.principal}]] !== 'anonymousUser') {
-       		  var memId = [[${#authentication.principal.userVO.id}]];
+				if([[${userId}]]!=null){
+       		  
        		   
-       		    console.log(memId);
-       		 	console.log(volActId);
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',
