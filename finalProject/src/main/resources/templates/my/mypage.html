@@ -40,8 +40,8 @@
 <body>
 	<section layout:fragment="content">
 		<div th:insert="~{banner/group::banner}"></div>
-		<th:block th:each="item : ${list}">
 			<div class="container">
+				<th:block th:each="item : ${list}">
 				<div class="contenttext" id="temperature" title="">
 					<div style="font-size:14px; font-weight: bold;">[[${heart}]]ºC
 						<img alt="마음 온도" src="/userresources/image/banner/heart.jpg" style="width:30px; height: 30px;">
@@ -74,8 +74,8 @@
 					  <a href="/clubList" class="a-tag">동아리</a>
 					  <a href="/facilityList" class="a-tag">봉사시설</a>
 					</div>
+			</th:block>
 			</div>
-		</th:block>
 	<script>
 		$("#temperature").attr( 'title', 
 `마음온도란 무엇인가요?
