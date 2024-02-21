@@ -362,7 +362,7 @@ public class DonaController {
 	public String openRevform( Model model) {
 
 		
-		return "donation/reviewform";
+		return "donation/reviewForm";
 	}
 
 	/**

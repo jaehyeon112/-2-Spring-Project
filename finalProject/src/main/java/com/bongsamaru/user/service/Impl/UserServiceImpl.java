@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Override
 	public Boolean countMemNick(String memNick) {
-		System.out.println(userMapper.countMemNick(memNick));
+		System.out.println(userMapper.countMemNick(memNick) + "!@!@");
 		if(userMapper.countMemNick(memNick) > 0){
 			return false;
 		}

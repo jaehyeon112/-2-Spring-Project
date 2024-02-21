@@ -1,10 +1,15 @@
-<!DOCTYPE html>
+
+
+	
+	
+	
+	<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>봉사마루: 봉사와 기부의 따뜻한 만남</title>
 <style>
 
 * { list-style: none; color: #000; }
@@ -27,7 +32,7 @@
 }
 
 a {
-	font-weight: bold;
+    font-weight: bold;
     color: #000;
     font-size: 17px;
     font-family: 'Orbit', sans-serif;
@@ -46,12 +51,12 @@ a {
 }
 
 .main1, .main2 {
-	text-align: center;
+    text-align: center;
 }
 
 .main2 {
-	width: 100%;
-	background-color: khaki;
+    width: 100%;
+    background-color: khaki;
 }
 
 .hidden {
@@ -62,31 +67,29 @@ a {
 </head>
 <body>
 <section layout:fragment="content">
-	<div class="container">
-		<div class="main1">
-			<h1>100%</h1>
-			<h1 style="text-decoration: underline;">곧장기부</h1>
-			<h3>1원도 빠짐없이 100%</h3>
-			<p>행복마루는 "기부금을 그대로 이웃에게 전달하고 싶어하는 분들이 믿고 기부할 수 있는 플랫폼"이 되고자 합<br>
-			니다. "지역아동센터의 아이들에게 필요한 물건을 후원한다"는 핵심기능에 집중하고 이미 대중화된 오픈 마<br>
-			켓 배송시스템 등을 활용하여 기부의 투명성을 최대로 높일 수 있었습니다.<br>
-			<br>
-			<img src="/userresources/image/banner/logo.png" alt="" style="width:324px; height: 240px;">
-		</div>
-		<br>
-		<div class="main2">
-		    <br>
-		    <h3 style="text-decoration: underline;">아이들에게</h3>
-		    <h1>곧장</h1>
-		    <p>여러분의 기부금은 아이들에게 필요한 물건을 사는 데에만 사용되고, 그물건들은 지역아동센터로 배송되어<br>
-		    아이들을 위해 사용됩니다. 기부금이 현금 그대로 전달될 때보다, 어떻게 아이들에게 쓰였는지 보다 확실하게<br>
-		    알 수 있습니다. 보다 진솔한 기부를 위해 아이들의 얼굴 노출을 지양합니다.<br>
-		    <br>
-		    <img src="/userresources/image/banner/logo2.png" alt="" style="width:324px; height: 240px;">
-		</div>
-	</div>
+<div th:insert="~{banner/empty::banner}"></div>
+    <div class="container">
+        <div class="main1">
+            <h1>100%의 약속</h1>
+            <h1 style="text-decoration: underline;">봉사마루</h1>
+            <h3>기부와 봉사의 따뜻한 만남</h3>
+            <p>한 걸음, 한 걸음, 우리와 함께하는 모든 순간이 지역사회에 긍정적인 변화를 만들어갑니다. 봉사마루는 단순한 기부를 넘어, 마음을 전하는 창입니다. 우리는 기부금 전액을 지역아동센터 아이들을 위한 물품 구매에 사용함으로써, 기부의 투명성과 직접적인 영향력을 극대화합니다.<br>
+            <br>
+            <img src="/image/봉사마루헤더.png" alt="" style="width:324px; height: 240px;">
+        </div>
+        <br>
+        <div class="main2">
+            <br>
+            <h3 style="text-decoration: underline;">지역사회와 함께 성장하다</h3>
+            <h1>아름다운 변화</h1>
+            <p>봉사마루를 통해 모인 기부는 아이들에게 필요한 실질적인 도움으로 변환됩니다. 이 과정을 통해, 우리는 기부자와 수혜자 간의 간격을 좁히고, 서로에 대한 이해와 신뢰를 높일 수 있습니다. 우리의 작은 움직임이 모여 큰 파도를 만들듯, 여러분의 따뜻한 마음이 지역사회에 아름다운 변화를 가져옵니다.<br>
+            <br>
+            <img src="/image/봉사마루로고.png" alt="" style="width:324px; height: 240px;">
+        </div>
+    </div>
   <script>
   </script>
 </section>
 </body>
 </html>
+	
