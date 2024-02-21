@@ -48,14 +48,10 @@
     </head>
 
     <body>
-      사용자 아이디: <span sec:authentication="name"></span>
+    
      <section layout:fragment="content">
     
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
+
 
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
@@ -250,13 +246,13 @@
         <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab" th:each="rev : ${rlist}" >
         
          <div style="padding: 10px 5px 10px 5px;">  
-            <h3  th:text="${rev.title}">제목(intro)</h3>
+            <h5  th:text="${rev.title}">제목(intro)</h5>
             <p th:text="${rev.content}" style="font-weight:'500'">소개글(intro)</p>
          </div>     
            
                                 
          <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-               <h4> 기부금 집행내역 </h4>
+               <h5>◽ 기부금 집행내역 </h5>
                <table class="table">
                   <tr  >
                      <th scope="col" class="table-warning" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">집행기간</th>
@@ -276,7 +272,7 @@
  
 
             <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-               <h4>  총 집행금액 </h4>
+               <h5> ◽ 총 집행금액 </h5>
                <table class="table">
                   <!-- Thead -->
                   <thead>
@@ -338,7 +334,7 @@
          </div>
             <!--모금후기 이미지 -->
          <div class="col-lg-6" style="padding: 20px 5px 20px 5px;">
-         	<h4>모금후기이미지</h4>
+         	<h4></h4>
             <div class="border rounded">
                <a href="#">
                   <img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid rounded" alt="Image">
