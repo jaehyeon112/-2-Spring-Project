@@ -100,8 +100,10 @@
 		    
 		    
 		}
-			
-			
+		
+		.cateBtn::active{
+			background-color : black'
+		}
 		</style>
 
 
@@ -122,7 +124,7 @@
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <h4>Categories</h4>
+                            <h4></h4>
                             <div class="row">
                             <!-- 전체보기 (유형) -->
                                 <div class="col-md-4 rounded" >
@@ -131,7 +133,7 @@
 								                style="background-color: white; border: 2px solid green;  border-radius: 10px; margin-bottom: 10px;"
 								                data-category=""
 								                onclick="filterByCategory(this)">
-								            <a href="#" style="'color: black; font-weight: bold;'">전체</a>
+								            <a href="#" style="color: black; font-weight: bold;'">전체</a>
 								        </button>
 								    </div>
 								</div>
@@ -139,7 +141,7 @@
                                 <!-- 유형유형 -->
                                 <div class="col-md-4 rounded" th:each="category : ${categoryList}">
 								    <div id="donaCategory" class="d-flex justify-content-between fruite-name">
-								        <button class="rounded" 
+								        <button class="rounded"  id="cateBtn"
 								                style="background-color: white; border: 2px solid green;  border-radius: 10px; margin-bottom: 10px;"
 								                th:attr="data-category=${category.subCodeId}"
 								                onclick="filterByCategory(this)">
@@ -168,7 +170,7 @@
                         
                         <!-- 카테고리별 리스트를 표시할 부분 -->
                         
-                           <div th:each="dona : ${list}">
+                           <div  th:each="dona : ${list}" th:if="${dona.donRegApp == '1'}">
                                 <div class="col-md-3 col-lg-3 col-xl-3 recruit-list"   >
                                     <!-- 리스트 아이템 표시 -->
                                     <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
@@ -188,7 +190,8 @@
                                                 # <strong><span th:text="${dona.subCodeName}"></span></strong>
                                             </div>
                                             <div class="info-item">
-                                                목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
+                                                목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3, 'COMMA') }"></span></strong> 원
+                                                
                                             </div>
                                             <div class="info-item">
                                                 <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
@@ -202,7 +205,7 @@
 											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
 											    </div>
 											    <div style="text-align: right;">
-											        <strong><span th:text="${dona.total}"></span></strong>원
+											        <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA')}"></span></strong>원
 											    </div>
 											</div>
 
@@ -246,6 +249,8 @@
     	<input type="hidden" name="category" th:value="${donaVO.category}">
     	<input type="hidden" name="recStat" th:value="1">
     	<input type="hidden" name="page" th:value="1">
+    	<input type="hidden" name="donRegApp" th:value="1">
+    	
     </form>
 
         
@@ -265,13 +270,12 @@
     <script th:inline="javascript">
     
     $(document).ready(function () {
- 
-
-        // 모집중 버튼을 클릭한 것과 동일한 동작 수행
-//        toggleList('recruit');
+    	mainform.donRegApp.value;
+		
     });
     
     function toggleList(type) {
+    	
         mainform.recStat.value = type;
         mainform.submit();	
     }

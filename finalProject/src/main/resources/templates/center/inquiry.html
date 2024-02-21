@@ -143,7 +143,9 @@ a {
 			</thead>
 			   <tbody>
 			       <tr th:each="item : ${list}">
-			           <td class="yearCheck"  th:text="${item.title}"></td>
+					   <td class="yearCheck">
+					       <a th:text="${item.title}" th:href="@{/inquiry/{boardId}(boardId=${item.boardId})}"></a>
+					   </td>
 			           <td class="yearCheck" style="color:green; font-welight" th:if="${item.commContent == null}">
 		           	   	   <input type="button" class="btn btn-lg btn-success" disabled value="답변대기">
 			           </td>
