@@ -187,6 +187,7 @@ public class LoginController {
 					e.printStackTrace();
 				}
 			}
+			
 			return ResponseEntity.ok("회원가입 성공!");
 		}else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패");
