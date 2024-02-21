@@ -90,7 +90,20 @@
 			  AND a.detail_code = 100
 	</select>
 	<!-- 댓글 작성 -->
-
+ 	<insert id="FeedCommentInsert" parameterType="CommentsVO">
+		INSERT INTO COMMENTS(
+			comm_id,
+			mem_id,
+			content,
+			parent_id,
+			code,)
+		VALUES(COMMENTS_SEQ.NEXTVAL
+				,#{memId}
+				,#{content}
+				,parent_id
+				,code)
+	</insert>
+	
  	<insert id="insertLike" parameterType="LikeVO">
 		INSERT INTO likes(
 			like_id,
