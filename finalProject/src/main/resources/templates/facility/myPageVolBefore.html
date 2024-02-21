@@ -8,10 +8,33 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
 <style>
 #showTable {
-  /* background-color : #689f38; */
+  
   cursor : pointer;
   color: #689f38;
   font-weight:bold;
+}
+
+.content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 텍스트가 넘칠 때 생략 부분을 표시 */
+}
+
+.more-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.show {
+  white-space: normal;
+  max-width: none;
 }
 </style>
 </head>
@@ -20,9 +43,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
  <div class="container">
  	<div th:insert="~{banner/empty::banner}"></div>
  	<div th:insert="~{facility/sidebar::side}"></div>
-
+<div class="container" >
 <div class="row justify-content-center hotel_booking_table">
-<div class="row">
+<div class="row" style="text-align:center;">
 <div class="col-md-3" style="margin-bottom:30px;"> </div>
 
 <div class="col-md-9" style="margin-bottom:30px;">
@@ -33,7 +56,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                     <p style="color:black;  font-size:20px">봉사제목</p>
                 </div>
             </div>
-        <div class="col-md-2" style="background-color:white;">
+        <div class="col-md-3" style="background-color:white;">
             <div class="book_tabel_item">
                 <p style="color:black; font-size:20px">봉사내용</p>
             </div>
@@ -56,9 +79,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
               
            </div>
        </div>
-       <div class="col-md-2" style="background-color:white;">
+       <div class="col-md-1" style="background-color:white;">
            <div class="book_tabel_item">
-              <p style="color:black; font-size:20px" >모집상태</p>
+              <p style="color:black; font-size:20px" >현황</p>
               
            </div>
        </div>
@@ -69,9 +92,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
             <p style="color:black; font-size:15px" th:text="${list.title}"></p>
            </div>
        </div>
-       <div class="col-md-2">
+       <div class="col-md-3">
            <div class="book_tabel_item box">
-             <p class="content" style="color:black; font-size:15px"th:text="${list.content}"></p>
+             <p class="content" style="color:black; font-size:15px"th:text="${list.content}"></p><a class="more-btn">더 보기</a>
            </div>
        </div>
        <div class="col-md-2">
@@ -92,19 +115,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
               <p style="color:black; font-size:15px"th:text="${list.count}+'명/'+${list.cap}+'명'"></p>
          </div>
       </div>      
-      <div class="col-md-2">
+      <div class="col-md-1">
            <div class="book_tabel_item">
               
               <p style="color:black; font-size:15px" th:text="${list.cap > list.count ? '진행중' : '모집마감'}"></p>
           </div>
        </div>        
-                
-                </th:block>
-             
-
+   </th:block>
             </div>
-          
-   
+            
+       <div class="col-12">   
 	<nav class="blog-pagination justify-content-center d-flex">
 		<ul class="pagination">
 			<li class="page-item"><a th:href="@{/fac/volJoin(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link"
@@ -125,7 +145,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 			</a></li>
 		</ul>
 	</nav>     
- 
+ </div>  
     
     </div>
     <br>
@@ -192,11 +212,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 					class="form-control plus-bnt" placeholder="상세주소">
 					<div class="error-message" id="addrCheckError"></div>
 					정원<input class="form-control plus-bnt" type="number" name="cap">
-					<br>
-					봉사일시<input type="date" id="volDate" name="volDate">
-					<br>
+					
 					<br>
 					모집일시<input type="date" id="startDate" name="startDate"> ~ <input type="date" id="expireDate" name="expireDate">
+					<br>
+					<br>
+					봉사일시<input type="date" id="volDate" name="volDate">
 					<br>
 					<br>
 					<br>
@@ -238,10 +259,31 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  </div>
   </div>        
  </div>
- </div>
-         
+
+      
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script>
+<script>
+
+$(document).ready(function() {
+    // 오늘 날짜를 시작일 최소값으로 설정
+    let todayDate = new Date().toISOString().substring(0, 10);
+    $('input[name=startDate]').prop("min", todayDate);
+    
+    // 시작일이 변경될 때 이벤트 처리
+    $('input[name=startDate]').on("change", function() {
+        let minExpire = $(this).val(); 
+        $('input[name=expireDate]').prop("min", minExpire); 
+    });
+
+    // 만료일이 변경될 때 이벤트 처리
+    $('input[name=expireDate]').on("change", function() {
+        let expireDate = $(this).val(); 
+        $('input[name=volDate]').prop("min", expireDate); 
+    });
+});
+	
+
+
 			// 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 			function addr() {
 				new daum.Postcode({
@@ -348,45 +390,7 @@ function clickApp(volActId, memId){
     // location.href = 'facilityMyPage/volJoin';
 } 
 
-//content의 내용을 10자만 보여주고 더보기... 하고싶
-$(document).ready(function(){
 
-    $('.box').each(function(){
-        var content = $(this).children('.content');
-        var content_txt = content.text();
-        var content_txt_short = content_txt.substring(0,100)+"...";
-        var btn_more = $('<a href="javascript:void(0)" class="more">더보기</a>');
-
-        
-        $(this).append(btn_more);
-        
-        if(content_txt.length >= 100){
-            content.html(content_txt_short)
-            
-        }else{
-            btn_more.hide()
-        }
-        
-        btn_more.click(toggle_content);
-        // 아래 bind가 안 되는 이유는??
-        // btn_more.bind('click',toggle_content);
-
-        function toggle_content(){
-            if($(this).hasClass('short')){
-                // 접기 상태
-                $(this).html('더보기');
-                content.html(content_txt_short)
-                $(this).removeClass('short');
-            }else{
-                // 더보기 상태
-                $(this).html('접기');
-                content.html(content_txt);
-                $(this).addClass('short');
-
-            }
-        }
-    });
-});
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
 			$('#myModal').on('show.bs.modal', function(e) {
@@ -410,16 +414,7 @@ $(document).ready(function(){
 
 				$('.uploadBtn').click(function () {
 					
-					/* $('input[name=volDate]').prop("min",new Date().toISOString().substring(0, 10));
-					//모집종료기간 제한(봉사일시보다 최소 하루전)
-					let minDate = new Date();
-					let maxDate = document.getElementById('volDate').value;
-					maxDate.setDate(maxDate.getDate() - 1);
-					let endDate = maxDate.toISOString().substring(0, 10);
-
-					$('input[name=expireDate]').prop("min", minDate);
-					$('input[name=expireDate]').prop("max", endDate);
-					 */
+				
 					
 					 var formData = new FormData(); //FormData 객체 생성
 					formData.append("title", $("input[name=title]").val());
@@ -448,7 +443,8 @@ $(document).ready(function(){
 						data: formData,
 						success: function (result) {
 							console.log(result)
-							alert('성공!')
+							 $('#myModal').modal('hide');
+							location.href=`/fac/volJoin`
 
 						},
 						error: function (reject) {
@@ -460,10 +456,27 @@ $(document).ready(function(){
 			
 			});
 		});
+		
+		//내용이 길어서 ...더보기로 처리함
+		
+		$(document).ready(function() {
+		  $('.more-btn').click(function() {
+		    var $content = $(this).prev('.content');
+		    if ($content.hasClass('show')) {
+		      $content.removeClass('show');
+		      $(this).text('더 보기');
+		    } else {
+		      $content.addClass('show');
+		      $(this).text('접기');
+		    }
+  });
+});
+		
+		
                     
 </script>
 
-
+</div>
 </section>
 </body>
 </html>

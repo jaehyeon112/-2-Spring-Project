@@ -75,12 +75,12 @@
 		   From Don_Ledger T1 
 		   Left Join Donation T2 
 		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id='toyFacility')          As donaitonAmt,
+		  Where T2.Fac_Id=#{facId})          As donaitonAmt,
 		(Select Count(Distinct(T1.Mem_Id)) 
 		   From Don_Ledger T1 
 		   Left Join Donation T2 
 		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id='toyFacility')          As donors
+		  Where T2.Fac_Id=#{facId})          As donors
 	From Facility F LEFT JOIN FILES FI
     ON F.FAC_ID = FI.CODE_USER
    Where Fac_Id=#{facId}
@@ -273,17 +273,19 @@ WHERE FAC_ID=#{facId}
                      LOCATION,
                      CAP,
                      VOL_ZIP,
+                     FIND_ZIP(#{volZip}),
                      VOL_DATE,
                      START_DATE,
                      EXPIRE_DATE)
              VALUES (#{volActId},
              		 #{facId},
-             		 'i06',
+             		 #{category},
              		 #{title},
              		 #{content},
                      #{location},
                      #{cap},
                      #{volZip},
+                     #{volZip2},
                      #{volDate},
                      #{startDate},
                      #{expireDate})
@@ -351,7 +353,7 @@ UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 <!-- 회원이 시설봉사 정보조회 -->
 <select id="getFacVolInfo" resultType="VolActVO">
 SELECT   FAC_ID,
-		 CATEGORY,
+		 SELECT_SUB(category) CATEGORY,
 		 TITLE,
 		 LOCATION,
 		 CAP,
