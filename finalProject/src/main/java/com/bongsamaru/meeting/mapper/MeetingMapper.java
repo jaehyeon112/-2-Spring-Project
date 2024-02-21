@@ -2,14 +2,13 @@ package com.bongsamaru.meeting.mapper;
 
 import java.util.List;
 
-import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
-import com.bongsamaru.file.service.FilesVO;
 
 public interface MeetingMapper {
 	public VolunteerVO meetingInfo(Integer volId);
@@ -50,4 +49,8 @@ public interface MeetingMapper {
 	public int deleteMember(Integer volId);
 	//모임 등록
 	public int insertMeeting(VolunteerVO vo);
+	public int insertTag(TagVO vo);
+	//모임 수정
+	public int updateMeeting(VolunteerVO vo);
+	public int deleteFile(Integer codeNo);
 }

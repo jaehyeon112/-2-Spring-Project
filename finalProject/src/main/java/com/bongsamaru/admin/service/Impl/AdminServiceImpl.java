@@ -313,4 +313,9 @@ public class AdminServiceImpl implements AdminService{
 		return userMapper.donaReviewInfo(donRevId);
 	}
 
+	@Override
+	public List<VolunteerVO> dailyAllList() {
+		return userMapper.dailyAllList();
+	}
+
 }

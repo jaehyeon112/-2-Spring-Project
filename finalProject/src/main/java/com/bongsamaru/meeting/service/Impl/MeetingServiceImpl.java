@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
@@ -179,5 +180,20 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
 	public int insertMeeting(VolunteerVO vo) {
 		return mapper.insertMeeting(vo);
+	}
+
+	@Override
+	public int updateMeeting(VolunteerVO vo) {
+		return mapper.updateMeeting(vo);
+	}
+
+	@Override
+	public int deleteFile(Integer codeNo) {
+		return mapper.deleteFile(codeNo);
+	}
+
+	@Override
+	public int insertTag(TagVO vo) {
+		return mapper.insertTag(vo);
 	}
 }

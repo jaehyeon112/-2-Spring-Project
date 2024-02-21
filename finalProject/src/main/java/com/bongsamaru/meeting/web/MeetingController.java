@@ -4,11 +4,10 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.velocity.runtime.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,18 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.admin.service.AdminService;
-import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.common.service.MailVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FileService;
-import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.meeting.service.MeetingService;
 @Controller
 public class MeetingController {
@@ -44,6 +43,19 @@ public class MeetingController {
 	
 	@Autowired
 	DonaService donaService;
+	
+	//봉사 날짜가 지나면 방 폭파
+	//@Scheduled(cron = "0 0 0 * * *")
+	public void autoDeleteMeeting() {
+		Date today = new Date();
+		List<VolunteerVO> volActList = userService.dailyAllList();
+		for(VolunteerVO vo : volActList) {
+			//봉사날짜가 오늘날짜를 지남
+			if(vo.getVolDate().compareTo(today) > 0) {
+				service.deleteMeeting(vo.getVolId());
+			}
+		}
+	}
 	
 	//모임 방 메인
 	/**
@@ -101,12 +113,6 @@ public class MeetingController {
 		model.addAttribute("choose",randomList);
 		return "meeting/meetings";
 	}
-	
-//	@GetMapping("volActMemCnt")
-//	@ResponseBody
-//	public VolActVO volActMemCnt(@RequestParam(name="volActId") Integer volActId) {
-//		return service.volActMemCnt(volActId);
-//	}
 	
 	@PostMapping("approveMeeting")
 	@ResponseBody
@@ -452,19 +458,26 @@ public class MeetingController {
 	@PostMapping(value="regMeeting",consumes = "multipart/form-data")
 	@ResponseBody
 	@Transactional
-	public String insertMeeting(VolunteerVO vo,HttpSession session,
-							@RequestPart("uploadfiles") MultipartFile[] uploadfiles) throws IOException {
+	public int insertMeeting(VolunteerVO vo,HttpSession session,
+					@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles) throws IOException {
+		System.out.println("지금 들어감!!");
+		//모임등록
 		service.insertMeeting(vo);
-		int codeNo = vo.getVolId();
-		String code = "p09";
-		fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+		//파일등록
+		if(uploadfiles!=null) {
+			int codeNo = vo.getVolId();
+			String code = "p09";
+			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+		}
+		//모임장등록
 		VolMemVO memVO = new VolMemVO();
 		memVO.setVolId(vo.getVolId());
 		memVO.setAppCode("h02");
 		memVO.setAppReason(null);
 		memVO.setMemId(vo.getMemId());
 		service.approveMeeting(memVO);
-		return "meetings?volId="+codeNo;
+		System.out.println("지금 나옴!!");
+		return vo.getVolId();
 	}
 	
 	@GetMapping("updateMeeting")
@@ -473,6 +486,25 @@ public class MeetingController {
 		VolunteerVO vo = service.meetingInfo(volId);
 		model.addAttribute("info",vo);
 		return "meeting/updateMeeting";
+	}
+	
+	@PostMapping(value="updateMeeting",consumes = "multipart/form-data")
+	@ResponseBody
+	public int updateMeeting(VolunteerVO vo,HttpSession session,
+						@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles,@RequestParam Integer volId) throws IOException {
+		if(uploadfiles!=null) {
+			int codeNo = volId;
+			String code = "p09";
+			service.deleteFile(volId);
+			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+		}
+		return service.updateMeeting(vo);
+	};
+	
+	@PostMapping("insertTag")
+	@ResponseBody
+	public int insertTag(TagVO vo) {
+		return service.insertTag(vo);
 	}
 	
 }

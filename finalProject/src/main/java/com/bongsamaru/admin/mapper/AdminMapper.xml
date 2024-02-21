@@ -495,7 +495,7 @@
                   AND (meet_name LIKE '%' || #{searchKeyword} || '%')      
                </if>
               </where>
-        order by vol_id) A)
+        order by REC_PERIOD desc) A)
         where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="meetingCnt" resultType="int">
