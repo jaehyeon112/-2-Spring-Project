@@ -19,7 +19,7 @@ import com.bongsamaru.mypage.service.HeartVO;
 
 public interface FacilityService {
 
-	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType,@Param("facId") String facId); //시설페이지 리스트
+	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType); //시설페이지 리스트
 	public List<FacilityVO> allFacilityList();
 	public FacilityVO getFacilityInfo(String facId);//시설상세페이지
 	public List<FundingVO> getFundingList(PageVO pageVO,String facId);//모금진행중 List
