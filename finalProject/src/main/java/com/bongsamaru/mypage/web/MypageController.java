@@ -1,5 +1,6 @@
 package com.bongsamaru.mypage.web;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
 import com.bongsamaru.user.service.UserDetailVO;
 
+import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 
@@ -31,6 +34,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
  * @author 나채현
  *
  */
+@Log4j
 @Controller
 public class MypageController {
 	
@@ -162,7 +166,9 @@ public class MypageController {
 	 // 수정
 	 @PostMapping("/updateProFile")
 	 @ResponseBody
-	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO) {
+	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO,
+			 									 @RequestParam(value = "files", required = false) MultipartFile[] files) {
+		 log.info(files);
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
 	         return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
