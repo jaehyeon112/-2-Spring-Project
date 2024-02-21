@@ -30,7 +30,7 @@ public interface FacilityService {
 	public int insertJoinVolunteer(VolMemVO volMemVO);//회원이 시설봉사 신청
 	public VolActVO getFacVolInfo(Integer volActId);
 	
-	public List<DonaVO> getDonaList(PageVO pageVO,@Param("facId")String facId, @Param("donRegApp")char donRegApp,@Param("recStat") char recStat);
+	public List<DonaVO> getDonaList(PageVO pageVO,@Param("facId")String facId, @Param("donRegApp")String donRegApp,@Param("recStat") String recStat);
 	public int InsertFacVol(VolActVO volActVO);//시설이 봉사등록
 	public List<VolMemVO> getVolunteerAppList(Integer volActId);//봉사참여하겠다고 신청한 참여자리스트
 	public int volAppUpdate(Integer volActId, String memId);//참여 승인되서 업데이트
@@ -47,7 +47,7 @@ public interface FacilityService {
 	public int getFacDonCount(@Param("recStat")Integer recStat, @Param("facId")String facId);
 	public int getVolFCount(String facId);
 	public int getVolICount(String facId);
-	public int getVolDonCount(@Param("facId")String facId, @Param("donRegApp")char donRegApp,@Param("recStat") char recStat);
+	public int getVolDonCount(@Param("facId")String facId, @Param("donRegApp")String donRegApp,@Param("recStat") String recStat);
 	
 	//마음온도
 	public int insertVolHeart(HeartVO heartVO);

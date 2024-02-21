@@ -19,14 +19,9 @@
    <div class="container" >
     <div th:insert="~{banner/empty::banner}"></div>
        <div class="side" th:insert="~{facility/sidebar::side}"></div>	
-         <div class=" main-content">
-                      
-
-                <div class="row hotel_booking_table">
-                
+         <div class="container">
+                <div class="row justify-content-center hotel_booking_table">
                         <div class="row" style="text-align:center;">
-                       
-                           
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p style="color:black; font-size:20px">기부제목</p>
@@ -95,6 +90,19 @@
                                 </th:block>   
                        
                 </div>
+<th:block th:if="${#lists.size(donaList0)}!=0">
+<nav class="blog-pagination justify-content-center d-flex">
+	<ul class="pagination">
+		<li class="page-item">
+			<a th:href="@{/facilityList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
+		<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+			 <a class="page-link" th:href="@{/facilityList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a></li>
+		<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
+	</ul>
+</nav>
+</th:block>           
+                
+                
                 </div>
                 
                 <br>
@@ -189,6 +197,18 @@
                                 </div>
                     </th:block> 
                 </div>
+                
+                <th:block th:if="${#lists.size(donaList1)}!=0">
+<nav class="blog-pagination justify-content-center d-flex">
+	<ul class="pagination">
+		<li class="page-item">
+			<a th:href="@{/fac/donaInfo(start=${vo2.start - vo2.cntPerPage}, end=${vo2.start - 1})}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
+		<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo2.startPage, vo2.endPage)}" th:class="${pageNum == vo2.currentPage ? 'page-item active' : 'page-item'}">
+			 <a class="page-link" th:href="@{/fac/donaInfo(start=${(pageNum - 1) * vo2.cntPerPage + 1}, end=${pageNum * vo2.cntPerPage})}" th:text="${pageNum}"></a></li>
+		<li class="page-item"><a th:href="@{/fac/donaInfo(start=${vo2.end + 1}, end=${vo2.end + vo2.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
+	</ul>
+</nav>
+</th:block> 
             </div>
             </div>
           </div>  

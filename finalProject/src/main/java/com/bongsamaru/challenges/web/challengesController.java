@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,6 +110,7 @@ public class challengesController {
 	 */
 	@PostMapping("/challengeInsert")
 	@ResponseBody
+	
 	public int getChallengeInsert(@RequestPart MultipartFile[] uploadFiles, ChallengesVO challengeVO,Principal principal) {
 		challengeVO.setMemId(principal.getName());
 		challengeService.getChallengeInsert(challengeVO);
