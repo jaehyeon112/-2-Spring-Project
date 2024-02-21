@@ -814,18 +814,15 @@
 						success: function (result) {
 							console.log(result)
 							if (result) {
-								alert('사용할 수 있는 아이디입니다.')
 								console.log(result);
 								valid.isUserId = true;
 								facValid.isUserId = true;
 								$('#userIdSuccess').removeClass('hidden');
 							} else {
-								alert('이미 존재하는 아이디입니다.')
 								$('#userIdError').text('이미 존재하는 아이디입니다.').show();
 							}
 						},
 						error: function (reject) {
-							alert('먼가 오류임!')
 							console.log(reject);
 						}
 					});
@@ -884,16 +881,13 @@
 							success: function (result) {
 								console.log(result)
 								if (result) {
-									alert('사용할 수 있는 닉네임입니다.')
 									valid.isNick = true;
 									$('#nickIdSuccess').removeClass('hidden');
 								} else {
-									alert('이미 존재하는 닉네임입니다.')
 									$('#nickCheckError').text('이미 존재하는 닉네임입니다.').show();
 								}
 							},
 							error: function (reject) {
-								alert('먼가 오류임!')
 								console.log(reject);
 							}
 						});
@@ -1098,7 +1092,6 @@
 						success: function (data) {
 							checkNum = data;
 							console.log('번호', checkNum)
-							alert('인증번호를 보냈습니다.');
 							// 여기에 인증번호 옆에 띄우기
 							$('#authCheck').parent().removeClass('hidden')
 							$('#phoneSuccess').removeClass('hidden');
@@ -1112,7 +1105,6 @@
 			$('#authCheckBnt').on('click', function () {
 				let auto = $('#authCheck').val();
 				if (auto == checkNum) {
-					alert('인증 되었습니다!')
 					$('#authCheckBnt').attr("disabled", true);
 					$('#phoneCheckbnt').attr("disabled", true);
 					$('#phoneCheck').attr("readonly", true);
@@ -1121,7 +1113,6 @@
 					valid.isPhone = true;
 					$('#phoneAuthSuccess').removeClass('hidden');
 				} else {
-					alert('실패~')
 					$('#authCheckError').text('인증번호가 일치하지 않습니다.').show();
 					//인증실패의 밑에 ㅇㅋ?
 				}
@@ -1151,10 +1142,8 @@
 						console.log('체크는?' + isNick);
 						$('#nickCheckError').text('닉네임 중복체크를 해주세요.').show();
 						isValid = false;
-						alert('3');
 					} else if (!validateNickname()) {
 						isValid = false;
-						alert('4');
 					} else {
 						$('#nickIdSuccess').removeClass('hidden');
 					}
@@ -1165,13 +1154,11 @@
 					if (!passCheckValue) {
 						$('#passCheckError').text('비밀번호를 입력해주세요.').show();
 						isValid = false;
-						alert('5');
 					} else {
 						passCheckValue = passCheckValue.replace(/\s+/g, ''); // 공백 제거
 						if (passCheckValue === '') {
 							$('#passCheckError').text('비밀번호에 공백을 포함할 수 없습니다.').show();
 							isValid = false;
-							alert('6');
 						} else if (!passwordRegex.test(passCheckValue)) {
 							$('#passCheckError').text('비밀번호는 8자 이상이며, 숫자와 특수문자를 포함해야 합니다.').show();
 							isValid = false;
@@ -1183,7 +1170,6 @@
 					if (!passCheck2Value) {
 						$('#passCheck2Error').text('비밀번호 확인을 입력해주세요.').show();
 						isValid = false;
-						alert('7');
 					} else {
 						passCheck2Value = passCheck2Value.replace(/\s+/g, ''); // 공백 제거
 						if (passCheck2Value === '') {
@@ -1202,13 +1188,11 @@
 					if (!phoneCheckValue) {
 						$('#phoneCheckError').text('휴대폰 번호를 입력해주세요.').show();
 						isValid = false;
-						alert('10');
 					} else {
 						phoneCheckValue = phoneCheckValue.replace(/\s+/g, ''); // 공백 제거
 						if (phoneCheckValue === '') {
 							$('#phoneCheckError').text('휴대폰 번호에 공백을 포함할 수 없습니다.').show();
 							isValid = false;
-							alert('11');
 						}
 					}
 					/* 
@@ -1270,7 +1254,6 @@
 					if (!birth) {
 						$('#birthError').text('생년월일을 입력해주세요.').show();
 						isValid = false;
-						alert('20');
 					}
 
 
@@ -1296,13 +1279,11 @@
 						if (!backIdenCheckValue) {
 							$('#frontIdenCheckError').text('주민등록번호 뒷자리를 입력해주세요.').show();
 							isValid = false;
-							alert('25');
 						} else {
 							backIdenCheckValue = backIdenCheckValue.replace(/\s+/g, ''); // 공백 제거
 							if (backIdenCheckValue === '') {
 								$('#frontIdenCheckError').text('주민등록번호 뒷자리에 공백을 포함할 수 없습니다.').show();
 								isValid = false;
-								alert('26');
 							}
 						}
 					}
@@ -1443,7 +1424,6 @@
 
 				} else {
 
-					alert('됨')
 					$('#emailError').hide();
 					$('#emailSuccess').removeClass('hidden');
 					$('#emailAuthCheck').parent().removeClass('hidden')
@@ -1470,7 +1450,6 @@
 
 
 				if (verificationCode == "") {
-					alert("인증번호를 입력하세요.");
 					return;
 				}
 
@@ -1484,7 +1463,6 @@
 					success: function (response) {
 						// 인증 성공 시 처리
 						if (response == "success") {
-							alert("인증되었습니다.");
 							$('#emailAuthSuccess').removeClass('hidden');
 							$('#emailCheckBtn').attr("disabled", true);
 							$('#emailAuthCheckBnt').attr("disabled", true);
@@ -1550,13 +1528,11 @@
 				if (!phoneCheckValue) {
 					$('#phoneCheckError').text('휴대폰 번호를 입력해주세요.').show();
 					isValid = false;
-					alert('10');
 				} else {
 					phoneCheckValue = phoneCheckValue.replace(/\s+/g, ''); // 공백 제거
 					if (phoneCheckValue === '') {
 						$('#phoneCheckError').text('휴대폰 번호에 공백을 포함할 수 없습니다.').show();
 						isValid = false;
-						alert('11');
 					}
 				}
 
@@ -1685,7 +1661,6 @@
 					
 
 				} else {
-					alert('머ㅏ임;')
 				}
 			})
 
@@ -1789,7 +1764,6 @@
 									}
 								},
 								error: function (result) {
-									alert("실패")
 								}
 							})
 						} else {
@@ -1799,7 +1773,6 @@
 					},
 					error: function (result) {
 						console.log(result.responseText); //responseText의 에러메세지 확인
-						alert('실패')
 					}
 				});
 			})
