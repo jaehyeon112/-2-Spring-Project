@@ -101,7 +101,9 @@
 		    
 		}
 		
-	
+		.cateBtn::active{
+			background-color : black'
+		}
 		</style>
 
 
@@ -168,7 +170,7 @@
                         
                         <!-- 카테고리별 리스트를 표시할 부분 -->
                         
-                           <div th:each="dona : ${list}" th:if="${dona.donRegApp} == '1' " >
+                           <div  th:each="dona : ${list}" th:if="${dona.donRegApp == '1'}">
                                 <div class="col-md-3 col-lg-3 col-xl-3 recruit-list"   >
                                     <!-- 리스트 아이템 표시 -->
                                     <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">

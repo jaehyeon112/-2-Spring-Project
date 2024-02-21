@@ -86,7 +86,7 @@
      LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08'   
     <where>
     <if test = "donRegApp !=  null and donRegApp != ''">
-     d.DON_REG_APP = #{donRegApp }
+     d.DON_REG_APP = #{donRegApp } 
     </if>
 	<if test="category != null and category != ''">
 	 AND d.category = #{category}
