@@ -11,11 +11,15 @@ import javax.servlet.http.HttpSession;
 import org.apache.velocity.runtime.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FreeBoardVO;
@@ -27,6 +31,7 @@ import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
+import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.meeting.service.MeetingService;
 @Controller
@@ -439,11 +444,27 @@ public class MeetingController {
 		model.addAttribute("region", region);
 		return "meeting/regMeeting";
 	}
+	
+	@Autowired
+	FileService fileService;
+	
 	//모임등록 프로세스
-	@PostMapping("regMeeting")
+	@PostMapping(value="regMeeting",consumes = "multipart/form-data")
 	@ResponseBody
-	public int insertMeeting(VolunteerVO vo) {
-		return service.insertMeeting(vo);
+	@Transactional
+	public String insertMeeting(VolunteerVO vo,HttpSession session,
+							@RequestPart("uploadfiles") MultipartFile[] uploadfiles) throws IOException {
+		service.insertMeeting(vo);
+		int codeNo = vo.getVolId();
+		String code = "p09";
+		fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+		VolMemVO memVO = new VolMemVO();
+		memVO.setVolId(vo.getVolId());
+		memVO.setAppCode("h02");
+		memVO.setAppReason(null);
+		memVO.setMemId(vo.getMemId());
+		service.approveMeeting(memVO);
+		return "meetings?volId="+codeNo;
 	}
 	
 }

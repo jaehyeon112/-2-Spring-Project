@@ -244,6 +244,7 @@ function approveMeeting(){
 	
 	var formData = new FormData();
 	formData.append("volId","[[${session.id}]]");
+	formData.append("appCode",'h01');
 	formData.append("appReason",appReason);
 	formData.append("memId",'[[${session.userId}]]');
 	$.ajax({

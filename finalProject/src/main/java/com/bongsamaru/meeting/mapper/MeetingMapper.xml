@@ -47,7 +47,7 @@
 		values(
 			VOLMEMBER_SEQ.NEXTVAL
 			,#{volId}
-			,'h01'
+			,#{appCode}
 			,sysdate
 			,#{appReason}
 			,#{memId}
@@ -346,10 +346,10 @@
 		where vol_act_id=#{volActId}
 	</select>
 	
-	<!-- 회원 탈퇴 -->
+	<!-- 회원 상태변경 -->
 	<update id="withdrawalMeeting" parameterType="VolMemVO">
 		update vol_mem 
-		set app_code = 'h04' 
+		set app_code = #{appCode} 
 		where vol_id=#{volId}
 		and mem_id=#{memId}
 	</update>
@@ -360,8 +360,11 @@
 		where vol_id=#{volId}
 	</update>
 	<insert id="insertMeeting" parameterType="VolunteerVO">
+		<selectKey keyProperty="volId" order="BEFORE" resultType="int">
+         	select VOLUNTEER_SEQ.NEXTVAL from dual
+      	</selectKey>
 		insert into volunteer values(
-        VOLUNTEER_SEQ.NEXTVAL
+        		 #{volId}
 		        ,#{meetName}
 		        ,#{meetType}
 		        ,#{cap}
