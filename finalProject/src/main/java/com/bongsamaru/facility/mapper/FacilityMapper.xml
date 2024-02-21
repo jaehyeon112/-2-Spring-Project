@@ -254,9 +254,9 @@ WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
 <select id="getVolDonCount" resultType="int">
 SELECT COUNT(*)
 FROM DONATION D
-WHERE F.FAC_ID=#{facId}
-      AND D.DON_REG_APP=#{donRegApp}
-      AND D.REC_STAT=#{recStat} 
+WHERE FAC_ID=#{facId}
+      AND DON_REG_APP=#{donRegApp}
+      AND REC_STAT=#{recStat} 
 </select>
 <!-- volunteer정보 -->
 <!-- 시설이 봉사 등록 -->
