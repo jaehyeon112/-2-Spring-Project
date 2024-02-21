@@ -408,11 +408,11 @@
                          <p class="mb-4" style="font-style: italic;"><i class="bi bi-info-square-fill"></i> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
                      </div>
                      <!-- 버튼 부분 유지 -->
-                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio == 100 or dona.recStat == '0'}"
+                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio >= 100 or dona.recStat == '0'}"
                               onclick="redirectToPayment()">
                               
                          <i class="bi bi-heart-fill"></i> 
-                         <span th:text="${dona.recStat == '1' ? (dona.donationRatio == 100 ? '모금완료' : '기부하기') : '모금완료'}" style="color:black"></span>
+                         <span th:text="${dona.recStat == '1' ? (dona.donationRatio >= 100 ? '모금완료' : '기부하기') : '모금완료'}" style="color:black"></span>
                      </button>
 
 
@@ -505,10 +505,18 @@
     <script th:inline="javascript">
     
     var currentDonId = [[${dona.donId}]];
+   
     
     //redirect
     function redirectToPayment(){
        let donId = [[${dona.donId}]];
+       let sessionRole = [[${session.Role}]]; 
+       console.log(sessionRole);
+       if (sessionRole == 'M03') {
+        	alert("시설회원은 기부를 할 수 없습니다.");
+           console.log('Invalid session role');
+           return;
+       }
        window.location.href = "/payment?donId=" + donId; //리다이렉트에 donId 추가해서 페이지넘김
     }
     

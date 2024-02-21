@@ -79,6 +79,7 @@
         (ROUND(f.total / goal_amt, 2)*100) as donation_ratio,
         s.sub_code_name,
         q.file_path
+        
     FROM facility c
     LEFT JOIN  donation d ON d.fac_id = c.fac_id
     LEFT JOIN  f  ON d.don_id = f.don_id 
@@ -86,7 +87,7 @@
      LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08'   
     <where>
     <if test = "donRegApp !=  null and donRegApp != ''">
-     d.DON_REG_APP = #{donRegApp } 
+     d.DON_REG_APP = #{donRegApp }
     </if>
 	<if test="category != null and category != ''">
 	 AND d.category = #{category}
@@ -162,7 +163,7 @@
     d.exp_effect,
     s.sub_code_name,
     q.file_path
-    
+   
 FROM donation d 
     LEFT JOIN don_ledger f ON d.don_id = f.don_id
     LEFT JOIN facility e ON d.fac_id = e.fac_id

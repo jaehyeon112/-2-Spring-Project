@@ -1,8 +1,11 @@
 package com.bongsamaru.dona.web;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -244,7 +247,7 @@ public class DonaController {
 	@ResponseBody
 	public ResponseEntity<String> extendDonationPeriod(@RequestBody DonaVO donaVO) {
 	    log.info(donaVO);
-
+	    
 	    donaService.extendDonationPeriod(donaVO);
 	    return ResponseEntity.ok("연장 성공!");
 	}
@@ -256,7 +259,13 @@ public class DonaController {
 	 */
 	// 결제창
 	@GetMapping("/payment")
-	public String openPaymentPage(@RequestParam Integer donId) {
+	public String openPaymentPage(@RequestParam Integer donId, HttpSession session) {
+		
+		String stat = (String) session.getAttribute("Role");
+		if(stat!="m02") {
+			return "ng";			
+		} 
+		
 		return "donation/payment";
 	}
 
@@ -269,7 +278,9 @@ public class DonaController {
 	// 찐 결제하기\
 	@PostMapping("/paymentProcess")
 	@ResponseBody
-	public String payProcess(@RequestBody DonaVO donaVO, Model model) {
+	public String payProcess(@RequestBody DonaVO donaVO,  Model model, Principal prin) {
+		
+		 
 		donaService.paymentProcess(donaVO);
 		return "ok";
 	}
