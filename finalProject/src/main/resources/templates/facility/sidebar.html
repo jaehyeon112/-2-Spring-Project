@@ -110,6 +110,14 @@ $(document).ready(function() {
               'font-size': '1.25rem',
               'margin-top': '10px'
             });
+
+            // 신청 및 신청내역 페이지에서는 대분류 메뉴도 유지시킵니다.
+            menuItem.parent().siblings().children('a').css({
+                'color': '#797979',
+                'font-size': '1.125rem',
+                'font-weight': '500',
+                'box-shadow': 'none'
+            });
         }
     });
 });

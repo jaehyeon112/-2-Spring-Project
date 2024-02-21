@@ -273,7 +273,7 @@ WHERE FAC_ID=#{facId}
                      LOCATION,
                      CAP,
                      VOL_ZIP,
-                     FIND_ZIP(#{volZip}),
+                     VOL_ZIP2,
                      VOL_DATE,
                      START_DATE,
                      EXPIRE_DATE)
@@ -285,7 +285,7 @@ WHERE FAC_ID=#{facId}
                      #{location},
                      #{cap},
                      #{volZip},
-                     #{volZip2},
+                     FIND_ZIP(#{volZip},
                      #{volDate},
                      #{startDate},
                      #{expireDate})

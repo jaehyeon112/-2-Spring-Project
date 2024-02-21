@@ -187,7 +187,7 @@ public class facilityController {
 									@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
 									@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		
-		int total = facilityService.getVolDonCount(facId,"0","0");
+		int total = facilityService.getVolDonCount(principal.getName(),"0","0");
 		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
 	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","0"); // 모금완료
