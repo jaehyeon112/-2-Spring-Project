@@ -65,8 +65,7 @@ public class WebSecurityConfig {
 			.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
 				.antMatchers("/fac/").hasAnyAuthority("ROLE_M03")
-				.antMatchers("/**")
-				.permitAll()
+				.antMatchers("/**").permitAll()
 				.antMatchers("/AdminMain").hasAnyAuthority("ROLE_M01")
 				.anyRequest().authenticated()
 			)
