@@ -215,6 +215,38 @@ width: 20%;
 			}
 		})
 	};
+	
+	function fileSub(cnt) {
+		var formData = new FormData(); //FormData 객체 생성
+		var inputFile = $("input[type='file']");
+		//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+		var files = inputFile[0].files;
+		if(files.length==0){
+			return;
+		}
+		//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+		//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+		for (var i = 0; i < files.length; i++) {
+			formData.append("uploadFiles", files[i]); //키,값으로 append 
+		}
+		formData.append("code", "p09")
+		formData.append("codeNo", cnt);
+
+		//jQuery.ajax
+		$.ajax({
+			url: '/uploadsAjax',
+			type: 'POST',
+			processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+			contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+			data: formData,
+			success: function (result) {
+				location.href="boardList?category=b01"
+			},
+			error: function (reject) {
+				console.log(reject);
+			}
+		});
+	};
 		
 	$("#close").click(function () {
 	    $("#ConfirmModal").modal("hide");
