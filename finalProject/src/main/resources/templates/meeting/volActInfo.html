@@ -55,7 +55,7 @@
 						<div id="viewer"></div>
 						<hr>
 		                <a th:if="${meeting}==${session.userId}" onclick="modalOpen()" type="button" style="float: right;width:90px" class="btn btn-secondary m-1">삭제</a>
-		                <a th:if="${meeting}!=${session.userId}" th:href="@{../volBoardList?(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-secondary m-1">참여하기</a>
+		                <a id="cham" onclick="withVolAct()" type="button" style="float: right;width:90px;display:none" class="btn btn-secondary m-1">참여하기</a>
 		                <a th:href="@{../volBoardList?(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a>
 						<!-- 모달창 -->
 						<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -116,6 +116,20 @@
 						$("#noBtn").on('click',function () {
 						    $("#confimModal").modal("hide");
 						});
+						
+						$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02')
+						.done(result => {
+							if(result==0){
+								$('#cham').css('display','none')
+							}else{
+								$('#cham').css('display','block')
+							}
+						})
+						.fail(err => console.log(err));
+						
+						function withVolAct(){
+							alert('처리하기')
+						}
 					</script>
 				</div>
 			</div>

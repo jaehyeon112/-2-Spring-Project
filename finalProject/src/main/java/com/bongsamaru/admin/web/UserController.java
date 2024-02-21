@@ -1,18 +1,23 @@
 package com.bongsamaru.admin.web;
 
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriUtils;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.AlertVO;
@@ -529,6 +534,12 @@ public class UserController {
 		return userService.donaReviewInfo(donRevId);
 	}
 	
+	@GetMapping("updateDonReview")
+	@ResponseBody
+	public int updateDonReview(DonaVO vo) {
+		return userService.updateDonReview(vo);
+	}
+	
 	/**
 	 * 승인페이지
 	 * @param model
@@ -815,6 +826,8 @@ public class UserController {
 	public String getNoticeOne1(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
 		model.addAttribute("info",vo);
+		CommentsVO comm = userService.inquireCommentOne(detailCate);
+		model.addAttribute("comm",comm);
 		return "admin/inquireInfo";
 	}
 	
@@ -864,20 +877,9 @@ public class UserController {
 		userService.updateNotice(boardVO);
 		return "redirect:boardList?category=b01";
 	}
-	
+
 	/**
-	 * 문의사항 상태 수정
-	 * @param boardId
-	 * @return
-	 */
-	@GetMapping("updateInquire")
-	@ResponseBody
-	public int updateInquire(@RequestParam(name="boardId") Integer boardId) {
-		return userService.updateInquire(boardId);
-	}
-	
-	/**
-	 * 문의사항 상세
+	 * 문의사항 답변달기 페이지
 	 * @param category
 	 * @param detailCate
 	 * @param model
@@ -886,9 +888,8 @@ public class UserController {
 	@GetMapping("inquireComment")
 	public String inquireComment(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
-		CommentsVO comm = userService.inquireCommentOne(detailCate);
 		model.addAttribute("info",vo);
-		model.addAttribute("comm",comm);
+		
 		return "admin/inquireComment";
 	}
 

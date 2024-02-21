@@ -85,7 +85,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                           <a th:href="@{../volBoardList(volId=${session.id})}" class="nav-item nav-link">봉사게시판</a>
                           <a th:href="@{../reviewBoardList(volId=${session.id})}" class="nav-item nav-link" style="display:block" id="reviewBoard">후기게시판</a>
                           <a th:href="@{../freeBoardList(volId=${session.id})}" class="nav-item nav-link">자유게시판</a>
-                          <div class="nav-item dropdown">
+                          <div class="nav-item dropdown" id="myPage" style="display:none">
                               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
                               <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                   <a th:href="@{../myInfoPage(volId=${session.id})}" class="dropdown-item">내 정보</a>
@@ -107,6 +107,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                           </div>
                       </div>
                       <div id="showing" style="display:none"><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">모임 가입</button></div>
+                      <div id="daegi" style="display:none"><button class="btn" style="cursor:text;background-color:#689f38;color:white">승인 대기 중</button></div>
                   </div>
               </nav>
           </div>
@@ -218,12 +219,22 @@ $.ajax(`../meetingTag?volId=[[${session.id}]]`)
 })
 .fail(err => console.log(err));
 //모임회원 목록
-$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]')
+$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02')
 .done(result => {
 	if(result==0){
-		$('#showing').css('display','block')
+		$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h01')
+		.done(result => {
+			if(result==0){
+				$('#daegi').css('display','none')
+				$('#showing').css('display','block')
+			}else{
+				$('#daegi').css('display','block')
+			}
+		})
+		.fail(err => console.log(err));
 	}else{
 		$('#showing').css('display','none')
+		$('#myPage').css('display','block')
 	}
 })
 .fail(err => console.log(err));

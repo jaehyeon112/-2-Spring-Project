@@ -28,7 +28,7 @@
 					FAC_ZIP,
 					FAC_TYPE,
 					select_sub(fac_Type) category,
-					(select file_Path from files where code='p02' and code_user=#{facId}) as filePath
+					(select file_Path from files where code='p02' and code_user=fac_id) as filePath
     FROM FACILITY
 	       <where><!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
         <if test="facZip2 != null and facZip2 !=''">
@@ -61,7 +61,8 @@
  Select Fac_ID,
  		Fac_Name,
  		BIZ_NUM,
- 		Fac_Type, 
+ 		Fac_Type,
+ 		select_sub(fac_Type) category, 
  		FAC_ADDR,
  		FAC_ADDR_DETAIL,
  		Fac_Web,
@@ -87,60 +88,73 @@
 
 <!-- 시설에서 진행중인 모금정보 List-->
 <select id="getfundingList" resultType="FundingVO">
-SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
-	SELECT D1.DON_ID ,                      		             
-	       D1.TITLE  ,                      		   
-	       D1.GOAL_AMT ,                    		  
-		   D1.REC_STAT ,
-		   FILE_PATH,                    		  
-		   SUM(NVL(D2.DON_AMT,0))          	      AS donationAmt, 
-		   COUNT(DISTINCT D2.MEM_ID)    		  AS donors,
-		   (SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio
-		   
-	  FROM DONATION D1 
-	  LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
-	  
-	 WHERE D1.REC_STAT ='0' 
-	   AND D1.DON_REG_APP='1'
-	   AND D1.FAC_ID=#{facId}
-	   
-	 GROUP BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
-	 
-) A )
-	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
+   SELECT * FROM (
+    SELECT ROWNUM RN, A.* FROM (
+        SELECT 
+            D1.DON_ID,                     
+            D1.TITLE,                     
+            D1.GOAL_AMT,                    
+            D1.REC_STAT,
+            SUM(NVL(D2.DON_AMT,0)) AS donationAmt, 
+            COUNT(DISTINCT D2.MEM_ID) AS donors,
+            (SUM(D2.don_amt) / D1.goal_amt) * 100 AS donationRatio,
+            F.FILE_PATH AS filePath
+        FROM 
+            DONATION D1 
+            LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+            LEFT JOIN FILES F ON  F.CODE_NO=D1.DON_ID AND F.CODE_USER=D1.FAC_ID
+        WHERE 
+            D1.REC_STAT ='0' 
+            AND D1.DON_REG_APP='1'
+            AND D1.FAC_ID=#{facId}
+            AND F.CODE='p08'
+        GROUP BY 
+            D1.DON_ID, D1.TITLE, D1.GOAL_AMT, D1.REC_STAT, F.FILE_PATH
+    ) A
+) 	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
 </select>
 
 <select id="getFacDonCount" resultType="int">
-SELECT    COUNT(*)
-  FROM    DONATION
- WHERE    REC_STAT =#{recStat} 
-   AND    DON_REG_APP='1'
-   AND    FAC_ID=#{facId}
+
+ SELECT    COUNT(*)
+  FROM 	   DONATION D1 
+            LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+            LEFT JOIN FILES F ON  F.CODE_NO=D1.DON_ID AND F.CODE_USER=D1.FAC_ID
+ WHERE 
+            D1.REC_STAT =#{recStat}
+            AND D1.DON_REG_APP='1'
+            AND D1.FAC_ID=#{facId}
+            AND F.CODE='p08'
 </select>
 
 
 
 <!-- 시설에서 진행마감인 모금정보 List-->
 <select id="getfundedList" resultType="FundingVO">
-SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
-	SELECT  D1.DON_ID,
-		 	D1.TITLE    , 
-			D1.GOAL_AMT , 
-			D1.REC_STAT ,
-			SUM(NVL(D2.DON_AMT,0))                 AS donationAmt, 
-			COUNT(DISTINCT D2.MEM_ID)              AS donors,
-			(SUM(D2.don_amt) / D1.goal_amt) * 100  AS donationRatio 
-			
-	  FROM  DONATION D1 
-	  LEFT  JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
-	  
-	 WHERE  D1.REC_STAT ='1' 
-	   AND  D1.DON_REG_APP='1' 
-	   AND  D1.FAC_ID=#{facId}
-	   
-	 GROUP  BY D1.DON_ID,D1.TITLE, D1.GOAL_AMT, D1.REC_STAT
-) A )
-WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
+ SELECT * FROM (
+    SELECT ROWNUM RN, A.* FROM (
+        SELECT 
+            D1.DON_ID,                     
+            D1.TITLE,                     
+            D1.GOAL_AMT,                    
+            D1.REC_STAT,
+            SUM(NVL(D2.DON_AMT,0)) AS donationAmt, 
+            COUNT(DISTINCT D2.MEM_ID) AS donors,
+            (SUM(D2.don_amt) / D1.goal_amt) * 100 AS donationRatio,
+            F.FILE_PATH AS filePath
+        FROM 
+            DONATION D1 
+            LEFT JOIN DON_LEDGER D2 ON D1.DON_ID=D2.DON_ID
+            LEFT JOIN FILES F ON  F.CODE_NO=D1.DON_ID AND F.CODE_USER=D1.FAC_ID
+        WHERE 
+            D1.REC_STAT ='1' 
+            AND D1.DON_REG_APP='1'
+            AND D1.FAC_ID=#{facId}
+            AND F.CODE='p08'
+        GROUP BY 
+            D1.DON_ID, D1.TITLE, D1.GOAL_AMT, D1.REC_STAT, F.FILE_PATH
+    ) A
+) 	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	
 </select>
 
 
@@ -168,9 +182,11 @@ WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
 
 <select id="getVolFCount" resultType="int">
 SELECT    COUNT(*)
-  FROM    VOL_ACT
-  WHERE   FAC_ID=#{facId}  
-     AND  SYSDATE > VOL_DATE 
+ FROM      VOL_ACT V LEFT JOIN FILES F 
+ ON        V.VOL_ACT_ID = F.CODE_NO 
+ WHERE     V.FAC_ID=#{facId}
+  AND      SYSDATE > VOL_DATE 
+ AND       F.CODE='p14'
 </select>
 
 <!-- 앞으로 진행한 시설의 봉사리스트  -->
@@ -185,10 +201,10 @@ SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
  		   EXPIRE_DATE, 
  		   VOL_ACT_ID,
  		   F.FILE_PATH
- FROM      VOL_ACT V LEFT JOIN FILES F 
+FROM      VOL_ACT V LEFT JOIN FILES F 
  ON        V.VOL_ACT_ID = F.CODE_NO 
  WHERE     V.FAC_ID=#{facId}
-  AND      VOL_DATE >  SYSDATE
+  AND      VOL_DATE  > SYSDATE 
  AND       F.CODE='p14'
  ) A )
 WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	 
@@ -196,13 +212,16 @@ WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
 
 <select id="getVolICount" resultType="int">
 SELECT    COUNT(*)
-  FROM    VOL_ACT
-  WHERE   FAC_ID=#{facId}  
-AND      VOL_DATE >  SYSDATE
+ FROM      VOL_ACT V LEFT JOIN FILES F 
+ ON        V.VOL_ACT_ID = F.CODE_NO 
+ WHERE     V.FAC_ID=#{facId}
+  AND      VOL_DATE  > SYSDATE
+ AND       F.CODE='p14'
 </select>
 <!-- MyPage쪽 -->
 <!-- dona정보 -->
 <select id="getDonaList" resultType="DonaVO">
+  SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (
    SELECT D.TITLE,  
   		  D.REC_PERIOD, 
   		  D.END_PERIOD, 
@@ -217,14 +236,28 @@ AND      VOL_DATE >  SYSDATE
      FROM DONATION D
 LEFT JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
 LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
-  <where>
+  where
           F.FAC_ID=#{facId}
-     <if test="recStat != null">
+        
+      AND D.DON_REG_APP=#{donRegApp}
+     
+    
       AND REC_STAT=#{recStat}
-     </if>
-   </where>
+
  GROUP BY D.TITLE, D.REC_PERIOD, D.END_PERIOD, D.GOAL_AMT, D.DON_REG_APP, D.DON_ID, F.FAC_ID, D.EXT_PERIOD, D.HASREVIEW
 
+) A )
+WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}	
+</select>
+
+<select id="getVolDonCount" resultType="int">
+SELECT COUNT(DISTINCT D.DON_ID)
+FROM DONATION D
+JOIN DON_LEDGER DL ON D.DON_ID = DL.DON_ID
+LEFT JOIN FACILITY F ON F.FAC_ID = D.FAC_ID
+WHERE F.FAC_ID=#{facId}
+      AND D.DON_REG_APP=#{donRegApp}
+      AND D.REC_STAT=#{recStat}
 </select>
 <!-- volunteer정보 -->
 <!-- 시설이 봉사 등록 -->

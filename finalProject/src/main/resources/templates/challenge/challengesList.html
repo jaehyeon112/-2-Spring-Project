@@ -44,9 +44,10 @@
 </head>
 <body>
 <section layout:fragment="content">
-<div class="hotel" style="text-align:center;">
-<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a></div>
+<div class="hotel">
+	<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
+	<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+	</div>
 	<section class="blog_area">
 		<div class="container">
 			<div class="row">
@@ -54,14 +55,18 @@
 					<div class="blog_left_sidebar">
 					<div class="row">
 					<th:block th:each="list: ${challengesList}">
+					<div th:if="list.length ==0">
+					
+					</div>
 					<div class="col-4"	>
+					
 <!-- 이미지 파일일 경우 -->
-<div th:if="${list.file.extension.startsWith('image')}">
+<div th:if="${list.file!=null and list.file.extension.startsWith('image')}">
     <img th:each="file : ${list.file}" th:src="${file.filePath}" onError="this.src='../image/기본이미지.jpg'" width="200" height="200">
 </div>
 
 <!-- 비디오 파일일 경우 -->
-<div th:if="${list.file.extension.startsWith('video')}">
+<div th:if="${list.file!=null and list.file.extension.startsWith('video')}">
     <video controls th:each="video : ${list.file}" th:src="${video.filePath}" width="200" height="200"></video>
 </div>
 						
@@ -117,7 +122,7 @@
       <div class="modal-body">
 		 <div class="form-group">
 		    <label class="form-check-label" for="s01">스팸홍보/도배글
-		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" checked></label>
+		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" ></label>
 		    <label class="form-check-label" for="s02">음란물
 		    <input class="form-check-input" id="s02" type="radio" name="reason" value="s02"  ></label>
 		    <label class="form-check-label" for="s03">불법정보 포함
@@ -192,42 +197,66 @@
 				});
 
 
-				$('.uploadBtn').click(function () {
-					var formData = new FormData(); //FormData 객체 생성
-					var inputFile = $("input[type='file']");
-					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
-					var files = inputFile[0].files;
-					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
-					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
-					for (var i = 0; i < files.length; i++) {
-						console.log(files[i]);
-						formData.append("uploadFiles", files[i]); //키,값으로 append 
-					}
-					
-					formData.append("chalId", [[${session.challengeInfo.chalId}]]);
-					formData.append("dContent", $('#content').val());
-				//	formData.append("code", "p04")
-				//	formData.append("codeNo", $('#chalDetId').val());
-
-					//jQuery.ajax
-					$.ajax({
-						url: '/challenge/challengeDeInsert',
-						type: 'POST',
-						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
-						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
-						data: formData,
-						success: function (result) {
-							console.log(result)
-							alert('성공!')
-							 $("#myModal").modal("hide");
-						},
-						error: function (reject) {
-							alert('실풰!')
-							console.log(reject);
-						}
-					});
+			
 				
-					 
+				
+				$('.uploadBtn').click(function () {
+					
+					$.ajax({
+	       		        url: '/getChallCheck',
+	       		        type: 'GET',
+	       		        data: {
+	       		            memId: memId,
+	       		            chalId: chalId,
+	       		            partDate: partDate
+	       		        },
+	       		        success: function(response) {
+	       		            if(response > 0) {
+	       		               alert('오늘 이미 챌린지 참여했음')
+	       		             
+	       		            } else {
+	       		           		
+	       		 			var formData = new FormData(); //FormData 객체 생성
+	    					var inputFile = $("input[type='file']");
+	    					//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
+	    					var files = inputFile[0].files;
+	    					//files : 선택한 모든 파일을 나열하는 FileList 객체입니다.
+	    					//multiple 특성을 지정하지 않닸다면 두 개 이상의 파일을 포함하지 않습니다.
+	    					for (var i = 0; i < files.length; i++) {
+	    						console.log(files[i]);
+	    						formData.append("uploadFiles", files[i]); //키,값으로 append 
+	    					}
+	    					
+	    					formData.append("chalId", [[${session.challengeInfo.chalId}]]);
+	    					formData.append("dContent", $('#content').val());
+	    			
+
+	    					//jQuery.ajax
+	    					$.ajax({
+	    						url: '/challenge/challengeDeInsert',
+	    						type: 'POST',
+	    						processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
+	    						contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
+	    						data: formData,
+	    						success: function (result) {
+	    							console.log(result)
+	    							
+	    							$('#myModal').modal('hide');
+	    							location.href='/challenge/challengesList?chalId=[[${session.challengeInfo.chalId}]]'
+	    						},
+	    						error: function (reject) {
+	    							alert('실풰!')
+	    							console.log(reject);
+	    						}
+	    					});
+	    					
+	       		            }
+	       		        },
+	       		        error: function(xhr, status, error) {
+	       		          
+	       		        }
+	       		    });
+		
 				
 				});
 			
@@ -236,7 +265,7 @@
 		});
 
 	
-		 reason = $('input[name="reason"]:checked').val();
+		var reason = $('input[name="reason"]:checked').val();
 		 console.log(reason); 
 		 var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
 		 console.log(boardId);
@@ -255,8 +284,8 @@ function openModal(chalDetId) {
 	    		   contentType: 'application/json', // 컨텐츠 타입을 JSON으로 지정
 	    		   data: JSON.stringify(info), // JavaScript 객체를 JSON 문자열로 변환
 	    		   success: function (result) {
-	    		       console.log(result);
-	    		       alert('성공!');
+	    			   $('#myModal3').modal('hide');
+	    		       
 	    		   },
 	    		   error: function (reject) {
 	    		       alert('실패!');

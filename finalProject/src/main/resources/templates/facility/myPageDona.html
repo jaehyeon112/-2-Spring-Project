@@ -16,9 +16,10 @@
 <body>
 
    <section layout:fragment="content"  class="d-flex">
-   <div class="row" >
-       <div class="side col-2" th:insert="~{facility/sidebar::side}"></div>
-         <div class="col-md-10 main-content">
+   <div class="container" >
+    <div th:insert="~{banner/empty::banner}"></div>
+       <div class="side" th:insert="~{facility/sidebar::side}"></div>	
+         <div class=" main-content">
                       
 
                 <div class="row hotel_booking_table">
@@ -86,7 +87,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="book_tabel_item">
-                                     <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
+                                   
                                        
                                       <a href="#" th:onclick="openExtModal([[${dona0.donId}]])"><button class="btn" >연장하기</button></a>
                                     </div>

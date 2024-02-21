@@ -153,6 +153,7 @@ public class DonaVO {
 	    
 	//파일 - 이미지 넣도록! 
 	    private String filePath;
+	    private String fileName;
 	    //private String code; p08
 	    private Integer codeNo;
 	    

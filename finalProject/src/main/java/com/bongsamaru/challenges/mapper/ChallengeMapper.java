@@ -1,5 +1,6 @@
 package com.bongsamaru.challenges.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +24,6 @@ public interface ChallengeMapper {
 			public int challengesLikeInsert(LikeVO likeVO);
 			public int deleteChallengeLike(Integer boardId);
 			public int reportInsert(ReportVO reportVO);
+			public int getChallCheck(@Param("memId") String memId,@Param("partDate") Date partDate,@Param("chalId") Integer chalId);
 			
 }

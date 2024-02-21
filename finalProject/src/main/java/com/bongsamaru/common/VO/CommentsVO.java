@@ -14,4 +14,13 @@ public class CommentsVO {
 	private Integer parentId;
 	private String code;
 	private Integer detailCate;
+	private Integer detailCode;
+	private Integer boardId;
+	  
+	private Integer replyId;
+	private String replyMemId;
+	private String replyContent;
+	private Date replyCommDate;
+	private Integer replyParentId;
+	private String replyCode;
 }

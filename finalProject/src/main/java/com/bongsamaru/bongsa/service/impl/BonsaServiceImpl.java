@@ -54,7 +54,24 @@ public class BonsaServiceImpl implements BongsaService {
 	
 	@Override
 	public CountVO cntVol(PageVO vo) {
-		return bongsaMapper.countVol(vo);
+		if(vo == null) {
+			CountVO countVO = new CountVO();
+			countVO.setDailyVol(0);
+			countVO.setCount(0);
+			countVO.setFacVol(0);
+			countVO.setGroupVol(0);
+			return countVO;
+		}
+	    CountVO result = bongsaMapper.countVol(vo);
+	    if (result == null) {
+	        // 쿼리 결과가 null인 경우, 기본값을 갖는 CountVO 객체를 생성하여 반환
+	        result = new CountVO();
+	        result.setDailyVol(0);
+	        result.setCount(0);
+	        result.setFacVol(0);
+	        result.setGroupVol(0);
+	    }
+	    return result;
 	}
 	
 	@Override
