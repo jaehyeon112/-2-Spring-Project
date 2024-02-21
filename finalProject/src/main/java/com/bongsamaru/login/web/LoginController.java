@@ -104,6 +104,7 @@ public class LoginController {
 	@GetMapping("/nickCheck/{memNick}")
 	@ResponseBody
 	public Boolean idNick(@PathVariable String memNick) {
+		System.out.println(memNick);
 		return userService.countMemId(memNick);
 	}
 	

@@ -107,7 +107,8 @@
 						            <img th:if="${stat.count} == 3" th:src="@{/image/bronze.png}" alt="Bronze Medal" style="width: 20px; height: 20px;"/>
 						            <span th:unless="${stat.count} == 1 or ${stat.count} == 2 or ${stat.count} == 3" th:text="${stat.count}"></span>
 						        </td>
-       								<td th:text="${king.mNick}"></td>
+       								<td th:if="${king.mNick} != null" th:text="${king.mNick}"></td>
+       								<td th:unless="${king.mNick} != null" th:text="익명"></td>
        								<td data-th-text="${#numbers.formatInteger(king.total, 1, 'COMMA') + '원'}"></td>
        							</tr>
        						</tbody>
