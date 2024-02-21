@@ -64,10 +64,10 @@ public class WebSecurityConfig {
 			.addFilterBefore(additionalInfoFilter, UsernamePasswordAuthenticationFilter.class) // 여기에 필터 추가
 			.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
-				.antMatchers("/fac/").hasAnyAuthority("ROLE_M03")
+				//.antMatchers("/fac/").hasAnyAuthority("ROLE_M03")
+				//.antMatchers("/AdminMain").hasAnyAuthority("ROLE_M01")
 				.antMatchers("/**").permitAll()
-				.antMatchers("/AdminMain").hasAnyAuthority("ROLE_M01")
-				.anyRequest().authenticated()
+				//.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
