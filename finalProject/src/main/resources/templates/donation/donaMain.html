@@ -188,7 +188,8 @@
                                                 # <strong><span th:text="${dona.subCodeName}"></span></strong>
                                             </div>
                                             <div class="info-item">
-                                                목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
+                                                목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3, 'COMMA') }"></span></strong> 원
+                                                
                                             </div>
                                             <div class="info-item">
                                                 <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
@@ -202,7 +203,7 @@
 											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
 											    </div>
 											    <div style="text-align: right;">
-											        <strong><span th:text="${dona.total}"></span></strong>원
+											        <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA')}"></span></strong>원
 											    </div>
 											</div>
 

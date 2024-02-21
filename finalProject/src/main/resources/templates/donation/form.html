@@ -42,7 +42,7 @@
 
 
 
-<div class="container" style="margin:200px 0px 0px 100px;">
+<div class="container" style="margin: 150px auto;">
 <form name="donaForm" >
   <fieldset>
     <legend style="font-weight:bold;"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -219,7 +219,22 @@
 
 <script th:inline="javascript">
 
-// 글자수
+	//textarea 처리
+	function processTextareaContent() {
+	    let textareaElements = document.querySelectorAll('textarea');
+	    textareaElements.forEach(function (textarea) {
+	        let content = textarea.value;
+	        // Replace newline characters with <br> tags
+	        content = content.replace(/\n/g, '<br>');
+	        // Set the processed content back to the textarea
+	        textarea.innerHTML = content;
+	    });
+	}
+
+// Call the function after the document is ready
+document.addEventListener("DOMContentLoaded", function () {
+    processTextareaContent();
+});
 
 
 	
@@ -284,7 +299,7 @@ function submitForm() {
             
             console.log("ajax 안에 success response " + response);
 
-            alert("등록성공!");
+            
             showDonationConfirmationModal();
             location.href = "donaMain";
             return;

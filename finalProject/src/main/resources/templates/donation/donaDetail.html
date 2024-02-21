@@ -31,7 +31,7 @@
         <link href="donation/board/css/style.css" rel="stylesheet">
        
        <style>
-       
+       v
     .vesitable-item {
         display: flex;
         flex-direction: column;
@@ -117,7 +117,7 @@
                           <thead>
                               <tr class="table-success">
                                   <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">총집행금액</th>
-                                  <th scope="col" colspan="2"  style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;" th:text="${dona.goalAmt} + '원 (목표금액 )'">총 집행금액</th>
+                                  <th scope="col" colspan="2"  style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;" th:text="${#numbers.formatInteger(dona.goalAmt,3, 'COMMA')} + '원 (목표금액 )'">총 집행금액</th>
                               </tr>
                           </thead>
                   
@@ -135,8 +135,8 @@
                                   </td>
                   
                                   <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt} + '원' "></p>
-                                  </td>
+                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt,3, 'COMMA')} + '원' "></p>
+                                  </td> 
                                   
                               </tr>
                               <!-- 두번째열 -->
@@ -150,7 +150,7 @@
                                   </td>
                   
                                   <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt2}+ '원' "></p>
+                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt2,3, 'COMMA')} + '원' "></p>
                                   </td>
                               </tr>
                               
@@ -165,7 +165,7 @@
                                   </td>
                   
                                   <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.usePlanAmt3} + '원' "></p>
+                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt3,3, 'COMMA')} + '원' "></p>
                                   </td>
                               </tr>
                           </tbody>
@@ -179,6 +179,7 @@
                          <tr>
                              <th scope="col" class="table-success" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center; width: 20%;">사업기간</th>
                              <td colspan="2" th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd') + ' ~ ' + #dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></td>
+                         		
                          </tr>
                          <tr>
                              <th scope="col" class="table-success" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">사업대상</th>
@@ -279,7 +280,7 @@
                   <thead>
                      <tr class="table-warning">
                         <th scope="col" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">총집행금액</th>
-                        <th scope="col" colspan="2"  style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;" th:text="${rev.bizCost} + '원 (' + ${dona.goalAmt} + ')'">총 집행금액</th>
+                        <th scope="col" colspan="2"  style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;" th:text="${#numbers.formatInteger(rev.bizCost,3,'COMMA')+'원'} + '(' + ${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'} + ')'">총 집행금액</th>
                      </tr>
                   </thead>
             
@@ -297,7 +298,7 @@
                         </td>
             
                         <td>
-                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.bizAmt} + '원'"></p>
+                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt,3,'COMMA')+'원'}"></p>
                         </td>
                         
                      </tr>
@@ -312,7 +313,7 @@
                         </td>
             
                         <td>
-                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.bizAmt2}+ '원' "></p>
+                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt2, 3, 'COMMA') + '원'}"></p>
                         </td>
                      </tr>
                      
@@ -327,7 +328,7 @@
                         </td>
             
                         <td>
-                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${row.bizAmt3}+ '원' "></p>
+                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt3, 3, 'COMMA') + '원'}"></p>
                         </td>
                      </tr>
                   </tbody>
@@ -346,11 +347,9 @@
 
      </div>  <!--  end 모금후기  영역 -->
                   </div> <!-- 하위 nav 안의 영역  -->
-                  		<div class="comments-container"style="margin-top:30px;">
+                  	<div class="comments-container">
                             <form>
-                                <h3 class="mb-5 fw-bold"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chat-heart" viewBox="0 0 16 16">
-							  <path fill-rule="evenodd" d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2m-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125M8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
-							</svg><i class="bi bi-chat-heart"></i> 응원 댓글 남기기! </h3>
+                                <h4 class="mb-5 fw-bold"> 댓글 달기 </h4>
                                 <div class="row g-4" id="showComments">
                               
                                    <div id="commentSection">   
@@ -359,24 +358,19 @@
                                       <p>
                                <span th:utext="${com.memId} + '님' +  '<br> <span style=\'color: #333; font-size: 1.2em;\'>❝ ' + ${com.content} + ' ❞</span>' +  '<br>' + ${#dates.format(com.commDate, 'yyyy/MM/dd')} ">댓글나와랑</span>
                            </p>
-
                                     </div>
                                    </div>
                                    
-									<div class="row">
-									    <div class="col-lg-9"> <!-- 댓글 입력 input이 9/12의 너비를 차지하도록 수정 -->
-									      <div class="border-bottom rounded my-4">
-									          <input name="content" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="댓글을 입력해주세요." spellcheck="false">
-									      </div>
-									  </div>
-									  <div class="col-lg-3 d-flex align-items-end"> <!-- 입력 버튼이 댓글 입력 input 옆에 오도록 수정 -->
-									      <div class="d-flex justify-content-end py-3 mb-5">
-									          <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()">입력</a>
-									        </div>
-									    </div>
-									</div>
-
-
+                                          <div class="col-lg-12">
+                                        <div class="border-bottom rounded my-4">
+                                            <input name="content" id="comment" class="form-control border-0" cols="30" rows="8" placeholder="댓글을 입력해주세요." spellcheck="false">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="d-flex justify-content-between py-3 mb-5">
+                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 댓글 입력하기 </a>
+                                        </div>
+                                    </div>   
                                     </div>
                                 
                             </form>
@@ -392,17 +386,18 @@
                         <div class="row g-4 fruite">
                      <div class="col-lg-12" >
                          
-                         <div class="info-item">목표금액 : <strong><span th:text="${dona.goalAmt}"></span> 원 </strong></div>
-                         
+                         <div class="info-item">목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
+                          
                             <div class="progress">
                                      <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
                                  </div>
                                  <div class="info-item" style="display: flex; justify-content: space-between;">
                                      <div style="text-align: left;">
-                                         <strong><span th:text="${dona.donationRatio}"></span></strong> %
+                                         <!--  <strong><span  style="font-size: 20px; color: green;" th:text="${dona.donationRatio}"></span>%</strong> -->
+                                          <strong><span  th:text="${dona.donationRatio}"></span>%</strong>
                                      </div>
                                      <div style="text-align: right;">
-                                         <strong><span th:text="${dona.total}"></span></strong>원
+                                         <strong><span th:text="${#numbers.formatInteger(dona.total,3,'COMMA')+'원'}"></span></strong>
                                      </div>
                                  </div>
                          
@@ -456,7 +451,7 @@
                         <div class="p-4 pb-0 rounded-bottom" >
                             <h5><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h5>
                             <div class="info-item">
-                                목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
+                                목표금액 :<strong><span th:text="${#numbers.formatInteger(dona.goalAmt, 3, 'COMMA') + '원'}"></span></strong>
                             </div>
                             <div class="info-item">
                                 <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
@@ -469,7 +464,7 @@
                                          <strong><span th:text="${dona.donationRatio}"></span></strong> %
                                      </div>
                                      <div style="text-align: right;">
-                                         <strong><span th:text="${dona.total}"></span></strong>원
+                                         <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA') + '원'}"></span></strong>
                                      </div>
                                  </div>
                             <div class="d-flex justify-content-center flex-lg-wrap">
@@ -619,7 +614,7 @@
     
     function updateCommentSection(donId, memId) {
         // 댓글 섹션을 비동기적으로 업데이트
-        $('#commentSection').load("../donaDetail?id=" + donId + "&facId=" + memId + " #commentList");
+        $('#commentList').load("../donaDetail?id=" + donId + "&facId=" + memId + " #commentList");
     }
     
 </script>
