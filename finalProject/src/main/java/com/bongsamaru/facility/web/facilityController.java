@@ -206,6 +206,7 @@ public class facilityController {
 		  int total = facilityService.getVolDonCount(facId,'1','0');
 		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
+	      log.info(vo);
 	      List<DonaVO> list1 = facilityService.getDonaList(vo, principal.getName(), '1','0'); // 모금완료
 	      model.addAttribute("donaList1", list1);
 	      log.info(list1);
@@ -213,7 +214,8 @@ public class facilityController {
 	      
 	      int total2 = facilityService.getVolDonCount(facId,'1','1');
 	      vo2 = new PageVO(total2,start, end, category ,3);
-	      model.addAttribute("vo2",vo);
+	      model.addAttribute("vo2",vo2);
+	      log.info(vo2);
 	      List<DonaVO> list0 = facilityService.getDonaList(vo2, principal.getName(),'1', '1'); //모금중
 	      model.addAttribute("donaList0", list0);
 	      log.info(list0);
@@ -247,7 +249,6 @@ public class facilityController {
 		  public String getFacilityVolFinish(Model model,
 							                  Principal principal,
 							                  PageVO vo, 
-							                  
 							                  Integer cntPerPage,
 							                  @RequestParam(value="category", required = false)String category,
 							                  @RequestParam(value="start", required = false, defaultValue = "1") Integer start,

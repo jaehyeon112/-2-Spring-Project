@@ -45,15 +45,11 @@ h3{
 								<div class="row justify-content-center" >
 								<div class="col-6" >
 								
-									<div class="image-container">
+									<div class="image-container" id="image-container0">
 									<div class="showimg-container">
 										<img id="imagePreview" src="/image/초록개구리.png"
 											style="width: 420px; height: 200px;">
-									<div class="file-input-container">
-									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
-									<label for="imageInput" class="custom-file-label"></label>
-									<span id="file-chosen"></span>
-									</div>
+									
 									</div>
 									<p>"메인 이미지 들어갈 자리입니다"</p>
 									</div>
@@ -61,20 +57,30 @@ h3{
 									</div>
 								</div>
 								</div>
+								
+									<h3>챌린지일시</h3>
+								<div class="form-group">
+									<div class="row">
+										<div class="col">
+											<input type="date" class="form-control" id="start" name="regDate" >
+											<small class="text-muted">챌린지 시작일</small>
+										</div>
+										<div class="col">
+											<input type="date" class="form-control" name="endDate" >
+											<small class="text-muted">챌린지 종료일 (오늘부터 최소 한 달, 최대 6개월까지)</small>
+										</div>
+									</div>
+								</div>
 								<h3>행동이유</h3>
 								<div class="row">
 								<div class="col-6">
 									<div class="form-group">
 									
-									<div class="image-container">
+									<div class="image-container" id="image-container1">
 									<div class="showimg-container">
 										<img id="imagePreview" src="/image/초록개구리.png"
 											style="width: 420px; height: 200px;">
-									<div class="file-input-container">
-									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
-									<label for="imageInput" class="custom-file-label"></label>
-									<span id="file-chosen"></span>
-									</div>
+									
 									</div>
 									<p>"행동이유 들어갈 자리입니다"</p>
 									</div>
@@ -82,15 +88,11 @@ h3{
 								</div>
 								<div class="col-6">
 									<div class="form-group">
-									<div class="image-container">
+									<div class="image-container" id="image-container2">
 									<div class="showimg-container">
 										<img id="imagePreview" src="/image/초록개구리.png"
 											style="width: 420px; height: 200px;">
-									<div class="file-input-container">
-									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
-									<label for="imageInput" class="custom-file-label"></label>
-									<span id="file-chosen"></span>
-									</div>
+									
 									</div>
 									<p>"행동이유 들어갈 자리입니다"</p>
 									</div>
@@ -105,15 +107,11 @@ h3{
 								<div class="row">
 								<div class="col-6">
 									<div class="form-group">
-									<div class="image-container">
+									<div class="image-container" id="image-container3">
 									<div class="showimg-container">
 										<img id="imagePreview" src="/image/초록개구리.png"
 											style="width: 420px; height: 200px;">
-									<div class="file-input-container">
-									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
-									<label for="imageInput" class="custom-file-label"></label>
-									<span id="file-chosen"></span>
-									</div>
+									
 									</div>
 									<p>"기대효과이미지 들어갈 자리입니다"</p>
 									</div>
@@ -121,15 +119,11 @@ h3{
 								</div>
 								<div class="col-6">
 									<div class="form-group">
-								<div class="image-container">
+								<div class="image-container" id="image-container4">
 									<div class="showimg-container">
 										<img id="imagePreview" src="/image/초록개구리.png"
 											style="width: 420px; height: 200px;">
-									<div class="file-input-container">
-									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file">
-									<label for="imageInput" class="custom-file-label"></label>
-									<span id="file-chosen"></span>
-									</div>
+								
 									</div>
 									<p>"기대효과 이미지 들어갈 자리입니다"</p>
 									</div>
@@ -144,21 +138,11 @@ h3{
 								<div class="form-group">
 									<textarea class="form-control" name="content" placeholder="그 외 내용(인증안되는 사례 등)을 자유롭게 작성해 주세요" required></textarea>
 								</div>
-								
-								<h3>챌린지일시</h3>
-								<div class="form-group">
-									<div class="row">
-										<div class="col">
-											<input type="date" class="form-control" id="start" name="regDate" >
-											<small class="text-muted">챌린지 시작일</small>
-										</div>
-										<div class="col">
-											<input type="date" class="form-control" name="endDate" >
-											<small class="text-muted">챌린지 종료일 (오늘부터 최소 한 달, 최대 6개월까지)</small>
-										</div>
+								<div class="file-input-container">
+									<input class="form-control file-input" id="imageInput" name="uploadFiles" type="file" multiple>
+									<label for="imageInput" class="custom-file-label"></label>
+									<span id="file-chosen"></span>
 									</div>
-								</div>
-								
 								<h3>HOW TO</h3>
 								<div class="form-group">
 									<input type="text" class="form-control" name="partMethod1" placeholder="방법 1을 입력해주세요" required>
@@ -168,7 +152,7 @@ h3{
 								<div class="form-group">
 									<input type="text" class="form-control" name="partMethod2" placeholder="방법 2을 입력해주세요" required>
 								</div>
-							
+									
 								<div class="text-center">
 								<br>
 									<button type="submit" class="btn btn-primary">작성하기</button>
@@ -261,7 +245,7 @@ h3{
 				//사진
 				var formData = new FormData(document.insertForm); //FormData 객체 생성
 
-				$.ajax({
+			 	$.ajax({
 					url: '/challengeInsert',
 					type: 'POST',
 					processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
@@ -277,34 +261,36 @@ h3{
 						alert('실패입니다!')
 						console.log(reject);
 					}
-			    });
+			    }); 
 
 			}
 			
 			document.querySelectorAll('.file-input').forEach(function(input) {
 			    input.addEventListener('change', function(event) {
-			        var label = input.nextElementSibling;
-			        var fileChosen = input.nextElementSibling.nextElementSibling;
 			        var files = event.target.files;
+			        var imageContainers = document.querySelectorAll('.image-container');
+			        
+			        for (var i = 0; i < files.length; i++) {
+			            var file = files[i];
+			            var label = input.nextElementSibling;
+			            var fileChosen = input.nextElementSibling.nextElementSibling;
 
-			        if (files.length > 0) {
-			            label.textContent = '파일 선택';
-			            fileChosen.textContent = files[0].name; // 파일명을 업데이트
-			        } else {
-			            label.textContent = '파일 선택';
-			            fileChosen.textContent = '파일명'; // 파일이 선택되지 않았을 때의 텍스트
-			        }
+			            if (file) {
+			                label.textContent = '파일 선택';
+			                fileChosen.textContent = file.name;
 
-			        // 이미지 미리보기 기능
-			        var image = input.closest('.image-container').querySelector('.showimg-container img');
-			        var reader = new FileReader();
-			        reader.onloadend = function() {
-			            image.src = reader.result;
-			        };
-			        if (files.length > 0) {
-			            reader.readAsDataURL(files[0]);
-			        } else {
-			            image.src = "";
+			                // 이미지 미리보기 기능
+			                var reader = new FileReader();
+			                reader.onloadend = (function (imgContainer) {
+			                    return function (e) {
+			                        imgContainer.querySelector('.showimg-container img').src = e.target.result;
+			                    };
+			                })(imageContainers[i]);
+			                reader.readAsDataURL(file);
+			            } else {
+			                label.textContent = '파일 선택';
+			                fileChosen.textContent = '파일명';
+			            }
 			        }
 			    });
 			});
