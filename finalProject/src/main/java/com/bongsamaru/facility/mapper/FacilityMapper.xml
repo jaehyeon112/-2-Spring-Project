@@ -16,6 +16,7 @@
 					select_sub(fac_Type) category,
 					(select file_Path from files where code='p02' and code_user=fac_Id) as filePath
               from facility
+              where mem_app = 1
 </select>
 <select id="getFacilityList" resultType="FacilityVO">
 	SELECT *    FROM (    	SELECT ROWNUM RN, A.*  FROM (

@@ -104,6 +104,7 @@ public class LoginController {
 	@GetMapping("/nickCheck/{memNick}")
 	@ResponseBody
 	public Boolean idNick(@PathVariable String memNick) {
+		System.out.println(memNick);
 		return userService.countMemId(memNick);
 	}
 	
@@ -162,7 +163,6 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(vo.getMemSsn() + "주민번호는?");
 		String ssn = vo.getMemSsn();
 		if(vo.getMemSsn() != null && vo.getMemSsn() != "") {
 			String encSsn = encrypt.encryptSsn(ssn);

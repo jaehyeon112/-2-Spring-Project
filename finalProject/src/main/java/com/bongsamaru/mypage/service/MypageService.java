@@ -9,6 +9,7 @@ public interface MypageService {
 	
 	public Double getHeart(String memId);
 	public int updateProFile(UserVO userVO);
+	public int deleteMember(UserVO userVO);
 	public Integer getSumAmt(String memId);
 	public Integer getGibuCount(String memId);
 	public List<DonledgerVO> getGibuList(String memId);

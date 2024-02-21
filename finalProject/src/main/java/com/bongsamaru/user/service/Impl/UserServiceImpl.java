@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 
 	@Override
 	public Boolean countMemId(String memId) {
-		if(userMapper.countMemId(memId) == 1){
+		if(userMapper.countMemId(memId) > 0){
 			return false;
 		}
 		return true;
@@ -79,7 +79,8 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	
 	@Override
 	public Boolean countMemNick(String memNick) {
-		if(userMapper.countMemNick(memNick) == 1){
+		System.out.println(userMapper.countMemNick(memNick));
+		if(userMapper.countMemNick(memNick) > 0){
 			return false;
 		}
 		return true;

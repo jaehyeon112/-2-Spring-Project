@@ -2,6 +2,8 @@ package com.bongsamaru.common.VO;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -26,14 +28,15 @@ public class VolunteerVO {
 	private Integer volId;
 	private String meetName;
 	private String meetType;
-	//private Integer cap;
 	private String meetPurp;
 	private String meetDesc;
 	private String region;
 	private String oneLiner;
 	private Integer roomStat;
 	private Integer meetingCnt;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date recPeriod;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date endPeriod;
 	private Date appDate;
 	private String path;

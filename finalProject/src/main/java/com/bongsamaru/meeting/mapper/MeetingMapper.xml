@@ -359,4 +359,21 @@
 		set meet_type = 'e04' 
 		where vol_id=#{volId}
 	</update>
+	<insert id="insertMeeting" parameterType="VolunteerVO">
+		insert into volunteer values(
+        VOLUNTEER_SEQ.NEXTVAL
+		        ,#{meetName}
+		        ,#{meetType}
+		        ,#{cap}
+		        ,#{meetPurp}
+		        ,#{meetDesc}
+		        ,#{region}
+		        ,1
+		        ,#{recPeriod}
+		        ,#{endPeriod}
+		        ,#{memId}
+		        ,#{oneLiner}
+		        ,#{category}
+		)
+	</insert>
 </mapper>

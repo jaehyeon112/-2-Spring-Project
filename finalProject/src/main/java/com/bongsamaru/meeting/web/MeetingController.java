@@ -25,6 +25,8 @@ import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.dona.service.DonaService;
+import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.meeting.service.MeetingService;
 @Controller
@@ -34,6 +36,9 @@ public class MeetingController {
 	
 	@Autowired
 	AdminService userService;
+	
+	@Autowired
+	DonaService donaService;
 	
 	//모임 방 메인
 	/**
@@ -424,4 +429,21 @@ public class MeetingController {
 	public String goodbye() {
 		return "meeting/goodbye";
 	}
+	
+	//모임 등록 페이지
+	@GetMapping("regMeetingPage")
+	public String redMeeting(Model model) {
+		List<DonaVO> region = donaService.getCategoryList("f");
+		List<DonaVO> categoryList = donaService.getCategoryList("z");
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("region", region);
+		return "meeting/regMeeting";
+	}
+	//모임등록 프로세스
+	@PostMapping("regMeeting")
+	@ResponseBody
+	public int insertMeeting(VolunteerVO vo) {
+		return service.insertMeeting(vo);
+	}
+	
 }

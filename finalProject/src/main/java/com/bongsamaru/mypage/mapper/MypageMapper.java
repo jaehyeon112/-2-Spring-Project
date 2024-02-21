@@ -28,5 +28,8 @@ public interface MypageMapper {
 	
 	// insert Heart
 	public int insertHeart(HeartVO vo);
+	
+	// 회원탈퇴
+	public int deleteMember(UserVO userVO);
 
 }
