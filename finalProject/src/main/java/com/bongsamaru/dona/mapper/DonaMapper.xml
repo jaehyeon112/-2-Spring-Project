@@ -16,12 +16,14 @@
  			d.rec_stat,
  			d.don_id,
  			c.fac_id,
- 			d.category		
+ 			d.category	
+ 			d.don_reg_app	
  		FROM donation d
  			LEFT JOIN don_ledger f ON d.don_id = f.don_id
  			LEFT JOIN facility c ON d.fac_id = c.fac_id
- 		where d.DON_REG_APP = 1
- 		GROUP BY d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category
+ 		where d.DON_REG_APP = '1' 
+ 		
+ 		GROUP BY d.don_reg_app, d.title, d.goal_amt, c.fac_name, d.rec_stat, d.don_id,c.fac_id, d.category
  	
  	</select>
 <!--  메인페이지 전체조회 : 모금중 -->
@@ -71,6 +73,7 @@
         d.category,
         d.ext_period,
         d.end_period,
+        d.don_reg_app,
         NVL(f.donation_count, 0) as donation_count,
         NVL( f.total, 0) as total,
         (ROUND(f.total / goal_amt, 2)*100) as donation_ratio,
@@ -83,7 +86,7 @@
      LEFT JOIN files q ON q.code_no = d.don_id AND q.code = 'p08'   
     <where>
     <if test = "donRegApp !=  null and donRegApp != ''">
-     d.DON_REG_APP = #{donRegApp }
+     d.DON_REG_APP = #{donRegApp } 
     </if>
 	<if test="category != null and category != ''">
 	 AND d.category = #{category}
@@ -158,8 +161,8 @@
     d.proj_target,
     d.exp_effect,
     s.sub_code_name,
-    q.file_path,
-    f.anon_check
+    q.file_path
+    
 FROM donation d 
     LEFT JOIN don_ledger f ON d.don_id = f.don_id
     LEFT JOIN facility e ON d.fac_id = e.fac_id
@@ -169,7 +172,7 @@ FROM donation d
 WHERE  d.don_id = #{donId} and e.fac_id=#{facId}
 GROUP BY d.don_id, d.title, d.rec_period, d.end_period, d.goal_amt, d.category,e.fac_id, e.fac_name, e.fac_intro, e.fac_est_date, d.rec_stat, d.intro_title, d.intro,
     z.don_det_id, z.use_plan, z.link, z.link2, z.use_plan, z.use_plan2, z.use_plan3, z.use_plan_amt, z.use_plan_amt2, z.use_plan_amt3, z.add_intro_title, z.add_intro, d.proj_target, d.exp_effect, 
-    d.ext_period, s.sub_code_name, q.file_path, f.anon_check
+    d.ext_period, s.sub_code_name, q.file_path
 
 </select>
 

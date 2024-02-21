@@ -47,7 +47,7 @@
  
   
     <div class="form-group">
-      <label for="execAmt" class="form-label mt-4">총 집행금액</label>
+      <label for="execAmt" class="form-label mt-4">  ⦁ 총 집행금액</label>
       <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
 <!--       
@@ -58,7 +58,7 @@
 -->     
     
     <div class="form-group">
-      <label for="period" class="form-label mt-4"> 사업집행기간 (DATE)</label>
+      <label for="period" class="form-label mt-4">  ⦁ 사업집행기간</label>
        <div class="row">
         <div class="col-md-3">
       <input type="date" class="form-control" name="startPeriod" th:datetime="${#dates.format(startPeriod, 'yyyy-MM-dd')}" id="startPeriod" placeholder="기부모금시작 " autocomplete="off">
@@ -71,13 +71,13 @@
 
 
     <div class="form-group">
-      <label for="bizCost" class="form-label mt-4">총사업비</label>
+      <label for="bizCost" class="form-label mt-4">  ⦁ 총사업비</label>
       <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
     
     
     <div class="form-group">
-      <label for="usePlan" class="form-label mt-4">기부금 사업내역</label>
+      <label for="usePlan" class="form-label mt-4">  ⦁ 기부금 사업내역</label>
       <div id = "dynamicFields" class="mb-3" style="width: 66.66%;">
       	<div class="input-group">
 	      <input type="text" class="form-control" name="bizContent" id="usePlan" placeholder="구체적사업내용" autocomplete="off"> 
@@ -89,7 +89,7 @@
     
     
     <div class="form-group">
-	  <label for="review" class="form-label mt-4">후기글</label>
+	  <label for="review" class="form-label mt-4">  ⦁ 후기글</label>
 	    <div id="articleContainer" class="mb-3" style="width: 66.66%;">
 	        <div class="input-group">
 	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off" >
@@ -102,9 +102,9 @@
 	</div>
 	
 
-	<div class="form-group">
-	    <label for="formFile2" class="form-label mt-4">이미지 첨부파일</label>
-	    <div id="formFile2Container" class="mb-3">
+	<div class="form-group" style="margin-bottom: 50px;">
+	    <label for="formFile2" class="form-label mt-4">  ⦁ 이미지 첨부파일</label>
+	    <div id="formFile2Container" class="mb-3" style="width: 33%;" >
 	        <div class="input-group">
 	            <input class="form-control" type="file" name="uploadfiles" id="formFile2" style="width: 66.66%;">
 	            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>

@@ -39,10 +39,10 @@
 
  <section layout:fragment="content" >
  
+<div th:insert="~{banner/empty::banner}"></div>
 
 
-
-<div class="container" style="margin: 150px auto;">
+ <div class="container" style="margin: 0 auto;"> 
 <form name="donaForm" >
   <fieldset>
     <legend style="font-weight:bold;"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -219,22 +219,26 @@
 
 <script th:inline="javascript">
 
-	//textarea 처리
-	function processTextareaContent() {
-	    let textareaElements = document.querySelectorAll('textarea');
-	    textareaElements.forEach(function (textarea) {
-	        let content = textarea.value;
-	        // Replace newline characters with <br> tags
-	        content = content.replace(/\n/g, '<br>');
-	        // Set the processed content back to the textarea
-	        textarea.innerHTML = content;
-	    });
-	}
-
-// Call the function after the document is ready
+//textarea 처리
 document.addEventListener("DOMContentLoaded", function () {
     processTextareaContent();
 });
+
+function processTextareaContent() {
+    let textareaElements = document.querySelectorAll('textarea');
+    textareaElements.forEach(function (textarea) {
+        let content = textarea.value;
+
+        // 개행문자(\n)를 <br> 태그로 변경
+        content = content.replace(/\n/g, '<br>');
+
+        // textarea에 HTML 내용을 추가
+        textarea.innerHTML = content;
+    });
+}
+
+
+
 
 
 	
