@@ -58,8 +58,13 @@ function dateFormat(value, format) {
 			<a style="color:black;font-size:14px" onclick="show1()">진행 중인 프로젝트 | </a>
 			<a style="color:black;font-size:14px" onclick="show2()"> 종료된 프로젝트</a>
 		</div>
+		<br><hr>
+		<th:block th:if=${#lists.size(facDona)==0}>
+			<h3 style="text-align:center">존재하는 데이터가 없습니다.</h3>
+		</th:block>
 		<div id="tableData">
 		<!-- 현재 진행중인 프로젝트 장부 시작-->
+		<th:block th:if=${#lists.size(facDona)!=0}>
 		<div th:if="${vo.recStat}==1" id="current">
 			<div class="btn-group" style="float:right;">
 			  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -107,9 +112,11 @@ function dateFormat(value, format) {
 			    </ul>
 			</nav>
 		</div>
+		</th:block>
 		<!-- 현재 진행중인 프로젝트 장부 종료 -->
 			
-		<!-- 종료된 프로젝트 장부 -->	
+		<!-- 종료된 프로젝트 장부 -->
+		<th:block th:if=${#lists.size(facDona)!=0}>
 		<div th:if="${vo.recStat}==0" id="ending">
 			<div class="btn-group" style="float:right;">
 			  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -157,6 +164,7 @@ function dateFormat(value, format) {
 			    </ul>
 			</nav>
 			</div>
+			</th:block>
 			<!-- 종료된 프로젝트 장부 종료-->	
 			
 		</div>

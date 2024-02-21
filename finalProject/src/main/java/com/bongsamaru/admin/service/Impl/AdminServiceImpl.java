@@ -161,15 +161,13 @@ public class AdminServiceImpl implements AdminService{
 		return userMapper.getReportCnt(pageVO);
 	}
 
+	@Transactional
 	@Override
 	public int inquireComments(CommentsVO commentsVO) {
-		return userMapper.inquireComments(commentsVO);
+		userMapper.inquireComments(commentsVO);
+		return userMapper.updateInquire(commentsVO.getDetailCate());
 	}
 
-	@Override
-	public int updateInquire(Integer boardId) {
-		return userMapper.updateInquire(boardId);
-	}
 
 	@Override
 	public CommentsVO inquireCommentOne(Integer detailCode) {

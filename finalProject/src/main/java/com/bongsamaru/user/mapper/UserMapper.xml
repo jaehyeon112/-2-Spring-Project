@@ -34,7 +34,7 @@
     #{memSsn},
     #{emailAgree},
     #{smsAgree},
-    (UPPER(#{memStat})),
+    #{memStat},
     #{memName}
 )
    </insert>
