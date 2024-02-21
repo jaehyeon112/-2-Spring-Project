@@ -826,6 +826,8 @@ public class UserController {
 	public String getNoticeOne1(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
 		model.addAttribute("info",vo);
+		CommentsVO comm = userService.inquireCommentOne(detailCate);
+		model.addAttribute("comm",comm);
 		return "admin/inquireInfo";
 	}
 	
@@ -875,20 +877,9 @@ public class UserController {
 		userService.updateNotice(boardVO);
 		return "redirect:boardList?category=b01";
 	}
-	
+
 	/**
-	 * 문의사항 상태 수정
-	 * @param boardId
-	 * @return
-	 */
-	@GetMapping("updateInquire")
-	@ResponseBody
-	public int updateInquire(@RequestParam(name="boardId") Integer boardId) {
-		return userService.updateInquire(boardId);
-	}
-	
-	/**
-	 * 문의사항 상세
+	 * 문의사항 답변달기 페이지
 	 * @param category
 	 * @param detailCate
 	 * @param model
@@ -897,9 +888,8 @@ public class UserController {
 	@GetMapping("inquireComment")
 	public String inquireComment(@RequestParam(name="category") String category,@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = userService.getNoticeOne(category,detailCate);
-		CommentsVO comm = userService.inquireCommentOne(detailCate);
 		model.addAttribute("info",vo);
-		model.addAttribute("comm",comm);
+		
 		return "admin/inquireComment";
 	}
 

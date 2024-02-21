@@ -73,7 +73,7 @@ public interface AdminMapper {
 	public int delFaq(Integer faqId);
 	public int updateNotice(BoardVO boardVO);
 	public int inquireComments(CommentsVO commentsVO);
-	public int updateInquire(Integer boardId);
+	public int updateInquire(Integer detailCate);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
