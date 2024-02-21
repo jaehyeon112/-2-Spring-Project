@@ -359,6 +359,12 @@
 		set meet_type = 'e04' 
 		where vol_id=#{volId}
 	</update>
+	<!-- 삭제시 회원상태수정 -->
+	<update id="deleteMember" parameterType="VolMemVO">
+		update vol_mem 
+		set app_code = 'h04' 
+		where vol_id=#{volId}
+	</update>
 	<insert id="insertMeeting" parameterType="VolunteerVO">
 		<selectKey keyProperty="volId" order="BEFORE" resultType="int">
          	select VOLUNTEER_SEQ.NEXTVAL from dual

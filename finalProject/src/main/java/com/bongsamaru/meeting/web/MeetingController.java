@@ -467,4 +467,12 @@ public class MeetingController {
 		return "meetings?volId="+codeNo;
 	}
 	
+	@GetMapping("updateMeeting")
+	public String updateMeetingPage(@RequestParam Integer volId,HttpServletRequest req,Model model) {
+		req.getSession().setAttribute("id",volId);
+		VolunteerVO vo = service.meetingInfo(volId);
+		model.addAttribute("info",vo);
+		return "meeting/updateMeeting";
+	}
+	
 }

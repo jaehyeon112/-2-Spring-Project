@@ -170,7 +170,9 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
+	@Transactional
 	public int deleteMeeting(Integer volId) {
+		mapper.deleteMember(volId);
 		return mapper.deleteMeeting(volId);
 	}
 
@@ -178,5 +180,4 @@ public class MeetingServiceImpl implements MeetingService{
 	public int insertMeeting(VolunteerVO vo) {
 		return mapper.insertMeeting(vo);
 	}
-
 }

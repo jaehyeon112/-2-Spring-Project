@@ -225,12 +225,14 @@
            		}
            	});
 		}
+		//모임 삭제하기
 		function delMeetModal(){
 			$("#delMeet").modal("show");
-			$("#delMeetYes").on('click',function () {
-				delMeet();
-			});
 		}
+		
+		$("#delMeetYes").on('click',function () {
+			delMeet();
+		});
 		
 		function delMeet(){
 			$.ajax({
@@ -258,7 +260,6 @@
 		
 		$("#delMeetNo").on('click',function () {
 		    $("#delMeet").modal("hide");
-           	location.href = "managerPage?volId="+volId;
 		});
 
 		function delActModal(id){

@@ -47,6 +47,7 @@ public interface MeetingMapper {
 	public int findVolActNo();
 	//모임 삭제
 	public int deleteMeeting(Integer volId);
+	public int deleteMember(Integer volId);
 	//모임 등록
 	public int insertMeeting(VolunteerVO vo);
 }
