@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bongsamaru.meeting.mapper.MeetingMapper">
+	<select id="dailyAllList" resultType="VolunteerVO">
+		select vol_id,vol_date 
+		from vol_act 
+		where vol_id is not null
+		and vol_id in (select vol_id from volunteer where meet_type='e01')
+	</select>
 	<select id="meetingInfo" resultType="VolunteerVO">
 		select VOL_ID
 			,MEET_NAME
@@ -359,6 +365,12 @@
 		set meet_type = 'e04' 
 		where vol_id=#{volId}
 	</update>
+	<!-- 삭제시 회원상태수정 -->
+	<update id="deleteMember" parameterType="VolMemVO">
+		update vol_mem 
+		set app_code = 'h04' 
+		where vol_id=#{volId}
+	</update>
 	<insert id="insertMeeting" parameterType="VolunteerVO">
 		<selectKey keyProperty="volId" order="BEFORE" resultType="int">
          	select VOLUNTEER_SEQ.NEXTVAL from dual
@@ -377,6 +389,28 @@
 		        ,#{memId}
 		        ,#{oneLiner}
 		        ,#{category}
+		)
+	</insert>
+	<update id="updateMeeting" parameterType="VolunteerVO">
+		update volunteer
+		set meet_name = #{meetName},
+			cap = #{cap},
+			meet_purp = #{meetPurp},
+			meet_desc = #{meetDesc},
+			one_liner = #{oneLiner},
+			end_period = #{endPeriod}
+		where vol_id = #{volId}
+	</update>
+	<delete id="deleteFile" parameterType="int">
+		delete from files
+		where code = 'p09' and code_no = #{codeNo}
+	</delete>
+	<insert id="insertTag" parameterType="TagVO">
+		insert into tag
+		values(
+			tag_seq.nextval,
+			#{tagContent},
+			#{volId}
 		)
 	</insert>
 </mapper>

@@ -138,7 +138,23 @@
 	            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 	                <h4><a th:text="${meet.meetName}">동아리명</a></h4>
 	                <a href="#" style="color:gray">
-					   <span th:text="'#'+${meet.region}"></span>
+					   <span th:if="${meet.region}=='z01'">#서울특별시</span>
+						   <span th:if="${meet.region}=='z02'">#부산광역시</span>
+						   <span th:if="${meet.region}=='z03'">#대구광역시</span>
+						   <span th:if="${meet.region}=='z04'">#인천광역시</span>
+						   <span th:if="${meet.region}=='z05'">#광주광역시</span>
+						   <span th:if="${meet.region}=='z06'">#대전광역시</span>
+						   <span th:if="${meet.region}=='z07'">#울산광역시</span>
+						   <span th:if="${meet.region}=='z08'">#세종특별자치시</span>
+						   <span th:if="${meet.region}=='z09'">#경기도</span>
+						   <span th:if="${meet.region}=='z10'">#강원도</span>
+						   <span th:if="${meet.region}=='z11'">#충청북도</span>
+						   <span th:if="${meet.region}=='z12'">#충청남도</span>
+						   <span th:if="${meet.region}=='z13'">#전라북도</span>
+						   <span th:if="${meet.region}=='z14'">#전라남도</span>
+						   <span th:if="${meet.region}=='z15'">#경상북도</span>
+						   <span th:if="${meet.region}=='z16'">#경상남도</span>
+						   <span th:if="${meet.region}=='z17'">#제주특별자치도</span>
 					   <span th:each="tag : ${tag}" th:if="${tag.volId}==${meet.volId}">#[[${tag.tagContent}]] </span>
 					</a>
 					<br>
