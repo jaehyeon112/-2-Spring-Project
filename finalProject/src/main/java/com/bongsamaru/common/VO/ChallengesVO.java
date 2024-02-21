@@ -16,7 +16,9 @@ public class ChallengesVO {
 	  private String content;
 	  private String expImpact;
 	  private String actionReason;
+	  @DateTimeFormat(pattern="yyyy-MM-dd")
 	  private Date regDate;
+	  @DateTimeFormat(pattern="yyyy-MM-dd")
 	  private Date endDate;
 	  private String partMethod1;
 	  private String partMethod2;

@@ -75,7 +75,7 @@
 <br>
 <br>
 <br>
- <th:block th:if="${#lists.size(facility)}!=0">
+ <th:block th:if="${#lists.size(facilityList)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -86,7 +86,7 @@
 	</ul>
 </nav>
 </th:block>
-		</div>
+</div>
 
 <script th:inline="javascript">
     function filterFacilities() {
