@@ -27,5 +27,5 @@ public interface UserMapper {
 	public int updateAlarm(AlertVO vo);
 	public UserFacilityVO findId(String phoen);
 	public String findInfo(String id);
-	public int updatePwd(String id, String type, String pwd);
+	public int updatePwd(String id, String type, String pass);
 }

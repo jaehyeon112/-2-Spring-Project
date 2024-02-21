@@ -188,15 +188,12 @@
 					                <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 					                    <h4><a class="cur" th:onclick="newMeet([[${day.vol.volId}]])" th:text="${day.vol.meetName}">프로젝트명</a></h4>
 					                    <a href="#" style="color:gray">
-					                        <span th:text="${day.vol.region}">지역명</span>
-					                    </a>
-					                    <br>
-					                    <strong>해시태그</strong>
-					                    <br>
-					                    <div th:if="${day?.tag?.size() != null ? day.tag.size() : ''}">
-										   <span style="margin-right:5px; color:gray" th:each="tag : ${daily.tag}" th:text="|#${tag.tagContent}|"></span>
-					                    </div>
-										<br>
+					                       <span th:text="|#${day.vol.region}|">지역할거임</span>
+											</a>
+											<span th:if="${day.tag.size()}!=0">
+											   <span class="tag-link"style="margin-right:5px; cursor:pointer; color:gray" th:each="tag : ${day.tag}" th:text="|#${tag.tagContent}|"></span>
+											 </span>
+											 <br>			
 					                    <strong>모집기간</strong>
 					                   	<br>
 					                    <span th:text="${#dates.format(day.vol.recPeriod, 'yy.MM.dd')}+' ~ '"></span> 
@@ -230,15 +227,12 @@
 					                <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 					                    <h4><a class="cur" th:onclick="newMeet([[${day.vol.volId}]])" th:text="${day.vol.meetName}">프로젝트명</a></h4>
 					                    <a href="#" style="color:gray">
-					                        <span th:text="${day.vol.region}">지역명</span>
-					                    </a>
-					                    <br>
-					                    <strong>해시태그</strong>
-					                    <br>
-					                    <div th:text="${day?.tag?.size() != null ? day.tag.size() : ''}">
-										   <span style="margin-right:5px; color:gray" th:each="tag : ${group.tag}" th:text="|#${tag.tagContent}|"></span>
-					                    </div>
-										<br>
+					                         <span th:text="|#${day.vol.region}|">지역할거임</span>
+											</a>
+											<span th:if="${day.tag.size()}!=0">
+											   <span class="tag-link"style="margin-right:5px; cursor:pointer; color:gray" th:each="tag : ${day.tag}" th:text="|#${tag.tagContent}|"></span>
+											 </span>
+											 <br>
 					                    <strong>모집기간</strong>
 					                   	<br>
 					                    <span th:text="${#dates.format(day.vol.recPeriod, 'yy.MM.dd')}+' ~ '"></span> 

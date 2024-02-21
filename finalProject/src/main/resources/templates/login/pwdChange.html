@@ -1,17 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-    
-         
 <head>
  <title>비밀번호 찾기 </title>
      <style>
@@ -74,26 +63,65 @@
             <div class="justify-content-center" style="text-align:center; margin: 0 auto; width: 500px; ">
             <div id="resultDisplay" class="result-display"></div>
                 <p style="margin-bottom:40px;">변경하실 비밀번호를 입력하세요.</p>
-                <div style="position: relative;"><label> <input id="id" class="form-control" type="text"
-                            name="username" maxlength="12" placeholder="아이디를 입력해주세요" />
+                <div style="position: relative;"><label> <input id="pass1" class="form-control" type="text"
+                            name="username" maxlength="12" placeholder="변경할 비밀번호를 입력해주세요" />
                     </label></div>
-                <div style="position: relative;"><label> <input id="phone" class="form-control" type="text"
-                            name="username" maxlength="12" placeholder="연락처를 입력해주세요" />
+                <div style="position: relative;"><label> <input id="pass2" class="form-control" type="text"
+                            name="username" maxlength="12" placeholder="한번 더 입력해주세요" />
                     </label>
-                    <a id="checkPhone"
-                        style="font-size:12px;color:#fbb200 ;position:absolute; right:100px;top:5px">인증번호 요청</a></div>
-                <div style="position: relative;"><label> <input id="check" style="margin-bottom:40px;"
-                            class="form-control" name="password" placeholder="인증번호를 입력해주세요" />
-                    </label><a id="checkvalid" style="font-size:12px;color:#fbb200 ;position:absolute; right:100px;top:5px">인증번호 확인</a>
-                </div>
+                    </div>
                 <div><label><button id="button-test" class="form-control big-button login">인증하기</button></label></div>
                 <div>
                 </div>
                 
                 
-                <script th:inline="javascript">
-            
-                </script>
+               <script th:inline="javascript">
+
+               /*<![CDATA[*/
+               var token = /*[[${token}]]*/ 'defaultTokenValue'; // 'defaultTokenValue'는 token 값이 없을 경우를 위한 기본값입
+    document.getElementById('button-test').addEventListener('click', function() {
+        var pass1 = document.getElementById('pass1').value;
+        var pass2 = document.getElementById('pass2').value;
+        var resultDisplay = document.getElementById('resultDisplay');
+        resultDisplay.innerHTML = ''; // 초기화
+
+        // 비밀번호 입력 확인
+        if (!pass1 || !pass2) {
+            resultDisplay.innerHTML = '비밀번호를 입력해주세요.';
+            return;
+        }
+
+        // 비밀번호 유효성 검사
+        var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{8,}$/;
+        if (!passwordRegex.test(pass1)) {
+            resultDisplay.innerHTML = '비밀번호는 8자 이상, 숫자, 특수문자, 영문자를 포함해야 합니다.';
+            return;
+        }
+
+        // 비밀번호 일치 확인
+        if (pass1 !== pass2) {
+            resultDisplay.innerHTML = '입력하신 비밀번호가 일치하지 않습니다.';
+            return;
+        }
+
+        // AJAX 요청
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/changePwd', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            // 요청 완료 시 처리
+            if (this.status == 200) {
+                alert('비밀번호 변경이 완료되었습니다.')
+                window.location.href="/";
+                // 성공 처리 로직
+            } else {
+                resultDisplay.innerHTML = '비밀번호 변경 중 오류가 발생했습니다.';
+                // 실패 처리 로직
+            }
+        };
+        xhr.send('token=' + encodeURIComponent(token) + '&newPassword=' + encodeURIComponent(pass1));
+    });
+</script>
 
             </div>
         </div>
