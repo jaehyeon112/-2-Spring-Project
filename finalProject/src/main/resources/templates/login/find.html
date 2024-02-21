@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+/* 기존 스타일에 추가 */
+@media (max-width: 768px) {
+    .phone_auth_box {
+        flex-direction: column;
+    }
+    .phone_auth_box .inner {
+        width: 100%; /* 모바일 뷰에서는 너비를 100%로 설정 */
+    }
+    .phone_auth_box .inner > input, .phone_auth_box .inner > button {
+        width: auto; /* 버튼과 입력 필드의 너비를 자동으로 조정 */
+        margin-top: 10px; /* 요소들 사이에 여백 추가 */
+    }
+    .phone_auth_box .inner .right_obj {
+        position: relative; /* 모바일 뷰에서는 절대 위치 대신 상대 위치 사용 */
+        top: auto;
+        right: auto;
+        transform: none;
+    }
+}
+.phone_auth_box.no_flex {
+    flex-wrap: wrap;
+}
+.login_box_title_tab li.on {
+    color: #000;
+    font-weight: 600;
+}
+
+ol, ul, dl, dd, label {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.login_box_title_tab li {
+    font-size: 1.875rem;
+    color: #797979;
+}
+user agent stylesheet
+li {
+    text-align: -webkit-match-parent;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+.phone_auth_box .inner > input {
+    width: 100%;
+}
+.login_box {
+    margin: 0 auto;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+}
+.login_box_title {
+    padding-bottom: 30px;
+}
+.login_box_title_tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.login_box_title_tab li {
+    font-size: 1.875rem;
+    color: #797979;
+}
+.login_box_title .desc {
+    margin-top: 15px;
+    font-weight: 400;
+}
+.phone_auth_box.no_flex {
+    flex-wrap: wrap;
+}
+.write_item input {
+    padding: 0 10px;
+    height: 40px;
+    border: 1px solid #d2d2d2;
+    background: none;
+    font-size: 0.875rem;
+}
+.phone_auth_box .inner .right_obj {
+    position: absolute;
+    top: 30%;
+    right: 200px;
+    transform: translate(0, -50%);
+    font-size: 0.75rem;
+}
+.phone_auth_box .inner button {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #fbb200;
+    font-weight: 600;
+}
+.phone_auth_box.no_flex {
+    flex-wrap: wrap;
+}
+
+.phone_auth_box {
+    display: flex;
+    align-items: center;
+}
+.write_item_ipt {
+    margin-top: 10px;
+}
+.login_box .btn_area {
+    margin-top: 20px;
+    padding: 0;
+}
+.mt-5, .my-5 {
+    margin-top: 3rem!important;
+}
+.login_box .btn_area button {
+    display: block;
+    width: 100%;
+    height: 60px;
+    font-weight: 600;
+}
+.btn_common {
+    display: inline-block;
+    border: 1px solid #fbb200;
+    background-color: #fbb200;
+    color: #fff;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+</style>
+<link rel="stylesheet" href="/userresources/css/bootstrap.css">
+<!-- 기타 스타일시트 링크 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+        <div class="login_box" style="max-width: 370px;">
+            <div class="login_box_title">
+
+                <ul class="login_box_title_tab">
+                    <li class="on">
+                        <a href="/index/find_id">아이디찾기</a>
+                    </li>
+                    <li>
+                        <a href="/index/find_pw">비밀번호찾기</a>
+                    </li>
+                </ul>
+
+                <h6 class="desc">가입 당시 입력한 휴대전화 번호를 통해 확인 가능합니다</h6>
+            </div>
+
+            <form method="post" action="/index/id_comp" onsubmit="chkForm(this);return false;">
+                <div class="write_item">
+                    <div class="write_item_ipt phone_auth_box no_flex">
+                        <div class="inner">
+                            <input type="text" name="phone" id="phone" minlength="10" maxlength="11" pattern="[0-9]*" required="" placeholder="연락처를 입력해주세요">
+                            <input type="hidden" name="auth_yn" id="auth_yn" value="N">
+                            <button type="button" class="right_obj" id="send_auth_btn">인증번호 요청</button>
+                        </div>
+
+                        <div class="inner">
+                            <input type="text" name="auth_code" id="auth_code" pattern="[0-9]*" minlength="6" maxlength="6" placeholder="인증번호를 입력해주세요" required="">
+                            <button type="button" class="right_obj" id="send_auth_chk_btn">인증번호 확인</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 btn_area">
+                    <button type="submit" class="btn_common">인증하기</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+<script>
+
+</script>
+</body>
+</html>

@@ -17,7 +17,7 @@ import com.bongsamaru.mypage.service.HeartVO;
 
 public interface FacilityMapper {
 	
-	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType, @Param("facId") String facId);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType);
 	public List<FacilityVO> allFacilityList();
 	public FacilityVO getFacilityInfo(String facId);
 	public List<FundingVO> getfundingList(PageVO pageVO,String facId);
