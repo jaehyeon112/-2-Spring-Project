@@ -60,4 +60,9 @@ public class MypageServiceImpl implements MypageService{
 		return false; 
 	}	
 	
+	@Override
+	public int deleteMember(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return mypageMapper.deleteMember(userVO);
+	}
 }

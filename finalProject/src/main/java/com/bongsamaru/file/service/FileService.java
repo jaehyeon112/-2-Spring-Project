@@ -26,6 +26,8 @@ public class FileService {
     @Value("${file.upload.path}")
     private String uploadPath;
     
+    
+    
     private final long MAX_SIZE = 50 * 1024 * 1024; // 50MB in bytes
     
     public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user) throws IOException {

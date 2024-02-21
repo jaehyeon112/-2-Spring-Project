@@ -52,9 +52,8 @@ ul,li{
 </head>
 <body>
 <section layout:fragment="content">
-<div class="row" style="color: black;">
-  	<div class="side col-2" th:insert="~{center/sidebar::side}"></div>
-	<div class="col-10">
+	<div th:insert="~{banner/empty::banner}"></div>
+  	<div class="side" th:insert="~{center/sidebar::side}"></div>
 		<div class="container">
 		  <h2 style="font-family: 'Orbit', sans-serif;">문의하기</h2>
 		  <p style="text-align: right;">* 필수입력사항</p>
@@ -115,7 +114,6 @@ ul,li{
 		      <input type="button" class="btn btn-outline-success" value="접수하기" onclick="return submitForm();">
 		    </div>
 		  </div>
-		</div>
 	</div>
 </div>
 <script th:inline="javascript">
@@ -158,7 +156,6 @@ ul,li{
     return false; // 접수 제한
   } else {
     // 필수 입력 사항과 체크박스 동의 여부가 모두 충족될 경우 접수를 진행합니다.
-    alert("접수가 완료되었습니다!");
     
     let vo = {
     	memId : id,
@@ -173,10 +170,10 @@ ul,li{
     	 dataType: "text",
     	  success: function(response) {
     	    if (response == "1") {
-    	      // 성공적으로 처리된 경우
-    	      alert("접수 되었습니다.");
+				window.location.href = "/inquiry";
     	    } else {
-    	      alert("실패 되었습니다.");
+				alert('오류가 발생했습니다.');
+				window.location.href = "/faq";
     	    }
     	  },
     	  error: function(xhr, status, error) {

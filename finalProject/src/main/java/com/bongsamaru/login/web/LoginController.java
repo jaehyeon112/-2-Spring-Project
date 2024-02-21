@@ -162,7 +162,6 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(vo.getMemSsn() + "주민번호는?");
 		String ssn = vo.getMemSsn();
 		if(vo.getMemSsn() != null && vo.getMemSsn() != "") {
 			String encSsn = encrypt.encryptSsn(ssn);

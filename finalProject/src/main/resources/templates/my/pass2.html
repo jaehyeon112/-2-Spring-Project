@@ -7,7 +7,7 @@
 <title>비밀번호 검증</title>
 <style>
 .title {
-	height: 1000px;
+	height: 800px;
 	margin:0 auto;
 	text-align:center;
 	color: black;
@@ -29,7 +29,8 @@ p {
 <div th:insert="~{banner/empty::banner}"></div>
   <div class="container">
   	<div class="title">
-	    <div>
+	    <div th:each="item : ${list}">
+			<input type="text" id="id" th:value="${item.memId}" style="display:none;" >
 	    	<span>회원정보 수정</span>
 	    	<p>회원님의 소중한 정보를 안전하게 관리하세요.</p>
 	    	<image src="/image/bongsalogo.png" class="imagelogo">
@@ -49,13 +50,30 @@ p {
 	// 현재 비밀번호 검증
 		$("#submitBtn").on('click', function() {
 		  let currentPassword = $("#currentPassword").val();
-
+		  let memId = $("#id").val();
+		  
+          let userVO = {
+		  
+		  	memId: $("#id").val(),
+          
+          };
 		  $.ajax({
 		    url: "/passwordCheck",
 		    type: "POST",
 		    data: { currentPassword: currentPassword },
 		    success: function(response) {
-		      window.location.href = "/profile";
+				
+				$.ajax({
+		            url: "/deleteMember", // 서버 사이드 스크립트 파일의 경로
+		            method: "POST",
+		            contentType: "application/json",
+		            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
+		            success: function(response) {
+						window.location.href = "/bye";
+		            },
+		            error: function(xhr, status, error) {
+		            }
+		        });
 		    },
 		    error: function(xhr, status, error) {
 		      console.log(error);
