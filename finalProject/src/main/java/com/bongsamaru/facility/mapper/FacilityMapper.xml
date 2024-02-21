@@ -274,17 +274,19 @@ WHERE FAC_ID=#{facId}
                      LOCATION,
                      CAP,
                      VOL_ZIP,
+                     FIND_ZIP(#{volZip}),
                      VOL_DATE,
                      START_DATE,
                      EXPIRE_DATE)
              VALUES (#{volActId},
              		 #{facId},
-             		 'i06',
+             		 #{category},
              		 #{title},
              		 #{content},
                      #{location},
                      #{cap},
                      #{volZip},
+                     #{volZip2},
                      #{volDate},
                      #{startDate},
                      #{expireDate})
@@ -352,7 +354,7 @@ UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 <!-- 회원이 시설봉사 정보조회 -->
 <select id="getFacVolInfo" resultType="VolActVO">
 SELECT   FAC_ID,
-		 CATEGORY,
+		 SELECT_SUB(category) CATEGORY,
 		 TITLE,
 		 LOCATION,
 		 CAP,

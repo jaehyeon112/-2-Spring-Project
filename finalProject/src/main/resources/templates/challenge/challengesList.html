@@ -36,9 +36,10 @@ p{
 <div th:insert="~{banner/empty::banner}"></div>
 <div class="comment-form">
 <section class="blog_area single-post-area">	
-<div class="hotel">
-	<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-	<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+<div class="hotel" >
+	<a style="font-size:25px;color:#689f38;font-weight:bold " th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}" >챌린지소개</a> <span style="margin-right: 25px;"></span>|<span style="margin-left: 25px;"></span>
+	<a style="font-size:25px;color:#689f38; font-weight:bold" th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}" >챌린지참여 </a>
+	<br><br><br>
 	</div>
 	<section class="blog_area">
 		<div class="container justify-content-center" style=" margin: 20px auto;max-width: 1500px; ">

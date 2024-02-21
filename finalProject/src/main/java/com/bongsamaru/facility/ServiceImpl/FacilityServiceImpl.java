@@ -28,8 +28,8 @@ public class FacilityServiceImpl implements FacilityService {
 	FacilityMapper mapper;
 
 	@Override
-	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType,@Param("facId") String facId) {
-		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType) {
+		return mapper.getFacilityList(pageVO,facZip2,facType);
 	}
 	
 	@Override

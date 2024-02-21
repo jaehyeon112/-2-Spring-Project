@@ -12,6 +12,7 @@ public class VolActVO {
 	private Integer volId;
 	private String facId;
 	private String category;
+	private String cate;
 	private String title;
 	private String content;
 	private String location;

@@ -10,7 +10,13 @@ img{
 	border-radius:20px;
 }
 p{
-	font-size:20px
+	font-size:23px;
+	color:black;
+	 line-height: 1.5;
+	
+}
+h2{
+color:#689f38;
 }
 </style>
 </head>
@@ -31,7 +37,7 @@ p{
 					<div class="single-post row">
 					<div class="col-lg-12 col-md-12 blog_details">
 					<div class="form-group">
-					<h1 th:text="${session.challengeInfo.title}" style="color:#689f38;"></h1>
+					<h1 th:text="${session.challengeInfo.title}" style="background-color:#689f38; color:white;"></h1>
 					</div>
 					</div>
 					<div class="col-lg-12">
@@ -44,7 +50,7 @@ p{
 					<div class="col-lg-12">
 		       			<div class="row">
                     	<div class="col-lg-12 " style="text-align:left;">
-                    		<h3>챌린지 하는 이유</h3></div>
+                    		<h2>챌린지 하는 이유</h2></div>
 								<div class="col-6">
 									<div class="form-group">
 									<img  width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].filePath}"onError="this.src='../image/기본이미지.jpg'" alt="">
@@ -57,11 +63,11 @@ p{
 								</div>
 						<div class="col-lg-12 mt-25">
 							<div class="form-group">
-								<p th:text="${session.challengeInfo.actionReason}"></p>
+								<p style=" white-space: pre-wrap; text-align:left;" th:text="${session.challengeInfo.actionReason}"></p>
 							</div>
 						</div>
 						<div class="col-lg-12  mt-25"  style="text-align:left;">
-							<h3>기대효과</h3></div>
+							<h2>기대효과</h2></div>
 								<div class="col-6">
 									<div class="form-group">
 										<img  width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
@@ -72,14 +78,14 @@ p{
 								</div>
 						<div class="col-lg-12 mt-25">
 							<div class="form-group">
-								<p th:text="${session.challengeInfo.expImpact}"></p>
+								<p  style="white-space: pre-wrap;text-align:left;" th:text="${session.challengeInfo.expImpact}"></p>
 							</div>
 						</div>
 						<div class="col-lg-12  mt-25"  style="text-align:left;">
-							<h3>추가 말..</h3></div>	
+							<h2>추가 말..</h2></div>	
 						<div class="col-lg-12 mt-25">
 							<div class="form-group">
-								<p th:text="${session.challengeInfo.content}"></p>
+								<p  style="white-space: pre-wrap; text-align:left;" th:text="${session.challengeInfo.content}"></p>
 							</div>
 						</div>
 					
@@ -92,18 +98,18 @@ p{
 		<div class="col-lg-4">
 			<div class="blog_right_sidebar">
 				<aside class="single_sidebar_widget popular_post_widget" style="border:2px solid #689f38">
-					<h3 class="widget_title"
-						th:text="${session.challengeInfo.title}"></h3>
+					<h2 class="widget_title"
+						th:text="${session.challengeInfo.title}"></h2>
 					
 						<img th:src="${FileList[0].filePath}" alt="post" width="300" height="400">
 
 						<div class="media-body">
-							<h3>How to</h3>
+							<h2>How to</h2>
 							<p th:text="${session.challengeInfo.partMethod1}"></p>
 							<p th:text="${session.challengeInfo.partMethod2}"></p>
 							
 						</div>
-						<h3>챌린지일시</h3>
+						<h2>챌린지일시</h2>
 						<div class="form-group">
 							<div class="row">
 								<div class="col">
