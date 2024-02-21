@@ -694,7 +694,7 @@ public class UserController {
 	 */
 	@GetMapping("noticeInsert")
 	public String insertNotice() {
-		return "admin/Noticeinsert";
+		return "admin/NoticeInsert";
 	}
 
 	/**
