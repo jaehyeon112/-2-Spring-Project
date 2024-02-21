@@ -283,5 +283,9 @@ public class LoginController {
 	    return userService.countAlarm(principal.getName());
 	}
 	
-	
+	@GetMapping("/find")
+	public String find(@RequestParam String type) {
+		
+		return "login/find";
+	}
 }

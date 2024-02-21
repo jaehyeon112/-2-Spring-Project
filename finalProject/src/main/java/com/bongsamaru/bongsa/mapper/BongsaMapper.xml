@@ -38,7 +38,8 @@
 		</if>
 		
 	     <if test="pageVO.searchKeyword != null and pageVO.searchKeyword != ''">
-	        AND (meet_name LIKE '%' || #{pageVO.searchKeyword} || '%')      
+	        AND (meet_name LIKE '%' || #{pageVO.searchKeyword} || '%')     
+	        
 	    </if>
 	    order by rn)
 	WHERE rn BETWEEN #{pageVO.start} and #{pageVO.end}

@@ -101,7 +101,9 @@ public class facilityController {
 	 @GetMapping("fInfo/facilityInfo")
 		public String getFacilityInfo(@RequestParam(name="facId") String facId,
 										Model model,HttpServletRequest request) {
+		
 		 	FacilityVO findVO =facilityService.getFacilityInfo(facId);
+		 	log.info(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
 			
