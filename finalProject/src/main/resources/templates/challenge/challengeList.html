@@ -18,8 +18,8 @@ border: double 2px solid #689f38;
 	<br>
 	<br>
 		<h1 style="color:#689f38 ">나의 사소한 노력이 모여 <br>우리의 긍정적인 영향을 더해줍니다!</h1>
-		<p th:text="'봉사마루 챌린지 총 ' +${challengeList[0].allParticipants}+'명 참여중'" style="color:black; font-size:15px;"></p>
-		<h4 ><a th:href="@{/challengeInsert}" style="color:#689f38 ">함께하고싶은 챌린지가 있으신가요?</a></h4>
+		<!-- <p th:text="'봉사마루 챌린지 총 ' +${challengeList[0].allParticipants}+'명 참여중'" style="color:black; font-size:15px;"></p> -->
+		<h3><a th:href="@{/challengeInsert}" style="color:#689f38 ">함께하고싶은 챌린지가 있으신가요? 모두 참여해보아요</a></h3>
 		<br>
 		<br>
 		<br>
@@ -40,6 +40,16 @@ border: double 2px solid #689f38;
       <div class="card-body">
         <h5 class="card-title" th:text="${challenge.title}"></h5>
         <div class="text-right">
+        <div th:if="${challenge.endDate > #dates.createNow()}">
+	    <div class="container" style="border: solid 1px; background-color: #689f38;">
+	        <p>행동중</p>
+	    </div>
+		</div>
+		<div th:else>
+	    <div class="container" style="border: solid 1px; background-color: gray;">
+	        <p>행동종료</p>
+	    </div>
+		</div>
        	<img class="img-zoomin img-fluid rounded-circle w-50" style="border-radius: 50%;" th:if="${challenge.file.filePath}!=null"  th:src="${challenge.profil}" onError="this.src='../image/기본이미지.jpg'">
         <p class="card-text" th:text="${challenge.memId}" ></p>
         </div>

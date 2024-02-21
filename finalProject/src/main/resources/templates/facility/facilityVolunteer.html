@@ -30,6 +30,7 @@
                     </div>
                 </div> 
 </th:block>
+  <th:block th:if="${#lists.size(volunteerF)}!=0"> 
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -51,7 +52,7 @@
         </li>
     </ul>
 </nav>
-
+</th:block>
 </div>
 
 <div class="facilities_item">
@@ -76,20 +77,21 @@
                     </div>
                 </div> 
 </th:block>
+  <th:block th:if="${#lists.size(volunteerI)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
-            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo2.start - vo2.cntPerPage}, end=${vo2.start - 1})}" class="page-link" aria-label="Previous">
                 <span aria-hidden="true">
                     <span class="lnr lnr-chevron-left"></span>
                 </span>
             </a>
         </li>
-        <li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-            <a class="page-link" th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a>
+        <li class="page-item" th:each="pageNum : ${#numbers.sequence(vo2.startPage, vo2.endPage)}" th:class="${pageNum == vo2.currentPage ? 'page-item active' : 'page-item'}">
+            <a class="page-link" th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${(pageNum - 1) * vo2.cntPerPage + 1}, end=${pageNum * vo2.cntPerPage})}" th:text="${pageNum}"></a>
         </li>
         <li class="page-item">
-            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo2.end + 1}, end=${vo2.end + vo2.cntPerPage})}" class="page-link" aria-label="Next">
                 <span aria-hidden="true">
                     <span class="lnr lnr-chevron-right"></span>
                 </span>
@@ -97,7 +99,7 @@
         </li>
     </ul>
 </nav>
-
+</th:block>
 </div>
 </section>
 </body>

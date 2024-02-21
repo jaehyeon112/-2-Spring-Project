@@ -43,8 +43,9 @@ display:inline-block;
                             </div>	
                         </div>
                     </div>
+                     </th:block>
                 </div> 
-                </th:block>
+  <th:block th:if="${#lists.size(fundingList)}!=0">                
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -66,10 +67,10 @@ display:inline-block;
         </li>
     </ul>
 </nav>
-
+</th:block>
 
 </div>
-<div class="facilities_item">
+<div class="container">
 <h3 class="title_color section_title text-center">기부 마감</h3>
 <div class="row mb_30">
 <th:block th:each="funded:${fundedList}">
@@ -88,7 +89,10 @@ display:inline-block;
                             </div>	
                         </div>
                     </div>
+    </th:block>                                
+
                 </div> 
+ <th:block th:if="${#lists.size(fundedList)}!=0">              
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -98,7 +102,6 @@ display:inline-block;
 		<li class="page-item"><a th:href="@{/fInfo/fundingList(facId=${session.facilityInfo.facId},start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
 	</ul>
 </nav>
-                
 </th:block>
 </div>
 </section>

@@ -14,4 +14,5 @@ public class FundingVO {
 	private Integer donationRatio;
 	private String donRegApp;
 	private String facId;
+	private String filePath;
 }

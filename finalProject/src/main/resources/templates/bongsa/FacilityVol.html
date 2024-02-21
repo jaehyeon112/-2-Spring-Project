@@ -161,7 +161,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
     
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #689f38">
         <h5 class="modal-title">봉사정보조회</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -378,11 +378,10 @@ var facId = '';
             });
            
         });
-        var memId = [[${userId}]];
+        var memId = '[[${session.id}]]';
+        console.log(memId);
         $('#joinVolBtn').on('click', function() {
 				if([[${userId}]]!=null){
-       		  
-       		   
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',
