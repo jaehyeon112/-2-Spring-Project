@@ -100,12 +100,12 @@
                                </div>
                                
                               <div style="padding: 10px 5px 10px 5px;">  
-                                  <h3  th:text="${dona.introTitle}">제목(intro)</h3>
+                                  <h4  th:text="${dona.introTitle}">제목(intro)</h4>
                                   <p th:text="${dona.intro}">소개글(intro)</p>
                                 </div>     
                                 
                                  <div style="padding: 10px 5px 10px 5px; margin-bottom:30px" th:if="${dona.addIntroTitle} or ${dona.addIntro}">  
-                                  <h3  th:text="${dona.addIntroTitle}">제목(intro)</h3>
+                                  <h4  th:text="${dona.addIntroTitle}">제목(intro)</h4>
                                   <p th:text="${dona.addIntro}">소개글(intro)</p>
                                 </div>  
                                 
@@ -174,7 +174,7 @@
                                
 
                   <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-                     <h4> 사업대상 및 기대효과 </h4>
+                     <h5> ◽ 사업대상 및 기대효과 </h5>
                      <table class="table">
                          <tr>
                              <th scope="col" class="table-success" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center; width: 20%;">사업기간</th>
@@ -194,20 +194,20 @@
                   
                   
                    <div>
-                     <h5>관련 콘텐츠 (link)</h5>
+                     <h6> ◽ 관련 콘텐츠 (link)</h6>
                        <a th:href="${dona.link}" th:if="${dona.link != null}" target="_blank" th:text="${dona.link}">link 주소</a>
 						<br><a th:if="${dona.link2 != null}" th:href="${dona.link2}" target="_blank" th:text="${dona.link2}">link 주소</a>
                   </div>
                   
                   <!-- 캐러셀 -->
                   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="margin-top:30px">
-                  <h5>추가이미지</h5>
+                  <h6> </h6>
 					  <div class="carousel-inner">
 					    <div class="carousel-item active">
-					      <img src="../image/bonsamaru.png" class="d-block w-100" style="width: 400px; height:290px;" alt="...">
+					      <img src="../image/children.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
 					    </div>
 					    <div class="carousel-item">
-					      <img src="../image/kakao.png" class="d-block w-100" style="width: 400px; height:270px;" alt="...">
+					      <img src="../image/hand.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
 					    </div>
 					  </div>
 					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -239,7 +239,9 @@
                          </div>
                          
    					  <div  th:if="${list.isEmpty()}">
-					        도움의 손길을 기다리고 있어요.
+					         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-through-heart" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a22 22 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354zm2.893-4.894A20.4 20.4 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708z"/>
+							</svg>도움의 손길을 기다리고 있어요.
 					    </div>
                      </div> <!--  end 리뷰안의 영역 -->
                                     
@@ -349,7 +351,7 @@
                   </div> <!-- 하위 nav 안의 영역  -->
                   	<div class="comments-container">
                             <form>
-                                <h4 class="mb-5 fw-bold"> 댓글 달기 </h4>
+                                <h5 class="mb-5 fw-bold"> 💬 응원메세지 </h5>
                                 <div class="row g-4" id="showComments">
                               
                                    <div id="commentSection">   
@@ -368,7 +370,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-between py-3 mb-5">
-                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 댓글 입력하기 </a>
+                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 입력 </a>
                                         </div>
                                     </div>   
                                     </div>
@@ -385,30 +387,25 @@
                  <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
                      <div class="col-lg-12" >
-                         
-                         <div class="info-item">목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
+                     
+                     <!--  test -->
+                          <div style="text-align: left;">
+                               <strong><span  style="font-size: 30px; color: green; font-weight:bold;" th:text="${dona.donationRatio}+ '%'" ></span></strong>    
+                            
+                            </div>
+                            
+                         <div class="progress">
+                               <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                         <div class="info-item"> ▫️ 현재 모금액 : <strong><span th:text="${#numbers.formatInteger(dona.total,3,'COMMA')+'원'}"></span>  </strong></div>    
+                         <div class="info-item"> ▫️ 목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
                           
-                            <div class="progress">
-                                     <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                                 <div class="info-item" style="display: flex; justify-content: space-between;">
-                                     <div style="text-align: left;">
-                                         <!--  <strong><span  style="font-size: 20px; color: green;" th:text="${dona.donationRatio}"></span>%</strong> -->
-                                          <strong><span  th:text="${dona.donationRatio}"></span>%</strong>
-                                     </div>
-                                     <div style="text-align: right;">
-                                         <strong><span th:text="${#numbers.formatInteger(dona.total,3,'COMMA')+'원'}"></span></strong>
-                                     </div>
-                                 </div>
-                         
-                         
-                  
-                         <p class="mb-4"><span th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></span></p>
-                         <p class="mb-4"><span th:text="${dona.dday} + '일 남았습니다.' "></span></p>
+                         <p class="mb-4">▫️ 기간  : <br> <span th:text="${#dates.format(dona.recPeriod, 'yyyy년MM월dd일')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy년MM월dd일')}"></span></p>
+                         <p class="mb-4"><strong><span th:text="${dona.dday}"></span></strong>일 남았습니다.</p>
                          
                          
                          
-                         <p class="mb-4"><i class="bi bi-info-square-fill"></i> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
+                         <p class="mb-4" style="font-style: italic;"><i class="bi bi-info-square-fill"></i> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
                      </div>
                      <!-- 버튼 부분 유지 -->
                      <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio == 100 or dona.recStat == '0'}"
@@ -420,9 +417,9 @@
 
 
                             <div class="col-lg-12">
-                                <h6 class="mb-4">시설소개</h6>
+                                <h6 class="mb-4"> 🔹 시설소개</h6>
                                 <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded" style="width: 100px; height: 100px;">
+                                    <div class="rounded" style="width: 150px; height: 150px;">
                                         <img src="donation/board/img/featur-1.jpg" class="img-fluid rounded" alt="Image">
                                     </div>
                                     <div>
