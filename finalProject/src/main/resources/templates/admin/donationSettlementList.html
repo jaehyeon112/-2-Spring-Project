@@ -25,6 +25,10 @@
 				<div class="container">
 					<h2>기부금 정산</h2>
 					<div id="tableData">
+						<th:block th:if="${#lists.size(donSel)} == 0">
+							<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>
+						</th:block>
+						<th:block th:if="${#lists.size(donSel)} != 0">
 						<table class="table" id="classic">
 							<thead>
 								<tr>
@@ -59,6 +63,7 @@
 								</th:block>
 							</tbody>
 						</table>
+						</th:block>
 					</div>
 					<div class="modal fade" id="mymodal" role="dialog"
 						aria-hidden="true">

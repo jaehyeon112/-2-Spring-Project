@@ -161,15 +161,13 @@ public class AdminServiceImpl implements AdminService{
 		return userMapper.getReportCnt(pageVO);
 	}
 
+	@Transactional
 	@Override
 	public int inquireComments(CommentsVO commentsVO) {
-		return userMapper.inquireComments(commentsVO);
+		userMapper.inquireComments(commentsVO);
+		return userMapper.updateInquire(commentsVO.getDetailCate());
 	}
 
-	@Override
-	public int updateInquire(Integer boardId) {
-		return userMapper.updateInquire(boardId);
-	}
 
 	@Override
 	public CommentsVO inquireCommentOne(Integer detailCode) {
@@ -293,6 +291,26 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int facVolunteerCnt(PageVO pageVO) {
 		return userMapper.facVolunteerCnt(pageVO);
+	}
+
+	@Override
+	public List<DonaVO> donaReviewList(PageVO pageVO) {
+		return userMapper.donaReviewList(pageVO);
+	}
+
+	@Override
+	public int donaReviewCnt(PageVO pageVO) {
+		return userMapper.donaReviewCnt(pageVO);
+	}
+
+	@Override
+	public int updateDonReview(DonaVO vo) {
+		return userMapper.updateDonReview(vo);
+	}
+
+	@Override
+	public DonaVO donaReviewInfo(Integer donRevId) {
+		return userMapper.donaReviewInfo(donRevId);
 	}
 
 }

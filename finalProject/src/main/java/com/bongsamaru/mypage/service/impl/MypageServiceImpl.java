@@ -18,9 +18,9 @@ public class MypageServiceImpl implements MypageService{
 	MypageMapper mypageMapper;
 	
 	@Override
-	public int updateEmail(UserVO userVO) {
+	public int updateProFile(UserVO userVO) {
 		// TODO Auto-generated method stub
-		return mypageMapper.updateEmail(userVO);
+		return mypageMapper.updateProFile(userVO);
 	}
 	
 	@Override
@@ -60,4 +60,9 @@ public class MypageServiceImpl implements MypageService{
 		return false; 
 	}	
 	
+	@Override
+	public int deleteMember(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return mypageMapper.deleteMember(userVO);
+	}
 }

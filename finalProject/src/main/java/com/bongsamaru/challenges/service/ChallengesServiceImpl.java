@@ -1,5 +1,6 @@
 package com.bongsamaru.challenges.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,26 +72,21 @@ public class ChallengesServiceImpl implements ChallengesService{
 		return challengeMapper.getChallengeLike( likeVO);
 	}
 
-	@Override
-	public int challengesLikeInsert(LikeVO likeVO) {
-		int result=challengeMapper.challengesLikeInsert(likeVO);
-		if(result ==1) {
-			return likeVO.getLikeId();
-		}else {
-			return -1;
-		}
-	}
-
-	@Override
-	public int deleteChallengeLike(Integer boardId) {
-		
-		return challengeMapper.deleteChallengeLike(boardId);
-	}
+	
 
 	@Override
 	public int reportInsert(ReportVO reportVO) {
-		
-		return challengeMapper.reportInsert(reportVO);
+		int result = challengeMapper.reportInsert(reportVO);
+		if(result ==1) {
+			return result;
+		}else {
+			return -1;
+		}	
+	}
+
+	@Override
+	public int getChallCheck(String memId, Date partDate, Integer chalId) {
+		return challengeMapper.getChallCheck(memId, partDate, chalId);
 	}
 
 

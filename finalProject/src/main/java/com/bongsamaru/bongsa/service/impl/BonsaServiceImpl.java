@@ -54,7 +54,24 @@ public class BonsaServiceImpl implements BongsaService {
 	
 	@Override
 	public CountVO cntVol(PageVO vo) {
-		return bongsaMapper.countVol(vo);
+		if(vo == null) {
+			CountVO countVO = new CountVO();
+			countVO.setDailyVol(0);
+			countVO.setCount(0);
+			countVO.setFacVol(0);
+			countVO.setGroupVol(0);
+			return countVO;
+		}
+	    CountVO result = bongsaMapper.countVol(vo);
+	    if (result == null) {
+	        // 쿼리 결과가 null인 경우, 기본값을 갖는 CountVO 객체를 생성하여 반환
+	        result = new CountVO();
+	        result.setDailyVol(0);
+	        result.setCount(0);
+	        result.setFacVol(0);
+	        result.setGroupVol(0);
+	    }
+	    return result;
 	}
 	
 	@Override
@@ -63,8 +80,7 @@ public class BonsaServiceImpl implements BongsaService {
 	}
 	@Override
 	public List<BongsaDTO> getVolTagDTO(PageVO vo, Date startDate, Date endDate , String cate) {
-		
-	    List<VolunteerVO> volunteers = bongsaMapper.volList(vo, startDate, endDate, cate);
+		List<VolunteerVO> volunteers = bongsaMapper.volList(vo, startDate, endDate, cate);			
 	    System.out.println(volunteers);
 	    List<TagVO> allTags = adminMapper.tagList(null);
 	    Map<Integer, List<TagVO>> tagsByVolunteer = allTags.stream()
@@ -76,4 +92,21 @@ public class BonsaServiceImpl implements BongsaService {
 	    return result;
 	}
 	
+	public List<BongsaDTO> getVolTagDTO(String type){
+		List<VolunteerVO> volunteers = bongsaMapper.allVol(type);			
+	    System.out.println(volunteers);
+	    List<TagVO> allTags = adminMapper.tagList(null);
+	    Map<Integer, List<TagVO>> tagsByVolunteer = allTags.stream()
+	            .collect(Collectors.groupingBy(TagVO::getVolId));
+
+	    List<BongsaDTO> result = volunteers.stream()
+	            .map(volunteer -> new BongsaDTO(volunteer, tagsByVolunteer.getOrDefault(volunteer.getVolId(), Collections.emptyList())))
+	            .collect(Collectors.toList());
+	    return result;
+	}
+	
+	@Override
+	public List<VolunteerVO> allVol(String type) {
+		return bongsaMapper.allVol(type);
+	}
 }

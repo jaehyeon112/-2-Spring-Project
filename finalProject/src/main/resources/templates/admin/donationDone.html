@@ -15,7 +15,7 @@
         <th:block th:if=${dona.size}==0 style="text-align:center">
 			<h3>데이터가 존재하지 않습니다</h3>
         </th:block>
-          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}" th:if="${dona.recStat}==1">
+          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
                 <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="../admin/images/products/s4.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
@@ -44,4 +44,21 @@
             </div>
           </div>
         </div>
+        <nav aria-label="Page navigation example">
+		    <ul class="pagination justify-content-center">
+		        <!-- 이전 버튼 -->
+		        <li class="page-item" th:if="${vo.prev}">
+		            <a class="page-link"th:onclick="prev([[${vo}]])">이전</a>
+		        </li>
+		        <!-- 페이지 번호 출력 -->
+		        <li th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+		            <a class="page-link" th:onclick="current([[${vo}]],[[${pageNum}]])"
+		               th:text="${pageNum}"></a>
+		        </li>
+		        <!-- 다음 버튼 -->
+		        <li class="page-item" th:if="${vo.next}">
+		            <a class="page-link" th:onclick="next([[${vo}]])">다음</a>
+		        </li>
+		    </ul>
+			</nav>
 	</div>

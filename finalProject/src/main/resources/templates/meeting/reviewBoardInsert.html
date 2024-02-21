@@ -58,9 +58,20 @@
 					        </div>
 					    </div>
 					 </div>
-					
 					<script>
 						var cateNo = 0;
+						$.ajax({
+			           		url: '/findReviewNo',
+			           		type: 'GET',
+			           		processData: false,
+			           		contentType: false,
+			           		success: function(data) {
+			           			cateNo = data;
+			           		},
+			           		error: function(e) {
+			           			console.log('실패');
+			           		}
+			           	});
 						const editor = new toastui.Editor({
 							el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
 							height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
@@ -70,39 +81,24 @@
 							placeholder : "내용을 입력하세요",
 							hooks: {
 						    	addImageBlobHook: (blob, callback) => {
-						    		let url = "http://localhost:8585"
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p13")
-						        	$.ajax({
-						           		url: '/findReviewNo',
-						           		type: 'GET',
+						           	formData.append("codeNo", data);
+				           			$.ajax({
+						           		url: '/uploadsAjax',
+						           		type: 'POST',
 						           		processData: false,
 						           		contentType: false,
-						           		success: function(data) {
-						           			cateNo = data;
-						           			formData.append("codeNo", data);
-						           			$.ajax({
-								           		url: '/uploadsAjax',
-								           		type: 'POST',
-								           		processData: false,
-								           		contentType: false,
-								           		data: formData,
-								           		success: function(datas) {
-								           			url = url + datas;
-								           			url = url.replace(/\\/g, '/')
-								           			callback(url);
-								           		},
-								           		error: function(e) {
-								           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
-								           		}
-								           	});	
+						           		data: formData,
+						           		success: function(datas) {
+						           			datas = (""+datas).replace(/\\/g, '/');
+						           			callback(datas);
 						           		},
 						           		error: function(e) {
-						           			console.log('실패');
+						           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
 						           		}
-						           	});
-						        	
+						           	});	
 						        }
 						    }
 						});

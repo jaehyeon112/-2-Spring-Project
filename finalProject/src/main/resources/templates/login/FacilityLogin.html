@@ -33,6 +33,7 @@
         .big-button{
         	font-weight:600;
         	height: 55px;
+        	cursor:pointer;
         	border: 1px #fbb200 solid;
         }
         .sign{
@@ -47,35 +48,32 @@
 
 <body>
     <section layout:fragment="content">
-        <div class="justify-content-center" style="text-align:center; padding:100px;">
+    <div class="container" style="margin-top:150px; margin-bottom:100px;">
+        <div class="justify-content-center" style="text-align:center; margin: 0 auto; width: 300px; ">
             <div style="margin-bottom:20px; align-content:center;">
-                <span style="cursor:pointer " class="loginMethod" id="user"> 회원</span>
-                <span style="cursor:pointer " class="loginMethod" id="facility"> 회원가입</span>
+                <span style="cursor:pointer " class="loginMethod"> 로그인</span>
             </div>
-			  <a th:href="@{/oauth2/authorization/google}" class="btn btn-primary me-2 active" role="button">Google Login</a>
+			   <a th:href="@{/oauth2/authorization/google}" role="button"><img style="width:300px; margin-bottom:20px;" src="image/구글로그인버튼.png"></a>
             <form th:action="@{/login}" method="post" id="loginForm">
                 <div><label> <input class="form-control" type="text" name="username" placeholder="아이디를 입력해주세요" />
                     </label></div>
-                <div><label> <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" />
+                <div><label> <input style="margin-bottom:0px;" class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" />
                     </label></div>
+                		<div style="text-align: left"><input type="checkbox" name="remember-me" id="remember"><label style="margin-left:5px;" for="remember"> 로그인 유지</label><br></div>
                 <div><label><button id="button-test" class="form-control big-button login" >로그인</button></label></div>
-                		<input type="checkbox" name="remember-me">로그인 유지<br>
-                <div><label><button id="" class="form-control big-button sign" >회원가입</button></label></div>
+                <div><label><a href="/signup"><input style="text-align: center" id="" class="form-control big-button sign" value="회원가입"></a></label></div>
             </form>
             	<div> 
-				<span><a>아이디 찾기</a></span>
-				<span><a>비밀번호 찾기</a></span>
+				<span><a style="cursor:pointer">아이디 찾기</a></span>
+				<span><a style="cursor:pointer">비밀번호 찾기</a></span>
 				</div>
-            <script type="text/javascript">
+            <script th:inline="javascript">
+            var loginErrorMessage = [[${session.loginErrorMessage}]]; // Thymeleaf 예시
+         
                 let user = true;
                 let facility = false;
                 $('#user').addClass('active-click');
-                window.onload = function () {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has('error')) {
-                        alert('로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.');
-                    }
-                };
+
 
                 $('#user').on('click', function (e) {
                     user = true;
@@ -105,11 +103,24 @@
                 })
                 
                 
-                
+			        // URL에서 쿼리 파라미터를 파싱
+			        const urlParams = new URLSearchParams(window.location.search);
+			        const error = urlParams.get('error'); // 'error' 쿼리 파라미터의 값을 가져옴
+					const logout = urlParams.get('logout')
+					console.log(error)
+					console.log(logout)
+			        // error 파라미터가 'no'인 경우, 경고창 표시
+			        if(error==''){
+			            alert(loginErrorMessage);
+			        }else if(logout==''){
+			        }
+			        
+			        
                 
             </script>
 
         </div>
+    </div>
     </section>
 </body>
 

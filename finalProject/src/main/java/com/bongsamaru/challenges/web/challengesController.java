@@ -2,6 +2,7 @@ package com.bongsamaru.challenges.web;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -121,7 +123,16 @@ public class challengesController {
 		return chalId;
 		
 	}
-	
+	@GetMapping("/getChallCheck")
+	  @ResponseBody
+	  public int getChallCheck(Model model,
+			  				  @RequestParam(name="chalId") Integer chalId, 
+			  				  @RequestParam(name="memId") String memId,  
+			  				  @RequestParam(name="partDate") Date partDate) { 
+		  int info = challengeService.getChallCheck(memId,partDate,chalId);
+		  model.addAttribute("info", info);
+		  return info;
+	  }
 	
 	/**
 	 * 게시글 참여
@@ -148,38 +159,16 @@ public class challengesController {
 		
 		return chalDetId;
 	}
-	/**
-	 *좋아요한 상태인지 조회하고 추가 or 삭제
-	 * @param model
-	 * @param likeVO
-	 * @return
-	 */
-	@PostMapping("challengeLike")
-	@ResponseBody
-	public List<LikeVO> getChallengeLike(Model model, Principal principal, LikeVO likeVO, @RequestParam Integer boardId) {
-		likeVO.setMemId(principal.getName());
-		//likeVO.setBoardId(boardId);
-		List<LikeVO> list = challengeService.getChallengeLike(likeVO);
-		model.addAttribute("challengeLikeList", list);
-		boolean isLiked = list.stream()
-                .anyMatch(vo -> vo.getMemId().equals(principal.getName()) && vo.getBoardId().equals(boardId) && vo.getCategory().equals("l02"));
-		if (!isLiked) {
-         
-            challengeService.challengesLikeInsert(likeVO);
-        } else {
-           
-        	challengeService.deleteChallengeLike(boardId);
-        }
-		return list;
-	}
+
 	@PostMapping("/reportInsert")
 	@ResponseBody
-	public int reportInsert(Model model, ReportVO reportVO, Principal principal) {
-		
+	public int reportInsert(Model model, @RequestBody ReportVO reportVO, Principal principal) {
 		reportVO.setMemId(principal.getName());
-		challengeService.reportInsert(reportVO); 
+		reportVO.setCategory("r01");
 		log.info(reportVO);
-		return challengeService.reportInsert(reportVO); 
+		int report = challengeService.reportInsert(reportVO); 
+		
+		return report; 
 	}
 	
 }

@@ -17,7 +17,9 @@ display:inline-block;
 <h3>시설정보</h3>
 <hr>
 <p th:text="${'시설명'+facilityInfo.facName}"></p>
-<p th:text="${'사업유형'+facilityInfo.facType}"></p>
+
+<p th:text="${'사업유형'+facilityInfo.category}"></p>
+
 <p th:text="기부금공제구분"></p>
 <p th:text="${'대표자명'+facilityInfo.repName}"></p>
 <p th:text="${'사업자번호'+facilityInfo.bizNum}"></p>

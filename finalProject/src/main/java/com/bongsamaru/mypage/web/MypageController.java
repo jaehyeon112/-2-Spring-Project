@@ -3,6 +3,7 @@ package com.bongsamaru.mypage.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,13 +53,20 @@ public class MypageController {
 	         if (principal instanceof UserDetails) {
 	                UserDetailVO userDetailVO = (UserDetailVO) principal;
 	                String memId = userDetailVO.getUsername();
-	                System.out.println(userDetailVO.getUserVO() + "확인");
 	                
 	                List<UserVO> list = mypageService.getProfile(memId);
 
 	        		Double heart = mypageService.getHeart(memId);
 	        		Integer sumamt = mypageService.getSumAmt(memId);
 	        		Integer gibuCount = mypageService.getGibuCount(memId);
+	        		
+	        		if (sumamt == null) {
+	        		    sumamt = 0;
+	        		}
+	        		
+	        		if (gibuCount == null) {
+	        			gibuCount = 0;
+	        		}
 	        		model.addAttribute("list",list);
 	        		model.addAttribute("heart",heart);
 	        		model.addAttribute("gibuCount",gibuCount);
@@ -67,6 +75,36 @@ public class MypageController {
 	      }
 
 	      return "my/mypage"; 
+	}
+	 /**
+	  * 회원탈퇴 페이지
+	  * @param model
+	  * @return my/withDrawal
+	  */
+	 @GetMapping("/withdrawal")
+	 public String withDrawal(Model model) {
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	    	 Object principal = auth.getPrincipal();
+	            
+	         if (principal instanceof UserDetails) {
+	                UserDetailVO userDetailVO = (UserDetailVO) principal;
+	         }
+	      }
+
+	      return "my/withdrawal"; 
+	}
+	 
+	 /**
+	  * 회원탈퇴 성공 페이지
+	  * @param model
+	  * @return my/bye
+	  */
+	 @GetMapping("/bye")
+	 public String byePage() {
+
+	      return "my/bye"; 
 	}
 	 
 	 /**
@@ -89,19 +127,18 @@ public class MypageController {
 	                // 또는 userDetailVO에 있는 다른 메서드를 호출하여 추가 정보를 얻을 수 있습니다.
 	                
 	                // 예시: 사용자 이름을 모델에 추가
-	                System.out.println(userDetailVO.getUserVO() + "확인로그인로그인");
 	                List<UserVO> list = mypageService.getProfile(userDetailVO.getUsername());
 	                
 	                
 	                model.addAttribute("list", list);
-	                System.out.println(list+ "리스트");
 	                
 	                // 필요한 경우, 여기에서 userDetailVO의 다른 정보를 모델에 추가할 수 있습니다.
 	            }
 	        }
 
 	        return "my/profile";
-	    }
+	        
+	 }
 	 
 	 /**
 	  * CoolSMS 이용한 프로필에서 휴대폰 인증번호
@@ -118,15 +155,35 @@ public class MypageController {
 	 }
 	 
 	 /**
-	  * 프로필 이메일 수정 아직 하는중
+	  * 프로필 수정
 	  * @param userVO
 	  */
-	 
+
 	 // 수정
-	 @PostMapping("/profile")
-		public void updateEmail(@RequestBody UserVO userVO) {
-			mypageService.updateEmail(userVO);
-			
-		}
+	 @PostMapping("/updateProFile")
+	 @ResponseBody
+	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO) {
+	     int result = mypageService.updateProFile(userVO);
+	     if (result > 0) {
+	         return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	     } else {
+	         return ResponseEntity.badRequest().body("프로필 업데이트에 실패했습니다.");
+	     }
+	 }
 	 
+	 
+	 @PostMapping("/deleteMember")
+	 @ResponseBody
+	 public ResponseEntity<String> deleteMember(@RequestBody UserVO userVO) {
+	     int result = mypageService.deleteMember(userVO);
+	     if (result > 0) {
+	    	 // 현재 사용자 로그아웃 처리
+	    	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	         authentication.setAuthenticated(false);
+	         SecurityContextHolder.clearContext();
+	         return ResponseEntity.ok("회원탈퇴 성공");
+	     } else {
+	         return ResponseEntity.badRequest().body("회원탈퇴실패");
+	     }
+	 }
 }

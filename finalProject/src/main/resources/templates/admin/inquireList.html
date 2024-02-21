@@ -9,6 +9,9 @@
 #tableData{
 	margin-top : 50px;
 }
+.cur{
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -21,8 +24,8 @@
 		<div class="container">
 		<h2>문의사항 관리</h2>
 		<div id=tableData>
-			<th:block th:if="${inquireList.size} == 0" style="text-align:center">
-				<p>데이터가 존재하지 않습니다<p>
+			<th:block th:if="${inquireList.size} == 0">
+				<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>
 			</th:block>
 			<th:block th:if="${inquireList.size} != 0">
 			<table class="table" id="notice">
@@ -41,9 +44,10 @@
 							 <td th:text="${st.count}" >번호</td>
 							 <td th:text="${board.memId}" >작성자</td>
 							 <td th:text="${board.title}" >제목</td>
-							 <td th:text="${board.content}" >내용</td>
-							 <td th:if="${board.priority}==0"><a class="cur" th:href="@{inquireInfo(category=${board.category},detailCate=${board.detailCate})}">답변 대기 중</a></td>
-							 <td th:if="${board.priority}==1" ><a class="cur" th:href="@{inquireComment(category=${board.category},detailCate=${board.detailCate})}">답변 완료</a></td>
+							 <td class="cur" th:if="${board.content.length}>=20" th:text="${#strings.substring(board.content, 0, 20)}+'...'" th:href="@{inquireInfo(category=${board.category},detailCate=${board.detailCate},boardId=${board.boardId})}"></td>
+							 <td th:if="${board.content.length}<20" th:text="${board.content}"></td>
+							 <td th:if="${board.priority}==0"><a class="cur" th:href="@{inquireComment(category=${board.category},detailCate=${board.detailCate},boardId=${board.boardId})}">답변 대기 중</a></td>
+							 <td th:if="${board.priority}==1" ><a class="cur" th:href="@{inquireInfo(category=${board.category},detailCate=${board.detailCate},boardId=${board.boardId})}">답변 완료</a></td>
 						</tr>
 					</th:block>
 				</tbody>

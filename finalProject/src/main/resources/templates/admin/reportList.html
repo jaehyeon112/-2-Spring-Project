@@ -36,10 +36,11 @@
 			<a style="color:black;font-size:14px" onclick="show2()"> 모임 신고건 |</a>
 			<a style="color:black;font-size:14px" onclick="show3()"> 피드댓글 신고건</a>
 		</div>
+		<br><hr>
 		<div id=tableData>
 			<div id="notice">
-			<th:block th:if="${reportList.size} == 0" style="text-align:center">
-				<p>데이터가 존재하지 않습니다<p>
+			<th:block th:if="${reportList.size} == 0">
+				<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>
 			</th:block>
 			<th:block th:if="${reportList.size} != 0">
 			<table class="table">
@@ -56,7 +57,7 @@
 				<tbody>
 					<tr th:each="report,st : ${reportList}">
 						 <td th:text="${st.count}">번호</td>
-						 <td><a th:href="@{/challenge/challengeInfo(chalId=${report.categoryNo})}" target='_blank' style="color:black">챌린지로 이동</a></td>
+						 <td><a th:href="@{/challenge/challengesList(chalId=${report.categoryNo})}" target='_blank' style="color:black">챌린지로 이동</a></td>
 						 <td th:text="${report.memId}" >신고자</td>
 						 <td th:text="${#dates.format(report.repDate, 'yyyy년 MMM dd일')}" >날짜</td>
 						 <td th:if="${report.repReason}=='s01'" >스팸홍보/도배글입니다</td>

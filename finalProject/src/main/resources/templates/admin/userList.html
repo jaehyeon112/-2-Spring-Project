@@ -27,9 +27,6 @@
 .cur{
 	cursor:pointer;
 }
-#tableData{
-	margin-top : 50px;
-}
 </style>
 </head>
 <body>
@@ -45,9 +42,11 @@
 			<a style="color:black;font-size:14px" onclick="show1()">일반회원 |</a>
 			<a style="color:black;font-size:14px" onclick="show2()"> 시설회원</a>
 		</div>
+		<br>
+		<hr>
 		<div id="tableData">
 		<div id="classic">
-			<div style="float:right;padding:10px">
+			<div style="float:right">
 				<input class="form-control-sm me-2" onkeypress="handleKeyPress(event)" id="search" type="search" placeholder="이름을 검색하세요" aria-label="Search" th:value="${vo.searchKeyword}">
 				<button class="btn btn-outline-success" onclick="search()" type="button">검색</button>
 				<button class="btn btn-outline-primary" type="button" onclick="show1()">초기화</button>
@@ -220,15 +219,15 @@
 			};
 			
 			function prev(vo){
-				$('#tableData').load(`../userListDetail?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1} #facility`);
+				$('#tableData').load(`../userListDetail?start=${vo.start - vo.cntPerPage}&end=${vo.start - 1}&memApp=1 #facility`);
 			}
 			
 			function current(vo,pageNum){
-				$('#tableData').load(`../userListDetail?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage} #facility`);
+				$('#tableData').load(`../userListDetail?start=${(pageNum - 1) * vo.cntPerPage + 1}&end=${pageNum * vo.cntPerPage}&memApp=1 #facility`);
 			}
 			
 			function next(vo){
-				$('#tableData').load(`../userListDetail?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage} #facility`);
+				$('#tableData').load(`../userListDetail?start=${vo.end + 1}&end=${vo.end + vo.cntPerPage}&memApp=1 #facility`);
 			}
 			
 			function handleKeyPress(event) {

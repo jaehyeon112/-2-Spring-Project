@@ -14,22 +14,29 @@
 <body>
 <!-- 마이페이지 사이드바 -->
 <div th:fragment="side">
-  <div class="card" style="background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;">
-    <div class="card-body">
-      <h1>봉사</h1>
-      <hr>
-      <div id="myList"> 
-        <h4 style="cursor: pointer;" id="/daily">일일봉사</h4>
-        <h4 style="cursor: pointer;" id="/Group">동아리</h4>
-        <h4 style="cursor: pointer;" id="/FacilityVol">시설봉사</h4>
-      </div>
-    </div>
+  <div style="background-color: #fff;
+    margin-bottom: 40px;
+        border-bottom: 1px solid #dcdcdc;">
+      <ul id="myList" class="container" style="display: flex;justify-content: center; list-style: none; margin-bottom:0"> 
+        <li style="cursor: pointer;" > <a id="/daily" style="display: inline-block;
+    padding: 30px 45px;
+    color: #797979;
+    font-size: 1.125rem;
+    font-weight: 500;">일일봉사</a></li>
+        <li style="cursor: pointer;" > <a  id="/Group" style="display: inline-block;
+    padding: 30px 45px;
+    color: #797979;
+    font-size: 1.125rem;
+    font-weight: 500;">동아리</a></li>
+        <li style="cursor: pointer;" > <a  id="/FacilityVol" style="display: inline-block;
+    padding: 30px 45px;
+    color: #797979;
+    font-size: 1.125rem;
+    font-weight: 500;">시설봉사</a></li>
+      </ul>
 </div>
 <script th:inline="javascript">
-    $('#myList h4').click(function (e) {
+    $('#myList a').click(function (e) {
         var href = $(this).attr('id'); // 클릭한 요소의 id 속성 값을 가져옵니다.
         window.location.href = href; // 해당 경로로 이동합니다.
     });
@@ -39,7 +46,7 @@
         var currentUrl = window.location.href;
 
         // 리스트 항목을 순회하며 현재 페이지와 연관된 항목을 찾습니다.
-        $('#myList h4').each(function () {
+        $('#myList a').each(function () {
             var href = $(this).attr('id');
             
             // 현재 페이지와 id 속성 값이 일치하는 경우 해당 항목에 스타일을 적용합니다.
@@ -47,7 +54,8 @@
                 $(this).css({
                     'color': 'black', // 글씨 색상을 파란색으로 변경
                     'font-size' : '24px',
-                    'font-weight': 'bold' // 글씨를 더 진하게 변경
+                    'font-weight': 'bold', 
+                    	'box-shadow': '0 1px 0 0 #689f38'
                 });
             } else {
                 // 다른 항목들은 기본 스타일로 설정합니다.

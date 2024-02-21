@@ -11,6 +11,7 @@ public class VolMemVO {
 	private String facId;
 	private String appCode;
 	private Date appDate;
+	private Date volDate;
 	private String appReason;
 	private String memId;
 	private Integer volActId;

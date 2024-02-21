@@ -61,7 +61,6 @@ public interface AdminService {
 	public int delFaq(Integer faqId);
 	public int updateNotice(BoardVO boardVO);
 	public int inquireComments(CommentsVO commentsVO);
-	public int updateInquire(Integer boardId);
 	public CommentsVO inquireCommentOne(Integer detailCode);
 	public int updateReport(Integer reqCode,Integer repId);
 	public List<FilesVO> selectFile(String codeNo);
@@ -90,4 +89,12 @@ public interface AdminService {
 	public List<RemittanceVO> remittanceList();
 	public int insertRemittance(RemittanceVO remittanceVO);
 	public List<AlertVO> alertList();
+
+	//기부영수증 후기 승인처리리스트
+	public List<DonaVO> donaReviewList(PageVO pageVO);
+	public int donaReviewCnt(PageVO pageVO);
+	public DonaVO donaReviewInfo(Integer donRevId);
+	
+	//기부후기 승인처리
+	public int updateDonReview(DonaVO vo);
 }

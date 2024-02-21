@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="image/favicon.png" type="image/png">
-    <title>Royal Hotel</title>
+    <title>기부 신청</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="userresources/css/bootstrap.css">
     <link rel="stylesheet" href="userresources/vendors/linericon/style.css">
@@ -118,6 +118,24 @@
 		</form>
 	</div>
 	
+	<!-- 기부신청 완료 모달 -->
+<div class="modal fade" id="donationConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="donationConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="donationConfirmationModalLabel">기부신청 완료</h5>
+            </div>
+            <div class="modal-body">
+                <p>기부신청이 성공적으로 완료되었습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+	
+	
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>	
 <script th:inline="javascript">
 	var downloadButton = document.getElementById('downloadButton');
@@ -160,25 +178,53 @@
                 formData.append("uploadFiles", fileInputs[i]); 
              }
 
-		$.ajax({
-			type : 'POST',
-			url : '/uploadsAjax',
-			data : formData,
-		       processData: false,
-		        contentType: false,
-		        success: function(response) {
-		            
-		            console.log("ajax 안에 success response " + response);
-		            alert("등록성공!");
-		            location.href = "donaMain";
-		            return;
-		        },
-		        error: function(error) {
-		            console.error(error);
-		        }
-		});
+		 // 첫 번째 AJAX 요청
+			$.ajax({
+				type : 'POST',
+				url : '/uploadsAjax',
+				data : formData,
+				processData: false,
+				contentType: false,
+				success: function(response) {
+					console.log("첫 번째 AJAX 성공: " + response);
+					
+					// 두 번째 AJAX 요청
+					$.ajax({
+						type: 'POST',
+						url: '/applydona',
+						data: {memId : facId},
+						
+						success: function (applyResponse) {
+							console.log("두 번째 AJAX 성공: " + applyResponse);
+							alert("두번째 등록 성공!");
+							  // 기부신청이 성공하면 모달 창 표시
+		                    showDonationConfirmationModal();
+							location.href = "/fac/donaInfo";
+						},
+						error: function (applyError) {
+							console.error("두 번째 AJAX 실패: " + applyError);
+							
+						}
+					});
+				},
+				error: function(error) {
+					console.error("첫 번째 AJAX 실패: " + error);
+				}
+			});
 	}
 	
+	 $(".btn-deleteAsk").click(function () {
+	        $("#deleteConfirmationModal").modal("show");
+	    });
+
+	    $(".btn-secondary").click(function () {
+	        $("#deleteConfirmationModal").modal("hide");
+	    });
+
+	    // 기부신청 완료 모달 표시
+	    function showDonationConfirmationModal() {
+	        $("#donationConfirmationModal").modal("show");
+	    }
 	
 	
 

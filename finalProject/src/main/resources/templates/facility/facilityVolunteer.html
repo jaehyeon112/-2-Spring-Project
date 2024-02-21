@@ -9,52 +9,96 @@
 <body>
 <section layout:fragment="content">
 <div class="facilities_item">
-<h3 class="title_color section_title text-center">봉사내역</h3>
+<h3 class="title_color section_title text-center">해왔던 봉사들..</h3>
 <div class="row mb_30">
-<th:block th:each="volunteer:${volList}">
+<th:block th:each="volunteerF:${volFList}">
                     <div class="col-lg-4 col-md-6">
-                        <div class="single-recent-blog-post">
-                            <div class="thumb">
-                                <img class="img-fluid" src="../image/초록개구리.png" alt="post">
-                                <!-- <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a> -->
+                        <div class="accomodation_item text-center facilityIntro">
+                            <div class="hotel_img">
+                                <img  th:src="${volunteerF.filePath}" onError="this.src='../image/기본이미지.jpg'" alt="post">
+
                             </div>
                             <div class="details">
                                 <div class="tags">
-                                    <!-- <a href="#" class="button_hover tag_btn">Travel</a>
-                                    <a href="#" class="button_hover tag_btn">Life Style</a> -->
+                                    
                                 </div>
-                                <h4 class="sec_h3" th:text="${volunteer.title}" style="color:black;"></h4>
-                                <p th:text="${volunteer.volDate}+''" style="color:black;"></p>
-                                <h6 class="date title_color" th:text="${volunteer.location}"></h6>
+                                <h4 class="sec_h3" th:text="${volunteerF.title}" style="color:black;"></h4>
+                                <p th:text="${volunteerF.volDate}+''" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${volunteerF.location}"></h6>
                             </div>	
                         </div>
                     </div>
                 </div> 
 </th:block>
+  <th:block th:if="${#lists.size(volunteerF)}!=0"> 
+<nav class="blog-pagination justify-content-center d-flex">
+    <ul class="pagination">
+        <li class="page-item">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous">
+                <span aria-hidden="true">
+                    <span class="lnr lnr-chevron-left"></span>
+                </span>
+            </a>
+        </li>
+        <li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
+            <a class="page-link" th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a>
+        </li>
+        <li class="page-item">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next">
+                <span aria-hidden="true">
+                    <span class="lnr lnr-chevron-right"></span>
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</th:block>
 </div>
 
 <div class="facilities_item">
-<h3 class="title_color section_title text-center">봉사후기</h3>
+<h3 class="title_color section_title text-center">앞으로 해나갈 봉사들!!</h3>
 <div class="row mb_30">
-<th:block th:each="volunteer:${volList}">
+<th:block th:each="volunteerI:${volIList}">
                     <div class="col-lg-4 col-md-6">
-                        <div class="single-recent-blog-post">
-                            <div class="thumb">
-                                <img class="img-fluid" src="../image/초록개구리.png" alt="post">
-                                <!-- <a th:href="@{info.do(donId=${funding.donId}, name=${funding.donId})}" th:text="${funding.title}"></a> -->
+                        <div class="accomodation_item text-center facilityIntro">
+                            <div class="hotel_img">
+                                <img  th:src="${volunteerI.filePath}" onError="this.src='../image/기본이미지.jpg'" alt="post">
+                               
                             </div>
                             <div class="details">
                                 <div class="tags">
-                                    <!-- <a href="#" class="button_hover tag_btn">Travel</a>
-                                    <a href="#" class="button_hover tag_btn">Life Style</a> -->
+                                   
                                 </div>
-                                <h4 class="sec_h3" th:text="${volunteer.revTitle}" style="color:black;"></h4>
-                                <p th:text="${volunteer.content}+''" style="color:black;"></p>
-                                <h6 class="date title_color" th:text="${volunteer.writeDate}"></h6>
+                                <h4 class="sec_h3" th:text="${volunteerI.revTitle}" style="color:black;"></h4>
+                                <p th:text="${volunteerI.content}+''" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${volunteerI.writeDate}"></h6>
                             </div>	
                         </div>
                     </div>
                 </div> 
+</th:block>
+  <th:block th:if="${#lists.size(volunteerI)}!=0">
+<nav class="blog-pagination justify-content-center d-flex">
+    <ul class="pagination">
+        <li class="page-item">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo2.start - vo2.cntPerPage}, end=${vo2.start - 1})}" class="page-link" aria-label="Previous">
+                <span aria-hidden="true">
+                    <span class="lnr lnr-chevron-left"></span>
+                </span>
+            </a>
+        </li>
+        <li class="page-item" th:each="pageNum : ${#numbers.sequence(vo2.startPage, vo2.endPage)}" th:class="${pageNum == vo2.currentPage ? 'page-item active' : 'page-item'}">
+            <a class="page-link" th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${(pageNum - 1) * vo2.cntPerPage + 1}, end=${pageNum * vo2.cntPerPage})}" th:text="${pageNum}"></a>
+        </li>
+        <li class="page-item">
+            <a th:href="@{/fInfo/volunteerList(facId=${session.facilityInfo.facId}, start=${vo2.end + 1}, end=${vo2.end + vo2.cntPerPage})}" class="page-link" aria-label="Next">
+                <span aria-hidden="true">
+                    <span class="lnr lnr-chevron-right"></span>
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
 </th:block>
 </div>
 </section>

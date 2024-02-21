@@ -1,8 +1,11 @@
 package com.bongsamaru.dona.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.bongsamaru.file.service.FilesVO;
 
 import lombok.Data;
 
@@ -26,16 +29,14 @@ public class DonaVO {
 	    private Date extPeriod; // 연장기간
 	    private Integer goalAmt; //목표모금액
 	    private String projTarget; //사업대상
-	    //private String recStat ="1"; //모집현황(c3)
-	    private Integer recStat;
+	    private String recStat ="1"; //모집현황(c3)
 	    private String intro; //소개 (v2000) : 젤 위에표시되는 애
 	    private String introTitle;// 소개글제목
 	    private String donRegApp; //기부금등록여부(c1)
 	    private String expEffect;  //기대효과(v2000) - 동적으로 처리하지말고 위에다가 처리하기! 
 
 	    private String category; // 유형
-	    private Integer RN; // 유형
-
+	    private String hasreview; //리뷰유무
 
 	    private String paidCode;
 	    private String backName;
@@ -50,7 +51,17 @@ public class DonaVO {
 	    //상세페이지
 	    private String dday; //디데이
 	    
-    
+   //연장관련 날짜 수저 오버라이딩
+	    public Date getEndPeriod() {
+	    	if(extPeriod != null) {
+	    		return extPeriod;
+	    	}else {
+	    		return endPeriod;
+	    	}
+	    }
+	    
+	    
+	    
     //Don_Detail(기부상세) 테이블
 	    private Integer donDetId; //기부등록상세번호 (notnull)
 	    //private Integer donId; 
@@ -77,7 +88,12 @@ public class DonaVO {
 	    private String payId; // 결제번호
 	    private String anonCheck; // 익명체크 (c3)
 	    private String memId; // 회원아이디 
-    
+	    
+	    //익명처리
+	    public String getMemId() {
+	    	 return ("1".equals(anonCheck)) ? "익명" : memId;
+	    }
+	    
     
     //don_review(기부후기) 테이블
 	    private Integer donRevId; //기부후기등록번호 (not null)
@@ -137,5 +153,15 @@ public class DonaVO {
 	    
 	//파일 - 이미지 넣도록! 
 	    private String filePath;
+	    private String fileName;
+	    //private String code; p08
+	    private Integer codeNo;
+	    
+	
+	//알람
+	    private Integer alertId;
+	    //private String category; //o04(기부등록신청), 05(기부글등록), 06(기부후기등록)
+	    //private String content;
+	    private String receiveId; //ADMIN
 	    
 }

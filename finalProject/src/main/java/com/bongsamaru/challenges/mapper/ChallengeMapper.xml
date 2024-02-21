@@ -30,6 +30,7 @@ SELECT  C.CHAL_ID,
 		C.TITLE, 
 		C.CONTENT,
         C.REG_DATE,
+        C.END_DATE,
 		F.FILE_PATH, 
 		F.FILE_ORDER, 
 		F.CODE_NO,
@@ -40,6 +41,7 @@ SELECT  C.CHAL_ID,
   LEFT  JOIN FILES F ON CAST(C.CHAL_ID AS VARCHAR2(100)) = F.CODE_NO
    AND  F.CODE ='p03'
  WHERE  FILE_ORDER = 1
+ ORDER BY REG_DATE
  
  
   
@@ -55,6 +57,7 @@ SELECT  CHAL_ID,
         EXP_IMPACT,
         ACTION_REASON,
         REG_DATE,
+        END_DATE,
         PART_METHOD1,
         PART_METHOD2
   FROM  CHALLENGE
@@ -86,6 +89,7 @@ SELECT  CHAL_ID,
     
     <collection property="file" ofType="FilesVO" >
         <result property="filePath" column="FILE_PATH"/>
+        <result property="extension" column="EXTENSION"/>
         <result property="fileOrder" column="FILE_ORDER"/>
         <result property="codeNo" column="CODE_NO"/>
     </collection>
@@ -98,16 +102,24 @@ SELECT  C.CHAL_DET_ID,
 		C.MEM_ID,
 		C.CONTENT, 
 		C.PART_DATE, 
-		F.FILE_PATH, 
+		F.FILE_PATH,
+		F.EXTENSION,
 		(SELECT F.FILE_PATH FROM FILES F WHERE C.MEM_ID = F.CODE_USER AND F.CODE='p01')                         AS PROFIL
    FROM CHAL_DETAIL C 
    LEFT JOIN FILES F ON CAST(C.CHAL_DET_ID AS VARCHAR2(100)) = F.CODE_NO
     AND F.CODE ='p04'
   WHERE C.CHAL_ID=#{chalId}
- 
+ ORDER BY REG_DATE
   
 </select>
-
+<!-- 오늘 등록한적 있는지 체크 -->
+<select id="getChallCheck" parameterType="int">
+  Select count(*)
+    FROM CHAL_DETAIL
+   WHERE MEM_ID=#{memId}
+     AND PART_DATE=#{partDate}
+     AND CHAL_ID=chalId 
+</select>
 <!-- 챌린지 등록-->
 <insert id="getChallengeInsert" parameterType="ChallengesVO">
 	<selectKey keyProperty="chalId" resultType="int"	order="BEFORE">
@@ -123,6 +135,7 @@ SELECT  C.CHAL_DET_ID,
 			 EXP_IMPACT,
 			 ACTION_REASON,
 			 REG_DATE,
+			 END_DATE,
 			 PART_METHOD1,
 			 PART_METHOD2)
 		 VALUES
@@ -133,6 +146,7 @@ SELECT  C.CHAL_DET_ID,
 			 #{expImpact},
 			 #{actionReason},
 			 sysdate,
+			 #{endDate},
 			 #{partMethod1},
 			 #{partMethod2})
  
@@ -202,7 +216,7 @@ SELECT  C.CHAL_DET_ID,
 
 </delete>
 <!-- 신고하기 -->
-<insert id="reportInsert" parameterType="int">
+<insert id="reportInsert" parameterType="ReportVO">
 INSERT INTO REPORT(REP_ID,
 				   CATEGORY,
 				   MEM_ID,
@@ -211,10 +225,10 @@ INSERT INTO REPORT(REP_ID,
 				   REP_REASON,
 				   REQ_CODE)
 			VALUES(REPORT_SEQ.NEXTVAL,
-				   'r01',
+				   #{category},
 				   #{memId},
 				   sysdate,
-				   1,
+				   #{categoryNo},
 				   #{repReason},
 				   0)	   
 

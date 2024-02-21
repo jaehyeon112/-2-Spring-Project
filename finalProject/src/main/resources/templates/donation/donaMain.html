@@ -113,21 +113,6 @@
 	
 	<section layout:fragment="content">
 
-       <!-- Spinner Start -->
-<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-    <div class="spinner-grow text-primary" role="status"></div>
-</div>
-<!-- Spinner End -->
-
-
-<!-- Single Page Header start -->
-<div class="container-fluid page-header py-5" style="background-color: #859d5c; background-image: none;">
-    <h1 class="text-center text-white display-6">Donation</h1>
-</div>
-
-
-
-<!-- Single Page Header End -->
 
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
@@ -188,7 +173,8 @@
                                     <!-- 리스트 아이템 표시 -->
                                     <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
                                         <div class="fruite-img">
-                                            <img src="donation/board/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" style="height:250px" alt="">
+                                            <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
+                                            <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} == null" src="../image/bonsamaru.png" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
                                         </div>
 
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: #ffb524; filter: grayscale(0%);">
@@ -197,10 +183,13 @@
 
                                         <!-- 테두리 없애부분 -->
                                         <div class="p-4 border-top-0 rounded-bottom" style="color: black;">
-                                            <h4><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h4>
-
+                                            <h6><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a></h6>
+											<div class="info-item" style="color: darkgreen;">
+                                                # <strong><span th:text="${dona.subCodeName}"></span></strong>
+                                            </div>
                                             <div class="info-item">
-                                                목표금액 :<strong><span th:text="${dona.goalAmt}"></span></strong> 원
+                                                목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3, 'COMMA') }"></span></strong> 원
+                                                
                                             </div>
                                             <div class="info-item">
                                                 <strong><span th:text="${dona.donationCount}"></span></strong>명 참여
@@ -214,12 +203,12 @@
 											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
 											    </div>
 											    <div style="text-align: right;">
-											        <strong><span th:text="${dona.total}"></span></strong>원
+											        <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA')}"></span></strong>원
 											    </div>
 											</div>
 
                                             <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;"></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +219,7 @@
                     </div>
                 </div>
                 <!-- pagination -->
-                <button type="button" class="btn btn-outline-primary m-1">등록</button>
+                
                           <div class="col-12 mt-5">
                             <div class="pagination d-flex justify-content-center mt-5">
                                 <a href="#" class="rounded">&laquo;</a>
@@ -238,8 +227,7 @@
                                 <a href="#" class="rounded">2</a>
                                 <a href="#" class="rounded">3</a>
                                 <a href="#" class="rounded">4</a>
-                                <a href="#" class="rounded">5</a>
-                                <a href="#" class="rounded">6</a>
+                               
                                 <a href="#" class="rounded">&raquo;</a>
                             </div>
                         </div>

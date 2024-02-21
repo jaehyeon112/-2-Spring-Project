@@ -5,33 +5,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 등록폼 </title>
+    <title> 기부후기등록폼 </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
     <!-- 다른 필요한 CSS 파일 여기에 추가 -->
+    
+    <style>
+    .form-select{
+    width: 20%;
+    }
+    
+    .form-control-sm {
+        width: 50%; /* 현재 크기의 1/3로 조정 */
+    }
+    
+    .form-control[type="file"] {
+        width: 33.33%; /* Set to one-third of the current size */
+    }
+
+      #execAmt::placeholder,
+    #bizCost::placeholder {
+        text-align: right;
+    }
+    </style>
+    
 </head>
 <body>
- <section layout:fragment="content" >
 
+ <section layout:fragment="content" >
+ 
+ <div th:insert="~{banner/empty::banner}"></div>
+<div class="container" style="margin:0 auto;">
 <form name="reviewForm">
-<!-- 나중에 버튼에 
-<h5><a th:href="@{/reviewform(donId=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}" style="color: black;"> 제목</a> 
-<input type="hidden" name="donId" th:value="${donaVO.donId}">
-<input type="hidden" name="facId" th:value="${donaVOfacId}"> -->
+
 
   <fieldset>
-    <legend> Donation Review Form </legend>
+    <legend style="font-weight:bold;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+  <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+</svg> 후기등록 </legend>
 
-    <div class="form-group">
-      <label for="formFile" class="form-label mt-4">영수증 첨부</label>
-      <input class="form-control" type="file" name="uploadfiles" id="formFile">
-    </div>
+   
  
-<!--     
+  
     <div class="form-group">
-      <label for="execAmt" class="form-label mt-4">총 모금액</label>
-      <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off">
+      <label for="execAmt" class="form-label mt-4">총 집행금액</label>
+      <input type="text" class="form-control" name="execAmt" id="execAmt" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
-    
+<!--       
     <div class="form-group">
       <label for="goalAmt" class="form-label mt-4">목표모금액</label>
       <input type="text" class="form-control" id="goalAmt" placeholder="(원)" autocomplete="off">
@@ -40,20 +59,26 @@
     
     <div class="form-group">
       <label for="period" class="form-label mt-4"> 사업집행기간 (DATE)</label>
+       <div class="row">
+        <div class="col-md-3">
       <input type="date" class="form-control" name="startPeriod" th:datetime="${#dates.format(startPeriod, 'yyyy-MM-dd')}" id="startPeriod" placeholder="기부모금시작 " autocomplete="off">
+      </div>
+        <div class="col-md-3">
       <input type="date" class="form-control" name="endPeriod" th:datetime="${#dates.format(endPeriod, 'yyyy-MM-dd')}" id="endPeriod" placeholder="기부모금종료기간 " autocomplete="off">
+    </div>
+    </div>
     </div>
 
 
     <div class="form-group">
       <label for="bizCost" class="form-label mt-4">총사업비</label>
-      <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off">
+      <input type="text" class="form-control" name="bizCost" id="bizCost" placeholder="(원)" autocomplete="off" style="width: 33.33%;">
     </div>
     
     
     <div class="form-group">
-      <label for="usePlan" class="form-label mt-4">기부금 사업내역(bizcontent, bizAmt)</label>
-      <div id = "dynamicFields" class="mb-3">
+      <label for="usePlan" class="form-label mt-4">기부금 사업내역</label>
+      <div id = "dynamicFields" class="mb-3" style="width: 66.66%;">
       	<div class="input-group">
 	      <input type="text" class="form-control" name="bizContent" id="usePlan" placeholder="구체적사업내용" autocomplete="off"> 
 	      <input type="text" class="form-control" name="bizAmt" placeholder="구체적사업비(원)" autocomplete="off">
@@ -65,12 +90,12 @@
     
     <div class="form-group">
 	  <label for="review" class="form-label mt-4">후기글</label>
-	    <div id="articleContainer" class="mb-3">
+	    <div id="articleContainer" class="mb-3" style="width: 66.66%;">
 	        <div class="input-group">
-	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off">
+	        	<input type="text" class="form-control" name="title" id="title" placeholder="제목" autocomplete="off" >
 	        </div>
 	        <div class="input-group">
-	            <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+	            <textarea class="form-control" name="content" id="content" rows="3" ></textarea>
 	        </div>
 	        
 	    </div>
@@ -78,40 +103,43 @@
 	
 
 	<div class="form-group">
-	    <label for="formFile2" class="form-label mt-4">추가 이미지 첨부파일(+)</label>
+	    <label for="formFile2" class="form-label mt-4">이미지 첨부파일</label>
 	    <div id="formFile2Container" class="mb-3">
 	        <div class="input-group">
-	            <input class="form-control" type="file" name="uploadfiles" id="formFile2">
+	            <input class="form-control" type="file" name="uploadfiles" id="formFile2" style="width: 66.66%;">
 	            <button type="button" class="btn btn-outline-secondary" onclick="addInputs('formFile2Container')">+</button>
 	        </div>
 	    </div>
 	</div>
     
     
-    <fieldset class="form-group">
-      <legend class="mt-4">필수 동의 </legend>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          유의사항을 읽었습니다.
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
-        <label class="form-check-label" for="flexCheckChecked">
-         약관동의합니다.
-        </label>
-      </div>
-    </fieldset>
+
 
     
     <button type="button" class="btn btn-primary" onclick="submitForm()">등록하기 </button>
     
   </fieldset>
 </form>
-
+</div>
 
 <script th:inline="javascript">
+//URL에서 파라미터 값을 가져오는 함수
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// donId와 facId 값을 가져오기
+var donId = getParameterByName('donId');
+console.log(donId);
+var facId = getParameterByName('facId');
+console.log(facId);
+
 
 //폼 제출하기
 	function submitForm(){
@@ -122,19 +150,20 @@
     
     let formData = new FormData(document.querySelector('form[name="reviewForm"]'));
     							
- 		
-    //let donId = document.querySelector('input[name="donId"]').value;
-    //let facId = document.querySelector('input[name="facId"]').value;
+ // donId와 facId 값을 가져오기
+    var donId = getParameterByName('donId');
+    console.log(donId);
+    var facId = getParameterByName('facId');
+    console.log(facId);
+  
 
    
-    //formData.append('donId', donId);
-    //formData.append('facId', facId);
+    formData.append('donId', donId);
+    formData.append('facId', facId);
+    formData.append('memId', facId);
     
     
-    
-	
-	let donId = 1; //임시방편임
-	formData.append('donId', donId);
+
 	
 	let fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach(function(fileInput) {
@@ -145,7 +174,7 @@
 	
     
     
-		    document.querySelectorAll('form[name="donaForm"] input').forEach(function(input) {
+		    document.querySelectorAll('form[name="reviewForm"] input').forEach(function(input) {
 		        console.log(input.name + ': ' + input.value);
 		    });
     
@@ -161,7 +190,7 @@
             console.log("ajax 안에 success response " + response);
 
             alert("등록성공!");
-            location.href = "my/mypage";
+            location.href = "/fac/donaInfo";
             return;
         },
         error: function(error) {
@@ -220,8 +249,8 @@
         if (type === "dynamicFields") {
             newFields.innerHTML =
                 `<div class="input-group">` +
-                `<input type="text" class="form-control" name="usePlans[${count}].bizContent" id="detailBiz" placeholder="구체적사업내용" autocomplete="off">` +
-                `<input type="text" class="form-control"  name="usePlans[${count}].bizCost" id="detailAmt" placeholder="구체적사업비" autocomplete="off">` +
+                `<input type="text" class="form-control" name="bizContent${count + 1}" id="detailBiz" placeholder="구체적사업내용" autocomplete="off">` +
+                `<input type="text" class="form-control"  name="bizAmt${count + 1}" id="detailAmt" placeholder="구체적사업비" autocomplete="off">` +
                 `<button type="button" class="btn btn-outline-secondary" onclick="removeInputs(this, '${type}')">-</button>` +
                 `</div>`;
         } else if (type === "formFile2Container") {
@@ -240,6 +269,6 @@
     }
 </script>
 
-
+</div>
 </section>
 </body>
