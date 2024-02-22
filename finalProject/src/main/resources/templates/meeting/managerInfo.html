@@ -326,6 +326,7 @@
 		}
 		$("#approveBtn").on('click',function () {
 		    $("#approveMeeting").modal("hide");
+		    location.href="managerPage?volId="+[[${session.id}]];
 		});
 		
 		function updateMeeting(){

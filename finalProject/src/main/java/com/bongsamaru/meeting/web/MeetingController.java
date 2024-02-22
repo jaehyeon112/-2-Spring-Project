@@ -71,6 +71,7 @@ public class MeetingController {
 	 */
 	@GetMapping("meetings")
 	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,HttpServletResponse res,Principal prin,VolunteerVO volunteerVO) throws IOException {
+		System.out.println("role"+session.getAttribute("Role"));
 		if(session.getAttribute("Role")!="M01"||session.getAttribute("Role")!="M02") {
 			String uri = "meetings?volId="+volId;
 		    if (uri != null && !uri.contains("/login")) {

@@ -313,7 +313,8 @@ width: 20%;
 				contentType: false,
 		        processData: false,
 				success: function (result) {
-					console.log("성공",result)
+					console.log("성공",result);
+					location=
 				},
 				error: function (reject) {
 					console.log(reject);
@@ -323,6 +324,11 @@ width: 20%;
 		if(checking==true){
 			handleSave(volId);
 			return;
+		}else{
+			src_width = screen.availWidth*0.1;
+   			src_height = screen.availHeight*0.1;
+   			window.open("meetings?volId="+volId, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1400, height=800, top="+src_height+",left="+src_width+",location=no");
+   			location.href="/";
 		}
 	};
 	
