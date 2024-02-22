@@ -111,7 +111,7 @@
 		                             <td th:text="${mem.memId}">John</td>
 		                             <td th:text="${#strings.substring(mem.appReason, 0, 10)}+'...'" th:if="${mem.appReason.length}>10">Doe</td>
 		                             <td th:text="${mem.appReason}" th:if="${mem.appReason.length}<=10">Doe</td>
-		                             <td><button th:onclick="${mem.memId}">승인하기</button></td>
+		                             <td><button th:onclick="outMeeting([[${mem.memId}]])">승인하기</button></td>
 		                         </tr>
 		                     </tbody>
 		                 </table>
@@ -185,6 +185,22 @@
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-danger" id="delMeetNo" data-dismiss="modal" aria-hidden="false">아니오</button>
 	                <button type="button" class="btn btn-secondary" id="delMeetYes" data-dismiss="modal" aria-hidden="false">네</button>
+	            </div>
+	        </div>
+	    </div>
+	 </div>
+	 <!-- 모달창 -->
+	<div class="modal fade" id="approveMeeting" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="deleteConfirmationModalLabel">승인 확인</h5>
+	            </div>
+	            <div class="modal-body">
+	                <p>승인 처리되었습니다.</p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-danger" id="approveBtn" data-dismiss="modal" aria-hidden="false">닫기</button>
 	            </div>
 	        </div>
 	    </div>
@@ -304,6 +320,14 @@
            		}
            	});
     	}
+		
+		function modalOpen(){
+			$("#approveMeeting").modal("show");
+		}
+		$("#approveBtn").on('click',function () {
+		    $("#approveMeeting").modal("hide");
+		    location.href="managerPage?volId="+[[${session.id}]];
+		});
 		
 		function updateMeeting(){
 			location.href = "updateMeeting?volId="+[[${session.id}]];

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{facility/facilitylayout}">
+ layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설상세</title>
@@ -13,23 +13,31 @@ display:inline-block;
 </head>
 <body>
 <section layout:fragment="content">
-<div class="facility">
+<div class="container">
+<div th:insert="~{banner/empty::banner}"></div>
+<div th:insert="~{facility/facilityNav::nav}"></div>
+
+<div class="row container">
+<div class="col-3">
+<div th:insert="~{facility/facilityInfoSide::side}"></div>
+</div>
+<div class="facility col-9">
 <h3>시설정보</h3>
 <hr>
-<p th:text="${'시설명'+facilityInfo.facName}"></p>
+<p th:text="${facilityInfo.facName}"></p>
 
-<p th:text="${'사업유형'+facilityInfo.category}"></p>
+<p th:text="${facilityInfo.category}"></p>
 
 <p th:text="기부금공제구분"></p>
-<p th:text="${'대표자명'+facilityInfo.repName}"></p>
-<p th:text="${'사업자번호'+facilityInfo.bizNum}"></p>
-<p th:text="${'대표번호'+facilityInfo.repPhone}"></p>
+<p th:text="${facilityInfo.repName}"></p>
+<p th:text="${facilityInfo.bizNum}"></p>
+<p th:text="${facilityInfo.repPhone}"></p>
 <p th:text="|주소 ${facilityInfo.facAddr},${facilityInfo.facAddrDetail}|"></p>
 <hr>
 
 </div>
-
-
+</div>
+</div>
 
 
 

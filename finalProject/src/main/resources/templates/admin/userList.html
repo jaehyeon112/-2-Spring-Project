@@ -74,6 +74,8 @@
 							 <td th:text="${user.memNick}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
 							 <td th:text="${user.memId}" >아이디</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
+							 <td th:if="${user.memDept}=='d01'">해당사항 없음</td>
+							 <td th:if="${user.memDept}==null">해당사항 없음</td>
 							 <td th:if="${user.memDept}=='d02'">인문계열</td>
 							 <td th:if="${user.memDept}=='d03'">사회계열</td>
 							 <td th:if="${user.memDept}=='d04'">교육계열</td>

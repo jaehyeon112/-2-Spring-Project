@@ -24,6 +24,8 @@
     <div th:insert="~{banner/empty::banner}"></div>
        <div class="side" th:insert="~{facility/sidebar::side}"></div>	
          <div class="container">
+         
+  					       
                 <div class="row justify-content-center hotel_booking_table">
                         <div class="row" style="text-align:center;">
                                 <div class="col-md-3" style="background-color:#689f38; text-align:center;">
@@ -61,6 +63,13 @@
                             
                             <th:block th:each="dona0:${donaList0}">
                             
+                             
+                             <div th:if="dona0.length ==0">
+			                  <div class="col-md-12">
+			                  </div>
+			                 <h2>아직 기부내역이 없습니다</h2>
+			                </div>
+			                
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p><a th:href="@{/donaDetail(id=${dona0.donId}, facId=${dona0.facId})}" th:text="${dona0.title}"></a></p>
@@ -113,7 +122,7 @@
                 <br>
                 <br>
                 <br>
-                
+               
                 <div class="row justify-content-center hotel_booking_table">
                 
                          <div class="row" style="text-align:center;">
@@ -140,7 +149,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="background-color:#689f38; text-align:center;">
 
                                     <div class="book_tabel_item">
                                        <p style="color:white;  font-size:20px">후기작성</p>
@@ -148,15 +157,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-1" style="background-color:#689f38; text-align:center;">
-                                    <div class="book_tabel_item">
-                                       <p style="color:white;  font-size:20px">영수증등록</p>
-                                       
-                                    </div>
-                                </div>
-
                         
                             <th:block th:each="dona:${donaList1}">
+                            
+                            <div th:if="dona.length ==0">
+			                  <div class="col-md-12">
+			                  </div>
+			                 <h2>아직 기부내역이 없습니다</h2>
+			                </div>
                                 <div class="col-md-3">
                                     <div class="book_tabel_item">
                                      <p><a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" th:text="${dona.title}"></a></p>
@@ -179,18 +187,14 @@
                                      
                                     </div>
                                 </div>
-                            
-                           
-                         <div class="col-md-1">
+                            	<div class="col-md-2">
                                     <div class="book_tabel_item">
-                                     <!-- endPeriod가 하루 전이면 버튼 활성화, 그렇지 않으면 비활성화 -->
-                                        <button class="btn" onclick="openReviewForm(this)" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}, data-hasrev=${dona.hasreview}" >후기작성</button>
-
-
-                                      <!--  <a class="book_now_btn button_hover" style="font-size: 14px; padding: 8px 12px;" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}" th:onclick="openReviewForm(this)">후기</a> -->
-
+                                      <button class="btn" onclick="openReviewForm(this)" th:attr="data-donId=${dona.donId}, data-facId=${dona.facId}, data-hasrev=${dona.hasreview}" >후기작성</button>
+                                     
                                     </div>
                                 </div>
+                           
+                       
         
                     </th:block> 
                 </div>
@@ -429,7 +433,7 @@ function openReviewForm(button) {
 	var revStat = button.getAttribute("data-hasrev");
 	console.log("revStat:", revStat); // 콘솔에 revStat 출력
 
-	if(revStat != null){
+	if(revStat === 1 ){
 		openAlertModal("이미 후기글을 작성하였습니다.");
 		return;
 	} else {

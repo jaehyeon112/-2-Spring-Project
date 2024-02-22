@@ -12,6 +12,7 @@
     <result property="title" column="TITLE"/>
     <result property="content" column="CONTENT"/>
     <result property="regDate" column="REG_DATE"/>
+    <result property="endDate" column="END_DATE"/>
     <result property="profil" column="PROFIL"/>
     <result property="participants" column="PARTICIPANTS"/>
     <result property="allParticipants" column="ALLPARTICIPANTS"/>
@@ -30,7 +31,7 @@ SELECT  C.CHAL_ID,
 		C.TITLE, 
 		C.CONTENT,
         C.REG_DATE,
-        C.END_DATE,
+        END_DATE,
 		F.FILE_PATH, 
 		F.FILE_ORDER, 
 		F.CODE_NO,
@@ -41,7 +42,7 @@ SELECT  C.CHAL_ID,
   LEFT  JOIN FILES F ON CAST(C.CHAL_ID AS VARCHAR2(100)) = F.CODE_NO
    AND  F.CODE ='p03'
  WHERE  FILE_ORDER = 1
- ORDER BY REG_DATE
+ ORDER BY REG_DATE DESC
  
  
   
