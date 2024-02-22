@@ -147,4 +147,10 @@
 		  ,INQUIRE_SEQ.NEXTVAL
 		)
 	</insert>
+	
+	<update id="updateViews" parameterType="BoardVO">
+	  UPDATE board
+	  SET views = views + 1
+	  WHERE board_id = #{boardId}
+	</update>
   </mapper>

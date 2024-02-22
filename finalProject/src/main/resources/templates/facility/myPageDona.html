@@ -429,7 +429,7 @@ function openReviewForm(button) {
 	var revStat = button.getAttribute("data-hasrev");
 	console.log("revStat:", revStat); // 콘솔에 revStat 출력
 
-	if(revStat != null){
+	if(revStat === 1 ){
 		openAlertModal("이미 후기글을 작성하였습니다.");
 		return;
 	} else {

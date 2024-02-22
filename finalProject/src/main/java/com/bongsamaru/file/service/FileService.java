@@ -108,6 +108,7 @@ public class FileService {
             fileVO.setFileSize((int) fileSize);
             fileVO.setExtension(contentType);
             fileMapper.updateFile(fileVO);
+            System.out.println("여기로 들어와서 그런듯?");
         } else {
             // 파일이 존재하지 않는 경우 인서트 수행
             fileVO = new FilesVO();

@@ -150,7 +150,7 @@ p{
 		</ul>
 	</nav>     
  </div>  
-    
+  
     </div>
     <br>
     <br>
@@ -159,7 +159,7 @@ p{
     <br>
                     
 <div class="row hotel_booking_table" id="hiddenTable" style="display:none;">
-  [[${volAppList}]]					
+				
 <table class="table"  style="text-align:center; ">
     <thead >
      <tr>
@@ -254,7 +254,7 @@ p{
 			    </div>
 			<div class="modal-body">
 				<div class="form-group">
-				[[${info}]]
+				
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -355,7 +355,7 @@ function showList(id) {
 		 }
 	});
 };
-function clickApp(volActId, memId){
+function clickApp(volActId, memId,rowElement){
 	// 수정
     $.ajax({
          url: '/volAppUpdate',
@@ -365,7 +365,7 @@ function clickApp(volActId, memId){
              memId: memId
          },
          success: function(result) {
-             //alert('업데이트 성공');
+             
          },
          error: function(err) {
              console.log(err);
@@ -383,7 +383,7 @@ function clickApp(volActId, memId){
          type: 'POST',
          data: info,
          success: function(result) {
-             alert('인서트 성공');
+        	 rowElement.remove();
            
          },
          error: function(err) {

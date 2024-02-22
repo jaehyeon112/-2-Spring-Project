@@ -17,4 +17,5 @@ public interface CenterMapper {
 	public int getNoticeCount(PageVO vo);
 	public int getInquiryCount(String memId);
 	public int insertInquiry(BoardVO boardVO);
+	public int updateViews(Integer boardId);
 }
