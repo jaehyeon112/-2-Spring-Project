@@ -96,7 +96,8 @@ public class FileService {
         String contentType = uploadFile.getContentType();
         
         
-        FilesVO fileVO = fileMapper.getFileCheck(codeUser);
+        
+        FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
         System.out.println(code + "파일체크");
         System.out.println(codeUser + "이름");
         System.out.println(fileVO);

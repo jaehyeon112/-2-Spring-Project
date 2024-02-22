@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.mypage.service.HeartVO;
@@ -64,5 +65,23 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteMember(UserVO userVO) {
 		// TODO Auto-generated method stub
 		return mypageMapper.deleteMember(userVO);
+	}
+	
+	@Override
+	public List<VolMemVO> getDayList(String memId) {
+		// TODO Auto-generated method stub
+		return mypageMapper.getDayList(memId);
+	}
+	
+	@Override
+	public List<VolMemVO> getClubList(String memId) {
+		// TODO Auto-generated method stub
+		return mypageMapper.getClubList(memId);
+	}
+	
+	@Override
+	public List<VolMemVO> getFacList(String memId) {
+		// TODO Auto-generated method stub
+		return mypageMapper.getFacList(memId);
 	}
 }

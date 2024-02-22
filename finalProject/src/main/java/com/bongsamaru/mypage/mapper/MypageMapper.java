@@ -3,6 +3,7 @@ package com.bongsamaru.mypage.mapper;
 import java.util.List;
 
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
 import com.bongsamaru.mypage.service.HeartVO;
 
@@ -31,5 +32,12 @@ public interface MypageMapper {
 	
 	// 회원탈퇴
 	public int deleteMember(UserVO userVO);
+	
+	// 일일봉사 내역 조회
+	public List<VolMemVO> getDayList(String memId);
+	// 동아리 내역 조회
+	public List<VolMemVO> getClubList(String memId);
+	// 시설 내역 조회
+	public List<VolMemVO> getFacList(String memId);
 
 }

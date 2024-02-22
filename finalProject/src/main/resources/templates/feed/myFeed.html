@@ -45,8 +45,8 @@
 				</div>
 				<div class="contenttext">
 						<span class="profile_thumb">
-						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
+						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 200px; height: 200px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
 						</span>
 				</div>
 				<p style="color: black; font-size: 25px; font-weight: bold;" th:text="${item.memNick + '님'}"></p>
