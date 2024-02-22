@@ -25,7 +25,8 @@ public class UserSuccessHandler implements AuthenticationSuccessHandler {
 		        UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
 		        request.getSession().setAttribute("userId", user.getUsername());
 		        request.getSession().setAttribute("Role", user.getUserVO().getMemStat());
-
+		        request.getSession().setAttribute("profile", user.getUserVO().getProfile());
+		        System.out.println(user.getUserVO().getProfile());
 		        response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트
         }
     }
