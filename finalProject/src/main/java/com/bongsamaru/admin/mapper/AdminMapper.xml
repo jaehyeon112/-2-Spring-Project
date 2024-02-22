@@ -671,7 +671,7 @@
             ,ALERT_DATE
             ,READ_FLAG
       from alert
-      where mem_id='ADMIN'
+      where receive_id='ADMIN'
    </select>
    <select id="donaReviewList" resultType="DonaVO">
          SELECT * 
