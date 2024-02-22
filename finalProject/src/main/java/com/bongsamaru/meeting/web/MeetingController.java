@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -490,14 +491,18 @@ public class MeetingController {
 	
 	@PostMapping(value="updateMeeting",consumes = "multipart/form-data")
 	@ResponseBody
+	@Transactional
 	public int updateMeeting(VolunteerVO vo,HttpSession session,
 						@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles,@RequestParam Integer volId) throws IOException {
 		if(uploadfiles!=null) {
+			System.out.println("여기 오낭");
+			service.deleteFile(volId);
 			int codeNo = volId;
 			String code = "p09";
-			service.deleteFile(volId);
-			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"));
+			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
 		}
+		System.out.println("durl!!"+uploadfiles);
 		return service.updateMeeting(vo);
 	};
 	
