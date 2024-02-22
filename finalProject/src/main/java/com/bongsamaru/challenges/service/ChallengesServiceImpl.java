@@ -19,8 +19,8 @@ public class ChallengesServiceImpl implements ChallengesService{
 	ChallengeMapper challengeMapper;
 	
 	@Override
-	public List<ChallengesVO> getChallengeList(ChallengesVO challengesVO) {
-		return challengeMapper.getChallengeList( challengesVO);
+	public List<ChallengesVO> getChallengeList() {
+		return challengeMapper.getChallengeList();
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ import com.bongsamaru.file.service.FilesVO;
 
 public interface ChallengesService {
 	
-	public List<ChallengesVO> getChallengeList(ChallengesVO challengesVO);
+	public List<ChallengesVO> getChallengeList();
 	public ChallengesVO getChallengeInfo(Integer chalId);
 	public List<FilesVO> getFileList(@Param("codeNo") Integer codeNo, @Param("code") String code);
 	public List<ChallengesVO> getChallengesList(Integer chalId);
