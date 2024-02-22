@@ -12,6 +12,7 @@
     <result property="title" column="TITLE"/>
     <result property="content" column="CONTENT"/>
     <result property="regDate" column="REG_DATE"/>
+    <result property="regDate" column="END_DATE"/>
     <result property="profil" column="PROFIL"/>
     <result property="participants" column="PARTICIPANTS"/>
     <result property="allParticipants" column="ALLPARTICIPANTS"/>
