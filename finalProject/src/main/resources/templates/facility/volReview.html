@@ -85,7 +85,7 @@ $.ajax({
 		placeholder : "내용을 입력하세요",
 		hooks: {
 	    	addImageBlobHook: (blob, callback) => {
-	    		let url = "http://localhost:8585"
+	    		
 	    		const formData = new FormData();
 	        	formData.append('uploadFiles', blob);
 	        	formData.append("code", "p15")
@@ -97,8 +97,8 @@ $.ajax({
 	           		contentType: false,
 	           		data: formData,
 	           		success: function(datas) {
-	           			url = url + datas;
-	           			url = url.replace(/\\/g, '/')
+	           			
+	           			datas= datas.replace(/\\/g, '/')
 	           			callback(url);
 	           		},
 	           		error: function(e) {
