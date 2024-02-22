@@ -66,10 +66,12 @@ public class MeetingController {
 	 * @param req
 	 * @param prin
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@GetMapping("meetings")
-	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
+	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
+		if(session.getAttribute("userId")==null) {
+		}
 		req.getSession().setAttribute("id",volId);
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
@@ -391,19 +393,11 @@ public class MeetingController {
 	    List<VolActVO> list = service.meetingVolActListPaging(pvo);
 	    model.addAttribute("volAct",list);
 	    
-	    volVO.setAppCode("h02");
-	    List<VolMemVO> member = service.meetingMemList(volVO);
-		model.addAttribute("member",member);
-		
-		volVO.setAppCode("h01");
-		List<VolMemVO> whobo = service.meetingMemList(volVO);
-		model.addAttribute("whobo",whobo);
-
-		List<VolActVO> after = new ArrayList<>();
+	    List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		Date today = new Date();
 		
-		for(VolActVO vo : list) {
+	    for(VolActVO vo : list) {
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
 			}else {
@@ -413,7 +407,15 @@ public class MeetingController {
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		
+	    volVO.setAppCode("h02");
+	    List<VolMemVO> member = service.meetingMemList(volVO);
+		model.addAttribute("member",member);
+		System.out.println("member"+member);
 		
+		volVO.setAppCode("h01");
+		List<VolMemVO> whobo = service.meetingMemList(volVO);
+		model.addAttribute("whobo",whobo);
+		System.out.println("whobo"+whobo);
 		return "meeting/managerInfo";
 	}
 	
