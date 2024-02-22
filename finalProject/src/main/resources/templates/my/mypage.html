@@ -8,7 +8,7 @@
 <style>
   .a-tag-container {
     text-align: center;
-    background-color: #007bff;
+    background-color: #fbb200;
     padding: 15px;
     display: flex;
     justify-content: center;
@@ -28,7 +28,7 @@
 
   .a-tag:hover {
     font-size: 25px;
-    color: black;
+    color: white; 
   }
   
  .contenttext {
@@ -90,9 +90,9 @@
 				<a data-tiara-layer="profile_img" data-tiara-action-name="프로필 수정_클릭" class="link_setting" href="/pass">설정</a>
 				<a class="link_setting" href="/withdrawal">탈퇴</a>
 			<div>					
-					<input id="feedBtn" type="button" class="btn btn-seccess" value="내 피드가기">
-					<input id="gibuBtn" type="button" class="btn btn-seccess" value="기부하러가기">
-					<input id="bongsaBtn" type="button" class="btn btn-seccess" value="봉사하러가기">
+					<input id="feedBtn" type="button" class="btn btn-outline-secondary m-1" value="내 피드가기">
+					<input id="gibuBtn" type="button" class="btn btn-outline-secondary m-1" value="기부하러가기">
+					<input id="bongsaBtn" type="button" class="btn btn-outline-secondary m-1" value="봉사하러가기">
 			<div>
 				<span class="num_title">총 기부금</span>
 				<span class="num_total" th:text="${#numbers.formatInteger(sumAmt, 1, 'COMMA') + '원'}"></span>
