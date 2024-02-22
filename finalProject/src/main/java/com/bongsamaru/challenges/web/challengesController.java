@@ -48,8 +48,8 @@ public class challengesController {
 	 * @return
 	 */
 	@GetMapping("/challengeList")
-	public String getChallengeList(Model model,ChallengesVO challengesVO) {
-		List<ChallengesVO> list = challengeService.getChallengeList(challengesVO);
+	public String getChallengeList(Model model) {
+		List<ChallengesVO> list = challengeService.getChallengeList();
 		model.addAttribute("challengeList", list);
 		log.info("목록에서 count가 나오느냐" +list);
 		return "challenge/challengeList";
