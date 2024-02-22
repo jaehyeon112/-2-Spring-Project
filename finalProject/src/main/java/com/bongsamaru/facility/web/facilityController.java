@@ -107,7 +107,7 @@ public class facilityController {
 		 	log.info(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
-			
+			log.info( findVO);
 			return "facility/facilityInfo";
 		}
 	 
@@ -208,7 +208,7 @@ public class facilityController {
 											@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		  
 		  int total = facilityService.getVolDonCount(principal.getName(),"1","0");
-		  vo = new PageVO(10,start, end, category ,5);
+		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
 	      log.info(vo);
 	      log.info(principal.getName());
