@@ -99,95 +99,66 @@ a {
 <div th:insert="~{banner/empty::banner}"></div>
 <div class="side" th:insert="~{my/sidebar::side}"></div>
   		<div class="container">
-			<th:block th:each="item,index : ${list}">
-			    <div th:if="${item.appCode == 'h01'}">
-			        <h4>참여내역</h4>
-			        <table style="height : 150px;">
-			            <thead>
-			                <tr>
-			                    <th style="width: 10%;">번호</th>
-			                    <th style="width: 80%;">제목</th>
-			                    <th style="width: 10%;">날짜</th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			                <tr>
-			                    <td th:text="${index.count}"></td>
-			                    <td th:text="${item.meetName}"></td>
-			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
-			                </tr>
-			            </tbody>
-			        </table>
-			    </div>
-			    <div th:if="${item.appCode != 'h01'}">
-			    	<h4>참여내역</h4>
-			    	<table style="height : 300px;">
-			    		<tr>
-			    			<td>
-			    				<span class="notList">참여내역이 없습니다.</span>
-			    			</td>
-			    		</tr>
-			    	</table>
-			    </div>
-			    <div th:if="${item.appCode == 'h02'}">
-			        <h4>신청내역</h4>
-			        <table style="height : 150px;">
-			            <thead>
-			                <tr>
-			                    <th style="width: 10%;">번호</th>
-			                    <th style="width: 80%;">제목</th>
-			                    <th style="width: 10%;">날짜</th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			                <tr>
-			                    <td th:text="${index.count}"></td>
-			                    <td th:text="${item.meetName}"></td>
-			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
-			                </tr>
-			            </tbody>
-			        </table>
-			    </div>
-			    <div th:if="${item.appCode != 'h02'}">
-			    	<h4>신청내역</h4>
-			    	<table style="height : 300px;">
-			    		<tr>
-			    			<td>
-			    				<span class="notList">신청내역이 없습니다.</span>
-			    			</td>
-			    		</tr>
-			    	</table>
-			    </div>
-			    <div th:if="${item.appCode == 'h03'}">
-			        <h4>거절내역</h4>
-			        <table style="height : 150px;">
-			            <thead>
-			                <tr>
-			                    <th style="width: 10%;">번호</th>
-			                    <th style="width: 80%;">제목</th>
-			                    <th style="width: 10%;">날짜</th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			                <tr>
-			                    <td th:text="${index.count}"></td>
-			                    <td th:text="${item.meetName}"></td>
-			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
-			                </tr>
-			            </tbody>
-			        </table>
-			    </div>
-			    <div th:if="${item.appCode != 'h03'}">
-			    	<h4>거절내역</h4>
-			    	<table style="height : 300px;">
-			    		<tr>
-			    			<td>
-			    				<span class="notList">거절내역이 없습니다.</span>
-			    			</td>
-			    		</tr>
-			    	</table>
-			    </div>
-			</th:block>
+				<div>
+				    <h4>참여내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 20%;">날짜</th>
+				                <th style="width: 80%;">제목</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h01'}">
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				                <td th:text="${item.meetName}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h01'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
+				<div>
+				    <h4>신청내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 20%;">날짜</th>
+				                <th style="width: 80%;">제목</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h02'}">
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				                <td th:text="${item.meetName}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h02'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
+				<div>
+				    <h4>거절내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 20%;">날짜</th>
+				                <th style="width: 80%;">제목</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h03'}">
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				                <td th:text="${item.meetName}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h03'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
 	</div>
 	<script  th:inline="javascript">
 	
