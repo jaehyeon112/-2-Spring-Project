@@ -98,8 +98,8 @@ $.ajax({
 	           		data: formData,
 	           		success: function(datas) {
 	           			
-	           			datas= datas.replace(/\\/g, '/')
-	           			callback(url);
+	           			datas = (""+datas).replace(/\\/g, '/');
+	           			callback(datas);
 	           		},
 	           		error: function(e) {
 	           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
