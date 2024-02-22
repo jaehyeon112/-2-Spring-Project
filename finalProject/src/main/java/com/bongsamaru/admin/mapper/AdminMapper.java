@@ -24,6 +24,9 @@ import com.bongsamaru.mypage.service.DonledgerVO;
 
 
 public interface AdminMapper {
+	//스케줄러를 위해
+	public List<VolunteerVO> dailyAllList();
+	
 	public List<CodeVO> subCodeList(String mainCodeId);
 	//회원목록
 	public List<UserVO> getUserList(PageVO pageVO);

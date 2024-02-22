@@ -115,12 +115,12 @@ public class GoogleMailController {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(senderEmail));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-            message.setSubject("행복마루에서 보내드리는 이메일 인증번호입니다.");
+            message.setSubject("봉사마루에서 보내드리는 이메일 인증번호입니다.");
             
             // 이메일 내용
             String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
-                    + "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일 인증번호입니다.</h1>"
-                    + "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다" + "이메일 인증번호를 보내드려요.<br>"
+                    + "<h1 style=\"padding: 50px;\">봉사마루에서 보내드리는 이메일 인증번호입니다.</h1>"
+                    + "<p style=\"padding: 50px;\">안녕하세요. 봉사마루입니다" + "이메일 인증번호를 보내드려요.<br>"
                     + "아래 4자리 인증번호를 복사하셔서 입력하시면, 이메일 인증이 완료됩니다.</p>"
                     + "<p style=\"padding: 100px; font-weight: bold; font-size: 40px; color: black;\">인증번호: <span style=\"color: white;\">" + numStr + "</span></p>"
                     + "</div>";
@@ -162,12 +162,12 @@ public class GoogleMailController {
     		Message message = new MimeMessage(session);
     		message.setFrom(new InternetAddress(senderEmail));
     		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-    		message.setSubject("행복마루에서 보내드리는 이메일입니다.");
+    		message.setSubject("봉사마루에서 보내드리는 이메일입니다.");
     		
     		// 이메일 내용
     		String emailContent = "<div style=\"background-color: lightgray; text-align: center; font-weight: bold; font-size: 17px;\">"
-    				+ "<h1 style=\"padding: 50px;\">행복마루에서 보내드리는 이메일입니다.</h1>"
-    				+ "<p style=\"padding: 50px;\">안녕하세요. 행복마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
+    				+ "<h1 style=\"padding: 50px;\">봉사마루에서 보내드리는 이메일입니다.</h1>"
+    				+ "<p style=\"padding: 50px;\">안녕하세요. 봉사마루입니다.<br>" + "기부금 사용에 대한 영수증 제출 기한이 지났습니다.<br>"
     				+ "빠른 시일 내에 영수증 첨부 부탁드립니다. 감사합니다.</p>"
     				+ "</div>";
     		

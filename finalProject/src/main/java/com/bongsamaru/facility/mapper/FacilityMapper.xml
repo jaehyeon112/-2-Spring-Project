@@ -31,14 +31,15 @@
 					select_sub(fac_Type) category,
 					(select file_Path from files where code='p02' and code_user=fac_id) as filePath
     FROM FACILITY
+
 	    where mem_app = 1   
+
         <if test="facZip2 != null and facZip2 !=''">
             AND 	FAC_ZIP2=#{facZip2}
         </if>
         <if test="facType != null and facType != ''">
         	AND 	FAC_TYPE = #{facType}
         </if>
-    
 	    ) A )
 	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
 	
@@ -60,31 +61,29 @@
 <!-- 시설정보 -->
 <select id="getFacilityInfo" resultType="FacilityVO">
  Select Fac_ID,
- 		Fac_Name,
- 		BIZ_NUM,
- 		Fac_Type,
- 		select_sub(fac_Type) category, 
- 		FAC_ADDR,
- 		FAC_ADDR_DETAIL,
- 		Fac_Web,
- 		FAC_INTRO,
- 		REP_NAME,
- 		REP_PHONE,
-        FI.FILE_PATH,
-		(Select nvl(Sum(T1.Don_Amt),0 )
-		   From Don_Ledger T1 
-		   Left Join Donation T2 
-		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id=#{facId})          As donaitonAmt,
-		(Select Count(Distinct(T1.Mem_Id)) 
-		   From Don_Ledger T1 
-		   Left Join Donation T2 
-		     On T1.Don_Id= T2.Don_Id 
-		  Where T2.Fac_Id=#{facId})          As donors
-	From Facility F LEFT JOIN FILES FI
-    ON F.FAC_ID = FI.CODE_USER
-   Where Fac_Id=#{facId}
-   AND FI.CODE='p02'
+       Fac_Name,
+       BIZ_NUM,
+       Fac_Type,
+       select_sub(fac_Type) category, 
+       FAC_ADDR,
+       FAC_ADDR_DETAIL,
+       Fac_Web,
+       FAC_INTRO,
+       REP_NAME,
+       REP_PHONE,
+       Select_profile(fac_id),
+      (Select nvl(Sum(T1.Don_Amt),0 )
+         From Don_Ledger T1 
+         right Join Donation T2 
+           On T1.Don_Id= T2.Don_Id 
+        Where T2.Fac_Id=#{facId})          As donaitonAmt,
+      (Select Count(Distinct(T1.Mem_Id)) 
+         From Don_Ledger T1
+         Left Join Donation T2 
+           On T1.Don_Id= T2.Don_Id 
+        Where T2.Fac_Id=#{facId})          As donors
+   From Facility F
+   where fac_id = #{facId}
 </select>
 
 <!-- 시설에서 진행중인 모금정보 List-->

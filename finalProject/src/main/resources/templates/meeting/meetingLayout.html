@@ -32,10 +32,8 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
         <!-- Template Stylesheet -->
         <link href="../dpdd/css/style.css" rel="stylesheet">
         		<!-- JavaScript Libraries -->
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="../dpdd/lib/easing/easing.min.js"></script>
 		<script src="../dpdd/lib/waypoints/waypoints.min.js"></script>
 		<script src="../dpdd/lib/owlcarousel/owl.carousel.min.js"></script>
@@ -48,7 +46,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
   <!-- Navbar start -->
   <div class="container-fluid sticky-top px-0">
-      <div class="container-fluid topbar bg-dark d-none d-lg-block">
+      <div class="container-fluid topbar d-none d-lg-block" style="background-color:#689f38">
           <div class="container px-0">
               <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
                   <div class="top-info flex-grow-0">
@@ -244,6 +242,7 @@ function approveMeeting(){
 	
 	var formData = new FormData();
 	formData.append("volId","[[${session.id}]]");
+	formData.append("appCode",'h01');
 	formData.append("appReason",appReason);
 	formData.append("memId",'[[${session.userId}]]');
 	$.ajax({

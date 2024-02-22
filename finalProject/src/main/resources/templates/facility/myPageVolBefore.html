@@ -161,7 +161,7 @@ p{
 		</ul>
 	</nav>     
  </div>  
-    
+  
     </div>
     <br>
     <br>
@@ -170,7 +170,7 @@ p{
     <br>
                     
 <div class="row hotel_booking_table" id="hiddenTable" style="display:none;">
-  [[${volAppList}]]					
+				
 <table class="table"  style="text-align:center; ">
     <thead >
      <tr>
@@ -214,7 +214,10 @@ p{
 					<br>
 					<textarea class="form-control plus-bnt" id="content" name="content" maxlength="500" placeholder="내용을 작성해 주세요"></textarea>
 					<br>
-					
+					<select id= "selFacType" style="width: 200px; height: 40px; bolder-radious:20px; text-align:center; background-color:rgba(104, 159, 56, 0.3)">
+					<option value="">===봉사유형===</option>
+					<option th:each="subf : ${subF}" th:value="${subf.subCode}" th:text="${subf.value}" th:selected="${#strings.equals(subf.subCode, param.facType)}"></option>
+					</select>
 					
 					<em class="highlight">*</em>주소
 					
@@ -265,7 +268,7 @@ p{
 			    </div>
 			<div class="modal-body">
 				<div class="form-group">
-				[[${info}]]
+				
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -352,10 +355,10 @@ function showList(id) {
 		    	   var appCodeText = result[i].appCode == 0 ? '승인 전' : '승인완료';
 				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		    	   $("#showTableBody").append( 
-		                   `<tr><td>${result[i].memId}</td>
+		                   `<tr id=${[i]}><td>${result[i].memId}</td>
 		                   <td>${formattedDate}</td>
 		                   <td><button type="button" data-toggle="modal" data-target="#myModal2">신청서보기</button></td>
-						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}')">수락</button></td>
+						   <td><button onclick="clickApp(clickApp(${result[i].volActId},'${result[i].memId}','${i}')">수락</button></td>
 						   <td> ${appCodeText}</td></tr>`
 		    		);
 		    		    
@@ -366,7 +369,7 @@ function showList(id) {
 		 }
 	});
 };
-function clickApp(volActId, memId){
+function clickApp(volActId, memId,rowElement){
 	// 수정
     $.ajax({
          url: '/volAppUpdate',
@@ -376,7 +379,7 @@ function clickApp(volActId, memId){
              memId: memId
          },
          success: function(result) {
-             //alert('업데이트 성공');
+             
          },
          error: function(err) {
              console.log(err);
@@ -394,7 +397,7 @@ function clickApp(volActId, memId){
          type: 'POST',
          data: info,
          success: function(result) {
-             alert('인서트 성공');
+        	 rowElement.remove();
            
          },
          error: function(err) {
@@ -429,14 +432,16 @@ function clickApp(volActId, memId){
 
 				$('.uploadBtn').click(function () {
 					
-				
+				console.log( $("select#selFacType option:selected").val());
 					
 					 var formData = new FormData(); //FormData 객체 생성
 					formData.append("title", $("input[name=title]").val());
     				formData.append("content", $("textarea[name=content]").val());
-				    formData.append("location", $("input[id=addrCheck]").val() + $("input[id=detailAddrCheck]").val());
-				    formData.append("volZip", $("input[id=zipCheck]").val());
+				    formData.append("location", $("input[id=addrCheck]").val() + ' '+ $("input[id=detailAddrCheck]").val());
+				    formData.append("category", $("select#selFacType option:selected").val());
 				    formData.append("cap", $("input[name=cap]").val());
+				    formData.append("volZip", $("input[id=zipCheck]").val());
+				   
 				    formData.append("volDate", $("input[name=volDate]").val());
 				    formData.append("startDate", $("input[name=startDate]").val());
 				    formData.append("expireDate", $("input[name=expireDate]").val());

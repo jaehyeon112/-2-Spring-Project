@@ -89,6 +89,7 @@
 	    <div style="display: flex; justify-content: space-between; width: 100%;">
 	    <!-- 왼쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div>
+	        <button style="opacity: 0.8;" type="button" class="btn btn-outline-primary m-1" onclick="location.href='../regMeetingPage'">등록</button>
 	    </div>
 	    <!-- 오른쪽으로 정렬될 요소들의 컨테이너 -->
 	    <div style="display: flex; gap: 10px;">
@@ -140,19 +141,13 @@
 	               <div class="d-flex align-items-center justify-content-between">
 		            <div class="p-4 pb-0 rounded-bottom" style="width:400px">
 		                <h4><a class="cur" th:text="${list.vol.meetName}" th:onclick="newMeet([[${list.vol.volId}]])">동아리명</a></h4>
-		                <a href="#" style="color:gray">
+		                <a class="region-link" href="#" style="color:gray">
 						   <span th:text="|#${list.vol.region}|">지역할거임</span>
 						</a>
-												<br>
-						<Strong><span>해시태그</span></Strong>
-						<br>
-						<div th:if="${list.tag.size()}!=0">
-						   <span style="margin-right:5px; color:gray" th:each="tag : ${list.tag}" th:text="|#${tag.tagContent}|"></span>
-						<br>
-						 </div>
-						 <div th:unless="${list.tag.size()}!=0">
-						 	<span style="margin-right:5px; color:gray">#</span>
-						 </div>						
+						<span th:if="${list.tag.size()}!=0">
+						   <span class="tag-link"style="margin-right:5px; cursor:pointer; color:gray" th:each="tag : ${list.tag}" th:text="|#${tag.tagContent}|"></span>
+						 </span>
+						 <br>			
 						<Strong><span>모집기간</span></Strong>
 						<br>
 	                    <span th:text="${#dates.format(list.vol.recPeriod, 'yy.MM.dd')}+' ~ '"></span> 
@@ -188,6 +183,7 @@
 </div>
 <script th:inline="javascript">
 $(document).ready(function() {
+	mss.scrollIntoView();
 	 $('#searchKeyword').keypress(function(event) {
 	        // 엔터 키 코드는 13입니다.
 	        if (event.which == 13) {

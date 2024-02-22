@@ -91,166 +91,166 @@
 					        </div>
 					    </div>
 					 </div>
-					<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-					<script>
-						var cateNo = 0;
-						$.ajax({
-			           		url: '/findVolActNo',
-			           		type: 'GET',
-			           		processData: false,
-			           		contentType: false,
-			           		success: function(data) {
-			           			cateNo = data;
-			           		},
-			           		error: function(e) {
-			           			console.log('실패');
-			           		}
-			           	});
-						const editor = new toastui.Editor({
-							el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
-							height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
-							initialEditType : 'wysiwyg', // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-							previewStyle : 'vertical', // 마크다운 프리뷰 스타일 (tab || vertical)
-							placeholder : "내용을 입력하세요",
-							hooks: {
-						    	addImageBlobHook: (blob, callback) => {
-						    		const formData = new FormData();
-						        	formData.append('uploadFiles', blob);
-						        	formData.append("code", "p11")
-				           			formData.append("codeNo", cateNo);
-				           			$.ajax({
-						           		url: '/uploadsAjax',
-						           		type: 'POST',
-						           		processData: false,
-						           		contentType: false,
-						           		data: formData,
-						           		success: function(datas) {
-						           			datas = (""+datas).replace(/\\/g, '/');
-						           			callback(datas);
-						           		},
-						           		error: function(e) {
-						           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
-						           		}
-						           	});	
-						        	
-						        }
-						    }
-						});
-						
-						function modalOpen(){
-							const startDate = $("input[name='startDate']")
-							const expireDate = $("input[name='expireDate']")
-							const volDate = $("input[name='volDate']")
-							const title = $("input[name='title']")
-							const content = editor.getMarkdown();
-							const addr = $('#facAddr2');
-							
-							if(startDate.val()>expireDate.val()){
-								alert('날짜가 올바르지 않습니다.\n기간을 다시 확인해주세요!');
-								return;
-							};
-							
-							if(startDate.val()==''){
-								alert('날짜를 입력하세요!');
-								return;
-							}else if(expireDate.val()==''){
-								alert('내용을 입력하세요!');
-								return;
-							}else if(volDate.val()==''){
-								alert('내용을 입력하세요!');
-								return;
-							}else if(title.val()==''){
-								alert('내용을 입력하세요!');
-								return;
-							}else if(content==''){
-								alert('내용을 입력하세요!');
-								return;
-							}else if(addr.val()==''){
-								alert('내용을 입력하세요!');
-								return;
-							}
-							
-							$("#confimModal").modal("show");
-							
-							$("#yesBtn").on('click',function () {
-								handleSave();
-							});
-						};
-						
-						$("#noBtn").on('click',function () {
-						    $("#confimModal").modal("hide");
-						});
-						
-						function handleSave(){
-							const startDate = $("input[name='startDate']").val();
-							const expireDate = $("input[name='expireDate']").val();
-							const volDate = $("input[name='volDate']").val();
-							const category = $("select[name='category'] option:selected").val();
-							const cap = $("input[name='cap']").val();
-							const title = $("input[name='title']").val();
-							const content = editor.getMarkdown();
-							const addr = $('#facAddr2').val();
-							const detail = $('#facAddr3').val();
-							const volZip = $('#facAddr1').val();;
-							
-							var formData = new FormData();
-							formData.append("volActId",cateNo);
-							formData.append("volId",[[${session.id}]]);
-							formData.append("category",category);
-							formData.append("title",title);
-							formData.append("content",content);
-							formData.append("location",addr+' '+detail);
-							formData.append("cap",cap);
-							formData.append("volZip",volZip);
-							formData.append("volDate",volDate);
-							formData.append("startDate",startDate);
-							formData.append("expireDate",expireDate);
-							$.ajax({
-				           		url: '/insertVolAct',
-				           		type: 'POST',
-				           		processData: false,
-				           		contentType: false,
-				           		data: formData,
-				           		success: function(data) {
-				           			location.href="volBoardList?volId="+[[${session.id}]]
-				           		},
-				           		error: function(e) {
-				           			console.log('실패');
-				           		}
-				           	});
-						}
-						
-						function Addr() {
-							new daum.Postcode({
-								oncomplete: function (data) {
-									// 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+var cateNo = 0;
+$.ajax({
+	url: '/findVolActNo',
+	type: 'GET',
+	processData: false,
+	contentType: false,
+	success: function(data) {
+		cateNo = data;
+	},
+	error: function(e) {
+		console.log('실패');
+	}
+});
+const editor = new toastui.Editor({
+	el : document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
+	height : '500px', // 에디터 영역의 높이 값 (OOOpx || auto)
+	initialEditType : 'wysiwyg', // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+	previewStyle : 'vertical', // 마크다운 프리뷰 스타일 (tab || vertical)
+	placeholder : "내용을 입력하세요",
+	hooks: {
+    	addImageBlobHook: (blob, callback) => {
+    		const formData = new FormData();
+        	formData.append('uploadFiles', blob);
+        	formData.append("code", "p11")
+         			formData.append("codeNo", cateNo);
+         			$.ajax({
+           		url: '/uploadsAjax',
+           		type: 'POST',
+           		processData: false,
+           		contentType: false,
+           		data: formData,
+           		success: function(datas) {
+           			datas = (""+datas).replace(/\\/g, '/');
+           			callback(datas);
+           		},
+           		error: function(e) {
+           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');
+           		}
+           	});	
+        	
+        }
+    }
+});
 
-									// 도로명 주소 변수
-									var roadAddr = data.roadAddress;
-									var extraRoadAddr = ''; // 참고 항목 변수
+function modalOpen(){
+	const startDate = $("input[name='startDate']")
+	const expireDate = $("input[name='expireDate']")
+	const volDate = $("input[name='volDate']")
+	const title = $("input[name='title']")
+	const content = editor.getMarkdown();
+	const addr = $('#facAddr2');
+	
+	if(startDate.val()>expireDate.val()){
+		alert('날짜가 올바르지 않습니다.\n기간을 다시 확인해주세요!');
+		return;
+	};
+	
+	if(startDate.val()==''){
+		alert('날짜를 입력하세요!');
+		return;
+	}else if(expireDate.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(volDate.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(title.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(content==''){
+		alert('내용을 입력하세요!');
+		return;
+	}else if(addr.val()==''){
+		alert('내용을 입력하세요!');
+		return;
+	}
+	
+	$("#confimModal").modal("show");
+	
+	$("#yesBtn").on('click',function () {
+		handleSave();
+	});
+};
 
-									// 법정동명이 있고, "동/로/가"로 끝난다면 추가
-									if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-										extraRoadAddr += data.bname;
-									}
-									// 건물명이 있고, 공동주택일 경우 추가
-									if (data.buildingName !== '' && data.apartment === 'Y') {
-										extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-									}
-									// 표시할 참고항목이 있으면, 괄호까지 추가한 최종 문자열을 만듦
-									if (extraRoadAddr !== '') {
-										extraRoadAddr = ' (' + extraRoadAddr + ')';
-									}
+$("#noBtn").on('click',function () {
+    $("#confimModal").modal("hide");
+});
 
-									// 우편번호와 주소 정보를 해당 필드에 넣는다.
-									document.getElementById('facAddr1').value = data.zonecode;
-									document.getElementById("facAddr2").value = roadAddr;
-									// 커서를 상세주소 필드로 이동한다.
-									document.getElementById("facAddr3").focus();
-								}
-							}).open(); // 여기에 닫는 괄호를 추가함
-						}
-					</script>
+function handleSave(){
+	const startDate = $("input[name='startDate']").val();
+	const expireDate = $("input[name='expireDate']").val();
+	const volDate = $("input[name='volDate']").val();
+	const category = $("select[name='category'] option:selected").val();
+	const cap = $("input[name='cap']").val();
+	const title = $("input[name='title']").val();
+	const content = editor.getMarkdown();
+	const addr = $('#facAddr2').val();
+	const detail = $('#facAddr3').val();
+	const volZip = $('#facAddr1').val();;
+	
+	var formData = new FormData();
+	formData.append("volActId",cateNo);
+	formData.append("volId",[[${session.id}]]);
+	formData.append("category",category);
+	formData.append("title",title);
+	formData.append("content",content);
+	formData.append("location",addr+' '+detail);
+	formData.append("cap",cap);
+	formData.append("volZip",volZip);
+	formData.append("volDate",volDate);
+	formData.append("startDate",startDate);
+	formData.append("expireDate",expireDate);
+	$.ajax({
+   		url: '/insertVolAct',
+   		type: 'POST',
+   		processData: false,
+   		contentType: false,
+   		data: formData,
+   		success: function(data) {
+   			location.href="volBoardList?volId="+[[${session.id}]]
+   		},
+   		error: function(e) {
+   			console.log('실패');
+   		}
+   	});
+}
+
+function Addr() {
+	new daum.Postcode({
+		oncomplete: function (data) {
+			// 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
+
+			// 도로명 주소 변수
+			var roadAddr = data.roadAddress;
+			var extraRoadAddr = ''; // 참고 항목 변수
+
+			// 법정동명이 있고, "동/로/가"로 끝난다면 추가
+			if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+				extraRoadAddr += data.bname;
+			}
+			// 건물명이 있고, 공동주택일 경우 추가
+			if (data.buildingName !== '' && data.apartment === 'Y') {
+				extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+			}
+			// 표시할 참고항목이 있으면, 괄호까지 추가한 최종 문자열을 만듦
+			if (extraRoadAddr !== '') {
+				extraRoadAddr = ' (' + extraRoadAddr + ')';
+			}
+
+			// 우편번호와 주소 정보를 해당 필드에 넣는다.
+			document.getElementById('facAddr1').value = data.zonecode;
+			document.getElementById("facAddr2").value = roadAddr;
+			// 커서를 상세주소 필드로 이동한다.
+			document.getElementById("facAddr3").focus();
+		}
+	}).open(); // 여기에 닫는 괄호를 추가함
+}
+</script>
 				</div>
 			</div>
 		</div>

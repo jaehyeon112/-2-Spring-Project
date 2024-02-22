@@ -59,7 +59,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>이름</th>
+						<th>닉네임</th>
 						<th>아이디</th>
 						<th>전화번호</th>
 						<th>학과</th>
@@ -71,9 +71,11 @@
 				 	<th:block th:each="user : ${userList}" >
 						<tr>
 							 <td th:text="${user.RN}">이름</td>
-							 <td th:text="${user.memName}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
+							 <td th:text="${user.memNick}" class="btn-deleteAsk" th:onclick="who([[${user.memId}]])">이름</td>
 							 <td th:text="${user.memId}" >아이디</td>
 							 <td th:text="${user.memPhone}" >전화번호</td>
+							 <td th:if="${user.memDept}=='d01'">해당사항 없음</td>
+							 <td th:if="${user.memDept}==null">해당사항 없음</td>
 							 <td th:if="${user.memDept}=='d02'">인문계열</td>
 							 <td th:if="${user.memDept}=='d03'">사회계열</td>
 							 <td th:if="${user.memDept}=='d04'">교육계열</td>

@@ -147,7 +147,9 @@
 var volActId='';
 window.onload = function() {
     // 봉사 후기가 작성되었는지 확인
-	  volActId = $('#volActId').data('vol-act-id');
+
+	 volActId = $('#volActId').data('vol-act-id');
+
 	   console.log(volActId);
   		    $.ajax({
   		        url: '/getFacRevCheck',
@@ -222,10 +224,9 @@ $(document).ready(function() {
   
 	$('#myModal').on('show.bs.modal', function(e) {
       // 클릭된 요소에서 vol-act-id 가져오기
-      
-
+      console.log("fff",volActId);
         // 참여자 목록 초기화
-        $("#showTableBody").empty();
+        //$("#showTableBody").empty();
 
         // Ajax를 통해 데이터 가져오기
         $.ajax({
@@ -251,8 +252,6 @@ $(document).ready(function() {
                                 
                              </tr>`);
                 }
-                
-                
                 
             },
             error: function(err) {

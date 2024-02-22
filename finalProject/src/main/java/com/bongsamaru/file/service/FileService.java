@@ -96,7 +96,8 @@ public class FileService {
         String contentType = uploadFile.getContentType();
         
         
-        FilesVO fileVO = fileMapper.getFileCheck(codeUser);
+        
+        FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
         System.out.println(code + "파일체크");
         System.out.println(codeUser + "이름");
         System.out.println(fileVO);
@@ -108,6 +109,7 @@ public class FileService {
             fileVO.setFileSize((int) fileSize);
             fileVO.setExtension(contentType);
             fileMapper.updateFile(fileVO);
+            System.out.println("여기로 들어와서 그런듯?");
         } else {
             // 파일이 존재하지 않는 경우 인서트 수행
             fileVO = new FilesVO();

@@ -102,10 +102,12 @@ public class facilityController {
 	 @GetMapping("fInfo/facilityInfo")
 		public String getFacilityInfo(@RequestParam(name="facId") String facId,
 										Model model,HttpServletRequest request) {
+		
 		 	FacilityVO findVO =facilityService.getFacilityInfo(facId);
+		 	log.info(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
-			
+			log.info( findVO);
 			return "facility/facilityInfo";
 		}
 	 
@@ -206,7 +208,7 @@ public class facilityController {
 											@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		  
 		  int total = facilityService.getVolDonCount(principal.getName(),"1","0");
-		  vo = new PageVO(10,start, end, category ,5);
+		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
 	      log.info(vo);
 	      log.info(principal.getName());
@@ -242,7 +244,9 @@ public class facilityController {
 	      log.info(vo);
 	      List<VolActVO> list = facilityService.getVolunteerJoinList(vo,facId);
 	      model.addAttribute("volList", list);
-	      
+	      List<SubCodeVO> f = commonMapper.subCodeList("f");
+	     	model.addAttribute("subF", f);
+	     	log.info(f);
 	      model.addAttribute("vo", vo);
 	      log.info(list);
 	      return "facility/myPageVolBefore";
@@ -272,6 +276,8 @@ public class facilityController {
 	public List<VolMemVO> getVolunteerAppList(Model model, Integer volActId) {
 		List<VolMemVO> listApp = facilityService.getVolunteerAppList(volActId);
 		model.addAttribute("volAppList", listApp);
+		log.info(listApp);
+		log.info(volActId);
 		return listApp;
 	}
 	
@@ -341,11 +347,14 @@ public class facilityController {
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody
-	public int facVolInsert (@RequestParam(value = "files", required = false) MultipartFile[] uploadFiles,VolActVO volActVO, Principal principal) {
+	public int facVolInsert (Model model,@RequestParam(value = "files", required = false) MultipartFile[] uploadFiles,VolActVO volActVO, Principal principal) {
 		volActVO.setFacId(principal.getName());
-		int result = facilityService.InsertFacVol(volActVO);
 		log.info("값"+volActVO);
+		
+		int result = facilityService.InsertFacVol(volActVO);
 		log.info("값"+result);
+		
+		
 		  try { 
 			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
 		  }catch (IOException e) {

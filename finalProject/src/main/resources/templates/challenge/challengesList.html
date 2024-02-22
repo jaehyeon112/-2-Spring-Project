@@ -33,7 +33,7 @@ p{
 </head>
 <body>
 <section layout:fragment="content">
-<div th:insert="~{banner/empty::banner}"></div>
+<div th:insert="~{banner/fac::banner}"></div>
 <div class="comment-form">
 <section class="blog_area single-post-area">	
 <div class="hotel" >
@@ -42,14 +42,15 @@ p{
 	<br><br><br>
 	</div>
 	<section class="blog_area">
-		<div class="container justify-content-center" style=" margin: 20px auto;max-width: 1500px; ">
+		<div class="container justify-content-center" style=" max-width: 1300px; ">
 			<div class="row">
 				<div class="col-lg-8">
 					<div class="blog_left_sidebar">
-					<div class="row">
-					<th:block th:each="list: ${challengesList}">
+					<div class="row" id="challengeListContainer">
+					 <th:block th:each="list: ${challengesList}"> 
+					<!--  <th:block th:each="list, stat: ${challengesList}" th:if="${stat.index < 6}"> -->
 					<div th:if="list.length ==0">
-					
+					 <p>참여내역이 아직 없습니다..</p>
 					</div>
 					<div class="col-4"	>
 					
@@ -62,14 +63,18 @@ p{
 <div th:if="${list.file!=null and list.file.extension.startsWith('video')}">
     <video controls th:each="video : ${list.file}" th:src="${video.filePath}" width="200" height="200"></video>
 </div>
-						
-							<svg  onclick="openModal('${list.chalDetId}')" data-toggle="modal" data-target="#myModal3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/></svg>					
+									
 		    							
 							<div class="hover">
 								<a class="light"><i class="fa fa-expand"></i></a>
+								<div class="text-center">
+  
+</div>
+								<svg  th:onclick="openModal([[${list.chalDetId}]])" data-toggle="modal" data-target="#myModal3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/></svg>	
 							</div>
-								<p th:text="${list.memId}"></p>
 							    <p class="getChalId" th:data-boardId="${list.chalDetId}">
+								<p th:text="${list.memId}"></p>
+								<p th:text="${#dates.format(list.partDate,'yyyy-MM-dd')}"></p>
 				</div>	
 				</th:block>
 				</div>
@@ -113,9 +118,9 @@ p{
 			</div>
 		</div>
 </div>
-
+  <button id="loadMoreBtn" class="btn btn-primary mt-3">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/></svg>
-</div>
+</button></div>
 
 <!-- 신고사유받기 모달-->
 <div class="modal" tabindex="-1" id="myModal3">
@@ -138,7 +143,7 @@ p{
 		    <label class="form-check-label" for="s04">혐오/차별적 표현
 		    <input class="form-check-input" id="s04" type="radio" name="reason" value="s04"  ></label>
 		    <label class="form-check-label" for="s05">주제와 상관이 없음
-		    <input class="form-check-input" id="s05" type="radio" name="reason" value="s05"  ></label>
+		    <input class="form-check-input" id="s05" type="radio" name="reason" value="s05" checked ></label>
 		</div>
       </div>
       <div class="modal-footer">
@@ -184,7 +189,9 @@ p{
 </div>		
 <script>
 var memId = [[${session.userId}]];
+	
 
+	
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
 			$('#myModal').on('show.bs.modal', function(e) {
@@ -274,12 +281,12 @@ var memId = [[${session.userId}]];
 		});
 
 	
-		var reason = $('input[name="reason"]:checked').val();
-		 console.log(reason); 
-		 var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
-		 console.log(boardId);
+			
 function openModal(chalDetId) {
-	
+	var reason = $('input[name="reason"]:checked').val();
+ 	console.log(reason); 
+ 	var boardId = document.querySelector('.getChalId').getAttribute('data-boardId');
+ 	console.log(boardId);
 	    $('.reportBtn').click(function () {
 	    	let info = {
 	    			categoryNo:boardId, 

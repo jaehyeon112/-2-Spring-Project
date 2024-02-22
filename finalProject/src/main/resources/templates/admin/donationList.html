@@ -91,7 +91,9 @@ function next(vo){
 	          <div class="col-sm-6 col-xl-3" style="color:black;width:25%" th:each="dona : ${dona}">
 	            <div class="card overflow-hidden rounded-2">
 	              <div class="position-relative">
-	                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" target='_blank'><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+	                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}" target='_blank'>
+	                <img src="../donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px">
+	                </a>
 	              </div>
 	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 				    <span>모금중</span><br>

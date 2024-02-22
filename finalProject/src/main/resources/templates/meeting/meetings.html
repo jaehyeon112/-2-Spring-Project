@@ -211,7 +211,7 @@
                               </th:block>
                               <hr>
                               <h4 class="my-4">참여중인 회원</h4>
-                              <th:block th:if="${member.size}==0">
+                              <th:block th:if="${#lists.size(member)}==0">
                                  <h5>회원이 존재하지 않습니다.</h5>
                               </th:block>
                               <div class="row g-4">
@@ -250,9 +250,8 @@
       </div>
       <!-- Latest News End -->
       <!-- Back to Top -->
-      <a href="#"
-         class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i
-         class="fa fa-arrow-up"></i></a>
+      <a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top">
+      <i class="fa fa-arrow-up text-white"></i></a>
 
 
       <!-- JavaScript Libraries -->

@@ -4,7 +4,7 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 검증</title>
+<title>봉사마루</title>
 <style>
 table {
   border: 1px #a39485 solid;
@@ -14,6 +14,7 @@ table {
   border-collapse: collapse;
   border-radius: 5px;
   overflow: hidden;
+  margin-bottom: 30px;
 }
 
 th {
@@ -86,6 +87,11 @@ a {
   .hidden {
   	display: none;
   }
+  .notList {
+  	font-size: 40px;
+  }
+  
+
 </style>
 </head>
 <body>
@@ -93,63 +99,96 @@ a {
 <div th:insert="~{banner/empty::banner}"></div>
 <div class="side" th:insert="~{my/sidebar::side}"></div>
   		<div class="container">
-	  	<h2>일일</h2>
-	  	<div>
-			<h4>참여내역</h4>
-		  	<table>
-				<thead>
-					<tr>
-						<th style="width:100px;"></th>
-						<th></th>
-						<th style="width: 150px;"></th>
-						<th></th>
-					</tr>
-				</thead>
-			    <tbody>
-			        <tr>
-			            <td></td>
-			        </tr>
-			    </tbody>
-			</table>
-  		</div>
-	  	<div>
-			<h4>신청내역</h4>
-		  	<table>
-				<thead>
-					<tr>
-						<th style="width:100px;"></th>
-						<th></th>
-						<th style="width: 150px;"></th>
-						<th></th>
-					</tr>
-				</thead>
-			    <tbody>
-			        <tr>
-			            <td></td>
-			        </tr>
-			    </tbody>
-			</table>
-  		</div>
-	  	<div>
-			<h4>거절내역</h4>
-		  	<table>
-				<thead>
-					<tr>
-						<th style="width:100px;"></th>
-						<th></th>
-						<th style="width: 150px;"></th>
-						<th></th>
-					</tr>
-				</thead>
-			    <tbody>
-			        <tr>
-			            <td></td>
-			        </tr>
-			    </tbody>
-			</table>
-  		</div>
+			<th:block th:each="item,index : ${list}">
+			    <div th:if="${item.appCode == 'h01'}">
+			        <h4>참여내역</h4>
+			        <table style="height : 150px;">
+			            <thead>
+			                <tr>
+			                    <th style="width: 10%;">번호</th>
+			                    <th style="width: 80%;">제목</th>
+			                    <th style="width: 10%;">날짜</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td th:text="${index.count}"></td>
+			                    <td th:text="${item.meetName}"></td>
+			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </div>
+			    <div th:if="${item.appCode != 'h01'}">
+			    	<h4>참여내역</h4>
+			    	<table style="height : 300px;">
+			    		<tr>
+			    			<td>
+			    				<span class="notList">참여내역이 없습니다.</span>
+			    			</td>
+			    		</tr>
+			    	</table>
+			    </div>
+			    <div th:if="${item.appCode == 'h02'}">
+			        <h4>신청내역</h4>
+			        <table style="height : 150px;">
+			            <thead>
+			                <tr>
+			                    <th style="width: 10%;">번호</th>
+			                    <th style="width: 80%;">제목</th>
+			                    <th style="width: 10%;">날짜</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td th:text="${index.count}"></td>
+			                    <td th:text="${item.meetName}"></td>
+			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </div>
+			    <div th:if="${item.appCode != 'h02'}">
+			    	<h4>신청내역</h4>
+			    	<table style="height : 300px;">
+			    		<tr>
+			    			<td>
+			    				<span class="notList">신청내역이 없습니다.</span>
+			    			</td>
+			    		</tr>
+			    	</table>
+			    </div>
+			    <div th:if="${item.appCode == 'h03'}">
+			        <h4>거절내역</h4>
+			        <table style="height : 150px;">
+			            <thead>
+			                <tr>
+			                    <th style="width: 10%;">번호</th>
+			                    <th style="width: 80%;">제목</th>
+			                    <th style="width: 10%;">날짜</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td th:text="${index.count}"></td>
+			                    <td th:text="${item.meetName}"></td>
+			                    <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+			                </tr>
+			            </tbody>
+			        </table>
+			    </div>
+			    <div th:if="${item.appCode != 'h03'}">
+			    	<h4>거절내역</h4>
+			    	<table style="height : 300px;">
+			    		<tr>
+			    			<td>
+			    				<span class="notList">거절내역이 없습니다.</span>
+			    			</td>
+			    		</tr>
+			    	</table>
+			    </div>
+			</th:block>
 	</div>
-</div>
 	<script  th:inline="javascript">
 	
 	</script>

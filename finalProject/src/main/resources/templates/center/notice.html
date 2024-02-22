@@ -82,7 +82,10 @@ div[th:if] {
 					<div class="content" th:if="${list.size} != 0" >
 						<span class="ico_pin" th:if="${item.priority == 1}"></span>
 						<a class="a-tag" th:text="${item.title}" th:onclick="noticeDetail('[[${item.boardId}]]')"></a>
-						<p style="font-size:14px;">작성일 [[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</p>
+						<p style="font-size:14px;">
+						작성일 [[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]
+							<span>조회수 [[${item.views}]]</span>
+						</p>
 					</div>
 				</th:block>
 				<div class="content" th:if="${list.size} == 0">
@@ -128,6 +131,18 @@ $('#searchBtn').on('click',function(){
 
 function noticeDetail(boardId) {
   window.location.href = `/notice/${boardId}`;
+  
+  $.ajax({
+    url: '/updateViews',
+    method: 'POST',
+    data: { boardId: boardId },
+    success: function(response) {
+      alert("조회수가 증가되었습니다.");
+    },
+    error: function(xhr, status, error) {
+      console.error(error);
+    }
+  });
 }
 </script>
 </section>

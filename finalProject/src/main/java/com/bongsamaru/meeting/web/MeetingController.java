@@ -4,30 +4,36 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.velocity.runtime.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.bongsamaru.admin.service.AdminService;
-import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.RemittanceVO;
 import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
+import com.bongsamaru.common.service.MailVO;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
-import com.bongsamaru.file.service.FilesVO;
+import com.bongsamaru.file.service.FileService;
 import com.bongsamaru.meeting.service.MeetingService;
 @Controller
 public class MeetingController {
@@ -40,6 +46,19 @@ public class MeetingController {
 	@Autowired
 	DonaService donaService;
 	
+	//봉사 날짜가 지나면 방 폭파
+	//@Scheduled(cron = "0 0 0 * * *")
+	public void autoDeleteMeeting() {
+		Date today = new Date();
+		List<VolunteerVO> volActList = userService.dailyAllList();
+		for(VolunteerVO vo : volActList) {
+			//봉사날짜가 오늘날짜를 지남
+			if(vo.getVolDate().compareTo(today) > 0) {
+				service.deleteMeeting(vo.getVolId());
+			}
+		}
+	}
+	
 	//모임 방 메인
 	/**
 	 * 모임 방 메인
@@ -48,10 +67,24 @@ public class MeetingController {
 	 * @param req
 	 * @param prin
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@GetMapping("meetings")
-	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
+	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,HttpServletResponse res,Principal prin,VolunteerVO volunteerVO) throws IOException {
+		String iden = "";
+		if(session.getAttribute("Role") != null) {
+			iden = (String)session.getAttribute("Role");
+		}
+		
+		if(iden.equals("m02") || iden.equals("m01")) {
+			System.out.println("너, 들어올수 있어");
+		}else {
+			String uri = "meetings?volId="+volId;
+		    if (uri != null && !uri.contains("/login")) {
+		        req.getSession().setAttribute("prevPage", uri);
+		    }
+		    res.sendRedirect("/login?redirectURL=login");
+		}
 		req.getSession().setAttribute("id",volId);
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
@@ -96,12 +129,6 @@ public class MeetingController {
 		model.addAttribute("choose",randomList);
 		return "meeting/meetings";
 	}
-	
-//	@GetMapping("volActMemCnt")
-//	@ResponseBody
-//	public VolActVO volActMemCnt(@RequestParam(name="volActId") Integer volActId) {
-//		return service.volActMemCnt(volActId);
-//	}
 	
 	@PostMapping("approveMeeting")
 	@ResponseBody
@@ -379,19 +406,11 @@ public class MeetingController {
 	    List<VolActVO> list = service.meetingVolActListPaging(pvo);
 	    model.addAttribute("volAct",list);
 	    
-	    volVO.setAppCode("h02");
-	    List<VolMemVO> member = service.meetingMemList(volVO);
-		model.addAttribute("member",member);
-		
-		volVO.setAppCode("h01");
-		List<VolMemVO> whobo = service.meetingMemList(volVO);
-		model.addAttribute("whobo",whobo);
-
-		List<VolActVO> after = new ArrayList<>();
+	    List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		Date today = new Date();
 		
-		for(VolActVO vo : list) {
+	    for(VolActVO vo : list) {
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
 			}else {
@@ -401,7 +420,15 @@ public class MeetingController {
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		
+	    volVO.setAppCode("h02");
+	    List<VolMemVO> member = service.meetingMemList(volVO);
+		model.addAttribute("member",member);
+		System.out.println("member"+member);
 		
+		volVO.setAppCode("h01");
+		List<VolMemVO> whobo = service.meetingMemList(volVO);
+		model.addAttribute("whobo",whobo);
+		System.out.println("whobo"+whobo);
 		return "meeting/managerInfo";
 	}
 	
@@ -439,11 +466,65 @@ public class MeetingController {
 		model.addAttribute("region", region);
 		return "meeting/regMeeting";
 	}
+	
+	@Autowired
+	FileService fileService;
+	
 	//모임등록 프로세스
-	@PostMapping("regMeeting")
+	@PostMapping(value="regMeeting",consumes = "multipart/form-data")
 	@ResponseBody
-	public int insertMeeting(VolunteerVO vo) {
-		return service.insertMeeting(vo);
+	@Transactional
+	public int insertMeeting(VolunteerVO vo,HttpSession session,
+					@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles) throws IOException {
+		System.out.println("지금 들어감!!");
+		//모임등록
+		service.insertMeeting(vo);
+		//파일등록
+		if(uploadfiles!=null) {
+			int codeNo = vo.getVolId();
+			String code = "p09";
+			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+		}
+		//모임장등록
+		VolMemVO memVO = new VolMemVO();
+		memVO.setVolId(vo.getVolId());
+		memVO.setAppCode("h02");
+		memVO.setAppReason(null);
+		memVO.setMemId(vo.getMemId());
+		service.approveMeeting(memVO);
+		System.out.println("지금 나옴!!");
+		return vo.getVolId();
+	}
+	
+	@GetMapping("updateMeeting")
+	public String updateMeetingPage(@RequestParam Integer volId,HttpServletRequest req,Model model) {
+		req.getSession().setAttribute("id",volId);
+		VolunteerVO vo = service.meetingInfo(volId);
+		model.addAttribute("info",vo);
+		return "meeting/updateMeeting";
+	}
+	
+	@PostMapping(value="updateMeeting",consumes = "multipart/form-data")
+	@ResponseBody
+	@Transactional
+	public int updateMeeting(VolunteerVO vo,HttpSession session,
+						@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles,@RequestParam Integer volId) throws IOException {
+		if(uploadfiles!=null) {
+			System.out.println("여기 오낭");
+			service.deleteFile(volId);
+			int codeNo = volId;
+			String code = "p09";
+			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"));
+			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
+		}
+		System.out.println("durl!!"+uploadfiles);
+		return service.updateMeeting(vo);
+	};
+	
+	@PostMapping("insertTag")
+	@ResponseBody
+	public int insertTag(TagVO vo) {
+		return service.insertTag(vo);
 	}
 	
 }

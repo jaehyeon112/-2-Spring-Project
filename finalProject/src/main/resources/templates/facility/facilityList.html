@@ -54,15 +54,15 @@
 
 								<br>
 							</div>
-							<div class="details">
+							<div class="details" >
 								<div class="tags">
 								</div>
 								<br>
 								<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
-										th:text="${facility.facName}" style="width: 30%;"></a> [[${facility.facId}]]
+										th:text="${facility.facName}" style="width: 30%;"></a>
 							</div>
-								<p th:text="${facility.facAddr}"></p>
-								<p style="display:none" th:text="${facility.region}" id="regions"></p>
+								<p style=" margin-bottom:50px;" th:text="${facility.facAddr}"></p>
+								<p style="display:none;" th:text="${facility.region}" id="regions"></p>
 					</div>
 				</th:block>
 			</div>

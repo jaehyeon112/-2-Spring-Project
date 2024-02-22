@@ -45,7 +45,9 @@
 .owl-next {
     right: 10px;
 }
-
+.cur {
+	cursor:pointer;
+}
 
     </style>
 
@@ -130,7 +132,7 @@
                                             <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} == null" src="../image/bonsamaru.png" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
                                         </div>
 
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: #ffb524; filter: grayscale(0%);">
+                                        <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
                                             <span th:text="${dona.recStat} == '1' ? '모금중' : '모금완료'"></span>
                                         </div>
 
@@ -174,7 +176,7 @@
 					    <div th:each="day : ${daily}" class="item">
 					        <div class="card overflow-hidden rounded-2" style="margin-bottom: 20px;">
 					            <div class="position-relative">
-					                <a><img th:src="@{${day.vol.path}}" class="card-img-top rounded-0" onerror="this.onerror=null; this.src='/userresources/image/nonono.png';" style="height:200px;"></a>
+					                <a class="cur" th:onclick="newMeet([[${day.vol.volId}]])"><img th:src="@{${day.vol.path}}" class="card-img-top rounded-0" onerror="this.onerror=null; this.src='/userresources/image/nonono.png';" style="height:200px;"></a>
 					                <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 					                    <span>모집중</span>
 					                </div>
@@ -184,17 +186,14 @@
 					            </div>
 					            <div class="d-flex align-items-center justify-content-between">
 					                <div class="p-4 pb-0 rounded-bottom" style="width:400px">
-					                    <h4><a th:text="${day.vol.meetName}">프로젝트명</a></h4>
+					                    <h4><a class="cur" th:onclick="newMeet([[${day.vol.volId}]])" th:text="${day.vol.meetName}">프로젝트명</a></h4>
 					                    <a href="#" style="color:gray">
-					                        <span th:text="${day.vol.region}">지역명</span>
-					                    </a>
-					                    <br>
-					                    <strong>해시태그</strong>
-					                    <br>
-					                    <div th:text="${day?.tag?.size() != null ? day.tag.size() : ''}">
-										   <span style="margin-right:5px; color:gray" th:each="tag : ${daily.tag}" th:text="|#${tag.tagContent}|"></span>
-					                    </div>
-										<br>
+					                       <span th:text="|#${day.vol.region}|">지역할거임</span>
+											</a>
+											<span th:if="${day.tag.size()}!=0">
+											   <span class="tag-link"style="margin-right:5px; cursor:pointer; color:gray" th:each="tag : ${day.tag}" th:text="|#${tag.tagContent}|"></span>
+											 </span>
+											 <br>			
 					                    <strong>모집기간</strong>
 					                   	<br>
 					                    <span th:text="${#dates.format(day.vol.recPeriod, 'yy.MM.dd')}+' ~ '"></span> 
@@ -216,7 +215,7 @@
 					    <div th:each="day : ${group}" class="item">
 					        <div class="card overflow-hidden rounded-2" style="margin-bottom: 20px;">
 					            <div class="position-relative">
-					                <a><img th:src="@{${day.vol.path}}" class="card-img-top rounded-0" onerror="this.onerror=null; this.src='/userresources/image/nonono.png';" style="height:200px;"></a>
+					                <a class="cur" th:onclick="newMeet([[${day.vol.volId}]])"><img th:src="@{${day.vol.path}}" class="card-img-top rounded-0" onerror="this.onerror=null; this.src='/userresources/image/nonono.png';" style="height:200px;"></a>
 					                <div class="text-white px-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 					                    <span>모집중</span>
 					                </div>
@@ -226,17 +225,14 @@
 					            </div>
 					            <div class="d-flex align-items-center justify-content-between">
 					                <div class="p-4 pb-0 rounded-bottom" style="width:400px">
-					                    <h4><a th:text="${day.vol.meetName}">프로젝트명</a></h4>
+					                    <h4><a class="cur" th:onclick="newMeet([[${day.vol.volId}]])" th:text="${day.vol.meetName}">프로젝트명</a></h4>
 					                    <a href="#" style="color:gray">
-					                        <span th:text="${day.vol.region}">지역명</span>
-					                    </a>
-					                    <br>
-					                    <strong>해시태그</strong>
-					                    <br>
-					                    <div th:text="${day?.tag?.size() != null ? day.tag.size() : ''}">
-										   <span style="margin-right:5px; color:gray" th:each="tag : ${group.tag}" th:text="|#${tag.tagContent}|"></span>
-					                    </div>
-										<br>
+					                         <span th:text="|#${day.vol.region}|">지역할거임</span>
+											</a>
+											<span th:if="${day.tag.size()}!=0">
+											   <span class="tag-link"style="margin-right:5px; cursor:pointer; color:gray" th:each="tag : ${day.tag}" th:text="|#${tag.tagContent}|"></span>
+											 </span>
+											 <br>
 					                    <strong>모집기간</strong>
 					                   	<br>
 					                    <span th:text="${#dates.format(day.vol.recPeriod, 'yy.MM.dd')}+' ~ '"></span> 
@@ -365,6 +361,11 @@ $(document).ready(function(){
         });
     });
 });
+function newMeet(id){
+	src_width = screen.availWidth*0.1;
+	src_height = screen.availHeight*0.1;
+	window.open("meetings?volId="+id, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1400, height=800, top="+src_height+",left="+src_width+",location=no");
+}
 </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>

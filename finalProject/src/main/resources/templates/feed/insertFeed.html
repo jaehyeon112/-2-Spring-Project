@@ -4,17 +4,22 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style scoped="scoped">
+.imageThumb{
+	width:300px;
+	height: 300px;
+}
 </style>
 </head>
 <body>
 	<section layout:fragment="content">
+		<div th:insert="~{banner/empty::banner}"></div>
 		<div>
 			<h1>피드 작성</h1>
 			<div>
-				<img id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="피드" class="img_thumb" >
+				<img id="profileImage" style="border-radius: 50%;" alt="피드" class="imageThumb">
 				<input class="form-control" id="imageInput" name="uploadFiles" type="file" multiple>
+				<input type="button" class="deleteBtn" value="삭제">
 				<button class="uploadBtn">저장</button>
 			</div>
 		</div>
@@ -31,9 +36,9 @@ $('.uploadBtn').click(function () {
 		console.log(files[i]);
 		formData.append("uploadFiles", files[i]); //키,값으로 append 
 	}
-	formData.append("code", "p01")
+	formData.append("code", "p16")
 	formData.append("codeUser", $('#id').val());
-	console.log($('#id').val(),'밸류')
+	console.log($('#id').val())
 
 	//jQuery.ajax
 	$.ajax({
@@ -52,6 +57,35 @@ $('.uploadBtn').click(function () {
 			console.log(reject);
 		}
 	});
+});
+
+$("#imageInput").on("change", function(e) {
+    var files = e.target.files, filesLength = files.length;
+    for (var i = 0; i < filesLength ; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+            var file = e.target;
+            var img = $("<img></img>",{
+                class : "imageThumb",
+                src : e.target.result,
+                title : file.name
+            });
+
+            var div = $("<div></div>", {
+                class: "imgContainer"
+            });
+
+            div.append(img);
+            div.insertAfter("#imageInput");
+        });
+        fileReader.readAsDataURL(f); // 이 부분을 for문 안으로 옮겼습니다.
+    }
+});
+
+$('.deleteBtn').click(function() {
+    $('#imageInput').val('');
+    $('.imgContainer').remove();
 });
 	</script>
 	</section>

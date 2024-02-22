@@ -33,6 +33,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
+	<div th:insert="~{banner/empty::banner}"></div>
 		<div class="container">
 			<th:block th:each="item : ${list}">
 			<div class="mainhead">
@@ -44,8 +45,8 @@
 				</div>
 				<div class="contenttext">
 						<span class="profile_thumb">
-						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 100px; height: 100px;">
-						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 100px; height: 100px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
+						<img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
+						<img th:if="${item.memProfile} != null"id="profileImage" style="border-radius: 50%; width: 200px; height: 200px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
 						</span>
 				</div>
 				<p style="color: black; font-size: 25px; font-weight: bold;" th:text="${item.memNick + '님'}"></p>
@@ -72,7 +73,7 @@
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				</div>
-				<h5 th:if="${feedList == null || feedList.size() == 0}" style="margin-top: 250px; color: gray;">아직 작성된 피드가 없어요. 🌱</h5>
+				<h5 th:if="${feedList == null || feedList.size() == 0}" style="margin-top: 250px; height: 500px; color: gray;">아직 작성된 피드가 없어요. 🌱</h5>
 			</div>
 		</div>
 	<script>
