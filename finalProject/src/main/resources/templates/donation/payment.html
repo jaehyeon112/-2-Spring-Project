@@ -34,7 +34,9 @@
     
 
 
-
+	.button-group-area > a {
+	 color : black; 
+	}
 
 		</style>
 
@@ -43,7 +45,6 @@
 	<body>
 	 <section layout:fragment="content">
  
-        사용자 아이디: <span sec:authentication="name"></span>
 		
 		
 		
@@ -67,10 +68,10 @@
 									
 											
 					<div class="button-group-area mt-40 mb-30">
-						<a href="#" class="genric-btn warning circle medium kakaoPayBtn" id="kakaoPayBtn" onclick="selectPaymentMethod('kakao')">카카오페이</a>
-						<a href="#" class="genric-btn success circle medium" onclick="selectPaymentMethod('card')">카드결제</a>
-						<a href="#" class="genric-btn info circle medium" onclick="selectPaymentMethod('toss')">토스페이</a>
-						<a href="#" class="genric-btn primary circle medium"  id="depositBtn" onclick="selectPaymentMethod('deposit')">무통장입금</a>
+						<a href="#" style="color : black; " class="genric-btn warning circle medium kakaoPayBtn" id="kakao" onclick="selectPaymentMethod('kakao')">카카오페이</a>
+						<a href="#" style="color : black; " class="genric-btn success circle medium" id="card" onclick="selectPaymentMethod('card')">카드결제</a>
+						<a href="#" style="color : black; " class="genric-btn info circle medium" id="toss" onclick="selectPaymentMethod('toss')">토스페이</a>
+						<a href="#" style="color : black; " class="genric-btn primary circle medium" id="deposit" onclick="selectPaymentMethod('deposit')">무통장입금</a>
 					</div>
 									
 					<div class="single-element-widget mt-10" style="display: flex; flex-direction: column;">
@@ -179,9 +180,22 @@
 		
 			let selectedPaymentMethod = '';  //결제수단 
 			
-			function selectPaymentMethod(paymentMethod){
-				selectedPaymentMethod = paymentMethod;
-				alert('결제수단 :  ' + selectedPaymentMethod + '  선택 ! ');
+			function selectPaymentMethod(paymentMethod) {
+			    // 모든 버튼의 스타일을 초기화
+			    $('.genric-btn').css({
+			        'background-color': '', // 기본 배경색으로 설정
+			        'color': 'black', // 글씨색을 검정색으로 설정
+			    });
+
+			    // 선택된 결제 방식에 해당하는 버튼의 스타일을 변경
+			    $('#' + paymentMethod).css({
+			        'background-color': 'white', // 배경색을 흰색으로 변경
+			        'color': 'black', // 글씨색을 검정색으로 설정
+			    });
+
+			    // 선택된 결제 방식을 저장
+			    selectedPaymentMethod = paymentMethod;
+			    alert('결제수단: ' + selectedPaymentMethod + ' 선택됨!');
 			}
 		
 			function getPg(paymentMethod){

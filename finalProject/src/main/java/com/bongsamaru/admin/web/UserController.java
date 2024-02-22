@@ -92,6 +92,7 @@ public class UserController {
 		model.addAttribute("vo",vo);
 		//진행중인 기부 리스트
 		model.addAttribute("before", donaList);
+		System.out.println(donaList+"???");
 		
 		//상위 기부랭킹 3개
 		List<DonledgerVO> king = userService.DonationKing();
