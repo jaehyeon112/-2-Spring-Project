@@ -6,6 +6,7 @@ import com.bongsamaru.common.VO.AlertVO;
 import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
+import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
 
 
@@ -23,4 +24,7 @@ public interface UserService {
 	public List<CountVO> volKing();
 	public int countAlarm(String memid);
 	public int updateAlarm(AlertVO vo);
+	public UserFacilityVO findId(String phone);
+	public String findInfo(String id);
+	public boolean changeUserPassword(String token, String pass);
 }

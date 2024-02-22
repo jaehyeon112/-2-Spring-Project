@@ -68,7 +68,7 @@ public class facilityController {
 								  String facType,
 								  PageVO vo, 
 								  Integer cntPerPage,
-								  String facId,
+								
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
 								  @RequestParam(value="start", required = false,defaultValue = "1")Integer start,
@@ -81,8 +81,9 @@ public class facilityController {
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);
      	
-     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType,facId);
+     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType);
      	model.addAttribute("facilityList", list);
+     	log.info(list);
      	List<SubCodeVO> z =commonMapper.subCodeList("z");
      	List<SubCodeVO> f = commonMapper.subCodeList("f");
      	model.addAttribute("subZ", z);
@@ -101,7 +102,9 @@ public class facilityController {
 	 @GetMapping("fInfo/facilityInfo")
 		public String getFacilityInfo(@RequestParam(name="facId") String facId,
 										Model model,HttpServletRequest request) {
+		
 		 	FacilityVO findVO =facilityService.getFacilityInfo(facId);
+		 	log.info(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
 			

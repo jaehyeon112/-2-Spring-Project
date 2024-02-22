@@ -14,7 +14,7 @@
       from member
       where MEM_STAT = 'm02'
       <if test="searchKeyword!=null and searchKeyword!='' ">
-         AND (MEM_NAME LIKE '%' || #{searchKeyword} || '%')      
+         AND (MEM_NICK LIKE '%' || #{searchKeyword} || '%')      
       </if>
    </select>
    <select id="getUserList" resultType="UserVO">
@@ -43,7 +43,7 @@
          from member
          where MEM_STAT = 'm02'
       <if test="searchKeyword!=null and searchKeyword!='' ">
-         AND (MEM_NAME LIKE '%' || #{searchKeyword} || '%')      
+         AND (MEM_NICK LIKE '%' || #{searchKeyword} || '%')      
       </if>
       order by MEM_ID) A)
         where RN BETWEEN #{start} AND #{end}
@@ -495,7 +495,7 @@
                   AND (meet_name LIKE '%' || #{searchKeyword} || '%')      
                </if>
               </where>
-        order by vol_id) A)
+        order by REC_PERIOD desc) A)
         where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="meetingCnt" resultType="int">
@@ -620,7 +620,7 @@
             ,(select fac_bank from facility where fac_id=donation.fac_id) as backName
             ,(select don_acct from facility where fac_id=donation.fac_id) as bankAcct
       from donation 
-      where rec_stat=1 
+      where rec_stat=0
       and paid_code=0
       order by don_id
       
@@ -635,7 +635,7 @@
             ,nvl((select SUM(don_amt) from don_ledger where don_id=d.don_id group by don_id),0) as total
       from facility f join donation d
       on f.fac_id=d.fac_id
-      where d.rec_stat=1 
+      where d.rec_stat=0
       and d.paid_code=0
       and d.don_id=#{donId}
    </select>

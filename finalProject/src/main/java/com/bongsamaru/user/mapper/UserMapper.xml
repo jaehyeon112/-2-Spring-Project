@@ -82,6 +82,31 @@
 
 	</select>
 	
+	<select id="findId" resultType="UserFacilityVO">
+		select id,usertype from userfacilityview where phone = #{phone}
+	</select>
+	<select id="findInfo" resultType="String">
+		select usertype from userfacilityview where id = #{id}
+	</select>
+	
+	<update id="updatePwd" parameterType="String">
+        <choose>
+            <when test="type == 'Member'">
+                UPDATE Member
+                SET mem_pwd = #{pass}
+                WHERE mem_id = #{id}
+            </when>
+            <when test="type == 'Facility'">
+                UPDATE Facility
+                SET fac_pwd = #{pass}
+                WHERE fac_id = #{id}
+            </when>
+            <otherwise>
+                -- Optionally handle unexpected types
+            </otherwise>
+        </choose>
+	</update>
+	
 	<insert id="insertCate" parameterType="String">
 		insert into interest (interest_id,interest_code, mem_id) values
 		(interest_seq.nextVal,#{name},#{id})
