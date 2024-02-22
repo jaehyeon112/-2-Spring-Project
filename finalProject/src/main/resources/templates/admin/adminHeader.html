@@ -99,8 +99,18 @@
 	    		  }else if(result[i].category=='o03'){
 	    			  $("#start").append('<h5><a href="/inquireList?category=b02">새로운 문의내역</a></h5>');	    			  
 			    	  $("#start").append('<p>'+result[i].content+'</p><br>');	 
+	    		  }else if(result[i].category=='o04'){
+	    			  $("#start").append('<h5><a href="/approve">새로운 승인건</a></h5>');	    			  
+			    	  $("#start").append('<p>'+result[i].content+'</p><br>');	 
+	    		  }else if(result[i].category=='o05'){
+	    			  $("#start").append('<h5><a href="/approve">새로운 승인건</a></h5>');	    			  
+			    	  $("#start").append('<p>'+result[i].content+'</p><br>');	 
+	    		  }else if(result[i].category=='o06'){
+	    			  $("#start").append('<h5><a href="/donationReceiptList">기부금 후기 제출내역</a></h5>');	    			  
+			    	  $("#start").append('<p>'+result[i].content+'</p><br>');	 
 	    		  }
 	    	  }
+	    	  
 	         })
 	      .fail(err => console.log(err));
 	  </script>
