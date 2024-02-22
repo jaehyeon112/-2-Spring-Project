@@ -161,7 +161,7 @@ public class CenterController {
 	         List<BoardVO> list = centerService.getInquiryList(vo);
 	         System.out.println(list + "하이루하이루");
 
-
+	         
 			 model.addAttribute("searchKeyword",searchKeyword);
 			 model.addAttribute("list",list);
 			 model.addAttribute("vo",vo);
@@ -194,9 +194,9 @@ public class CenterController {
 
 	         if (principal instanceof UserDetails) {
 	             UserDetailVO userDetailVO = (UserDetailVO) principal;
-	             System.out.println(userDetailVO.getUserVO() + " 확인");
+	             String memId = userDetailVO.getUserVO().getId();
 	             
-	             model.addAttribute("vo",userDetailVO);
+	             model.addAttribute("memId",memId);
 
 			 }
 			 return "center/receipt"; 
@@ -205,6 +205,12 @@ public class CenterController {
 		 }
 		 
 	 }
+	 
+	@PostMapping("/updateViews")
+	  public void updateViews(@RequestParam(value="boardId",required = false)Integer boardId) {
+	    // 게시물 조회수 업데이트 로직
+	    centerService.updateViews(boardId);
+	}
 	 
 	 @PostMapping("/insertInquiry")
 	 @ResponseBody // ajax호출 return 값

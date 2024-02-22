@@ -70,4 +70,10 @@ public class CenterServiceImpl implements CenterService{
     	// TODO Auto-generated method stub
     	return centerMapper.getInquiryDetail(boardId);
     }
+    
+    @Override
+    public int updateViews(Integer boardId) {
+    	// TODO Auto-generated method stub
+    	return centerMapper.updateViews(boardId);
+    }
 }

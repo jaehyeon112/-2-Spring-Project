@@ -50,7 +50,7 @@
 			        ,CODE_NO
 			        ,CODE_USER
         	FROM files
-        	WHERE code = 'p01'
+        	WHERE code = #{code}
         	AND code_user = #{codeUser}
   	</select>
   </mapper>
