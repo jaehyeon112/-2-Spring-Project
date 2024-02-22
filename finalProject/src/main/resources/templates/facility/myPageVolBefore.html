@@ -203,7 +203,10 @@ p{
 					<br>
 					<textarea class="form-control plus-bnt" id="content" name="content" maxlength="500" placeholder="내용을 작성해 주세요"></textarea>
 					<br>
-					
+					<select id= "selFacType" style="width: 200px; height: 40px; bolder-radious:20px; text-align:center; background-color:rgba(104, 159, 56, 0.3)">
+					<option value="">===봉사유형===</option>
+					<option th:each="subf : ${subF}" th:value="${subf.subCode}" th:text="${subf.value}" th:selected="${#strings.equals(subf.subCode, param.facType)}"></option>
+					</select>
 					
 					<em class="highlight">*</em>주소
 					
@@ -418,14 +421,16 @@ function clickApp(volActId, memId,rowElement){
 
 				$('.uploadBtn').click(function () {
 					
-				
+				console.log( $("select#selFacType option:selected").val());
 					
 					 var formData = new FormData(); //FormData 객체 생성
 					formData.append("title", $("input[name=title]").val());
     				formData.append("content", $("textarea[name=content]").val());
-				    formData.append("location", $("input[id=addrCheck]").val() + $("input[id=detailAddrCheck]").val());
-				    formData.append("volZip", $("input[id=zipCheck]").val());
+				    formData.append("location", $("input[id=addrCheck]").val() + ' '+ $("input[id=detailAddrCheck]").val());
+				    formData.append("category", $("select#selFacType option:selected").val());
 				    formData.append("cap", $("input[name=cap]").val());
+				    formData.append("volZip", $("input[id=zipCheck]").val());
+				   
 				    formData.append("volDate", $("input[name=volDate]").val());
 				    formData.append("startDate", $("input[name=startDate]").val());
 				    formData.append("expireDate", $("input[name=expireDate]").val());
