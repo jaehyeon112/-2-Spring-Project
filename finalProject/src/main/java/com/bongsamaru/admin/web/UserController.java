@@ -1,23 +1,17 @@
 package com.bongsamaru.admin.web;
 
-import java.net.MalformedURLException;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.UriUtils;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.common.VO.AlertVO;
@@ -40,8 +34,6 @@ import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.mypage.service.DonledgerVO;
-
-
 /**
  * 관리자페이지
  * @author 서영희
