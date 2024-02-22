@@ -10,12 +10,13 @@ import lombok.Data;
 public class VolunteerVO {
 	private String volActId; 
 	private String revTitle;
-	private String content; 
+	private String content;
 	private Date writeDate; 
 	private String facId; 
 	private String category; 
 	private String title; 
-	private String location; 
+	private String location;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date volDate;
 	private Integer cap;
 	private String facName; 
