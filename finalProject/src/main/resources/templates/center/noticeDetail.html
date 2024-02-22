@@ -63,6 +63,10 @@ div[th:if] {
     font-weight: bold;
     
 }
+
+.content-div {
+	white-space: pre-wrap;
+}
 </style>
 </head>
 <body>
@@ -75,9 +79,10 @@ div[th:if] {
 				<div class="content" th:if="${list.size} != 0">
 					<h1 th:text="${item.title}"></h1>
 					<span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>
+					<span>조회수 [[${item.views}]]</span>
 					<hr>
 					<div style="width:1000px; height: 500px; margin: 30px;">
-						<div th:text="${item.content}"></div>
+						<div class="content-div" th:text="${item.content}"></div>
 					</div>
 					<hr>
 					<div class="lw-go-back only-pc"><a href="/notice" title="목록으로" data-list="^/notice/$">목록으로</a></div>

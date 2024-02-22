@@ -17,4 +17,5 @@ public interface CenterService {
 	public List<BoardVO> getInquiryDetail(Integer boardId);
 	public int insertInquiry(BoardVO boardVO);
 	public List<BoardVO> getInquiryList(PageVO vo);
+	public int updateViews(Integer boardId);
 }
