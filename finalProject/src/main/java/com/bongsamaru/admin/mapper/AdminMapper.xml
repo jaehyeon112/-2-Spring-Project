@@ -126,7 +126,8 @@
                 d.rec_stat,
                 d.don_id,
                 c.fac_id,
-                d.category
+                d.category,
+                (select file_path from files where code='p08' and code_no=d.don_id) filePath
              FROM donation d
                 LEFT JOIN don_ledger f ON d.don_id = f.don_id
                 LEFT JOIN facility c ON d.fac_id = c.fac_id
