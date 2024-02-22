@@ -95,7 +95,7 @@
 			sms_agree = null,
 		    acct_num = null,
 		    bank_name = null,
-		    mem_stat = null,
+		    mem_stat = 'm04',
 		    mem_name = null,
             mem_dept = null,
 		    SOCIAL = null
