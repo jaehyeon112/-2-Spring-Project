@@ -12,6 +12,7 @@
     <result property="title" column="TITLE"/>
     <result property="content" column="CONTENT"/>
     <result property="regDate" column="REG_DATE"/>
+    <result property="endDate" column="END_DATE"/>
     <result property="profil" column="PROFIL"/>
     <result property="participants" column="PARTICIPANTS"/>
     <result property="allParticipants" column="ALLPARTICIPANTS"/>
@@ -30,7 +31,7 @@ SELECT  C.CHAL_ID,
 		C.TITLE, 
 		C.CONTENT,
         C.REG_DATE,
-        C.END_DATE,
+        END_DATE,
 		F.FILE_PATH, 
 		F.FILE_ORDER, 
 		F.CODE_NO,
