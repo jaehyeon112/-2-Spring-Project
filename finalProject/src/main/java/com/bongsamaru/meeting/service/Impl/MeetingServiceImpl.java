@@ -196,4 +196,9 @@ public class MeetingServiceImpl implements MeetingService{
 	public int insertTag(TagVO vo) {
 		return mapper.insertTag(vo);
 	}
+
+	@Override
+	public int insertVolActMem(VolMemVO vo) {
+		return mapper.insertVolActMem(vo);
+	}
 }
