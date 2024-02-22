@@ -194,6 +194,24 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+	  $('.alert-filter').click(function() {
+	        var filter = $(this).data('filter'); // 클릭된 필터의 data-filter 값 가져오기
+
+	        // 모든 알림 행 숨기기
+	        $('#exampleModal .modal-body tbody tr').hide();
+
+	        if(filter === 'all') {
+	            // '전체' 필터 클릭 시 모든 알림 보여주기
+	            $('#exampleModal .modal-body tbody tr').show();
+	        } else if(filter === 'read') {
+	            // '읽음' 필터 클릭 시 읽은 알림만 보여주기
+	            $('#exampleModal .modal-body tbody tr.read').show();
+	        } else if(filter === 'unread') {
+	            // '안읽음' 필터 클릭 시 안 읽은 알림만 보여주기
+	            $('#exampleModal .modal-body tbody tr.unread').show();
+	        }
+	    });
+	
 	checkAlarmCount();
     // 알람 개수를 확인하고 빨간 점을 업데이트하는 함수
     function checkAlarmCount() {
