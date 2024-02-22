@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -285,7 +286,8 @@ public class LoginController {
 	}
 	
 	@GetMapping("/")
-	public String firstPage(Model model, Principal prin) {
+	public String firstPage(Model model, Principal prin, HttpSession session) {
+      
 		
 		boolean isLogin = prin != null;
 		model.addAttribute("isLogin",isLogin);
