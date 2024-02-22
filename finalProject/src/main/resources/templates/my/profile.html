@@ -95,7 +95,7 @@
 				<div id="listyle">
 					<div class="area_thumb">
 					    <div style="position: relative; display: inline-block;">
-					      <img th:if="${item.memProfile} == null" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
+					      <img th:if="${item.memProfile} == null" id="profileImage" alt="프로필 이미지" src="/userresources/image/banner/nullimage.jpg" style="border-radius: 50%; width: 200px; height: 200px;">
 					      <img th:if="${item.memProfile} != null" id="profileImage" style="border-radius: 50%; width: 200px; height: 200px;" alt="프로필 이미지" class="img_thumb" th:src="@{${item.memProfile}}">
 					      <label for="imageInput" class="custom-file-upload" style="position: absolute; top: 170px; left: 90px; z-index: 1;">
 					        <i class="fas fa-cloud-upload-alt"></i>
