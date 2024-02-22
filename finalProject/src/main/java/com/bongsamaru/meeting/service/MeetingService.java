@@ -50,4 +50,6 @@ public interface MeetingService {
 	//모임 수정
 	public int updateMeeting(VolunteerVO vo);
 	public int deleteFile(Integer codeNo);
+	//봉사참여
+	public int insertVolActMem(VolMemVO vo);
 }

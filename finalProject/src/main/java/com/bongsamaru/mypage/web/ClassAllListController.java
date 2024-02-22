@@ -1,5 +1,10 @@
 package com.bongsamaru.mypage.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.user.service.UserDetailVO;
 
@@ -32,32 +38,32 @@ public class ClassAllListController {
 	            
 	         if (principal instanceof UserDetails) {
 	                UserDetailVO userDetailVO = (UserDetailVO) principal;
-
-	                System.out.println(userDetailVO.getUserVO() + "확인");
+	                String memId = userDetailVO.getUsername();
+	                List<VolMemVO> list = mypageService.getDayList(memId);
 	                
-	                model.addAttribute("userVO", userDetailVO.getUserVO());
-
+	                model.addAttribute("list",list);
+	                
 	         }
 	      }
 
 	      return "my/dayList"; 
 	}
+	 
 	 @GetMapping("/clubList")
 	 public String classListPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		 
-		 if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-			 Object principal = auth.getPrincipal();
-			 
-			 if (principal instanceof UserDetails) {
-				 UserDetailVO userDetailVO = (UserDetailVO) principal;
-				 
-				 System.out.println(userDetailVO.getUserVO() + "확인");
-				 
-				 model.addAttribute("userVO", userDetailVO.getUserVO());
-				 
-			 }
-		 }
+	        
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	    	 Object principal = auth.getPrincipal();
+	            
+	         if (principal instanceof UserDetails) {
+	                UserDetailVO userDetailVO = (UserDetailVO) principal;
+	                String memId = userDetailVO.getUsername();
+	                List<VolMemVO> list = mypageService.getClubList(memId);
+
+	                model.addAttribute("list", list);
+	         }
+	      }
 		 
 		 return "my/clubList"; 
 	 }
@@ -65,19 +71,19 @@ public class ClassAllListController {
 	 @GetMapping("/facility")
 	 public String clubListPage(Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		 
-		 if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-			 Object principal = auth.getPrincipal();
-			 
-			 if (principal instanceof UserDetails) {
-				 UserDetailVO userDetailVO = (UserDetailVO) principal;
-				 
-				 System.out.println(userDetailVO.getUserVO() + "확인");
-				 
-				 model.addAttribute("userVO", userDetailVO.getUserVO());
-				 
-			 }
-		 }
+	        
+	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+	    	 Object principal = auth.getPrincipal();
+	            
+	         if (principal instanceof UserDetails) {
+	                UserDetailVO userDetailVO = (UserDetailVO) principal;
+	                String memId = userDetailVO.getUsername();
+	                List<VolMemVO> list = mypageService.getFacList(memId);
+	                
+	                model.addAttribute("list",list);
+	                
+	         }
+	      }
 		 
 		 return "my/facilityList"; 
 	 }

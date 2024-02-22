@@ -344,10 +344,10 @@ function showList(id) {
 		    	   var appCodeText = result[i].appCode == 0 ? '승인 전' : '승인완료';
 				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		    	   $("#showTableBody").append( 
-		                   `<tr><td>${result[i].memId}</td>
+		                   `<tr id=${[i]}><td>${result[i].memId}</td>
 		                   <td>${formattedDate}</td>
 		                   <td><button type="button" data-toggle="modal" data-target="#myModal2">신청서보기</button></td>
-						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}')">수락</button></td>
+						   <td><button onclick="clickApp(clickApp(${result[i].volActId},'${result[i].memId}','${i}')">수락</button></td>
 						   <td> ${appCodeText}</td></tr>`
 		    		);
 		    		    

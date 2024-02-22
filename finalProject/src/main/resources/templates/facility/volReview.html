@@ -85,7 +85,7 @@ $.ajax({
 		placeholder : "내용을 입력하세요",
 		hooks: {
 	    	addImageBlobHook: (blob, callback) => {
-	    		let url = "http://localhost:8585"
+	    		
 	    		const formData = new FormData();
 	        	formData.append('uploadFiles', blob);
 	        	formData.append("code", "p15")
@@ -97,9 +97,9 @@ $.ajax({
 	           		contentType: false,
 	           		data: formData,
 	           		success: function(datas) {
-	           			url = url + datas;
-	           			url = url.replace(/\\/g, '/')
-	           			callback(url);
+	           			
+	           			datas = (""+datas).replace(/\\/g, '/');
+	           			callback(datas);
 	           		},
 	           		error: function(e) {
 	           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');

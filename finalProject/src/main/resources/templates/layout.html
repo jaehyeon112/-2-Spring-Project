@@ -7,7 +7,7 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <link rel="icon" href="/image/봉사마루로고.png" type="image/png">
-   <title>Royal Hotel</title>
+   <title>봉사마루</title>
    <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="/userresources/css/bootstrap.css">
         <link rel="stylesheet" href="/userresources/vendors/linericon/style.css">
@@ -91,29 +91,29 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto" >
-                            <li class="nav-item"><a style="font-size: 16px" class="nav-link "  th:href="@{/}">메인</a></li>
+                            <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link "  th:href="@{/}">메인</a></li>
                                <li class="nav-item submenu dropdown">
-                                <a style="cursor: pointer; font-size: 16px" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
+                                <a style="cursor: pointer; font-size: 16px; font-weight: 700;" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">소개</a>
                                 <ul class="dropdown-menu" >
-                                    <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/intro}">봉사마루</a></li>
-                                    <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/facilityList}">시설소개</a></li>
+                                    <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/intro}">봉사마루</a></li>
+                                    <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/facilityList}">시설소개</a></li>
                                 </ul>
                             </li> 
                            <li class="nav-item submenu dropdown">
-                                <a style="cursor: pointer; font-size: 16px" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">봉사</a>
+                                <a style="cursor: pointer; font-size: 16px; font-weight: 700;" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">봉사</a>
                                 <ul class="dropdown-menu" >
-                                    <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/daily}">일일봉사</a></li>
-                                    <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/Group}">동아리</a></li>
-                                    <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/FacilityVol}">시설봉사</a></li>
+                                    <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/daily}">일일봉사</a></li>
+                                    <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/Group}">동아리</a></li>
+                                    <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/FacilityVol}">시설봉사</a></li>
                                 </ul>
                             </li> 
 
-                            <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/donaMain}">기부</a></li>
-                            <li class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
+                            <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/donaMain}">기부</a></li>
+                            <li class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/challengeList}">챌린지</a></li>
                  
 							</ul>
 							<ul class="nav navbar-nav menu_nav ml-auto">
-                    		<li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/login}">로그인</a></li>
+                    		<li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/login}">로그인</a></li>
                    		    <li sec:authorize="isAuthenticated()" class="nav-item" style="padding-top:15px;">
 						        <!-- M02 역할 사용자를 위한 링크 -->
 						        <a sec:authorize="hasRole('M02')" th:href="@{/my}">
@@ -127,13 +127,13 @@
 						        </a>
 						        <!-- 기타 역할 사용자를 위한 링크, 필요에 따라 추가 -->
 						    </li>
-						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a style="font-size: 16px" class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 |">[[${userNickname}]]님 환영합니다</a></li>
-						    <li th:if="${session.name}!=null" class="nav-item"><a style="font-size: 16px" class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
-						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/fac}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
-						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px" class="nav-link" th:href="@{/signup}">회원가입</a></li>
+						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 |">[[${userNickname}]]님 환영합니다</a></li>
+						    <li th:if="${session.name}!=null" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
+						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/fac}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
-						        <input type="submit" value="로그아웃" class="nav-link" style="background:none;border:none;padding:0;font-size: 16px">
+						        <input type="submit" value="로그아웃" class="nav-link" style=" font-weight: 700;background:none;border:none;padding:0;font-size: 16px; font-weight: 700;">
 						    </form>
 							</li>
 							<li sec:authorize="isAuthenticated()" class="nav-item cur">
@@ -194,6 +194,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+	scrollIntoView();
     // 알람 개수를 확인하고 빨간 점을 업데이트하는 함수
     function checkAlarmCount() {
         $.ajax({
