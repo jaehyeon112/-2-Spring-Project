@@ -98,7 +98,10 @@
           <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="dona,st : ${before}" th:if="${st.count}<6">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img src="image/초록개구리.png" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+                <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}">
+                <img th:if="${dona.filePath}!=null" th:src="@{${dona.filePath}}" onError="this.src='../donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
+				<img th:if="${dona.filePath}==null" src="../donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px">
+                </a>
               </div>
               <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 			    <span>모금중</span><br>
@@ -129,7 +132,9 @@
           <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="meet : ${meet}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+                <a th:href="@{meetings(volId=${meet.volId})}" target='_blank'>
+                <img th:if="${meet.filePath}!=null" th:src="@{${meet.filePath}}" onError="this.src='../donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
+				<img th:if="${meet.filePath}==null" src="../donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
               <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px;left: 10px;background-color:#ffb524">
 			    <span>모집중</span><br>
@@ -175,7 +180,9 @@
           <div class="col-sm-6 col-xl-3" style="color:black;width:25%;margin-right:20px;" th:each="facVol : ${facVol}">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a><img src="donation/board/img/fruite-item-5.jpg" class="card-img-top rounded-0" alt="..." style="height:200px"></a>
+                <a>
+                <img th:if="${facVol.filePath}!=null" th:src="@{${facVol.filePath}}" onError="this.src='../donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
+				<img th:if="${facVol.filePath}==null" src="../donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px"></a>
               </div>
               <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">
 			    <span>모집중</span><br>

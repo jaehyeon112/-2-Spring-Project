@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +70,13 @@ public class MeetingController {
 	 * @throws IOException
 	 */
 	@GetMapping("meetings")
-	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
-		if(session.getAttribute("userId")==null) {
+	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,HttpServletResponse res,Principal prin,VolunteerVO volunteerVO) throws IOException {
+		if(session.getAttribute("Role")!="M01"||session.getAttribute("Role")!="M02") {
+			String uri = "meetings?volId="+volId;
+		    if (uri != null && !uri.contains("/login")) {
+		        req.getSession().setAttribute("prevPage", uri);
+		    }
+		    res.sendRedirect("/login?redirectURL=login");
 		}
 		req.getSession().setAttribute("id",volId);
 		VolunteerVO vo2 = service.meetingInfo(volId);
