@@ -12,11 +12,7 @@
     <result property="title" column="TITLE"/>
     <result property="content" column="CONTENT"/>
     <result property="regDate" column="REG_DATE"/>
-<<<<<<< HEAD
-    <result property="regDate" column="END_DATE"/>
-=======
     <result property="endDate" column="END_DATE"/>
->>>>>>> db622c19076fdc73c3b07cded0b966496e42fd1d
     <result property="profil" column="PROFIL"/>
     <result property="participants" column="PARTICIPANTS"/>
     <result property="allParticipants" column="ALLPARTICIPANTS"/>
