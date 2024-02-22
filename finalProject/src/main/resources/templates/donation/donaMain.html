@@ -101,9 +101,7 @@
 		    
 		}
 		
-		.cateBtn::active{
-			background-color : black'
-		}
+		
 		</style>
 
 
@@ -114,7 +112,18 @@
     <body>
 	
 	<section layout:fragment="content">
-
+	<!-- 배너test -->
+		<section class="breadcrumb_area blog_banner_two">
+					<div class="overlay bg-parallax" data-stellar-ratio="0.8"
+						data-stellar-vertical-offset="0" data-background=""
+						style="transform: translateY(0px);"></div>
+					<div class="container">
+						<div class="page-cover text-center">
+							<h2 class="page-cover-tittle f_48"> 기부</h2>
+		
+						</div>
+					</div>
+		</section>
 
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
@@ -173,7 +182,7 @@
                            <div  th:each="dona : ${list}" th:if="${dona.donRegApp == '1'}">
                                 <div class="col-md-3 col-lg-3 col-xl-3 recruit-list"   >
                                     <!-- 리스트 아이템 표시 -->
-                                    <div class="rounded position-relative fruite-item" style="border: 1px solid #ccc;">
+                                    <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img">
                                             <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
                                             <a th:href="@{/donaDetail(id=${dona.donId}, facId=${dona.facId})}"><img th:if="${dona.filePath} == null" src="../image/bonsamaru.png" class="img-fluid w-100 rounded-top" style="height:250px" alt=""></a>
@@ -189,7 +198,7 @@
 											<div class="info-item" style="color: darkgreen;">
                                                 # <strong><span th:text="${dona.subCodeName}"></span></strong>
                                             </div>
-                                            <div class="info-item">
+                                            <div class="info-item" style = "margin-bottom:10px;">
                                                 목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3, 'COMMA') }"></span></strong> 원
                                                 
                                             </div>
@@ -204,12 +213,12 @@
 											    <div style="text-align: left;">
 											        <strong><span th:text="${dona.donationRatio}"></span></strong> %
 											    </div>
-											    <div style="text-align: right;">
+											    <div style="text-align: right; margin-bottom:20px;">
 											        <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA')}"></span></strong>원
 											    </div>
 											</div>
 
-                                            <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
+                                            <div class="d-flex justify-content-center align-items-center flex-lg-wrap" style = "margin-bottom:5px;" >
                                                 <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;"></span></a>
                                             </div>
                                         </div>
@@ -220,7 +229,7 @@
                         
                     </div>
                 </div>
-                <!-- pagination -->
+                <!-- pagination 
                 
                           <div class="col-12 mt-5">
                             <div class="pagination d-flex justify-content-center mt-5">
@@ -232,7 +241,7 @@
                                
                                 <a href="#" class="rounded">&raquo;</a>
                             </div>
-                        </div>
+                        </div> -->
             </div>
         </div>
     </div>

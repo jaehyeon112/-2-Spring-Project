@@ -2,9 +2,6 @@ package com.bongsamaru.user.service.Impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +16,7 @@ import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserFacilityVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.service.TokenService;
 import com.bongsamaru.mypage.mapper.MypageMapper;
 import com.bongsamaru.mypage.service.HeartVO;
 import com.bongsamaru.user.mapper.UserMapper;
@@ -33,7 +31,8 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Autowired
 	MypageMapper mypageMapper;
 	
-
+	@Autowired
+	TokenService tokenService;
 	
 	
 	
@@ -161,5 +160,28 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Override
 	public int updateAlarm(AlertVO vo) {
 		return userMapper.updateAlarm(vo);
+	}
+	
+	@Override
+	public UserFacilityVO findId(String phone) {
+		return userMapper.findId(phone);
+	}
+	
+	@Override
+	public boolean changeUserPassword(String token , String pass) {
+		 String userId = tokenService.getUserIdFromToken(token);
+		  if (userId == null) {
+		        return false;
+		    }
+		String type = userMapper.findInfo(userId);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+		String result = encoder.encode(pass);
+		userMapper.updatePwd(userId, type, result);
+		return true;
+	}
+	
+	@Override
+	public String findInfo(String id) {
+		return userMapper.findInfo(id);
 	}
 }

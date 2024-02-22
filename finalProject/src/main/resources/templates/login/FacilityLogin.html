@@ -63,9 +63,9 @@
                 <div><label><button id="button-test" class="form-control big-button login" >로그인</button></label></div>
                 <div><label><a href="/signup"><input style="text-align: center" id="" class="form-control big-button sign" value="회원가입"></a></label></div>
             </form>
-            	<div> 
-				<span><a onclick="goToFind('id')" style="cursor:pointer">아이디 찾기</a></span>
-				<span><a onclick="goToFind('pwd')" style="cursor:pointer">비밀번호 찾기</a></span>
+            	<div style="justify-content:space-around; ; display: flex;"> 
+				<span><a href="/findId" style="cursor:pointer; color:black">아이디 찾기</a></span>
+				<span><a href="/findPwd" style="cursor:pointer; color:black">비밀번호 찾기</a></span>
 				</div>
             <script th:inline="javascript">
             var loginErrorMessage = [[${session.loginErrorMessage}]]; // Thymeleaf 예시
@@ -115,15 +115,7 @@
 			        }else if(logout==''){
 			        }
 			        
-			        function goToFind(e){
-			        	let go = e;
-			        	alert(go);
-			        	src_width = screen.availWidth*0.1;
-			        	src_height = screen.availHeight*0.1;
-			        	window.open("find?type="+go, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=800, height=600, top="+src_height+",left="+src_width+",location=no");
-			        	
-			        }
-			        
+			
                 
             </script>
 

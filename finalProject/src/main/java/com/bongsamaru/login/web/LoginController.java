@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bongsamaru.admin.service.AdminService;
 import com.bongsamaru.bongsa.service.BongsaDTO;
@@ -28,6 +31,8 @@ import com.bongsamaru.common.VO.CountVO;
 import com.bongsamaru.common.VO.FacilityVO;
 import com.bongsamaru.common.VO.UserCategoryVO;
 import com.bongsamaru.common.VO.UserVO;
+import com.bongsamaru.common.service.TokenGenerator;
+import com.bongsamaru.common.service.TokenService;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
@@ -72,6 +77,9 @@ public class LoginController {
 	MypageMapper mypageMapper;
 	
 	@Autowired
+	TokenService tokenService;
+	
+	@Autowired
 	private FileService fileService;
 	
 	/**
@@ -85,6 +93,60 @@ public class LoginController {
 		return userService.countMemId(memId);
 	}
 	
+	@GetMapping("/findInfo")
+	@ResponseBody
+	public String phoneCheck(@RequestParam String phone) {
+		log.info(phone);
+		String result = userService.findId(phone).getId();
+		
+		if(result == null) {
+			return "0";
+		}
+		return result;
+	}
+	
+	@GetMapping("/changePwd")
+	public String changePwdPage(@RequestParam("token") String token, Model model) {
+		log.info(token);
+	    boolean isValidToken = tokenService.validateToken(token); // 토큰 검증 로직
+	    if (!isValidToken) {
+	        // 토큰이 유효하지 않으면 에러 페이지 또는 로그인 페이지로 리다이렉트
+	        return "redirect:/";
+	    }
+	    
+	    model.addAttribute("token", token);
+	    return "login/pwdChange";
+	}
+	
+	@PostMapping("/changePwd")
+	public String changePwd(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword, RedirectAttributes redirectAttributes) {
+	    boolean changeResult = userService.changeUserPassword(token, newPassword); // 비밀번호 변경 처리
+	    
+	    if (!changeResult) {
+	        // 비밀번호 변경 실패 (예: 유효하지 않은 토큰, 만료된 토큰 등)
+	        redirectAttributes.addFlashAttribute("error", "비밀번호 변경에 실패했습니다.");
+	        return "redirect:/changePwd?token=" + token; // 에러 메시지와 함께 다시 비밀번호 변경 페이지로
+	    }
+
+	    // 비밀번호 변경 성공
+	    redirectAttributes.addFlashAttribute("success", "비밀번호가 성공적으로 변경되었습니다.");
+	    return "redirect:/login"; // 로그인 페이지로 리다이렉션
+	}
+	
+	
+	@PostMapping("/generateToken")
+	public ResponseEntity<?> generateToken(@RequestBody Map<String, String> payload) {
+		 String userId = payload.get("id");
+	    String token = TokenGenerator.generateToken(); // 앞서 설명한 토큰 생성기를 사용
+	    log.info(token);
+	    // 토큰 저장 및 관리 로직 (DB에 토큰 저장 등)
+	   tokenService.createToken(userId,token);
+	    // 세션 ID 또는 토큰 반환
+	    return ResponseEntity.ok().body(Map.of("sessionId", token));
+	}
+	
+	
+	
 	/**
 	 * 
 	 * @param bizNum
@@ -95,6 +157,8 @@ public class LoginController {
 	public Boolean facBizCheck(@PathVariable String bizNum) {
 		return userService.countBizNum(bizNum);
 	}
+	
+	
 	
 	/**
 	 * 
@@ -222,7 +286,8 @@ public class LoginController {
 	}
 	
 	@GetMapping("/")
-	public String firstPage(Model model, Principal prin) {
+	public String firstPage(Model model, Principal prin, HttpSession session) {
+      
 		
 		boolean isLogin = prin != null;
 		model.addAttribute("isLogin",isLogin);
@@ -248,6 +313,8 @@ public class LoginController {
 		
 		return "home"; 
 	}
+	
+	
 	
 	
 	@GetMapping("/userAlarm")
@@ -283,9 +350,15 @@ public class LoginController {
 	    return userService.countAlarm(principal.getName());
 	}
 	
-	@GetMapping("/find")
-	public String find(@RequestParam String type) {
+	@GetMapping("/findId")
+	public String findId() {
 		
 		return "login/find";
+	}
+	
+	@GetMapping("/findPwd")
+	public String findPwd() {
+		
+		return "login/findpwd";
 	}
 }

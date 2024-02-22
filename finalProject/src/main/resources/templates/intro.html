@@ -1,95 +1,62 @@
-
-
-	
-	
-	
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout}">
+	 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>봉사마루: 봉사와 기부의 따뜻한 만남</title>
+<title>Insert title here</title>
 <style>
-
-* { list-style: none; color: #000; }
-
-.service_section1 .tab_line_area {
-    margin-bottom: 30px;
+body {
+     font-family: Arial, sans-serif;
+     margin: 0;
+     padding: 0;
 }
-
-.tab_line_area ul li {
-    position: relative;
-    padding: 20px;
-    color: #6a6a6a;
-    font-size: 1.125rem;
+.banner {
+     width: 100%;
+     height: 400px;
 }
-
-.tab_line_area ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-a {
-    font-weight: bold;
-    color: #000;
-    font-size: 17px;
-    font-family: 'Orbit', sans-serif;
-}
-
-.tab_line_area ul li + li:before {
-    content: '';
-    display: block;
-    position: absolute;
-    margin-top: -7px;
-    left: 0;
-    top: 50%;
-    width: 1px;
-    height: 14px;
-    background-color: #d5d5d5;
-}
-
-.main1, .main2 {
+.main1 {
     text-align: center;
+    padding: 20px;
 }
-
+.main1 h1 {
+    text-decoration: underline;
+}
 .main2 {
-    width: 100%;
-    background-color: khaki;
+     padding: 20px;
 }
-
-.hidden {
-      display: none;
+   .main2 h3 {
+    color: green;
+   font-size: 24px;
+  font-weight: bold;
 }
-
+.main2 p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
 </style>
 </head>
 <body>
 <section layout:fragment="content">
 <div th:insert="~{banner/empty::banner}"></div>
-    <div class="container">
-        <div class="main1">
-            <h1>100%의 약속</h1>
-            <h1 style="text-decoration: underline;">봉사마루</h1>
-            <h3>기부와 봉사의 따뜻한 만남</h3>
-            <p>한 걸음, 한 걸음, 우리와 함께하는 모든 순간이 지역사회에 긍정적인 변화를 만들어갑니다. 봉사마루는 단순한 기부를 넘어, 마음을 전하는 창입니다. 우리는 기부금 전액을 지역아동센터 아이들을 위한 물품 구매에 사용함으로써, 기부의 투명성과 직접적인 영향력을 극대화합니다.<br>
-            <br>
-            <img src="/image/봉사마루헤더.png" alt="" style="width:324px; height: 240px;">
-        </div>
-        <br>
-        <div class="main2">
-            <br>
-            <h3 style="text-decoration: underline;">지역사회와 함께 성장하다</h3>
-            <h1>아름다운 변화</h1>
-            <p>봉사마루를 통해 모인 기부는 아이들에게 필요한 실질적인 도움으로 변환됩니다. 이 과정을 통해, 우리는 기부자와 수혜자 간의 간격을 좁히고, 서로에 대한 이해와 신뢰를 높일 수 있습니다. 우리의 작은 움직임이 모여 큰 파도를 만들듯, 여러분의 따뜻한 마음이 지역사회에 아름다운 변화를 가져옵니다.<br>
-            <br>
-            <img src="/image/봉사마루로고.png" alt="" style="width:324px; height: 240px;">
-        </div>
-    </div>
+	<div class="container">
+	  <div class="banner">
+	    <img src="/banner/home2.png" style="width: 100%; height: 100%;" alt="배너 이미지">
+	  </div>
+	  <div class="main1">
+	    <h1>봉사마루</h1>
+	  </div>
+	  <div class="main2">
+	    <h3>기부와 봉사를 연결하는 플랫폼</h3>
+	    <p>봉사마루는 기부와 봉사를 연결하여 사회적 가치를 실현하는 플랫폼입니다. 우리는 봉사 활동을 통해 더 나은 세상을 만들기 위해 노력하고 있습니다.</p>
+	    <p>우리는 다양한 사회 문제에 대한 기부금을 모금하고, 이를 활용하여 사회적 약자를 지원하고 사회적 문제를 해결하는 데 기여하고 있습니다. 또한, 봉사자와 봉사 기관, 봉사자와 봉사자를 연결하여 상호간의 가치를 실현할 수 있도록 돕고 있습니다. 이를 통해 더욱 사회적인 연대를 강화하고, 봉사 활동의 의미와 가치를 널리 알리고자 합니다.</p>
+	    <p>봉사마루는 소중한 기부금을 효율적으로 관리하며, 이를 사회적 문제 해결을 위한 시설에 정확하게 전달합니다. 우리는 사회적으로 취약한 이들에게 필요한 지원을 제공하고, 사회적 가치를 실현하는 데 최선을 다하고 있습니다. 봉사마루는 기부금을 소중하게 보호하며, 그 가치가 사회에 긍정적인 영향을 미칠 수 있도록 최선을 다하고 있습니다.</p>
+	    <p>우리는 아름다운 세상을 만들기 위해 끊임없는 노력과 열정을 가지고 있습니다. 이를 통해 사회적으로 어려움을 겪는 분들께 희망과 지지를 전달하고, 더 나은 미래를 위한 변화를 이끌어내고자 합니다.</p>
+	  </div>
+	</div>
   <script>
   </script>
 </section>
 </body>
 </html>
-	
