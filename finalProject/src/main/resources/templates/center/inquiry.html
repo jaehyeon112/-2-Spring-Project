@@ -68,10 +68,6 @@ thead {
   text-align: center;
 }
 
-a {
-  color: #73685d;
-}
-  
  @media all and (max-width: 768px) {
     
   table, thead, tbody, th, td, tr {
@@ -131,20 +127,19 @@ a {
 <div class="container" style="color: black;">
   	<div class="side" th:insert="~{center/sidebar::side}"></div>
 		<div class="container">
-		  	<h2 style="font-family: 'Orbit', sans-serif;">1:1문의내역</h2>
-		  			  <table>
-			<thead>
-				<tr>
-					<th>제목</th>
-					<th>상태</th>
-					<th>날짜</th>
-					<th></th>
-				</tr>
-			</thead>
+		  	<table>
+				<thead>
+					<tr>
+						<th>제목</th>
+						<th>상태</th>
+						<th>날짜</th>
+						<th></th>
+					</tr>
+				</thead>
 			   <tbody>
 			       <tr th:each="item : ${list}">
 					   <td class="yearCheck">
-					       <a th:text="${item.title}" th:href="@{/inquiry/{boardId}(boardId=${item.boardId})}"></a>
+					       <a style="color:black;" th:text="${item.title}" th:href="@{/inquiry/{boardId}(boardId=${item.boardId})}"></a>
 					   </td>
 			           <td class="yearCheck" style="color:green; font-welight" th:if="${item.commContent == null}">
 		           	   	   <input type="button" class="btn btn-lg btn-success" disabled value="답변대기">

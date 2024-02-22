@@ -85,13 +85,11 @@ div[th:if] {
                 <hr>
             </div>
             <div class="adminContent">
-                <h1>답변</h1>
                 <div th:if="${item.commContent} != null">
-	                <span style="font-size:18px;">[[${#dates.format(item.commDate, 'yyyy.MM.dd')}]]</span>            
-	                <p>아직 답변이 작성되지 않았습니다.</p>
+	                <span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>            
+	                <p th:text="${item.commContent}"></p>
 				</div>
                 <div th:if="${item.commContent} == null">
-	                <span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>            
 	                <p>아직 답변이 작성되지 않았습니다.</p>
 				</div>
 				
