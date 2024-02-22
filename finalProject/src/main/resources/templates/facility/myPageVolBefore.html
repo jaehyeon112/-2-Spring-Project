@@ -36,6 +36,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   white-space: normal;
   max-width: none;
 }
+p{
+	font-weight:bold;
+	font-size:15px;
+}
 </style>
 </head>
 <body>
@@ -51,37 +55,37 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <div class="col-md-9" style="margin-bottom:30px;">
 <button class="btn btn-outline-warning float-right" type="button" data-toggle="modal" data-target="#myModal">시설봉사 등록</button>
 </div>
-            <div class="col-md-2" style="background-color:white;">
+            <div class="col-md-2" style="background-color:#689f38; text-align:center;">
                 <div class="book_tabel_item">
-                    <p style="color:black;  font-size:20px">봉사제목</p>
+                    <p style="color:white;  font-size:20px">봉사제목</p>
                 </div>
             </div>
-        <div class="col-md-3" style="background-color:white;">
+        <div class="col-md-3" style="background-color:#689f38; text-align:center;">
             <div class="book_tabel_item">
-                <p style="color:black; font-size:20px">봉사내용</p>
+                <p style="color:white; font-size:20px">봉사내용</p>
             </div>
           </div>
-        <div class="col-md-2" style="background-color:white;">
+        <div class="col-md-2" style="background-color:#689f38; text-align:center;">
             <div class="book_tabel_item">
-                <p style="color:black;  font-size:20px">봉사일시</p>
+                <p style="color:white;  font-size:20px">봉사일시</p>
               
             </div>
         </div>
-       <div class="col-md-2" style="background-color:white;">
+       <div class="col-md-2" style="background-color:#689f38; text-align:center;">
            <div class="book_tabel_item">
-              <p style="color:black;  font-size:20px" >신청자보기</p>
+              <p style="color:white;  font-size:20px" >신청자보기</p>
               
            </div>
        </div>
-       <div class="col-md-2" style="background-color:white;">
+       <div class="col-md-2" style="background-color:#689f38; text-align:center;">
            <div class="book_tabel_item">
-              <p style="color:black;  font-size:20px" >모집인원</p>
+              <p style="color:white;  font-size:20px" >모집인원</p>
               
            </div>
        </div>
-       <div class="col-md-1" style="background-color:white;">
+       <div class="col-md-1" style="background-color:#689f38; text-align:center;">
            <div class="book_tabel_item">
-              <p style="color:black; font-size:20px" >현황</p>
+              <p style="color:white; font-size:20px" >현황</p>
               
            </div>
        </div>
@@ -146,7 +150,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		</ul>
 	</nav>     
  </div>  
-    
+  
     </div>
     <br>
     <br>
@@ -155,15 +159,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     <br>
                     
 <div class="row hotel_booking_table" id="hiddenTable" style="display:none;">
-  [[${volAppList}]]					
-<table class="table" >
-    <thead>
+				
+<table class="table"  style="text-align:center; ">
+    <thead >
      <tr>
-     <th>신청자</th>
-     <th>신청날짜</th>
-     <th>신청서보기</th>
-     <th>수락버튼</th>
-     <th>수락상태</th>
+     <th style="background-color:#689f38;  color:white;">신청자</th>
+     <th style="background-color:#689f38;  color:white;">신청날짜</th>
+     <th style="background-color:#689f38;  color:white;">신청서보기</th>
+     <th style="background-color:#689f38;  color:white;">수락버튼</th>
+     <th style="background-color:#689f38;  color:white;">수락상태</th>
      </tr>
     </thead>
    
@@ -250,7 +254,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 			    </div>
 			<div class="modal-body">
 				<div class="form-group">
-				[[${info}]]
+				
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -351,7 +355,7 @@ function showList(id) {
 		 }
 	});
 };
-function clickApp(volActId, memId){
+function clickApp(volActId, memId,rowElement){
 	// 수정
     $.ajax({
          url: '/volAppUpdate',
@@ -361,7 +365,7 @@ function clickApp(volActId, memId){
              memId: memId
          },
          success: function(result) {
-             //alert('업데이트 성공');
+             
          },
          error: function(err) {
              console.log(err);
@@ -379,7 +383,7 @@ function clickApp(volActId, memId){
          type: 'POST',
          data: info,
          success: function(result) {
-             alert('인서트 성공');
+        	 rowElement.remove();
            
          },
          error: function(err) {

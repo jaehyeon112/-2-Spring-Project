@@ -189,7 +189,7 @@
     </div>
   </div>
 
-</div>      
+     
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
@@ -390,7 +390,7 @@ function formatDate(date) {
         var memId = [[${session.userId}]];
         console.log(memId);
         $('#joinVolBtn').on('click', function() {
-				if(memberId!=null || [[$session.role]]=='m02'){
+				if(memberId!=null || [[${session.Role}]]=='M02'){
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',
@@ -402,7 +402,7 @@ function formatDate(date) {
        		            if(response > 0) {
        		               
        		             $('#myModal').modal('hide');
-       		             $('#myModal3').modal('show');
+       		            
        		            } else {
        		                // 봉사 등록 가능
        		                // 추가적인 봉사 등록 처리 로직을 구현
