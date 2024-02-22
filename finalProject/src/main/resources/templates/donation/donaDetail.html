@@ -48,14 +48,21 @@
     </head>
 
     <body>
-      사용자 아이디: <span sec:authentication="name"></span>
+    
      <section layout:fragment="content">
     
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
+	<!-- 배너test -->
+		<section class="breadcrumb_area blog_banner_two">
+					<div class="overlay bg-parallax" data-stellar-ratio="0.8"
+						data-stellar-vertical-offset="0" data-background=""
+						style="transform: translateY(0px);"></div>
+					<div class="container">
+						<div class="page-cover text-center">
+							<h2 class="page-cover-tittle f_48"> 기부</h2>
+		
+						</div>
+					</div>
+		</section>
 
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
@@ -100,12 +107,12 @@
                                </div>
                                
                               <div style="padding: 10px 5px 10px 5px;">  
-                                  <h3  th:text="${dona.introTitle}">제목(intro)</h3>
+                                  <h4  th:text="${dona.introTitle}">제목(intro)</h4>
                                   <p th:text="${dona.intro}">소개글(intro)</p>
                                 </div>     
                                 
                                  <div style="padding: 10px 5px 10px 5px; margin-bottom:30px" th:if="${dona.addIntroTitle} or ${dona.addIntro}">  
-                                  <h3  th:text="${dona.addIntroTitle}">제목(intro)</h3>
+                                  <h4  th:text="${dona.addIntroTitle}">제목(intro)</h4>
                                   <p th:text="${dona.addIntro}">소개글(intro)</p>
                                 </div>  
                                 
@@ -139,42 +146,42 @@
                                   </td> 
                                   
                               </tr>
-                              <!-- 두번째열 -->
-                              <tr th:each="row : ${dona}" >    
-                                  <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
-                                  </td>
-                                  
-                                  <td>
-                                      <p class="mb-0 mt-4" th:text="${row.usePlan2}" style="text-align: center;"></p>
-                                  </td>
-                  
-                                  <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt2,3, 'COMMA')} + '원' "></p>
-                                  </td>
-                              </tr>
-                              
-                              <!-- 세번째열 -->
-                              <tr th:each="row : ${dona}" >    
-                                  <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
-                                  </td>
-                                  
-                                  <td>
-                                      <p class="mb-0 mt-4" th:text="${row.usePlan3}" style="text-align: center;"></p>
-                                  </td>
-                  
-                                  <td>
-                                      <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt3,3, 'COMMA')} + '원' "></p>
-                                  </td>
-                              </tr>
+                             <!-- 두번째열 -->
+							<tr th:each="row : ${dona}" th:if="${row.usePlan2 != null and row.usePlan2 != ''}" >    
+							    <td>
+							        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+							    </td>
+							    
+							    <td>
+							        <p class="mb-0 mt-4" th:text="${row.usePlan2}" style="text-align: center;"></p>
+							    </td>
+							
+							    <td>
+							        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt2,3, 'COMMA')} + '원' "></p>
+							    </td>
+							</tr>
+							
+							<!-- 세번째열 -->
+							<tr th:each="row : ${dona}" th:if="${row.usePlan3 != null and row.usePlan3 != ''}">    
+							    <td>
+							        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+							    </td>
+							    
+							    <td>
+							        <p class="mb-0 mt-4" th:text="${row.usePlan3}" style="text-align: center;"></p>
+							    </td>
+							
+							    <td>
+							        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt3,3, 'COMMA')} + '원' "></p>
+							    </td>
+							</tr>
                           </tbody>
                       </table>
                   </div>
                                
 
                   <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-                     <h4> 사업대상 및 기대효과 </h4>
+                     <h5> ◽ 사업대상 및 기대효과 </h5>
                      <table class="table">
                          <tr>
                              <th scope="col" class="table-success" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center; width: 20%;">사업기간</th>
@@ -194,20 +201,24 @@
                   
                   
                    <div>
-                     <h5>관련 콘텐츠 (link)</h5>
+                     <h6> ◽ 관련 콘텐츠 (link)</h6>
                        <a th:href="${dona.link}" th:if="${dona.link != null}" target="_blank" th:text="${dona.link}">link 주소</a>
 						<br><a th:if="${dona.link2 != null}" th:href="${dona.link2}" target="_blank" th:text="${dona.link2}">link 주소</a>
                   </div>
                   
-                  <!-- 캐러셀 -->
+                  
+                  <div>
+                  	<img src="image/bongsalogo.png" style="margin:0 auto; width: 250px; height: 250px;">
+                  </div>
+                  <!-- 캐러셀 
                   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="margin-top:30px">
-                  <h5>추가이미지</h5>
+                  <h6> </h6>
 					  <div class="carousel-inner">
 					    <div class="carousel-item active">
-					      <img src="../image/bonsamaru.png" class="d-block w-100" style="width: 400px; height:290px;" alt="...">
+					      <img src="../image/children.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
 					    </div>
 					    <div class="carousel-item">
-					      <img src="../image/kakao.png" class="d-block w-100" style="width: 400px; height:270px;" alt="...">
+					      <img src="../image/hand.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
 					    </div>
 					  </div>
 					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -216,9 +227,9 @@
 					  </button>
 					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
 					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Next</span>
+					    <span class="visually-hidden">Next</span>🩷
 					  </button>
-					</div>
+					</div> -->
                   
                   
                    </div>
@@ -239,22 +250,24 @@
                          </div>
                          
    					  <div  th:if="${list.isEmpty()}">
-					        도움의 손길을 기다리고 있어요.
+					         <p> 등록된 후기글이 없습니다.</p>
 					    </div>
                      </div> <!--  end 리뷰안의 영역 -->
                                     
         <!--  모금후기  -->
    
         <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab" th:each="rev : ${rlist}" >
-        
+          
+					    
+					    
          <div style="padding: 10px 5px 10px 5px;">  
-            <h3  th:text="${rev.title}">제목(intro)</h3>
+            <h5  th:text="${rev.title}">제목(intro)</h5>
             <p th:text="${rev.content}" style="font-weight:'500'">소개글(intro)</p>
          </div>     
            
                                 
          <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-               <h4> 기부금 집행내역 </h4>
+               <h5>◽ 기부금 집행내역 </h5>
                <table class="table">
                   <tr  >
                      <th scope="col" class="table-warning" style="background-color: rgba(240, 240, 240, 0.8); color: #000000; text-align: center;">집행기간</th>
@@ -274,7 +287,7 @@
  
 
             <div class="table-responsive" style="padding: 20px 5px 20px 5px;">
-               <h4>  총 집행금액 </h4>
+               <h5> ◽ 총 집행금액 </h5>
                <table class="table">
                   <!-- Thead -->
                   <thead>
@@ -303,53 +316,56 @@
                         
                      </tr>
                      <!-- 두번째열 -->
-                     <tr th:each="row : ${rev}" >    
-                        <td>
-                           <p class="mb-0 mt-4" style="text-align: center;">사업비2</p>
-                        </td>
-                        
-                        <td>
-                           <p class="mb-0 mt-4" th:text="${row.bizContent2} " style="text-align: center;"></p>
-                        </td>
-            
-                        <td>
-                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt2, 3, 'COMMA') + '원'}"></p>
-                        </td>
-                     </tr>
-                     
-                     <!-- 세번째열 -->
-                     <tr th:each="row : ${rev}" >    
-                        <td>
-                           <p class="mb-0 mt-4" style="text-align: center;">사업비3</p>
-                        </td>
-                        
-                        <td>
-                           <p class="mb-0 mt-4" th:text="${row.bizContent3}" style="text-align: center;"></p>
-                        </td>
-            
-                        <td>
-                           <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt3, 3, 'COMMA') + '원'}"></p>
-                        </td>
-                     </tr>
+					<tr th:each="row : ${dona}" th:if="${row.usePlan2 != null and row.usePlan2 != ''}" >    
+					    <td>
+					        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+					    </td>
+					    
+					    <td>
+					        <p class="mb-0 mt-4" th:text="${row.usePlan2}" style="text-align: center;"></p>
+					    </td>
+					
+					    <td>
+					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt2,3, 'COMMA')} + '원' "></p>
+					    </td>
+					</tr>
+					
+					<!-- 세번째열 -->
+					<tr th:each="row : ${dona}" th:if="${row.usePlan3 != null and row.usePlan3 != ''}">    
+					    <td>
+					        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
+					    </td>
+					    
+					    <td>
+					        <p class="mb-0 mt-4" th:text="${row.usePlan3}" style="text-align: center;"></p>
+					    </td>
+					
+					    <td>
+					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt3,3, 'COMMA')} + '원' "></p>
+					    </td>
+					</tr>
+
                   </tbody>
                </table>
          </div>
             <!--모금후기 이미지 -->
          <div class="col-lg-6" style="padding: 20px 5px 20px 5px;">
-         	<h4>모금후기이미지</h4>
+         	<h4></h4>
             <div class="border rounded">
                <a href="#">
-                  <img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/bonsamaru.png'" class="img-fluid rounded" alt="Image">
-             		<img th:if="${dona.filePath} == null" src="../image/bonsamaru.png">
+                  <img th:if="${dona.filePath} != null" th:src="${dona.filePath}" onError="this.src='../image/thankyou.jpg'" class="img-fluid rounded" alt="Image" style="width:500px; height: 300px; margin:0 auto;">
+             		<img th:if="${dona.filePath} == null" src="../image/thankyou.jpg" style="width:500px; height: 300px; margin:0 auto;">
                </a>
             </div>
          </div>
+         
+   
 
      </div>  <!--  end 모금후기  영역 -->
                   </div> <!-- 하위 nav 안의 영역  -->
                   	<div class="comments-container">
                             <form>
-                                <h4 class="mb-5 fw-bold"> 댓글 달기 </h4>
+                                <h5 class="mb-5 fw-bold"> 💬 응원메세지 </h5>
                                 <div class="row g-4" id="showComments">
                               
                                    <div id="commentSection">   
@@ -368,7 +384,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-between py-3 mb-5">
-                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 댓글 입력하기 </a>
+                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3" onclick="postComment()"> 입력 </a>
                                         </div>
                                     </div>   
                                     </div>
@@ -385,49 +401,46 @@
                  <div class="col-lg-4 col-xl-3">
                         <div class="row g-4 fruite">
                      <div class="col-lg-12" >
-                         
-                         <div class="info-item">목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
+                     
+                     <!--  test -->
+                          <div style="text-align: left;">
+                               <strong><span  style="font-size: 30px; color: green; font-weight:bold;" th:text="${dona.donationRatio}+ '%'" ></span></strong>    
+                            
+                            </div>
+                            
+                         <div class="progress">
+                               <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                         <div class="info-item"> ▫️ 현재 모금액 : <strong><span th:text="${#numbers.formatInteger(dona.total,3,'COMMA')+'원'}"></span>  </strong></div>    
+                         <div class="info-item"> ▫️ 목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
                           
-                            <div class="progress">
-                                     <div class="progress-bar progress-bar bg-success" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
-                                 </div>
-                                 <div class="info-item" style="display: flex; justify-content: space-between;">
-                                     <div style="text-align: left;">
-                                         <!--  <strong><span  style="font-size: 20px; color: green;" th:text="${dona.donationRatio}"></span>%</strong> -->
-                                          <strong><span  th:text="${dona.donationRatio}"></span>%</strong>
-                                     </div>
-                                     <div style="text-align: right;">
-                                         <strong><span th:text="${#numbers.formatInteger(dona.total,3,'COMMA')+'원'}"></span></strong>
-                                     </div>
-                                 </div>
-                         
-                         
-                  
-                         <p class="mb-4"><span th:text="${#dates.format(dona.recPeriod, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy-MM-dd')}"></span></p>
-                         <p class="mb-4"><span th:text="${dona.dday} + '일 남았습니다.' "></span></p>
+                         <p class="mb-4">▫️ 기간   <br> <span th:text=" ' ' + ${#dates.format(dona.recPeriod, 'yyyy년MM월dd일')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy년MM월dd일')}"></span></p>
+                         <p class="mb-4"><strong><span th:text="${dona.dday}"></span></strong>일 남았습니다.</p>
                          
                          
                          
-                         <p class="mb-4"><i class="bi bi-info-square-fill"></i> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
+                         <p class="mb-4" style="font-style: italic;"><i class="bi bi-info-square-fill"></i> 목표금액 미달 시 계획을 변경하여 기부금을 사용할 수 있습니다. </p>
                      </div>
                      <!-- 버튼 부분 유지 -->
-                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio == 100 or dona.recStat == '0'}"
+                     <button type="button" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" th:disabled="${dona.donationRatio >= 100 or dona.recStat == '0'}"
                               onclick="redirectToPayment()">
                               
                          <i class="bi bi-heart-fill"></i> 
-                         <span th:text="${dona.recStat == '1' ? (dona.donationRatio == 100 ? '모금완료' : '기부하기') : '모금완료'}" style="color:black"></span>
+                         <span th:text="${dona.recStat == '1' ? (dona.donationRatio >= 100 ? '모금완료' : '기부하기') : '모금완료'}" style="color:black"></span>
                      </button>
 
 
                             <div class="col-lg-12">
-                                <h6 class="mb-4">시설소개</h6>
+                                <h6 class="mb-4"> 🔹 시설소개</h6>
                                 <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded" style="width: 100px; height: 100px;">
+                                    <div class="rounded" style="width: 150px; height: 150px;">
+                                       <a href="/facilityList">
                                         <img src="donation/board/img/featur-1.jpg" class="img-fluid rounded" alt="Image">
+                                    	</a>
                                     </div>
                                     <div>
                                         <p class="mb-2" th:text="${dona.facName}">시설명</p>
-                                        <pclass="d-flex mb-2" th:text="${dona.facIntro}">시설 간단 소개</p>
+                                        <p class="d-flex mb-2" th:text="${dona.facIntro}">시설 간단 소개</p>
                                         <div class="d-flex mb-2" >설립일자 : 
                                             <p th:text="${#dates.format(dona.facEstDate, 'yyyy/MM/dd')}">설립일자</p>
                                             
@@ -439,7 +452,7 @@
                         </div>
                     </div> <!-- end col-lg-4 col-xl-3 -->
             <div class="vesitable" >
-                <h5 class="fw-bold mb-0"> 도움의 손길을 기다리고 있어요 </h5>
+                <h6 class="fw-bold mb-0"> 🩷 도움의 손길을 기다리고 있어요 </h6>
                 <div class="owl-carousel vegetable-carousel justify-content-center" >
                     <div th:if="${dona.donId} != ${currentDonId}" class="border border-primary rounded position-relative vesitable-item" th:each="dona : ${randomlist}"  style="border: none !important;">
                         <div class="vesitable-img">
@@ -459,7 +472,7 @@
                               <div class="progress">
                                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" th:style="'width: ' + ${dona.donationRatio} + '%'" aria-valuenow="${dona.donationRatio}" aria-valuemin="0" aria-valuemax="100"></div>
                                  </div>
-                                 <div class="info-item" style="display: flex; justify-content: space-between;">
+                                 <div class="info-item" style="display: flex; justify-content: space-between;  margin-bottom:10px;">
                                      <div style="text-align: left;">
                                          <strong><span th:text="${dona.donationRatio}"></span></strong> %
                                      </div>
@@ -467,7 +480,7 @@
                                          <strong><span th:text="${#numbers.formatInteger(dona.total, 3, 'COMMA') + '원'}"></span></strong>
                                      </div>
                                  </div>
-                            <div class="d-flex justify-content-center flex-lg-wrap">
+                            <div class="d-flex justify-content-center flex-lg-wrap" style="margin-bottom:20px;">
                                 <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
                                     <span th:text="${dona.facilityName}" style="color: black;"></span>
                                 </a>
@@ -508,10 +521,18 @@
     <script th:inline="javascript">
     
     var currentDonId = [[${dona.donId}]];
+   
     
     //redirect
     function redirectToPayment(){
        let donId = [[${dona.donId}]];
+       let sessionRole = [[${session.Role}]]; 
+       console.log(sessionRole);
+       if (sessionRole == 'M03') {
+        	alert("시설회원은 기부를 할 수 없습니다.");
+           console.log('Invalid session role');
+           return;
+       }
        window.location.href = "/payment?donId=" + donId; //리다이렉트에 donId 추가해서 페이지넘김
     }
     

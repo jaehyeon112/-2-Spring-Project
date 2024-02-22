@@ -2,18 +2,18 @@ package com.bongsamaru.meeting.service.Impl;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bongsamaru.common.VO.BoardVO;
 import com.bongsamaru.common.VO.FreeBoardVO;
 import com.bongsamaru.common.VO.PageVO;
+import com.bongsamaru.common.VO.TagVO;
 import com.bongsamaru.common.VO.VolActReviewVO;
 import com.bongsamaru.common.VO.VolActVO;
 import com.bongsamaru.common.VO.VolMemVO;
 import com.bongsamaru.common.VO.VolunteerVO;
-import com.bongsamaru.file.service.FilesVO;
 import com.bongsamaru.meeting.mapper.MeetingMapper;
 import com.bongsamaru.meeting.service.MeetingService;
 
@@ -171,8 +171,29 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
+	@Transactional
 	public int deleteMeeting(Integer volId) {
+		mapper.deleteMember(volId);
 		return mapper.deleteMeeting(volId);
 	}
 
+	@Override
+	public int insertMeeting(VolunteerVO vo) {
+		return mapper.insertMeeting(vo);
+	}
+
+	@Override
+	public int updateMeeting(VolunteerVO vo) {
+		return mapper.updateMeeting(vo);
+	}
+
+	@Override
+	public int deleteFile(Integer codeNo) {
+		return mapper.deleteFile(codeNo);
+	}
+
+	@Override
+	public int insertTag(TagVO vo) {
+		return mapper.insertTag(vo);
+	}
 }

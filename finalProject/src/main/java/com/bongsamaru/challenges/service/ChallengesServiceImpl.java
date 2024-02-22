@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bongsamaru.challenges.mapper.ChallengeMapper;
 import com.bongsamaru.common.VO.ChallengesVO;
@@ -50,6 +51,7 @@ public class ChallengesServiceImpl implements ChallengesService{
 	}
 
 	@Override
+	@Transactional
 	public int getChallengesInsert(ChallengesVO challengeVO) {
 		int result = challengeMapper.getChallengesInsert(challengeVO);
 		if(result ==1) {

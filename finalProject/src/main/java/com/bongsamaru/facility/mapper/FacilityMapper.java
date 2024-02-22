@@ -17,7 +17,7 @@ import com.bongsamaru.mypage.service.HeartVO;
 
 public interface FacilityMapper {
 	
-	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType, @Param("facId") String facId);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,@Param("facZip2") String facZip2, @Param("facType") String facType);
 	public List<FacilityVO> allFacilityList();
 	public FacilityVO getFacilityInfo(String facId);
 	public List<FundingVO> getfundingList(PageVO pageVO,String facId);
@@ -30,7 +30,7 @@ public interface FacilityMapper {
 	public VolActVO getFacVolInfo(Integer volActId);
 	
 	//시설 마이페이지(기부)
-	public List<DonaVO> getDonaList(PageVO pageVO,@Param("facId")String facId, @Param("donRegApp")char donRegApp,@Param("recStat") char recStat);
+	public List<DonaVO> getDonaList(@Param("pageVO")PageVO pageVO,@Param("facId")String facId, @Param("donRegApp")String donRegApp,@Param("recStat")String recStat);
 	
 	//시설 마이페이지(봉사)
 	public  int InsertFacVol(VolActVO volActVO);//시설이 봉사 신청하기위한 등록폼
@@ -51,7 +51,7 @@ public interface FacilityMapper {
 	public int getFacDonCount(@Param("recStat")Integer recStat, @Param("facId")String facId);
 	public int getVolFCount(String facId);
 	public int getVolICount(String facId);
-	public int getVolDonCount(@Param("facId")String facId, @Param("donRegApp")char donRegApp,@Param("recStat") char recStat);
+	public int getVolDonCount(@Param("facId")String facId, @Param("donRegApp")String donRegApp,@Param("recStat") String recStat);
 	//마음온도
 	public int insertVolHeart(HeartVO heartVO);
 	//봉사후기

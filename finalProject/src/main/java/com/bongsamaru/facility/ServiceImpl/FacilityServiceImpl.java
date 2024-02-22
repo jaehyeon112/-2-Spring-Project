@@ -18,6 +18,9 @@ import com.bongsamaru.dona.service.DonaVO;
 import com.bongsamaru.facility.Service.FacilityService;
 import com.bongsamaru.facility.mapper.FacilityMapper;
 import com.bongsamaru.mypage.service.HeartVO;
+
+import lombok.extern.log4j.Log4j2;
+@Log4j2
 @Service
 public class FacilityServiceImpl implements FacilityService {
 
@@ -25,8 +28,8 @@ public class FacilityServiceImpl implements FacilityService {
 	FacilityMapper mapper;
 
 	@Override
-	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType,@Param("facId") String facId) {
-		return mapper.getFacilityList(pageVO,facZip2,facType,facId);
+	public List<FacilityVO> getFacilityList(PageVO pageVO,String facZip2, String facType) {
+		return mapper.getFacilityList(pageVO,facZip2,facType);
 	}
 	
 	@Override
@@ -71,7 +74,10 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 	
 	@Override
-	public List<DonaVO> getDonaList(PageVO pageVO,String facId,char donRegApp, char recStat) {
+	public List<DonaVO> getDonaList(PageVO pageVO,String facId,String donRegApp, String recStat) {
+		log.info(facId);
+		log.info(donRegApp);
+		log.info(recStat);
 		return mapper.getDonaList(pageVO,facId,donRegApp,recStat);
 	}
 	
@@ -186,7 +192,7 @@ public class FacilityServiceImpl implements FacilityService {
 		}
 
 		@Override
-		public int getVolDonCount(String facId, char donRegApp, char recStat) {
+		public int getVolDonCount(String facId, String donRegApp, String recStat) {
 			return mapper.getVolDonCount(facId, donRegApp, recStat);
 		}
 		

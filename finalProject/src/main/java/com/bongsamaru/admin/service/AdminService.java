@@ -22,6 +22,7 @@ import com.bongsamaru.mypage.service.DonledgerVO;
 
 
 public interface AdminService {
+	public List<VolunteerVO> dailyAllList();
 	public List<CodeVO> subCodeList(String mainCodeId);
 	//회원목록
 	public List<UserVO> getUserList(PageVO pageVO);

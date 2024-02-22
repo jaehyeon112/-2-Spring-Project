@@ -111,7 +111,7 @@
 		                             <td th:text="${mem.memId}">John</td>
 		                             <td th:text="${#strings.substring(mem.appReason, 0, 10)}+'...'" th:if="${mem.appReason.length}>10">Doe</td>
 		                             <td th:text="${mem.appReason}" th:if="${mem.appReason.length}<=10">Doe</td>
-		                             <td><button>승인하기</button></td>
+		                             <td><button th:onclick="${mem.memId}">승인하기</button></td>
 		                         </tr>
 		                     </tbody>
 		                 </table>
@@ -120,7 +120,8 @@
 		    </div>
 		</div>
 	</div>
-	 <div class="container"><button onclick="delMeetModal()" style="float:right">모임 삭제하기</button></div>
+	 <div class="container"><button class="btn" onclick="delMeetModal()" style="float:right;margin:10px">모임 삭제</button></div>
+	 <div class="container"><button class="btn" onclick="updateMeeting()" style="float:right;margin:10px">모임 수정</button></div>
 	<!-- 모달창 -->
 	<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
 	    <div class="modal-dialog" role="document">
@@ -225,12 +226,14 @@
            		}
            	});
 		}
+		//모임 삭제하기
 		function delMeetModal(){
 			$("#delMeet").modal("show");
-			$("#delMeetYes").on('click',function () {
-				delMeet();
-			});
 		}
+		
+		$("#delMeetYes").on('click',function () {
+			delMeet();
+		});
 		
 		function delMeet(){
 			$.ajax({
@@ -258,7 +261,6 @@
 		
 		$("#delMeetNo").on('click',function () {
 		    $("#delMeet").modal("hide");
-           	location.href = "managerPage?volId="+volId;
 		});
 
 		function delActModal(id){
@@ -288,6 +290,24 @@
            		}
            	});
 		};
+		function outMeeting(memId){
+    		$.ajax({
+           		url: "/WithdrawalProcess?volId="+volId+"&memId="+memId+"&appCode=h02",
+           		type: 'GET',
+           		processData: false,
+           		contentType: false,
+           		success: function(data) {
+           			modalOpen();
+           		},
+           		error: function(e) {
+           			console.log('실패');
+           		}
+           	});
+    	}
+		
+		function updateMeeting(){
+			location.href = "updateMeeting?volId="+[[${session.id}]];
+		}
 	</script>
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/popper.min.js"></script>

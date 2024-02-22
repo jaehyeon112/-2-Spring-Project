@@ -68,7 +68,7 @@ public class facilityController {
 								  String facType,
 								  PageVO vo, 
 								  Integer cntPerPage,
-								  String facId,
+								
 								  Model model,
 								  @RequestParam(value="category", required = false)String category,
 								  @RequestParam(value="start", required = false,defaultValue = "1")Integer start,
@@ -81,8 +81,9 @@ public class facilityController {
      	model.addAttribute("vo",vo);
      	model.addAttribute("category",category);
      	
-     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType,facId);
+     	List<FacilityVO> list = facilityService.getFacilityList(vo,facZip2, facType);
      	model.addAttribute("facilityList", list);
+     	log.info(list);
      	List<SubCodeVO> z =commonMapper.subCodeList("z");
      	List<SubCodeVO> f = commonMapper.subCodeList("f");
      	model.addAttribute("subZ", z);
@@ -101,7 +102,9 @@ public class facilityController {
 	 @GetMapping("fInfo/facilityInfo")
 		public String getFacilityInfo(@RequestParam(name="facId") String facId,
 										Model model,HttpServletRequest request) {
+		
 		 	FacilityVO findVO =facilityService.getFacilityInfo(facId);
+		 	log.info(facId);
 			request.getSession().setAttribute("facilityInfo",findVO);
 			model.addAttribute("facilityInfo", findVO);
 			
@@ -186,10 +189,10 @@ public class facilityController {
 									@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
 									@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		
-		int total = facilityService.getVolDonCount(facId,'0','0');
+		int total = facilityService.getVolDonCount(principal.getName(),"0","0");
 		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
-	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), '0','0'); // 모금완료
+	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","0"); // 모금완료
 	      model.addAttribute("donaList", list);
 		return "facility/myPageDona2";
 	}
@@ -203,18 +206,22 @@ public class facilityController {
 											@RequestParam(value="category", required = false)String category,
 											@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
 											@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
-		  int total = facilityService.getVolDonCount(facId,'1','0');
-		  vo = new PageVO(total,start, end, category ,5);
+		  
+		  int total = facilityService.getVolDonCount(principal.getName(),"1","0");
+		  vo = new PageVO(10,start, end, category ,5);
 	      model.addAttribute("vo",vo);
-	      List<DonaVO> list1 = facilityService.getDonaList(vo, principal.getName(), '1','0'); // 모금완료
+	      log.info(vo);
+	      log.info(principal.getName());
+	      List<DonaVO> list1 = facilityService.getDonaList(vo, principal.getName(), "1","0"); // 모금완료
 	      model.addAttribute("donaList1", list1);
 	      log.info(list1);
 	      
 	      
-	      int total2 = facilityService.getVolDonCount(facId,'1','1');
+	      int total2 = facilityService.getVolDonCount(principal.getName(),"1","1");
 	      vo2 = new PageVO(total2,start, end, category ,3);
-	      model.addAttribute("vo2",vo);
-	      List<DonaVO> list0 = facilityService.getDonaList(vo2, principal.getName(),'1', '1'); //모금중
+	      model.addAttribute("vo2",vo2);
+	      log.info(vo2);
+	      List<DonaVO> list0 = facilityService.getDonaList(vo2, principal.getName(),"1", "1"); //모금중
 	      model.addAttribute("donaList0", list0);
 	      log.info(list0);
 	      return "facility/myPageDona";
@@ -247,7 +254,6 @@ public class facilityController {
 		  public String getFacilityVolFinish(Model model,
 							                  Principal principal,
 							                  PageVO vo, 
-							                  
 							                  Integer cntPerPage,
 							                  @RequestParam(value="category", required = false)String category,
 							                  @RequestParam(value="start", required = false, defaultValue = "1") Integer start,

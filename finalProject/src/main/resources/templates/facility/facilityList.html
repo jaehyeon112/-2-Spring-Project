@@ -46,7 +46,6 @@
 			<div class="row mb_30 container" style="margin: 0 auto;"  >
 				<th:block th:each="facility:${facilityList}" id="filteredFacilities">
 					<div class="col-lg-4 col-md-6" style="text-align:center">
-
 							<div class="thumb" style="position: relative;">
 								<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 60%; ">
 								<div class="text-white px-1 rounded position-absolute" style="top: 10px; right: 80px;background-color:#28a745;">
@@ -60,7 +59,7 @@
 								</div>
 								<br>
 								<a class="btn theme_btn button_hover " th:href="@{/fInfo/facilityInfo(facId=${facility.facId})}"
-										th:text="${facility.facName}" style="width: 30%;"></a>
+										th:text="${facility.facName}" style="width: 30%;"></a> [[${facility.facId}]]
 							</div>
 								<p th:text="${facility.facAddr}"></p>
 								<p style="display:none" th:text="${facility.region}" id="regions"></p>
@@ -75,7 +74,7 @@
 <br>
 <br>
 <br>
- <th:block th:if="${#lists.size(facility)}!=0">
+ <th:block th:if="${#lists.size(facilityList)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -86,7 +85,7 @@
 	</ul>
 </nav>
 </th:block>
-		</div>
+</div>
 
 <script th:inline="javascript">
     function filterFacilities() {

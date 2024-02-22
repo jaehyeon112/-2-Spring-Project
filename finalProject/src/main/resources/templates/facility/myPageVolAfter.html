@@ -12,6 +12,10 @@
     background-color: #689f38; 
     color: white;
  }
+ p{
+	font-weight:bold;
+	font-size:15px;
+}
  </style>
 </head>
 <body>
@@ -20,31 +24,32 @@
  	<div th:insert="~{banner/empty::banner}"></div>
  	<div th:insert="~{facility/sidebar::side}"></div>
     <div>
+    <div class="container">
 		<div class="row justify-content-center hotel_booking_table">
         	
-            		<div class="col-md-2" style="background-color:white;">
+            		<div class="col-md-2" style="background-color:#689f38; text-align:center;">
                 		<div class="book_tabel_item">
-                    	<p style="color:black;  font-size:20px">봉사제목</p>
+                    	<p style="color:white;  font-size:20px">봉사제목</p>
                 		</div>
             		</div>
-        			<div class="col-md-4" style="background-color:white;">
+        			<div class="col-md-4" style="background-color:#689f38; text-align:center;">
             			<div class="book_tabel_item">
-                		<p style="color:black; font-size:20px">봉사내용</p>
+                		<p style="color:white;  font-size:20px">봉사내용</p>
             			</div>
           			</div>
-        			<div class="col-md-2" style="background-color:white;">
+        			<div class="col-md-2" style="background-color:#689f38; text-align:center;">
             			<div class="book_tabel_item">
-                		<p style="color:black; font-size:20px">봉사일시</p>
+                		<p style="color:white;  font-size:20px">봉사일시</p>
 		            	</div>
         			</div>
-       				<div class="col-md-2" style="background-color:white;">
+       				<div class="col-md-2" style="background-color:#689f38; text-align:center;">
            				<div class="book_tabel_item">
-              			<p style="color:black; font-size:20px" >참여자</p>
+              			<p style="color:white; font-size:20px" >참여자</p>
            				</div>
        				</div>
-       				<div class="col-md-2" style="background-color:white;">
+       				<div class="col-md-2" style="background-color:#689f38; text-align:center;">
            				<div class="book_tabel_item">
-              			<p style="color:black; font-size:20px" >후기작성</p>
+              			<p style="color:white;  font-size:20px" >후기작성</p>
        	    			</div>
        				</div>
    				   <th:block th:each="list: ${volList}">
@@ -137,7 +142,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 <script th:inline="javascript">
 var volActId='';
 window.onload = function() {

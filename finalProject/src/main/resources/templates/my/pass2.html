@@ -31,10 +31,9 @@ p {
   	<div class="title">
 	    <div th:each="item : ${list}">
 			<input type="text" id="id" th:value="${item.memId}" style="display:none;" >
-	    	<span>회원정보 수정</span>
-	    	<p>회원님의 소중한 정보를 안전하게 관리하세요.</p>
-	    	<image src="/image/bongsalogo.png" class="imagelogo">
-	    	<p style="font-size:20px;">회원정보를 수정하시려면 비밀번호를 입력하셔야 합니다.</p>
+	    	<div>회원탈퇴</div>
+	    	<img src="/image/bongsalogo.png" class="imagelogo">
+	    	<p style="font-size:20px;">회원정보를 삭제하시려면 비밀번호를 입력하셔야 합니다.</p>
 	    	<p style="font-size:14px;">회원님의 개인정보 보호를 위한 본인 확인 절차이오니, 봉사마루 회원 로그인 시 사용하시는 비밀번호를 입력해주세요.</p>
 	    	<div style="margin-bottom:30px;">
 			    <input style="padding-left:17px;" type="password" id="currentPassword" name="currentPassword" placeholder="비밀번호를 입력해주세요">

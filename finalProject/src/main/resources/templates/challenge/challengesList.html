@@ -21,35 +21,28 @@
 	color: white;
 	cursor: pointer;
 }
-.gallery_img {
-    position: relative;
-    display: inline-block;
-}
 
-.image-container {
-    position: relative;
-    display: inline-block;
+img{
+	border-radius:20px;
 }
-
-.bi-heart {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-.bi-heart.filled path {
-    fill: red;
+p{
+	font-size:20px
 }
 
 </style>
 </head>
 <body>
 <section layout:fragment="content">
-<div class="hotel">
-	<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-	<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+<div th:insert="~{banner/empty::banner}"></div>
+<div class="comment-form">
+<section class="blog_area single-post-area">	
+<div class="hotel" >
+	<a style="font-size:25px;color:#689f38;font-weight:bold " th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}" >챌린지소개</a> <span style="margin-right: 25px;"></span>|<span style="margin-left: 25px;"></span>
+	<a style="font-size:25px;color:#689f38; font-weight:bold" th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}" >챌린지참여 </a>
+	<br><br><br>
 	</div>
 	<section class="blog_area">
-		<div class="container">
+		<div class="container justify-content-center" style=" margin: 20px auto;max-width: 1500px; ">
 			<div class="row">
 				<div class="col-lg-8">
 					<div class="blog_left_sidebar">
@@ -82,30 +75,45 @@
 				</div>
 				</div>
 					</div>
-				
+			
 <!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
-	            <div class="col-lg-4">
-		  			<div class="blog_right_sidebar">
-						<aside class="single_sidebar_widget popular_post_widget">
-				<h3 class="widget_title" th:text="${session.challengeInfo.title}"></h3>
-				<div class="media post_item">
-					<img th:if="${session.FileList != null and !session.FileList.isEmpty()}"  th:src="${session.FileList[0].filePath}" alt="post">
+	           <div class="col-lg-4">
+			<div class="blog_right_sidebar">
+				<aside class="single_sidebar_widget popular_post_widget" style="border:2px solid #689f38">
+					<h3 class="widget_title"
+						th:text="${session.challengeInfo.title}"></h3>
+					
+						<img th:if="${session.FileList != null and !session.FileList.isEmpty()}"  width="300" height="400" th:src="${session.FileList[0].filePath}" alt="post">		
 
-					<div class="media-body">
-						<h3>How to</h3>
-						<p th:text="${session.challengeInfo.partMethod1}"></p>
-						<p th:text="${session.challengeInfo.partMethod2}"></p>
-						<button type="button" data-toggle="modal"
-							data-target="#myModal">챌린지 참여하기</button>
+						<div class="media-body">
+							<h3>How to</h3>
+							<p th:text="${session.challengeInfo.partMethod1}"></p>
+							<p th:text="${session.challengeInfo.partMethod2}"></p>
+							
+						</div>
+						<h3>챌린지일시</h3>
+						<div class="form-group">
+							<div class="row">
+								<div class="col">
+								<small class="text-muted">챌린지 시작일</small>
+								<h4 th:text="${#dates.format(session.challengeInfo.regDate,'yyyy-MM-dd') }"></h4>
+								</div>
+								<div class="col">
+								<small class="text-muted">챌린지 마감일</small>
+								<h4 th:text="${#dates.format(session.challengeInfo.endDate,'yyyy-MM-dd' )}"></h4>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+								data-target="#myModal">챌린지 참여하기</button><br>
+								<a id="kakaotalk-sharing-btn" href="javascript:;">
+  								<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" /></a>
+								<br><br>
+				</aside>
 			</div>
 		</div>
-	</aside>
- 
- </div>
-<a id="kakaotalk-sharing-btn" href="javascript:;">
-  <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" /></a>
 </div>
-</div>
+
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/></svg>
 </div>
 
@@ -175,6 +183,7 @@
   </div>
 </div>		
 <script>
+var memId = [[${session.userId}]];
 
 		$(document).ready(function() {
 			// 모달이 표시될 때 이벤트 처리
@@ -312,29 +321,12 @@ function openModal(chalDetId) {
   });
 </script>
 	
-
+</section>
+</section>
+</div>
 </section>
 
-</section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
 
 </body>
 </html>

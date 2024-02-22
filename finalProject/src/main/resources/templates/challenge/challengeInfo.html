@@ -5,161 +5,130 @@
 <head>
 <meta charset="UTF-8">
 <title>챌린지 상세정보</title>
+<style>
+img{
+	border-radius:20px;
+}
+p{
+	font-size:23px;
+	color:black;
+	 line-height: 1.5;
+	
+}
+h2{
+color:#689f38;
+}
+</style>
 </head>
 <body>
-	<section layout:fragment="content">
+<section layout:fragment="content">
+<div th:insert="~{banner/empty::banner}"></div>	
 <div class="comment-form">
 <section class="blog_area single-post-area">
-	<div class="hotel">
-	<a th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}">챌린지소개</a>
-	<a th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}">챌린지참여</a>
+	<div class="hotel" >
+	<a style="font-size:25px;color:#689f38;font-weight:bold " th:href="@{/challenge/challengeInfo(chalId=${session.challengeInfo.chalId})}" >챌린지소개</a> <span style="margin-right: 25px;"></span>|<span style="margin-left: 25px;"></span>
+	<a style="font-size:25px;color:#689f38; font-weight:bold" th:href="@{/challenge/challengesList(chalId=${session.challengeInfo.chalId})}" >챌린지참여 </a>
+	<br><br><br>
 	</div>
 	<section class="blog_area">
-		<div class="container" style="border: 1px solid black;">
+		<div class="container justify-content-center" style=" margin: 20px auto;max-width: 1500px; ">
 			<div class="row">
 				<div class="col-lg-8 posts-list">
 					<div class="single-post row">
+					<div class="col-lg-12 col-md-12 blog_details">
+					<div class="form-group">
+					<h1 th:text="${session.challengeInfo.title}" style="background-color:#689f38; color:white;"></h1>
+					</div>
+					</div>
 					<div class="col-lg-12">
-					<div class="feature-img">
-                                <br>
-					<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].filePath}" onError="this.src='../image/기본이미지.jpg'"width="300" height="200"alt=""><br>
+					<div class="feature-img"><br>
+					<img th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[0] != null}"  th:src="${FileList[0].filePath}" onError="this.src='../image/기본이미지.jpg'"width="400" height="300"alt=""><br>
+					<br><br>
 					</div>
 					</div>
-			<div class="col-lg-12 col-md-12 blog_details">
-				<div class="form-group">
-					<p th:text="${session.challengeInfo.title}"></p>
-				</div>
-			</div>
-			<div class="col-lg-12">
-		       <div class="row">
-                    <div class="col-lg-12  mt-25">
-
-									<h3>챌린지 하는 이유</h3>
-									</div>
-											<div class="col-6">
-												<div class="form-group">
-													<img  width="300" height="200" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].filePath}"onError="this.src='../image/기본이미지.jpg'" alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<img  width="300" height="200" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[2] != null}" th:src="${FileList[2].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
-												</div>
-											</div>
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<p th:text="${session.challengeInfo.actionReason}"></p>
-												</div>
-
-											</div>
-						<div class="col-lg-12  mt-25">
-									<h3>기대효과</h3>
-									</div>
-											<div class="col-6">
-												<div class="form-group">
-													<img  width="300" height="200" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<img width="300" height="200" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[4] != null}" th:src="${FileList[4].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
-											</div>
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<p th:text="${session.challengeInfo.expImpact}"></p>
-												</div>
-											</div>
-
-
-
-
-
-											 <div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control" id="subject"
-														th:readonly placeholder="그외 자유내용 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img1.jpg" alt="">
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<input type="text" class="form-control" id="subject"
-														th:readonly placeholder="그외 자유내용 이미지 들어갈 자리입니다"> <img
-														class="img-fluid" src="image/blog/post-img2.jpg" alt="">
-												</div>
-											</div> 
-
-
-
-											<div class="col-lg-12 mt-25">
-												<div class="form-group">
-													<textarea th:text="${session.challengeInfo.content}"></textarea>
-												</div>
-
-											</div>
-
-
-											<p>함께할 날짜</p>
-											<div class="form-group form-inline">
-
-												<div class="form-group col-lg-6 col-md-6 name">
-													<input type="date" id="start" name="start">
-													<p>"챌린지를 시작하는 날짜는 오늘입니다"</p>
-												</div>
-												<div class="form-group col-lg-6 col-md-6 name">
-													<input type="date" id="regDate" name="regDate">
-													<p>챌린지를 마감할 날짜오늘부터 최소 한달, 최대 6개월까지 참여가능합니다</p>
-
-												</div>
-											</div>
- 
-
-											<div class="form-group">
-												<p>HowTo</p>
-
-
-												<p th:text="${session.challengeInfo.partMethod1}" style="width: 500px"></p>
-												<hr>
-												<p th:text="${session.challengeInfo.partMethod2}" style="width: 500px"></p>
-											</div >
-										
-										</div>
+					
+					<div class="col-lg-12">
+		       			<div class="row">
+                    	<div class="col-lg-12 " style="text-align:left;">
+                    		<h2>챌린지 하는 이유</h2></div>
+								<div class="col-6">
+									<div class="form-group">
+									<img  width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[1] != null}" th:src="${FileList[1].filePath}"onError="this.src='../image/기본이미지.jpg'" alt="">
 									</div>
 								</div>
-						
-
+								<div class="col-6">
+									<div class="form-group">
+									<img  width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[2] != null}" th:src="${FileList[2].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
+								</div>
+								</div>
+						<div class="col-lg-12 mt-25">
+							<div class="form-group">
+								<p style=" white-space: pre-wrap; text-align:left;" th:text="${session.challengeInfo.actionReason}"></p>
 							</div>
-
-								<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
-					<div class="col-lg-4">
-						<div class="blog_right_sidebar">
-							<aside class="single_sidebar_widget popular_post_widget">
-								<h3 class="widget_title"
-									th:text="${session.challengeInfo.title}"></h3>
-								
-									<img th:src="${FileList[0].filePath}" alt="post">
-
-									<div class="media-body">
-										<h3>How to</h3>
-										<p th:text="${session.challengeInfo.partMethod1}"></p>
-										<p th:text="${session.challengeInfo.partMethod2}"></p>
-										<button type="button" class="btn btn-warning" data-toggle="modal"
-											data-target="#myModal">챌린지 참여하기</button>
+						</div>
+						<div class="col-lg-12  mt-25"  style="text-align:left;">
+							<h2>기대효과</h2></div>
+								<div class="col-6">
+									<div class="form-group">
+										<img  width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[3] != null}" th:src="${FileList[3].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
 									</div>
-								
-							</aside>
+								</div>
+								<div class="col-6">
+									<img width="400" height="300" th:if="${FileList != null and not #lists.isEmpty(FileList) and FileList[4] != null}" th:src="${FileList[4].filePath}" onError="this.src='../image/기본이미지.jpg'"alt="">
+								</div>
+						<div class="col-lg-12 mt-25">
+							<div class="form-group">
+								<p  style="white-space: pre-wrap;text-align:left;" th:text="${session.challengeInfo.expImpact}"></p>
+							</div>
 						</div>
-					</div>
+						<div class="col-lg-12  mt-25"  style="text-align:left;">
+							<h2>추가 말..</h2></div>	
+						<div class="col-lg-12 mt-25">
+							<div class="form-group">
+								<p  style="white-space: pre-wrap; text-align:left;" th:text="${session.challengeInfo.content}"></p>
+							</div>
 						</div>
+					
+					    </div>
+				     </div>
+			      </div>
+                </div>
 
-					</div>
-			
-				
+		<!-- 여기 세션 만들어서 주기 Info에서 넘어온다-->
+		<div class="col-lg-4">
+			<div class="blog_right_sidebar">
+				<aside class="single_sidebar_widget popular_post_widget" style="border:2px solid #689f38">
+					<h2 class="widget_title"
+						th:text="${session.challengeInfo.title}"></h2>
+					
+						<img th:src="${FileList[0].filePath}" alt="post" width="300" height="400">
+
+						<div class="media-body">
+							<h2>How to</h2>
+							<p th:text="${session.challengeInfo.partMethod1}"></p>
+							<p th:text="${session.challengeInfo.partMethod2}"></p>
+							
+						</div>
+						<h2>챌린지일시</h2>
+						<div class="form-group">
+							<div class="row">
+								<div class="col">
+								<small class="text-muted">챌린지 시작일</small>
+								<h4 th:text="${#dates.format(session.challengeInfo.regDate,'yyyy-MM-dd') }"></h4>
+								</div>
+								<div class="col">
+								<small class="text-muted">챌린지 마감일</small>
+								<h4 th:text="${#dates.format(session.challengeInfo.endDate,'yyyy-MM-dd' )}"></h4>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+								data-target="#myModal">챌린지 참여하기</button><br><br>
+				</aside>
+			</div>
+		</div>
+	</div>
+</div>
 
 			<div class="modal" tabindex="-1" id="myModal">
 				<div

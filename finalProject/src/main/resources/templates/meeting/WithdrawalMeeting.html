@@ -56,7 +56,7 @@
     	const volMemId = "[[${session.userId}]]";
     	function outMeeting(){
     		$.ajax({
-           		url: "/WithdrawalProcess?volId="+volId+"&memId="+volMemId,
+           		url: "/WithdrawalProcess?volId="+volId+"&memId="+volMemId+"&appCode=h04",
            		type: 'GET',
            		processData: false,
            		contentType: false,
@@ -75,6 +75,7 @@
 		
 		$("#noBtn").on('click',function () {
 		    $("#confimModal").modal("hide");
+		    location.href="/";
 		});
     </script>
 	</section>
