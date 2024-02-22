@@ -244,7 +244,9 @@ public class facilityController {
 	      log.info(vo);
 	      List<VolActVO> list = facilityService.getVolunteerJoinList(vo,facId);
 	      model.addAttribute("volList", list);
-	      
+	      List<SubCodeVO> f = commonMapper.subCodeList("f");
+	     	model.addAttribute("subF", f);
+	     	log.info(f);
 	      model.addAttribute("vo", vo);
 	      log.info(list);
 	      return "facility/myPageVolBefore";
@@ -343,11 +345,14 @@ public class facilityController {
 	//시설봉사등록
 	@PostMapping("/InvolJoin")
 	@ResponseBody
-	public int facVolInsert (@RequestParam(value = "files", required = false) MultipartFile[] uploadFiles,VolActVO volActVO, Principal principal) {
+	public int facVolInsert (Model model,@RequestParam(value = "files", required = false) MultipartFile[] uploadFiles,VolActVO volActVO, Principal principal) {
 		volActVO.setFacId(principal.getName());
-		int result = facilityService.InsertFacVol(volActVO);
 		log.info("값"+volActVO);
+		
+		int result = facilityService.InsertFacVol(volActVO);
 		log.info("값"+result);
+		
+		
 		  try { 
 			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
 		  }catch (IOException e) {
