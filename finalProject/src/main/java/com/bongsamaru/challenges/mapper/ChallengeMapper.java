@@ -12,7 +12,7 @@ import com.bongsamaru.file.service.FilesVO;
 
 public interface ChallengeMapper {
 	
-			public List<ChallengesVO> getChallengeList(ChallengesVO challengesVO);
+			public List<ChallengesVO> getChallengeList();
 			public ChallengesVO getChallengeInfo(int chalId);
 			public List<FilesVO> getFileList(@Param("codeNo") Integer codeNo, @Param("code") String code);
 			public List<ChallengesVO> getChallengesList(int chalId);			
