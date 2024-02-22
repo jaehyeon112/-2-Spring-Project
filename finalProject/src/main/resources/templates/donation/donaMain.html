@@ -101,7 +101,7 @@
 		    
 		}
 		
-		
+
 		
 		</style>
 
@@ -282,10 +282,46 @@
     <script th:inline="javascript">
     
     $(document).ready(function () {
+    	mss.scrollIntoView();
     	mainform.donRegApp.value;
-		
-    });
-    
+    	   // URL에서 쿼리 파라미터 값 가져오기
+        var urlParams = new URLSearchParams(window.location.search);
+        var category = urlParams.get('category'); // 'category' 쿼리 파라미터 값 읽기
+		var recStat = urlParams.get('recStat');
+        
+        if(recStat == '1' || recStat == null){
+        	$('#btnRecruiting').css({
+        		 'background-color': '#ccc',
+        		 'color' : 'black'
+        		 
+        	})
+        }else{
+        	$('#btnCompleted').css({
+       		 'background-color': '#ccc',
+       		'color' : 'black'
+       	})
+        }
+        
+        // 모든 카테고리 버튼에 대해 반복
+        $("#donaCategory button").each(function() {
+            var buttonCategory = $(this).data("category"); // 버튼의 데이터 속성 값 읽기
+            // URL의 'category' 파라미터 값과 버튼의 데이터 값이 일치하면
+            if (buttonCategory === category) {
+                // 해당 버튼에 'active' 클래스 추가
+                
+                $(this).css({
+            		    /* 활성화된 버튼에 대한 스타일 */
+            		    'background-color': '#ccc' /* 예시: 파란색 배경 */
+                	
+                });
+            }
+        });
+   });
+    function filterByCategory(button) {
+        var category = button.getAttribute("data-category"); // 클릭된 버튼의 'data-category' 값 읽기
+        mainform.category.value = category; // 폼에 값 설정
+        mainform.submit(); // 폼 제출
+    }
     function toggleList(type) {
     	
     	
@@ -303,7 +339,11 @@
         
         //location.href='donaMain?category='+ category
     }
-
+    function filterByCategory(button) {
+        var category = button.getAttribute("data-category"); // 클릭된 버튼의 'data-category' 값 읽기
+        mainform.category.value = category; // 폼에 값 설정
+        mainform.submit(); // 폼 제출
+    }
 
 
     </script>

@@ -71,7 +71,14 @@ public class MeetingController {
 	 */
 	@GetMapping("meetings")
 	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,HttpServletResponse res,Principal prin,VolunteerVO volunteerVO) throws IOException {
-		if(session.getAttribute("Role")!="M01"||session.getAttribute("Role")!="M02") {
+		String iden = "";
+		if(session.getAttribute("Role") != null) {
+			iden = (String)session.getAttribute("Role");
+		}
+		
+		if(iden.equals("m02") || iden.equals("m01")) {
+			System.out.println("너, 들어올수 있어");
+		}else {
 			String uri = "meetings?volId="+volId;
 		    if (uri != null && !uri.contains("/login")) {
 		        req.getSession().setAttribute("prevPage", uri);

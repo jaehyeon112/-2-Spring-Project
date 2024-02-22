@@ -25,6 +25,8 @@ public class UserSuccessHandler implements AuthenticationSuccessHandler {
 		        UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
 		        request.getSession().setAttribute("userId", user.getUsername());
 		        request.getSession().setAttribute("Role", user.getUserVO().getMemStat());
+		        System.out.println(user.getUserVO().getMemStat()+"야야야야야");
+		      
 		        request.getSession().setAttribute("profile", user.getUserVO().getProfile());
 		        System.out.println(user.getUserVO().getProfile());
 		        if (request.getSession().getAttribute("prevPage") != null) {
