@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Donation Detail page</title>
+        <title></title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -50,19 +50,8 @@
     <body>
     
      <section layout:fragment="content">
-    
-	<!-- 배너test -->
-		<section class="breadcrumb_area blog_banner_two">
-					<div class="overlay bg-parallax" data-stellar-ratio="0.8"
-						data-stellar-vertical-offset="0" data-background=""
-						style="transform: translateY(0px);"></div>
-					<div class="container">
-						<div class="page-cover text-center">
-							<h2 class="page-cover-tittle f_48"> 기부</h2>
-		
-						</div>
-					</div>
-		</section>
+     <div th:insert="~{banner/dona::banner}"></div>
+	
 
         <!-- Single Product Start -->
         <div class="container-fluid py-5 mt-5">
@@ -415,7 +404,7 @@
                          <div class="info-item"> ▫️ 목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
                           
                          <p class="mb-4">▫️ 기간   <br> <span th:text=" ' ' + ${#dates.format(dona.recPeriod, 'yyyy년MM월dd일')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy년MM월dd일')}"></span></p>
-                         <p class="mb-4"><strong><span th:text="${dona.dday}"></span></strong>일 남았습니다.</p>
+                         <p class="mb-4"><strong><span th:if="${dona.recStat} == '1'" th:text="${dona.dday} + '일 남았습니다.'"></span></strong></p>
                          
                          
                          

@@ -119,7 +119,7 @@ ul,li{
 <script th:inline="javascript">
 	function submitForm() {
   // 필수 입력 사항을 가져옵니다.
-  let id = 'test';
+  let id = [[${memId}]];
   let email = $("#email").val();
   let phoneNumber = $("#phoneNumber").val();
   let inquiryTitle = $("#inquiryTitle").val();

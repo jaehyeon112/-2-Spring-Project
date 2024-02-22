@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,10 +67,17 @@ public class MeetingController {
 	 * @param req
 	 * @param prin
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@GetMapping("meetings")
-	public String meetings(PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,Principal prin,VolunteerVO volunteerVO) throws IOException {
+	public String meetings(HttpSession session,PageVO pvo,VolMemVO volVO,@RequestParam Integer volId,Model model,HttpServletRequest req,HttpServletResponse res,Principal prin,VolunteerVO volunteerVO) throws IOException {
+		if(session.getAttribute("Role")!="M01"||session.getAttribute("Role")!="M02") {
+			String uri = "meetings?volId="+volId;
+		    if (uri != null && !uri.contains("/login")) {
+		        req.getSession().setAttribute("prevPage", uri);
+		    }
+		    res.sendRedirect("/login?redirectURL=login");
+		}
 		req.getSession().setAttribute("id",volId);
 		VolunteerVO vo2 = service.meetingInfo(volId);
 		model.addAttribute("info",vo2);
@@ -390,19 +399,11 @@ public class MeetingController {
 	    List<VolActVO> list = service.meetingVolActListPaging(pvo);
 	    model.addAttribute("volAct",list);
 	    
-	    volVO.setAppCode("h02");
-	    List<VolMemVO> member = service.meetingMemList(volVO);
-		model.addAttribute("member",member);
-		
-		volVO.setAppCode("h01");
-		List<VolMemVO> whobo = service.meetingMemList(volVO);
-		model.addAttribute("whobo",whobo);
-
-		List<VolActVO> after = new ArrayList<>();
+	    List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		Date today = new Date();
 		
-		for(VolActVO vo : list) {
+	    for(VolActVO vo : list) {
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
 			}else {
@@ -412,7 +413,15 @@ public class MeetingController {
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		
+	    volVO.setAppCode("h02");
+	    List<VolMemVO> member = service.meetingMemList(volVO);
+		model.addAttribute("member",member);
+		System.out.println("member"+member);
 		
+		volVO.setAppCode("h01");
+		List<VolMemVO> whobo = service.meetingMemList(volVO);
+		model.addAttribute("whobo",whobo);
+		System.out.println("whobo"+whobo);
 		return "meeting/managerInfo";
 	}
 	
@@ -490,14 +499,18 @@ public class MeetingController {
 	
 	@PostMapping(value="updateMeeting",consumes = "multipart/form-data")
 	@ResponseBody
+	@Transactional
 	public int updateMeeting(VolunteerVO vo,HttpSession session,
 						@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles,@RequestParam Integer volId) throws IOException {
 		if(uploadfiles!=null) {
+			System.out.println("여기 오낭");
+			service.deleteFile(volId);
 			int codeNo = volId;
 			String code = "p09";
-			service.deleteFile(volId);
-			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"));
+			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
 		}
+		System.out.println("durl!!"+uploadfiles);
 		return service.updateMeeting(vo);
 	};
 	

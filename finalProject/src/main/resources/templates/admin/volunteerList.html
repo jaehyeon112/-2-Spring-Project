@@ -108,8 +108,8 @@ function search2(key){
 	            <div class="card overflow-hidden rounded-2">
 	              <div class="position-relative">
 	              <a th:href="@{meetings(volId=${meet.volId})}" target='_blank'>
-	                <img th:if="${meet.filePath}!=null" th:src="@{${meet.filePath}}" onError="this.src='donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
-					<img th:if="${meet.filePath}==null" src="donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px">
+	                <img th:if="${meet.filePath}!=null" th:src="@{${meet.filePath}}" onError="this.src='../donation/board/img/fruite-item-5.jpg'" class="card-img-top rounded-0" alt="..." style="height:200px">
+					<img th:if="${meet.filePath}==null" src="../donation/board/img/fruite-item-5.jpg"class="card-img-top rounded-0" alt="..." style="height:200px">
 	              </a>
 	              </div>
 	              <div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;background-color:#ffb524">

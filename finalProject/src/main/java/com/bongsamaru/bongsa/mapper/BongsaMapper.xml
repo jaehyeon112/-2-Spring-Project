@@ -15,7 +15,7 @@
 	            REC_PERIOD,
 	            end_period,
 	            (select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') meetingCnt,
-	            select_file(vol_id,'p11') path,
+	            select_file(vol_id,'p09') path,
 	            select_sub(category) mainCategory
 	    FROM volunteer
 	    WHERE END_PERIOD > sysdate
@@ -55,7 +55,7 @@
 	            REC_PERIOD,
 	            end_period,
 	            (select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') meetingCnt,
-	            select_file(vol_id,'p11') path,
+	            select_file(vol_id,'p09') path,
 	            select_sub(category) mainCategory
 	    FROM volunteer
 	    WHERE END_PERIOD > sysdate

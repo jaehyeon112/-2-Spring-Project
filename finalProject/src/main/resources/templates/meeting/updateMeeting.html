@@ -118,7 +118,6 @@ width: 20%;
 	    let todayDate = new Date().toISOString().substring(0, 10);
 	    $('input[name=endPeriod]').prop("min", todayDate);
 	});
-
 	function updateMeeting(){
 		let meetName = $('[name="meetName"]');
 		let meetPurp = $('[name="meetPurp"]');
@@ -160,6 +159,10 @@ width: 20%;
 	            formData.append('uploadfiles', fileInput.files[i]);
 	        }
 	    });
+	    document.querySelectorAll('form[name="insertMeeting"] input').forEach(function(input) {
+	        console.log(input.name + ': ' + input.value);
+	    });
+	    
 	    $.ajax({
 			url: '/updateMeeting',
 			type: 'POST',
@@ -167,6 +170,7 @@ width: 20%;
 			contentType: false,
 	        processData: false,
 			success: function (result) {
+				console.log(result);
 				$("#CheckModal").modal("show");
 			},
 			error: function (reject) {
