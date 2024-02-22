@@ -3,6 +3,54 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bongsamaru.mypage.mapper.MypageMapper">
+	<!-- 일일봉사내역 -->
+	<select id="getDayList" resultType="VolMemVO">
+	    SELECT 
+                a.vol_mem_id,
+                a.vol_id,
+                a.fac_id,
+                a.app_code,
+                a.app_date,
+                a.mem_id,
+                b.meet_type,
+                b.meet_name    
+        FROM vol_mem a
+        LEFT JOIN volunteer b ON a.vol_id = b.vol_id
+        WHERE a.mem_id = #{memId}
+        AND b.meet_type = 'e01'
+	</select>
+	<!-- 동아리내역 -->
+	<select id="getClubList" resultType="VolMemVO">
+	    SELECT 
+                a.vol_mem_id,
+                a.vol_id,
+                a.fac_id,
+                a.app_code,
+                a.app_date,
+                a.mem_id,
+                b.meet_type,
+                b.meet_name    
+        FROM vol_mem a
+        LEFT JOIN volunteer b ON a.vol_id = b.vol_id
+        WHERE a.mem_id = #{memId}
+        AND b.meet_type = 'e02'
+	</select>
+	<!-- 시설내역 -->
+	<select id="getFacList" resultType="VolMemVO">
+	    SELECT 
+                a.vol_mem_id,
+                a.vol_id,
+                a.fac_id,
+                a.app_code,
+                a.app_date,
+                a.mem_id,
+                b.meet_type,
+                b.meet_name    
+        FROM vol_mem a
+        LEFT JOIN volunteer b ON a.vol_id = b.vol_id
+        WHERE a.mem_id = #{memId}
+        AND b.meet_type = 'e03'
+	</select>
 	<!-- 마음온도 조회 -->
 	<select id="getHeart" resultType="Double">
 		    SELECT sum(temp_change) as tempChange
@@ -116,4 +164,6 @@
 						,#{tempChange}
 					 )
 	</insert>
+	
+	
 </mapper>
