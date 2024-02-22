@@ -414,4 +414,12 @@
 			#{volId}
 		)
 	</insert>
+	<insert id="insertVolActMem" parameterType="VolMemVO">
+		insert into vol_act_mem
+		values(
+			VOL_ACT_MEM_SEQ.nextval,
+			#{volActId},
+			#{memId}
+		)
+	</insert>
 </mapper>

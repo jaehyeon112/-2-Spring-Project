@@ -527,4 +527,10 @@ public class MeetingController {
 		return service.insertTag(vo);
 	}
 	
+	@PostMapping("insertvolActMem")
+	@ResponseBody
+	public int insertvolActMem(VolMemVO vo) {
+		return service.insertVolActMem(vo);
+	}
+	
 }
