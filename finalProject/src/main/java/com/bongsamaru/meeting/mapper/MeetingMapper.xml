@@ -287,6 +287,7 @@
 			,VOL_ID
 			,APP_DATE
 			,APP_REASON
+			,APP_code
 			,MEM_ID
 			,(select file_path 
 			from files 
