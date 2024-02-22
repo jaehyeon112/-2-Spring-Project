@@ -415,7 +415,7 @@
                          <div class="info-item"> ▫️ 목표금액 : <strong><span th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></span>  </strong></div> 
                           
                          <p class="mb-4">▫️ 기간   <br> <span th:text=" ' ' + ${#dates.format(dona.recPeriod, 'yyyy년MM월dd일')} + ' ~ ' + ${#dates.format(dona.endPeriod, 'yyyy년MM월dd일')}"></span></p>
-                         <p class="mb-4"><strong><span th:text="${dona.dday}"></span></strong>일 남았습니다.</p>
+                         <p class="mb-4"><strong><span th:if="${dona.recStat} == '1'" th:text="${dona.dday} + '일 남았습니다.'"></span></strong></p>
                          
                          
                          

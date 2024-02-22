@@ -302,7 +302,7 @@ public class DonaController {
 	// 기부신청폼
 	@GetMapping("/applyform")
 	public String openapplyform(Model model) {
-		return "donation/forDonaform";
+		return "donation/forDonaForm";
 	}
 	
 	@PostMapping("/applydona")
