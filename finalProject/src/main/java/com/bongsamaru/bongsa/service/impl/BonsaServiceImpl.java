@@ -94,7 +94,6 @@ public class BonsaServiceImpl implements BongsaService {
 	
 	public List<BongsaDTO> getVolTagDTO(String type){
 		List<VolunteerVO> volunteers = bongsaMapper.allVol(type);			
-	    System.out.println(volunteers);
 	    List<TagVO> allTags = adminMapper.tagList(null);
 	    Map<Integer, List<TagVO>> tagsByVolunteer = allTags.stream()
 	            .collect(Collectors.groupingBy(TagVO::getVolId));

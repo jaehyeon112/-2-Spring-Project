@@ -27,6 +27,10 @@ public class UserSuccessHandler implements AuthenticationSuccessHandler {
 		        request.getSession().setAttribute("Role", user.getUserVO().getMemStat());
 		        request.getSession().setAttribute("profile", user.getUserVO().getProfile());
 		        System.out.println(user.getUserVO().getProfile());
-		        response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트
+		        if (request.getSession().getAttribute("prevPage") != null) {
+		        	response.sendRedirect((String) request.getSession().getAttribute("prevPage"));
+		        }else {
+		        	response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트		        	
+		        }
         }
     }

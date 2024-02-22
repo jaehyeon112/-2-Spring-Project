@@ -118,7 +118,6 @@ width: 20%;
 	    let todayDate = new Date().toISOString().substring(0, 10);
 	    $('input[name=endPeriod]').prop("min", todayDate);
 	});
-	alert([[${session.id}]])
 	function updateMeeting(){
 		let meetName = $('[name="meetName"]');
 		let meetPurp = $('[name="meetPurp"]');
