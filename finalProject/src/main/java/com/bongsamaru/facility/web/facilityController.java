@@ -356,7 +356,7 @@ public class facilityController {
 		
 		
 		  try { 
-			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
+			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId(),1);
 		  }catch (IOException e) {
 			  e.printStackTrace(); 
 		   }

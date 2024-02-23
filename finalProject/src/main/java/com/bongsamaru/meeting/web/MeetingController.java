@@ -511,7 +511,7 @@ public class MeetingController {
 		if(uploadfiles!=null) {
 			int codeNo = vo.getVolId();
 			String code = "p09";
-			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"),0);
 		}
 		//모임장등록
 		VolMemVO memVO = new VolMemVO();
@@ -542,7 +542,7 @@ public class MeetingController {
 			service.deleteFile(volId);
 			int codeNo = volId;
 			String code = "p09";
-			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"),0);
 			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
 		}
 		System.out.println("durl!!"+uploadfiles);
