@@ -154,8 +154,15 @@ public class MeetingController {
 	@GetMapping("findMember")
 	@ResponseBody
 	public int findMember(VolMemVO vo,@RequestParam Integer volId,@RequestParam(required = false) String memId
-							,@RequestParam(required = false) String appCode,@RequestParam(required = false) Integer volActId) {
+							,@RequestParam(required = false) String appCode) {
 		return service.findMember(vo);
+	}
+	
+	//레이아웃에서 아작스로 받기
+	@GetMapping("chamMem")
+	@ResponseBody
+	public int chamMem(VolMemVO vo,@RequestParam(required = false) Integer volActId,@RequestParam(required = false) String memId) {
+		return service.chamMem(vo);
 	}
 	
 	@GetMapping("meetingInfoPage")
@@ -379,13 +386,21 @@ public class MeetingController {
 		List<VolMemVO> MemVolActList = service.MemVolActList(volId, (String) session.getAttribute("userId"));
 		model.addAttribute("MemVolActList",MemVolActList);
 		
-		System.out.println("여기!!!"+session.getAttribute("userId"));
 		req.getSession().setAttribute("id",volId);
 		List<VolMemVO> cnt = service.volCnt(vo);
 		if(cnt.size()!=0) {
 			model.addAttribute("cnt",cnt.get(0).getCnt());
 		}else {
 			model.addAttribute("cnt",0);
+		}
+		
+		Date today = new Date();
+		for(VolMemVO volmemVO : MemVolActList) {
+			if(volmemVO.getVolDate().compareTo(today) >= 0) {
+				volmemVO.setBigo("after");
+			}else {
+				volmemVO.setBigo("before");
+			}
 		}
 		
 		vo.setAppCode("h02");
