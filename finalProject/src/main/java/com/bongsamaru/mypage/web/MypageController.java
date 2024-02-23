@@ -24,6 +24,7 @@ import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
 import com.bongsamaru.user.service.UserDetailVO;
+import com.bongsamaru.user.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -43,6 +44,9 @@ public class MypageController {
 	 @Autowired
 	 MypageService mypageService;
 	
+	 @Autowired
+	 UserService userService;	
+	 
 	 /**
 	  *  마이페이지 마음온도,기부횟수,기부금액,프로필 리스트
 	  * @param model
@@ -170,12 +174,13 @@ public class MypageController {
 	 @ResponseBody
 	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO,
 			 									 @RequestParam(value = "files", required = false) MultipartFile[] files,
-			 									 Authentication authentication, HttpSession session) {
+			 									 HttpSession session) {
 		 log.info(files);
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
-	    	 UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
-	    	 session.setAttribute("propfile", user.getUserVO().getProfile());
+	    	 
+	    	 String profile = userService.findInfo(userVO.getMemId());
+	    	 session.setAttribute("profile", profile);
 	    	 return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
 	         
 	     } else {

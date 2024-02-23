@@ -13,17 +13,39 @@
     </head>
     <body>
 	<div th:fragment="banner">
-         <section class="banner-home" style="height:500px; background-size:cover;background-image: url('banner/봉사.png');
+         <section class="banner-home" style="height:500px; background-size:cover;background-image: url('banner/챌린지.png');
      ">
-        <div class=" d_flex align-items-center" style="min-height: 800px;">
+        <div class=" d_flex align-items-center" style=" min-height: 800px;">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0"
-                data-background=""></div>
-            <div class="container" style="margin-bottom:300px;">
+                data-background="">
+                
+                </div>
+            <div class="container" style="text-align:center; margin-bottom:300px;">
+                <p id="title" style="font-size:40px; font-weight: 700; margin-bottom:50px;">여기</p>
+                <p id="subTitle" style="font-size:22px; font-weight: 700">여기</p>
                 <div  style="color:#fff; "class="banner_content text-center">
                 </div>
             </div>
         </div>
     </section>
+<script>
+    window.onload = function() {
+        // 현재 URL의 경로만 추출 (예: '/daily')
+        const path = window.location.pathname;
+
+        // 경로에 따라 조건 분기
+        if(path.includes('/daily')) {
+            document.querySelector('#title').textContent = '일일 봉사';
+            document.querySelector('#subTitle').textContent = '딱 하루! 만나 봉사하는 일일 봉사';
+        } else if(path.includes('/group')) {
+            document.querySelector('#title').textContent = '동아리';
+            document.querySelector('#subTitle').textContent = '꾸준한 정기모임을 통해 봉사하는 동아리';
+        } else if(path.includes('/FacilityVol')) {
+            document.querySelector('#title').textContent = '시설 봉사';
+            document.querySelector('#subTitle').textContent = '시설에 직접 가서 봉사하는 시설 봉사';
+        }
+    };
+</script>
    </div>
     </body>
 </html>
