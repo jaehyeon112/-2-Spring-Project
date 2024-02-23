@@ -65,8 +65,10 @@
 			           		type: 'GET',
 			           		processData: false,
 			           		contentType: false,
-			           		success: function(data) {
-			           			cateNo = data;
+			           		success: function(result) {
+			           			console.log(result);
+			           			console.log("??");
+			           			cateNo = result;
 			           		},
 			           		error: function(e) {
 			           			console.log('실패');
@@ -84,7 +86,7 @@
 						    		const formData = new FormData();
 						        	formData.append('uploadFiles', blob);
 						        	formData.append("code", "p13")
-						           	formData.append("codeNo", data);
+						           	formData.append("codeNo", cateNo);
 				           			$.ajax({
 						           		url: '/uploadsAjax',
 						           		type: 'POST',
