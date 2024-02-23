@@ -1092,7 +1092,7 @@
 						success: function (data) {
 							checkNum = data;
 							console.log('번호', checkNum)
-							// 여기에 인증번호 옆에 띄우기
+							$('#phoneCheckError').addClass('hidden');
 							$('#authCheck').parent().removeClass('hidden')
 							$('#phoneSuccess').removeClass('hidden');
 						}
@@ -1445,7 +1445,7 @@
 			$('#emailAuthCheckBnt').on('click', function () {
 				let verificationCode = $("#emailAuthCheck").val();
 				let recipientEmail = $("#emailCheck").val();
-
+		
 
 				if (verificationCode == "") {
 					return;

@@ -160,8 +160,7 @@ public class DonaController {
 		
 		//후기글
 		DonaVO rev = donaService.getDonaReview(donId);
-		System.out.println("======================");
-		System.out.println(rev);
+	
 		model.addAttribute("rlist", rev);
 		
 		// 랜덤
@@ -361,21 +360,13 @@ public class DonaController {
 		return "ok";
 	}
 
+
+	
 	/**
 	 * 
 	 * @param model
 	 * @return 후기작성 폼으로 이동
 	 */
-	// 후기폼으로 GO 이걸로 해야됨! 
-//	@GetMapping("/reviewform")
-//	public String openRevform(@RequestParam Integer donId, @RequestParam String facId, Model model) {
-//
-//		model.addAttribute("donId", donId);
-//		model.addAttribute("facId", facId);
-//		return "donation/reviewform";
-//	}
-	
-	////임시
 	@GetMapping("/reviewform")
 	public String openRevform( Model model) {
 
@@ -411,12 +402,7 @@ public class DonaController {
 	public int registerReview(DonaVO donaVO,
 			 Model model) {
 		donaService.insertReview(donaVO);	
-//		Integer revId = donaVO.getDonRevId();
-//		model.addAttribute(revId);
-		
-		//int codeNo = donaVO.getDonId();
-		//String code = "p07";
-		//fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+
 
 		return donaVO.getDonRevId();
 	}
@@ -430,16 +416,5 @@ public class DonaController {
 		return "영수증등록완료";
 	}
 	
-					// 템플릿 놔둔곳... 입니다.. (삭제)
-					// 기부신청폼22
-					@GetMapping("/applyform2")
-					public String openapplyform2(Model model) {
-						return "donation/applyDona";
-					}
 					
-					// 일단-모달창
-					@GetMapping("/extmodal")
-					public String openModal(Model model) {
-						return "donation/extension";
-					}
 }

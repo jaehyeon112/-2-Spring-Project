@@ -19,4 +19,5 @@ public class BoardVO {
 	private Integer RN;
 	
 	private String commContent;
+
 }
