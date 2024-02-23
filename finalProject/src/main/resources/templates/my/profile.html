@@ -358,6 +358,7 @@ $(document).ready(function() {
             success: function(response) {
                 // 성공적으로 업데이트되었을 때의 동작
                 alert("정보가 성공적으로 수정되었습니다.");
+                window.location.href = "/my";
             },
             error: function(xhr, status, error) {
                 // 업데이트 중에 오류가 발생했을 때의 동작
