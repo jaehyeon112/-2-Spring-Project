@@ -153,8 +153,9 @@ public class MeetingController {
 	//레이아웃에서 아작스로 받기
 	@GetMapping("findMember")
 	@ResponseBody
-	public int findMember(@RequestParam Integer volId,@RequestParam(required = false) String memId,@RequestParam(required = false) String appCode) {
-		return service.findMember(volId,memId,appCode);
+	public int findMember(VolMemVO vo,@RequestParam Integer volId,@RequestParam(required = false) String memId
+							,@RequestParam(required = false) String appCode,@RequestParam(required = false) Integer volActId) {
+		return service.findMember(vo);
 	}
 	
 	@GetMapping("meetingInfoPage")
@@ -191,6 +192,21 @@ public class MeetingController {
       return "meeting/volBoardList";
    }
    
+ //봉사게시판 정보
+   @GetMapping("volActBoardInfo")
+   public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
+      VolActVO info = service.volActBoardInfo(volActId);
+      model.addAttribute("info",info);
+      req.getSession().setAttribute("id",volId);
+      //모임의 방장 아이디
+      VolunteerVO vo = service.meetingInfo(volId);
+      model.addAttribute("meeting",vo.getMemId());
+      Date today = new Date();
+      model.addAttribute("after",info.getVolDate().compareTo(today)>0);
+      
+      return "meeting/volActInfo";
+   }
+   
    //봉사게시판 작성폼
    @GetMapping("insertVolActPage")
    public String insertVolActPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
@@ -217,19 +233,6 @@ public class MeetingController {
       return service.findVolActNo();
    }
    
-   //봉사게시판 정보
-   @GetMapping("volActBoardInfo")
-   public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
-      VolActVO info = service.volActBoardInfo(volActId);
-      model.addAttribute("info",info);
-      req.getSession().setAttribute("id",volId);
-      //모임의 방장 아이디
-      VolunteerVO vo = service.meetingInfo(volId);
-      model.addAttribute("meeting",vo.getMemId());
-      
-      return "meeting/volActInfo";
-   }
-	   
 	//자유게시판
 	@GetMapping("freeBoardList")
 	   public String freeBoardList(PageVO vo,FreeBoardVO freeVo, Model model,HttpServletRequest req,@RequestParam Integer volId,Principal prin
