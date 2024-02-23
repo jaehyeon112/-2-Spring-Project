@@ -393,11 +393,11 @@ function extendDeadline() {
 }
 
 
-// Function to open the alert modal
+// open the alert modal
 function openAlertModal(msg) {
-    // Set the alert message dynamically
+    
     document.getElementById("alertMessage").innerText = msg;
-    // Open the alert modal
+    
     $("#alertModal").modal("show");
 }
 
@@ -431,9 +431,10 @@ function openReviewForm(button) {
 	
 	// 후기글이 존재하면 이미 후기글이 존재한다고 경고창 띄우기
 	var revStat = button.getAttribute("data-hasrev");
+	console.log(typeof(revStat));
 	console.log("revStat:", revStat); // 콘솔에 revStat 출력
 
-	if(revStat === 1 ){
+	if(revStat === '1' ){
 		openAlertModal("이미 후기글을 작성하였습니다.");
 		return;
 	} else {
