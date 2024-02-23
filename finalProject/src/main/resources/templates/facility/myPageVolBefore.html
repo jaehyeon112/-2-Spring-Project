@@ -352,7 +352,7 @@ function showList(id) {
 		       for(let i=0; i<result.length; i++){
 		    	   var date = new Date(result[i].appDate);
 		    	   console.log(result[i]);
-		    	   var appCodeText = result[i].appCode == 0 ? '승인 전' : '승인완료';
+		    	   var appCodeText = result[i].appCode == 'h01' ? '승인 전' : '승인완료';
 				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		    	   $("#showTableBody").append( 
 		                   `<tr id=${[i]}><td>${result[i].memId}</td>
