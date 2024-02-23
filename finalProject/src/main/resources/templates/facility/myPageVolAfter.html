@@ -147,7 +147,9 @@
 var volActId='';
 window.onload = function() {
     // 봉사 후기가 작성되었는지 확인
+
 	 volActId = $('#volActId').data('vol-act-id');
+
 	   console.log(volActId);
   		    $.ajax({
   		        url: '/getFacRevCheck',

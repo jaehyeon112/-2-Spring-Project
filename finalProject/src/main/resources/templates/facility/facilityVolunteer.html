@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{facility/facilitylayout}">
+ layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
 <title>시설봉사</title>
 </head>
 <body>
 <section layout:fragment="content">
-<div class="facilities_item">
+<div class="container">
+<div th:insert="~{banner/empty::banner}"></div>
+<div th:insert="~{facility/facilityNav::nav}"></div>
+<div class="facilities_item ">
 <h3 class="title_color section_title text-center">해왔던 봉사들..</h3>
 <div class="row mb_30">
 <th:block th:each="volunteerF:${volFList}">
@@ -30,7 +33,9 @@
                     </div>
                 </div> 
 </th:block>
-  <th:block th:if="${#lists.size(volunteerF)}!=0"> 
+
+
+<th:block th:if="${volunteerF != null and #lists.size(volunteerF) != 0}">
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -77,7 +82,7 @@
                     </div>
                 </div> 
 </th:block>
-  <th:block th:if="${#lists.size(volunteerI)}!=0">
+  <th:block th:if="${ volunteerI != null && #lists.size(volunteerI)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
@@ -100,6 +105,7 @@
     </ul>
 </nav>
 </th:block>
+</div>
 </div>
 </section>
 </body>

@@ -184,6 +184,8 @@
 		    va.vol_date BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)
 		GROUP BY 
 		    act.mem_id, m.mem_nick
+		ORDER BY count desc
+			
 	</select>
 	
 	<select id="CountAlarm" resultType="int">

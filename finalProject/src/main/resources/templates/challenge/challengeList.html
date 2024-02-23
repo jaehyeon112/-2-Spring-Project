@@ -63,7 +63,7 @@ border: double 2px solid #689f38;
     </div>
     <div class="col-md-5">
       <div class="card-body">
-       
+
       <div th:if="${#dates.format(challenge.endDate, 'yyyy-MM-dd') > #dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     <div class="rounded-circle action-badge" style="border: solid 1px; border-radius: 50%;  background-color: #689f38;">
         <p>행동중</p>
@@ -76,7 +76,7 @@ border: double 2px solid #689f38;
 </div>
 <div th:if="${#dates.format(challenge.endDate, 'yyyy-MM-dd') == #dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     <div class="rounded-circle action-badge" style="border: solid 1px; border-radius: 50%;  background-color: orange;">
-        <p>마감임박</p>
+        <p>오늘종료</p>
     </div>
 </div>
 		<br>
