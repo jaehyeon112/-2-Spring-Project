@@ -33,6 +33,6 @@ public class VolActVO {
 	private Integer volZip;
 	private String path;
 	private Integer rn;
-	private String volZip2; 
+	private String volZip2;
 
 }

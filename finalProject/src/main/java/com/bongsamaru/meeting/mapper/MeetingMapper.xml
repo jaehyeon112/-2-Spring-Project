@@ -308,6 +308,12 @@
 		and mem_id = #{memId}
 		and app_code = #{appCode}
 	</select>
+	<select id="chamMem" resultType="int">
+		select count(*) 
+		from vol_act_mem 
+		where mem_id = #{memId}
+		and vol_act_id = #{volActId}
+	</select>
 	<!-- 회원별 봉사활동한 리스트 -->
 	<select id="MemVolActList" resultType="VolMemVO">
 		select m.vol_act_id,a.title,a.vol_date
@@ -351,6 +357,14 @@
 		select count(mem_id) cnt 
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
+	</select>
+	<select id="volReviewCnt" resultType="VolActReviewVO">
+		select count(*) cnt,review_id
+		from vol_review 
+		where vol_id=#{volId}
+		and vol_act_id=#{volActId}
+		and writer=#{writer}
+		 group by review_id
 	</select>
 	
 	<!-- 회원 상태변경 -->

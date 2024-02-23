@@ -25,12 +25,14 @@ public class UserSuccessHandler implements AuthenticationSuccessHandler {
 		        UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
 		        request.getSession().setAttribute("userId", user.getUsername());
 		        request.getSession().setAttribute("Role", user.getUserVO().getMemStat());
-		        System.out.println(user.getUserVO().getMemStat()+"야야야야야");
-		      
+		        System.out.println(user.getUserVO().getMemStat());
 		        request.getSession().setAttribute("profile", user.getUserVO().getProfile());
 		        System.out.println(user.getUserVO().getProfile());
 		        if (request.getSession().getAttribute("prevPage") != null) {
 		        	response.sendRedirect((String) request.getSession().getAttribute("prevPage"));
+		        }else if(user.getUserVO().getMemStat().equals("m01")) {
+		        	response.sendRedirect("/AdminMain");
+		        	System.out.println("관리자 들어오나");
 		        }else {
 		        	response.sendRedirect("/"); // 사용자를 홈 페이지로 리다이렉트		        	
 		        }
