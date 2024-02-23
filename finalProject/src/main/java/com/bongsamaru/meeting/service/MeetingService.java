@@ -25,6 +25,7 @@ public interface MeetingService {
 	public List<VolActVO> volActReviewListPaging(PageVO pageVO);
 	public int volActReviewListCnt(VolActReviewVO vo);
 	public int findMember(VolMemVO vo);
+	public int chamMem(VolMemVO vo);
 	public String findFile(String code,Integer codeNo);
 	public int insertBoard(FreeBoardVO vo);
 	public int findBoardNo();

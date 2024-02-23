@@ -201,4 +201,9 @@ public class MeetingServiceImpl implements MeetingService{
 	public int insertVolActMem(VolMemVO vo) {
 		return mapper.insertVolActMem(vo);
 	}
+
+	@Override
+	public int chamMem(VolMemVO vo) {
+		return mapper.chamMem(vo);
+	}
 }

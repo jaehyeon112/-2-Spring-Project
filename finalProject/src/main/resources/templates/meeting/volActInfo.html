@@ -133,7 +133,7 @@
 						    $("#confimModal").modal("hide");
 						});
 						
-						$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02&volActId='+[[${info.volActId}]])
+						$.ajax('../chamMem?memId=[[${session.userId}]]&volActId='+[[${info.volActId}]])
 						.done(result => {
 							const abd = [[${after}]]
 							if(result==1 || abd==false){
