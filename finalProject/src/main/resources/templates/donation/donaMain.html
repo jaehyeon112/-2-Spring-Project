@@ -114,18 +114,7 @@
 	
 	<section layout:fragment="content">
 	 <div th:insert="~{banner/dona::banner}"></div>
-	<!-- 배너test 
-		<section class="breadcrumb_area blog_banner_two">
-					<div class="overlay bg-parallax" data-stellar-ratio="0.8"
-						data-stellar-vertical-offset="0" data-background=""
-						style="transform: translateY(0px);"></div>
-					<div class="container">
-						<div class="page-cover text-center">
-							<h2 class="page-cover-tittle f_48"> 기부</h2>
-		
-						</div>
-					</div>
-		</section>-->
+	
 
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5"  >
@@ -282,6 +271,8 @@
     <script th:inline="javascript">
     
     $(document).ready(function () {
+
+
     	mainform.donRegApp.value;
     	   // URL에서 쿼리 파라미터 값 가져오기
         var urlParams = new URLSearchParams(window.location.search);

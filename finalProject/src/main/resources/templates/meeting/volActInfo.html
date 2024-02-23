@@ -74,6 +74,22 @@
 						        </div>
 						    </div>
 						 </div>
+						<!-- 모달창 -->
+						<div class="modal fade" id="actVol" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+						    <div class="modal-dialog" role="document">
+						        <div class="modal-content">
+						            <div class="modal-header">
+						                <h5 class="modal-title" id="deleteConfirmationModalLabel">참여 확인</h5>
+						            </div>
+						            <div class="modal-body">
+						                <p>참여되었습니다!</p>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" class="btn btn-secondary" id="actVolBtn" data-dismiss="modal" aria-hidden="false">확인</button>
+						            </div>
+						        </div>
+						    </div>
+						 </div>
 						 
 					<script>
 						function decodeHtml(html) {
@@ -117,9 +133,10 @@
 						    $("#confimModal").modal("hide");
 						});
 						
-						$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02')
+						$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02&volActId='+[[${info.volActId}]])
 						.done(result => {
-							if(result==0){
+							const abd = [[${after}]]
+							if(result==1 || abd==false){
 								$('#cham').css('display','none')
 							}else{
 								$('#cham').css('display','block')
@@ -128,8 +145,23 @@
 						.fail(err => console.log(err));
 						
 						function withVolAct(){
-							alert('처리하기')
+							$.ajax({
+				           		url: '../insertvolActMem?volActId='+[[${info.volActId}]]+'&memId=[[${session.userId}]]',
+				           		type: 'POST',
+				           		processData: false,
+				           		contentType: false,
+				           		success: function(data) {
+				           			$("#actVol").modal("show");
+				           		},
+				           		error: function(e) {
+				           			console.log('실패');
+				           		}
+				           	});
 						}
+						
+						$("#actVolBtn").on('click',function () {
+							$("#actVol").modal("hide");
+						});
 					</script>
 				</div>
 			</div>

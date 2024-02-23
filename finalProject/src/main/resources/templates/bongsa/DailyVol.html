@@ -183,6 +183,7 @@
 </div>
 <script th:inline="javascript">
 $(document).ready(function() {
+	mss.scrollIntoView();
 	 $('#searchKeyword').keypress(function(event) {
 	        // 엔터 키 코드는 13입니다.
 	        if (event.which == 13) {

@@ -42,7 +42,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		</div>
 		<!-- TUI 에디터 JS CDN -->
 		<!-- 모달창 -->
-<!-- 		<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+		<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
 		    <div class="modal-dialog" role="document">
 		        <div class="modal-content">
 		            <div class="modal-header">
@@ -57,7 +57,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		            </div>
 		        </div>
 		    </div>
-		 </div> -->
+		 </div> 
 		 
 
 <script th:inline="javascript">
@@ -85,10 +85,10 @@ $.ajax({
 		placeholder : "내용을 입력하세요",
 		hooks: {
 	    	addImageBlobHook: (blob, callback) => {
-	    		let url = "http://localhost:8585"
+	    		
 	    		const formData = new FormData();
 	        	formData.append('uploadFiles', blob);
-	        	formData.append("code", "p15")
+	        	formData.append("code",  b"p15")
           			formData.append("codeNo", cateNo);
           			$.ajax({
 	           		url: '/uploadsAjax',
@@ -97,9 +97,9 @@ $.ajax({
 	           		contentType: false,
 	           		data: formData,
 	           		success: function(datas) {
-	           			url = url + datas;
-	           			url = url.replace(/\\/g, '/')
-	           			callback(url);
+	           			
+	           			datas = (""+datas).replace(/\\/g, '/');
+	           			callback(datas);
 	           		},
 	           		error: function(e) {
 	           			callback('image_load_fail', '사진을 읽어들일 수가 없습니다.');

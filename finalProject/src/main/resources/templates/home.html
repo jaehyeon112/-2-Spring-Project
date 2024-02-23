@@ -162,7 +162,7 @@
 											</div>
 
                                             <div class="d-flex justify-content-center align-items-center flex-lg-wrap" >
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
+                                                <a th:href="@{/fInfo/facilityInfo(facId=${dona.facId})}" class="btn border border-secondary rounded-pill px-3 text-dark mx-auto"><span th:text="${dona.facilityName}" style="color: black;">명 참여</span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,8 +172,8 @@
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">일일봉사</span><span class="bottom-line" ></span></p>
        			<div class="vesitable" >
-					<div class="owl-carousel daily-carousel  vegetable-carousel justify-content-center">
-					    <div th:each="day : ${daily}" class="item">
+					<div class="owl-carousel daily-carousel justify-content-center">
+					    <div th:each="day,index : ${daily}" class="item">
 					        <div class="card overflow-hidden rounded-2" style="margin-bottom: 20px;">
 					            <div class="position-relative">
 					                <a class="cur" th:onclick="newMeet([[${day.vol.volId}]])"><img th:src="@{${day.vol.path}}" class="card-img-top rounded-0" onerror="this.onerror=null; this.src='/userresources/image/nonono.png';" style="height:200px;"></a>
@@ -206,8 +206,6 @@
 					        </div>
 					    </div>
 					</div>
-					
-
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">동아리</span><span class="bottom-line" ></span></p>
        		<div class="vesitable" >
@@ -250,8 +248,8 @@
 				</div> <!-- vesitable end -->
        		<p class="section-title"><span style="font-weight:700;">시설소개</span> <span class="bottom-line" ></span></p>
 	       		<div class="vesitable" >
-					<div class="owl-carousel club-carousel justify-content-center">
-	       		<th:block th:each="facility:${facilityList}" class="item" id="filteredFacilities">
+					<div class="owl-carousel donation-carousel justify-content-center">
+	       		<div th:each="facility:${facilityList}" class="item" id="filteredFacilities">
 						<div class="card" style="text-align:center">
 								<div class="card-body thumb" style="position: relative;">
 									<img th:src="${facility.filePath}" onError="this.src='../image/기본이미지.jpg'"alt="" style="width: 200px; height:180px; ">
@@ -270,7 +268,7 @@
 									<p th:text="${facility.facAddr}"></p>
 									<p style="display:none" th:text="${facility.region}" id="regions"></p>
 						</div>
-					</th:block>
+					</div>
 				</div>
 			</div>
        	</div>
@@ -279,7 +277,35 @@ $(document).ready(function(){
     // 기부 캐러셀 초기화
     $('.donation-carousel').each(function() {
         var itemCount = $(this).find('.item').length;
-        console.log(itemCount)
+        
+        $(this).owlCarousel({
+            loop: itemCount > 1,
+            margin: 10,
+            nav: itemCount > 1,
+            navText: ['<i class="fas fa-chevron-left fa-2x"></i>', '<i class="fas fa-chevron-right fa-2x"></i>'],
+            dots: false,
+            autoplay: itemCount > 1,
+            autoplayTimeout: 4000,
+            autoplayHoverPause: true,
+            stagePadding: 50,
+            slideBy: 2,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:4
+                }
+            }
+        });
+    });
+    
+    $('.fac-carousel').each(function() {
+        var itemCount = $(this).find('.item').length;
+        
         $(this).owlCarousel({
             loop: itemCount > 1,
             margin: 10,

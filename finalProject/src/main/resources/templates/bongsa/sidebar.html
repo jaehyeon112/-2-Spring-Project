@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- 마이페이지 사이드바 -->
-<div th:fragment="side">
+<div th:fragment="side" id="mss">
   <div style="background-color: #fff;
     margin-bottom: 40px;
         border-bottom: 1px solid #dcdcdc;">
@@ -36,6 +36,7 @@
       </ul>
 </div>
 <script th:inline="javascript">
+
     $('#myList a').click(function (e) {
         var href = $(this).attr('id'); // 클릭한 요소의 id 속성 값을 가져옵니다.
         window.location.href = href; // 해당 경로로 이동합니다.

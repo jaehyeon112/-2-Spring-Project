@@ -276,6 +276,8 @@ public class facilityController {
 	public List<VolMemVO> getVolunteerAppList(Model model, Integer volActId) {
 		List<VolMemVO> listApp = facilityService.getVolunteerAppList(volActId);
 		model.addAttribute("volAppList", listApp);
+		log.info(listApp);
+		log.info(volActId);
 		return listApp;
 	}
 	
