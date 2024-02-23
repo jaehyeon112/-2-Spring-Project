@@ -19,6 +19,7 @@ public class VolMemVO {
 	private String path;
 	private String volActMemId;
 	private String title;
+	private String bigo;
 	
 	private String meetName;
 }

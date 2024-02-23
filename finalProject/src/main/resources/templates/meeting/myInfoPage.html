@@ -97,7 +97,8 @@
 									 <td th:text="${st.count}">번호</td>
 									 <td><a th:text="${vol.title}" class="cur"></a></td>
 									 <td th:text="${#dates.format(vol.volDate, 'yyyy년 MMM dd일')}" ></td>
-									 <td><a th:href="@{../reviewBoardInsertPage(volId=${session.id},volActId=${vol.volActId})}"><i class="bi bi-brush"></i>작성하기</a></td>
+									 <td th:if="${vol.bigo}==before"><a th:href="@{../reviewBoardInsertPage(volId=${session.id},volActId=${vol.volActId})}"><i class="bi bi-brush"></i>작성하기</a></td>
+									 <td th:if="${vol.bigo}==after">봉사 완료 후 작성 가능</td>
 								</tr>
 							</th:block>
 						</tbody>
