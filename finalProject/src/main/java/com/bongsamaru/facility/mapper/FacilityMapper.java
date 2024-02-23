@@ -57,7 +57,7 @@ public interface FacilityMapper {
 	//봉사후기
 	public void insertVolReview(BoardVO boardVO);
 	public int updateVolReview(BoardVO boardVO);
-	public List<BoardVO> getVolReviewList(String category);
+	public List<BoardVO> getVolReviewList(String memId);
 	public BoardVO getVolReviewInfo(Integer detailCate);
 	public int findBoardNo();
 }

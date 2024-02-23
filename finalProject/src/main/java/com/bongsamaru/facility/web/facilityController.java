@@ -188,10 +188,10 @@ public class facilityController {
 									@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
 									@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		
-		int total = facilityService.getVolDonCount(principal.getName(),"0","0");
+		int total = facilityService.getVolDonCount(principal.getName(),"0","1");
 		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
-	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","0"); // 모금완료
+	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","1"); 
 	      model.addAttribute("donaList", list);
 		return "facility/myPageDona2";
 	}
@@ -412,11 +412,14 @@ public class facilityController {
 	 * @param category
 	 * @return
 	 */
-	@GetMapping("volReviewList")
-	public List<BoardVO> getNoticeOne(Model model, String category) {
-		List<BoardVO> list = facilityService.getVolReviewList("b03");
-		model.addAttribute("info",list);
-		return list;
+	@GetMapping("fInfo/volReviewList")
+	public String getNoticeOne(Model model, String memId) {
+		
+		List<BoardVO> list = facilityService.getVolReviewList(memId);
+		log.info("시설이름"+ memId);
+		model.addAttribute("list",list);
+		log.info("시설후기"+ list);
+		return "facility/reviewList";
 	}
 	/**
 	 * 봉사후기 info
@@ -426,8 +429,8 @@ public class facilityController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("volReviewInfo")
-	public String getNoticeOne(@RequestParam(name="detailCate") Integer detailCate,Model model) {
+	@GetMapping("fInfo/volReviewInfo")
+	public String getNoticeOne(Integer detailCate,Model model) {
 		BoardVO vo = facilityService.getVolReviewInfo(detailCate);
 		model.addAttribute("info",vo);
 		return "facility/volReviewInfo";
