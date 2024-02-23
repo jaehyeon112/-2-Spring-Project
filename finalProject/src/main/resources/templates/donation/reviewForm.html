@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 기부후기등록폼 </title>
+    <title>  </title>
     <link rel="stylesheet" th:href="@{/donation/form/bootstrap.min.css}">
     <!-- 다른 필요한 CSS 파일 여기에 추가 -->
     
@@ -270,7 +270,7 @@ var codeNo = 0;
    
             console.log("ajax 안에 success response " + response);
 
-            alert("등록성공!");
+          
             
             return;
         }, 
@@ -320,7 +320,7 @@ var codeNo = 0;
 					
 					success: function (applyResponse) {
 						console.log("두 번째 AJAX 성공: " + applyResponse);
-						alert("두번째 등록 성공!");
+						
 						// 성공 메시지 모달 열기
 	                    $("#successModal").modal("show");
 
@@ -380,7 +380,7 @@ var codeNo = 0;
 					
 					success: function (applyResponse) {
 						console.log("두 번째 AJAX 성공: " + applyResponse);
-						alert("두번째 등록 성공!");
+						
 						// 성공 메시지 모달 열기
 	                    $("#successModal").modal("show");
 
