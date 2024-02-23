@@ -26,5 +26,6 @@ public interface UserService {
 	public int updateAlarm(AlertVO vo);
 	public UserFacilityVO findId(String phone);
 	public String findInfo(String id);
+	public String findProfile(String id);
 	public boolean changeUserPassword(String token, String pass);
 }
