@@ -3,6 +3,8 @@ package com.bongsamaru.mypage.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -167,11 +169,15 @@ public class MypageController {
 	 @PostMapping("/updateProFile")
 	 @ResponseBody
 	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO,
-			 									 @RequestParam(value = "files", required = false) MultipartFile[] files) {
+			 									 @RequestParam(value = "files", required = false) MultipartFile[] files,
+			 									 Authentication authentication, HttpSession session) {
 		 log.info(files);
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
-	         return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	    	 UserDetailVO user = (UserDetailVO) authentication.getPrincipal();
+	    	 session.setAttribute("propfile", user.getUserVO().getProfile());
+	    	 return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	         
 	     } else {
 	         return ResponseEntity.badRequest().body("프로필 업데이트에 실패했습니다.");
 	     }
