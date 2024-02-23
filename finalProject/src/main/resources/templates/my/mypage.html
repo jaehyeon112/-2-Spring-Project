@@ -63,12 +63,21 @@
     background-color: initial;
     color: #444;
 }
+.title{
+	text-align:center;
+}
+.contenttext{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 </style>
 </head>
 <body>
 	<section layout:fragment="content">
 		<div th:insert="~{banner/empty::banner}"></div>
+			<div class="side" th:insert="~{my/sidebar::side}"></div>
 			<div class="container title">
 				<th:block th:each="item : ${list}">
 				<div class="contenttext" id="temperature" title="">
@@ -97,17 +106,7 @@
 				<span class="num_title">총 기부금</span>
 				<span class="num_total" th:text="${#numbers.formatInteger(sumAmt, 1, 'COMMA') + '원'}"></span>
 			</div>
-					<div class="a-tag-container" style="margin-bottom: 50px; margin-top: 50px;">
-					  <a href="/gibuList" class="a-tag">기부내역</a>
-					  <a href="/gibuReceipt" class="a-tag">기부영수증</a>
-					  <a href="/" class="a-tag">활동증서</a>
-					</div>
 			</div>
-					<div class="a-tag-container">
-					  <a href="/dayList" class="a-tag">일일모임</a>
-					  <a href="/clubList" class="a-tag">동아리</a>
-					  <a href="/facility" class="a-tag">봉사시설</a>
-					</div>
 			</th:block>
 			</div>
 	<script>

@@ -110,7 +110,7 @@ a {
 				        </thead>
 				        <tbody>
 				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h02'}">
-				                <td th:text="${item.meetName}"></td>
+				                <td th:text="${item.meetName}" th:onclick="meeting('[[${item.volId}]]')"></td>
 				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
 				            </tr>
 				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h02'])}">
@@ -160,26 +160,6 @@ a {
 				    </table>
 				</div>
 				<div>
-				    <h4>거절내역</h4>
-				    <table style="height : 150px;">
-				        <thead>
-				            <tr>
-				                <th style="width: 70%;">제목</th>
-				                <th style="width: 30%;">날짜</th>
-				            </tr>
-				        </thead>
-				        <tbody>
-				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h03'}">
-				                <td th:text="${item.meetName}"></td>
-				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
-				            </tr>
-				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h03'])}">
-				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
-				            </tr>
-				        </tbody>
-				    </table>
-				</div>
-				<div>
 				    <h4>탈퇴내역</h4>
 				    <table style="height : 150px;">
 				        <thead>
@@ -201,7 +181,11 @@ a {
 				</div>
 	</div>
 	<script  th:inline="javascript">
-	
+		function meeting(volId){
+			src_width = screen.availWidth*0.1;
+			src_height = screen.availHeight*0.1;
+			window.open("meetings?volId="+volId, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1400, height=800, top="+src_height+",left="+src_width+",location=no");
+		}
 	</script>
 </section>
 </body>
