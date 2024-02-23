@@ -22,4 +22,5 @@ public class VolMemVO {
 	private String bigo;
 	
 	private String meetName;
+	private String checking;
 }
