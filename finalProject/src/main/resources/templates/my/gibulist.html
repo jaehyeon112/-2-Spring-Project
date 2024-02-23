@@ -115,7 +115,7 @@ a {
 		   <tbody>
 		       <tr th:each="item : ${list}">
 		           <td class="yearCheck" th:text="${#dates.format(item.payDate, 'yyyy.MM.dd')}" style="width:100px;"></td>
-		           <td class="yearCheck" onclick="redirectToDonationDetail(`[[${item.donId}]`]" th:text="${item.title}">[[${item.title}]]</td>
+		           <td class="yearCheck" onclick="redirectToDonationDetail(`[[${item.donId}]`)" th:text="${item.title}">[[${item.title}]]</td>
 		           <td class="yearCheck" style="width:150px;">[[${#numbers.formatInteger(item.donAmt, 3, 'COMMA')}]]원<br>
 				   </td>
 				   <td style="width:30px; text-align:center;">
@@ -126,7 +126,8 @@ a {
 			   </tr>
 		   </tbody>
 		</table>
-	    <table th:class="${list.size == 0 ? 'hidden' : ''}" id="noList" style="display: none;">
+		
+	    <table th:if="${list.size > 0}" style="display:none;" id="noList">
 	    	<tbody>
 	    		<tr>
 					<td style="height: 400px;">내역이 없습니다</td>    		
@@ -161,6 +162,7 @@ a {
 	let selectOption = 'all';
     $('#gibuSelect').on('change', function(e) {
         selectOption = $(this).val();
+        console.log(selectOption,'벨류')
 
         let trElements = $("tr:has(td.yearCheck)");
 
