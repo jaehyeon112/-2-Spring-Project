@@ -498,7 +498,9 @@ INSERT INTO HEART
  		WRITE_DATE, 
  		MEM_ID, 
  		DETAIL_CATE 
- 		FROM BOARD WHERE CATEGORY='b03'
+ 		FROM BOARD 
+ 		WHERE CATEGORY='b03'
+ 		AND MEM_ID=#{memId}
 
 </select>
  <select id="getVolReviewInfo" resultType="BoardVO">

@@ -197,8 +197,8 @@ public class FacilityServiceImpl implements FacilityService {
 		}
 
 		@Override
-		public List<BoardVO> getVolReviewList(String category) {
-			return mapper.getVolReviewList(category);
+		public List<BoardVO> getVolReviewList(String memId) {
+			return mapper.getVolReviewList(memId);
 		}
 		
 

@@ -4,7 +4,7 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>자유게시판 게시글</title>
+<title>시설봉사후기</title>
 
 <!-- TUI 에디터 CSS CDN -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
@@ -28,21 +28,21 @@
 		<div class="body-wrapper">
 			<div class="container-fluid">
 				<div class="container">
-					<h2 style="text-align: center;">자유게시판</h2>
+					<h2 style="text-align: center;">봉사후기</h2>
 					<br>
 					<label>제목</label>
-	                <input th:value="${vo.title}" class='write-1' type="text" name="title" readonly>
+	                <input th:value="${list.title}" class='write-1' type="text" name="title" readonly>
 	                <hr>
 	                <label>내용</label>
 	                <div class='write-2' id="viewer"></div> 
 					<!-- 에디터를 적용할 요소 (컨테이너) -->
 					<br>
-	                <a th:href="@{../freeBoardList(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a>
+	                <!-- <a th:href="@{../freeBoardList(volId=${session.id})}" type="button" style="float: right;width:90px" class="btn btn-primary m-1">돌아가기</a> -->
 					<!-- TUI 에디터 JS CDN -->
 					<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 					<script>
 					
-						const cont = `[[${vo.content}]]`;
+						const cont = `[[${list.content}]]`;
 						const viewer = new toastui.Editor.factory({
 							  el: document.querySelector('#viewer'),
 							  viewer: true,
