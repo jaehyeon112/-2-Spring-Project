@@ -33,7 +33,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<h5 style="float:right;">총 금액 : [[${totals}]]</h5>
+		<h5 style="float:right;" th:text="'총 금액 : '+${#numbers.formatInteger(totals, 3, 'COMMA') + '원'}"></h5>
 		<nav aria-label="Page navigation example">
 		    <ul class="pagination justify-content-center">
 		        <!-- 이전 버튼 -->
