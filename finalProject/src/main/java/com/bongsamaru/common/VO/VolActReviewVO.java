@@ -8,6 +8,7 @@ import lombok.Data;
 public class VolActReviewVO {
 	private Integer reviewId;
 	private Integer volId;
+	private Integer cnt;
 	private Integer volActId;
 	private String title;
 	private String content;

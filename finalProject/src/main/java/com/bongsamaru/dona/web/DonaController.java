@@ -95,7 +95,12 @@ public class DonaController {
 	public String openDonaMainPage(DonaVO donaVO , Model model) {
 		
 		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		log.info(donaVO);
 		model.addAttribute("list", donaList);
+		for(DonaVO a : donaList) {
+			log.info(a);
+		}
+		
 //		model.addAttribute("recruitList", recruitList);
 //		model.addAttribute("completedList", completedList);
 
@@ -343,14 +348,17 @@ public class DonaController {
 			                   @RequestPart("uploadfiles") MultipartFile[] uploadfiles, 
 			                   Model model) throws IOException {
 		//기부등록
+		log.info(donaVO);
 		donaService.insertDonation(donaVO);
-
+		
+		
 		//첨부파일등록
 		int codeNo = donaVO.getDonId();
+		
 		String code = "p08";
-		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId(),1);
 
-		return "redirect:facility/myPageDona";
+		return "ok";
 	}
 
 	/**
@@ -392,7 +400,7 @@ public class DonaController {
 
 		int codeNo = donaVO.getDonId();
 		String code = "p07";
-		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId(),1);
 
 		return "후기등록성공!";
 	}

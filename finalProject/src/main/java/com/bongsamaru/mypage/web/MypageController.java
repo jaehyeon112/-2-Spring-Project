@@ -175,11 +175,11 @@ public class MypageController {
 	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO,
 			 									 @RequestParam(value = "files", required = false) MultipartFile[] files,
 			 									 HttpSession session) {
-		 log.info(files);
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
 	    	 
-	    	 String profile = userService.findInfo(userVO.getMemId());
+	    	 String profile = userService.findProfile(userVO.getMemId());
+	    	 log.info(profile);
 	    	 session.setAttribute("profile", profile);
 	    	 return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
 	         

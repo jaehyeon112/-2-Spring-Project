@@ -52,5 +52,6 @@
         	FROM files
         	WHERE code = #{code}
         	AND code_user = #{codeUser}
+        	and rownum = 1
   	</select>
   </mapper>

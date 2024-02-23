@@ -25,9 +25,9 @@ public class FileController {
     
     @PostMapping("/uploadsAjax")
     @ResponseBody
-    public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, @RequestParam(required = false, defaultValue = "0") int codeNo, String codeUser) {
+    public List<String> uploadFile(@RequestPart MultipartFile[] uploadFiles, String code, @RequestParam(required = false, defaultValue = "0") int codeNo, String codeUser, int type) {
         try {
-            return fileService.uploadFiles(uploadFiles, code, codeNo, codeUser);
+            return fileService.uploadFiles(uploadFiles, code, codeNo, codeUser, type);
         } catch (IOException e) {
             e.printStackTrace();
             return null; // 혹은 적절한 에러 메시지와 함께 응답을 반환

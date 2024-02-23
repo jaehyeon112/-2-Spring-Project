@@ -104,15 +104,16 @@ public class MeetingController {
 		model.addAttribute("today",today);
 		
 		List<VolActVO> review = service.volActReviewListPaging(pvo);
+		
 		for(VolActVO vo : review) {
-			vo.setFilePath(service.findFile("p12",review.get(0).getVolActId()));
+			vo.setFilePath(service.findFile("p12",vo.getVolActId()));
 		}
 		model.addAttribute("review",review);
 		
 		List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		for(VolActVO vo : list) {
-			vo.setFilePath(service.findFile("p11",list.get(0).getVolActId()));
+			vo.setFilePath(service.findFile("p11",vo.getVolActId()));
 			vo.setCnt(service.volActMemCnt(vo.getVolActId()));
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
@@ -384,7 +385,6 @@ public class MeetingController {
 		vo.setMemId((String) session.getAttribute("userId"));
 		pageVO.setWriter((String) session.getAttribute("userId"));
 		List<VolMemVO> MemVolActList = service.MemVolActList(volId, (String) session.getAttribute("userId"));
-		model.addAttribute("MemVolActList",MemVolActList);
 		
 		req.getSession().setAttribute("id",volId);
 		List<VolMemVO> cnt = service.volCnt(vo);
@@ -401,18 +401,28 @@ public class MeetingController {
 			}else {
 				volmemVO.setBigo("before");
 			}
+			reviewVO.setVolActId(volmemVO.getVolActId());
+			reviewVO.setVolId(volId);
+			reviewVO.setWriter((String) session.getAttribute("userId"));
+			if(service.volReviewCnt(reviewVO) == null) {
+				volmemVO.setChecking("ok");
+			}else {
+				volmemVO.setChecking("no");
+			}
 		}
+		model.addAttribute("MemVolActList",MemVolActList);
 		
 		vo.setAppCode("h02");
 		List<VolMemVO> date = service.meetingMemList(vo);
 		model.addAttribute("date",date.get(0).getAppDate());
 		
-
-		
 		int total = service.volActReviewListCnt(reviewVO);
 		pageVO = new PageVO(total, 1, 10,volId,null);
 		List<VolActVO> review = service.volActReviewListPaging(pageVO);
+		
 		model.addAttribute("review",review);
+		
+		
 		return "meeting/myInfoPage";
 	}
 	
@@ -501,7 +511,7 @@ public class MeetingController {
 		if(uploadfiles!=null) {
 			int codeNo = vo.getVolId();
 			String code = "p09";
-			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, code, codeNo,(String)session.getAttribute("userId"),0);
 		}
 		//모임장등록
 		VolMemVO memVO = new VolMemVO();
@@ -532,7 +542,7 @@ public class MeetingController {
 			service.deleteFile(volId);
 			int codeNo = volId;
 			String code = "p09";
-			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"),0);
 			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
 		}
 		System.out.println("durl!!"+uploadfiles);

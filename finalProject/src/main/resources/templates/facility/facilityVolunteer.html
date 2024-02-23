@@ -26,7 +26,7 @@
                                     
                                 </div>
                                 <h4 class="sec_h3" th:text="${volunteerF.title}" style="color:black;"></h4>
-                                <p th:text="${volunteerF.volDate}+''" style="color:black;"></p>
+                                 <p th:text="${#dates.format(volunteerF.volDate,'yyyy-MM-dd')}" style="color:black;"></p>
                                 <h6 class="date title_color" th:text="${volunteerF.location}"></h6>
                             </div>	
                         </div>
@@ -74,15 +74,15 @@
                                 <div class="tags">
                                    
                                 </div>
-                                <h4 class="sec_h3" th:text="${volunteerI.revTitle}" style="color:black;"></h4>
-                                <p th:text="${volunteerI.content}+''" style="color:black;"></p>
-                                <h6 class="date title_color" th:text="${volunteerI.writeDate}"></h6>
+                                <h4 class="sec_h3" th:text="${volunteerI.title}" style="color:black;"></h4>
+                                 <p th:text="${#dates.format(volunteerI.volDate,'yyyy-MM-dd')}" style="color:black;"></p>
+                                <h6 class="date title_color" th:text="${volunteerI.location}"></h6>
                             </div>	
                         </div>
                     </div>
                 </div> 
 </th:block>
-  <th:block th:if="${ volunteerI != null && #lists.size(volunteerI)}!=0">
+  <th:block th:if="${ volunteerI != null and #lists.size(volunteerI)}!=0">
 <nav class="blog-pagination justify-content-center d-flex">
     <ul class="pagination">
         <li class="page-item">
