@@ -358,6 +358,14 @@
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
 	</select>
+	<select id="volReviewCnt" resultType="VolActReviewVO">
+		select count(*) cnt,review_id
+		from vol_review 
+		where vol_id=#{volId}
+		and vol_act_id=#{volActId}
+		and writer=#{writer}
+		 group by review_id
+	</select>
 	
 	<!-- 회원 상태변경 -->
 	<update id="withdrawalMeeting" parameterType="VolMemVO">
