@@ -104,15 +104,16 @@ public class MeetingController {
 		model.addAttribute("today",today);
 		
 		List<VolActVO> review = service.volActReviewListPaging(pvo);
+		
 		for(VolActVO vo : review) {
-			vo.setFilePath(service.findFile("p12",review.get(0).getVolActId()));
+			vo.setFilePath(service.findFile("p12",vo.getVolActId()));
 		}
 		model.addAttribute("review",review);
 		
 		List<VolActVO> after = new ArrayList<>();
 		List<VolActVO> before = new ArrayList<>();
 		for(VolActVO vo : list) {
-			vo.setFilePath(service.findFile("p11",list.get(0).getVolActId()));
+			vo.setFilePath(service.findFile("p11",vo.getVolActId()));
 			vo.setCnt(service.volActMemCnt(vo.getVolActId()));
 			if(vo.getVolDate().compareTo(today) >= 0) {
 				after.add(vo);
@@ -153,8 +154,16 @@ public class MeetingController {
 	//레이아웃에서 아작스로 받기
 	@GetMapping("findMember")
 	@ResponseBody
-	public int findMember(@RequestParam Integer volId,@RequestParam(required = false) String memId,@RequestParam(required = false) String appCode) {
-		return service.findMember(volId,memId,appCode);
+	public int findMember(VolMemVO vo,@RequestParam Integer volId,@RequestParam(required = false) String memId
+							,@RequestParam(required = false) String appCode) {
+		return service.findMember(vo);
+	}
+	
+	//레이아웃에서 아작스로 받기
+	@GetMapping("chamMem")
+	@ResponseBody
+	public int chamMem(VolMemVO vo,@RequestParam(required = false) Integer volActId,@RequestParam(required = false) String memId) {
+		return service.chamMem(vo);
 	}
 	
 	@GetMapping("meetingInfoPage")
@@ -191,6 +200,21 @@ public class MeetingController {
       return "meeting/volBoardList";
    }
    
+ //봉사게시판 정보
+   @GetMapping("volActBoardInfo")
+   public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
+      VolActVO info = service.volActBoardInfo(volActId);
+      model.addAttribute("info",info);
+      req.getSession().setAttribute("id",volId);
+      //모임의 방장 아이디
+      VolunteerVO vo = service.meetingInfo(volId);
+      model.addAttribute("meeting",vo.getMemId());
+      Date today = new Date();
+      model.addAttribute("after",info.getVolDate().compareTo(today)>0);
+      
+      return "meeting/volActInfo";
+   }
+   
    //봉사게시판 작성폼
    @GetMapping("insertVolActPage")
    public String insertVolActPage(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req) {
@@ -217,19 +241,6 @@ public class MeetingController {
       return service.findVolActNo();
    }
    
-   //봉사게시판 정보
-   @GetMapping("volActBoardInfo")
-   public String volActBoardInfo(Principal prin,Model model,@RequestParam Integer volId,HttpServletRequest req,@RequestParam Integer volActId) {
-      VolActVO info = service.volActBoardInfo(volActId);
-      model.addAttribute("info",info);
-      req.getSession().setAttribute("id",volId);
-      //모임의 방장 아이디
-      VolunteerVO vo = service.meetingInfo(volId);
-      model.addAttribute("meeting",vo.getMemId());
-      
-      return "meeting/volActInfo";
-   }
-	   
 	//자유게시판
 	@GetMapping("freeBoardList")
 	   public String freeBoardList(PageVO vo,FreeBoardVO freeVo, Model model,HttpServletRequest req,@RequestParam Integer volId,Principal prin
@@ -374,9 +385,7 @@ public class MeetingController {
 		vo.setMemId((String) session.getAttribute("userId"));
 		pageVO.setWriter((String) session.getAttribute("userId"));
 		List<VolMemVO> MemVolActList = service.MemVolActList(volId, (String) session.getAttribute("userId"));
-		model.addAttribute("MemVolActList",MemVolActList);
 		
-		System.out.println("여기!!!"+session.getAttribute("userId"));
 		req.getSession().setAttribute("id",volId);
 		List<VolMemVO> cnt = service.volCnt(vo);
 		if(cnt.size()!=0) {
@@ -385,16 +394,35 @@ public class MeetingController {
 			model.addAttribute("cnt",0);
 		}
 		
+		Date today = new Date();
+		for(VolMemVO volmemVO : MemVolActList) {
+			if(volmemVO.getVolDate().compareTo(today) >= 0) {
+				volmemVO.setBigo("after");
+			}else {
+				volmemVO.setBigo("before");
+			}
+			reviewVO.setVolActId(volmemVO.getVolActId());
+			reviewVO.setVolId(volId);
+			reviewVO.setWriter((String) session.getAttribute("userId"));
+			if(service.volReviewCnt(reviewVO) == null) {
+				volmemVO.setChecking("ok");
+			}else {
+				volmemVO.setChecking("no");
+			}
+		}
+		model.addAttribute("MemVolActList",MemVolActList);
+		
 		vo.setAppCode("h02");
 		List<VolMemVO> date = service.meetingMemList(vo);
 		model.addAttribute("date",date.get(0).getAppDate());
 		
-
-		
 		int total = service.volActReviewListCnt(reviewVO);
 		pageVO = new PageVO(total, 1, 10,volId,null);
 		List<VolActVO> review = service.volActReviewListPaging(pageVO);
+		
 		model.addAttribute("review",review);
+		
+		
 		return "meeting/myInfoPage";
 	}
 	

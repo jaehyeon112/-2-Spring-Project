@@ -117,12 +117,12 @@
                    		    <li sec:authorize="isAuthenticated()" class="nav-item" style="padding-top:15px;">
 						        <!-- M02 역할 사용자를 위한 링크 -->
 						        <a sec:authorize="hasRole('M02')" th:href="@{/my}">
-						           <img th:src="${#authentication.principal.userVO.profile}" 
+						           <img th:src="${session.profile}" 
 						              style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
 						        </a>
 						        <!-- M03 역할 사용자를 위한 링크 -->
 						        <a sec:authorize="hasRole('M03')" th:href="@{/fac}">
-						           <img th:src="${#authentication.principal.userVO.profile}" 
+						           <img th:src="${session.profile}" 
 						              style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
 						        </a>
 						        <!-- 기타 역할 사용자를 위한 링크, 필요에 따라 추가 -->

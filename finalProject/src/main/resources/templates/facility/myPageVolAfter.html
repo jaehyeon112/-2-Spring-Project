@@ -124,7 +124,7 @@
 		    </div>
 	  </div>
   </div>				
-				
+<th:block th:if="${volList != null and #lists.size(volList)!=0}">				
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
@@ -138,7 +138,8 @@
 			</span>
 		</a></li>
 	</ul>
-</nav>	
+</nav>
+</th:block>	
 		</div>
 	</div>
 </div>

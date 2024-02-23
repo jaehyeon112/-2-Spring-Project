@@ -88,6 +88,10 @@
 	<select id="findInfo" resultType="String">
 		select usertype from userfacilityview where id = #{id}
 	</select>
+	<select id="findProfile" resultType="String">
+		select profile from userfacilityview where id = #{id}
+	</select>
+	
 	
 	<update id="updatePwd" parameterType="String">
         <choose>

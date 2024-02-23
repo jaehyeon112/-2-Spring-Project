@@ -4,6 +4,7 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
+<title>봉사마루</title>
 <style>
 table {
   border: 1px #a39485 solid;
@@ -39,7 +40,6 @@ thead {
 
 a {
   color: #73685d;
-  cursor: pointer;
 }
   
  @media all and (max-width: 768px) {
@@ -91,76 +91,102 @@ a {
   	font-size: 40px;
   }
   
-#noList {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-}
 
-#noList td {
-    font-size: 20px; /* 텍스트 크기 */
-    font-weight: bold; /* 텍스트 굵기 */
-}
 </style>
 </head>
 <body>
 <section layout:fragment="content">
 <div th:insert="~{banner/empty::banner}"></div>
 <div class="side" th:insert="~{my/sidebar::side}"></div>
-<div class="container">
-<!-- 상태를 선택할 수 있는 셀렉트 박스 -->
-	<select id="appCodeSelect" class="form-control">
-	    <option value="h01">참여내역</option>
-	    <option value="h02">신청내역</option>
-	    <option value="h03">거절내역</option>
-	</select>
-	
-	<!-- 선택한 상태에 따른 내역 표시 -->
-	<div>
-	    <table style="height : 150px;">
-	        <thead>
-	            <tr>
-	                <th style="width: 10%;">날짜</th>
-	                <th style="width: 80%;">제목</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr th:each="item : ${list}">
-	                <td class="item" th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
-	                <td class="appCode" id="itemcheck" style="display:none;" th:text="${item.appCode}"></td>
-	                <td class="item" th:text="${item.meetName}"></td>
-	            </tr>
-	        </tbody>
-	    </table>
-	    <table id="noList">
-	    	<tbody>
-	    		<tr>
-					<td id="noList" style="height: 400px; display:none;">내역이 없습니다</td>    		
-	    </table>
+  		<div class="container">
+				<div>
+				    <h4>참여중</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 70%;">제목</th>
+				                <th style="width: 30%;">날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h02'}">
+				                <td th:text="${item.meetName}" th:onclick="meeting('[[${item.volId}]]')"></td>
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h02'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
+				<div>
+				    <h4>신청내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 70%;">제목</th>
+				                <th style="width: 30%;">날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h01'}">
+				                <td th:text="${item.meetName}"></td>
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h01'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
+				<div>
+				    <h4>거절내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 70%;">제목</th>
+				                <th style="width: 30%;">날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h03'}">
+				                <td th:text="${item.meetName}"></td>
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h03'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
+				<div>
+				    <h4>탈퇴내역</h4>
+				    <table style="height : 150px;">
+				        <thead>
+				            <tr>
+				                <th style="width: 70%;">제목</th>
+				                <th style="width: 30%;">날짜</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h04'}">
+				                <td th:text="${item.meetName}"></td>
+				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
+				            </tr>
+				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h03'])}">
+				                <td colspan="3"><span class="notList">내역이 없습니다.</span></td>
+				            </tr>
+				        </tbody>
+				    </table>
+				</div>
 	</div>
-</div>
-<script th:inline="javascript">
-$('#appCodeSelect').on('change', function(e) {
-    let selectOption = $(this).val();
-    console.log(selectOption)
-
-    let trElements = $("tr:has(td)");
-    let isExist = false;
-
-    trElements.each(function() {
-        let appcode = $(this).find("td.appCode").text();
-        console.log(appcode,'확인');
-        if (appcode == selectOption) {
-            isExist = true;
-        } else {
-            $(this).css('display', 'none');
-        }
-    });
-});
-
-</script>
+	<script  th:inline="javascript">
+		function meeting(volId){
+			src_width = screen.availWidth*0.1;
+			src_height = screen.availHeight*0.1;
+			window.open("meetings?volId="+volId, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1400, height=800, top="+src_height+",left="+src_width+",location=no");
+		}
+	</script>
 </section>
 </body>
 </html>

@@ -57,8 +57,8 @@
                <div class="latest-news-item" th:each="act : ${before}">
                   <div class="bg-light rounded">
                      <div class="rounded-top overflow-hidden">
-                        <img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
-                        <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
+                        <img th:if="${act.filePath}==null" src="../image/zz.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
+                        <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../image/zz.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:230px;">
                      </div>
                      <div class="d-flex flex-column p-4">
                         <a th:onclick="location.href='volActBoardInfo?volId=[[${session.id}]]&volActId=[[${act.volActId}]]'" class="h4 cur" th:text="${act.title}"></a>
@@ -95,8 +95,8 @@
                               <div th:if="${after.size}=='0'">예정되어있는 봉사가 없습니다.</div>
                               <div class="col-lg-8" th:each="act,st : ${after}" th:if="${st.count}==1">
                                  <div class="position-relative rounded overflow-hidden">
-                                    <img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:270px;">
-                                    <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" 
+                                    <img th:if="${act.filePath}==null" src="../image/zz.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:270px;">
+                                    <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../image/zz.jpg'" 
                                        class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:270px;">
                                     <div class="position-absolute text-white px-4 py-2 bg-primary rounded" th:if="${act.category}=='f01'"
                                        style="top: 20px; right: 20px;">아동 및 청소년</div>
@@ -130,8 +130,8 @@
                                        <div class="row g-4 align-items-center">
                                           <div class="col-5">
                                              <div class="overflow-hidden rounded">
-                                                <img th:if="${act.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
-                                                <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
+                                                <img th:if="${act.filePath}==null" src="../image/zz.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
+                                                <img th:if="${act.filePath}!=null" th:src="${act.filePath}" onError="this.src='../image/zz.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:80px">
                                              </div>
                                           </div>
                                           <div class="col-7">
@@ -164,8 +164,8 @@
                         <div class="latest-news-item" th:each="review : ${review}">
                            <div class="bg-light rounded">
                               <div class="rounded-top overflow-hidden">
-                                 <img th:if="${review.filePath}==null" src="../dpdd/img/news-7.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
-                                 <img th:if="${review.filePath}!=null" th:src="${review.filePath}" onError="this.src='../dpdd/img/news-7.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
+                                 <img th:if="${review.filePath}==null" src="../image/zz.jpg" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
+                                 <img th:if="${review.filePath}!=null" th:src="${review.filePath}" onError="this.src='../image/zz.jpg'" class="img-zoomin img-fluid rounded-top w-100" alt="" style="height:255px;">
                               </div>
                               <div class="d-flex flex-column p-4">
                                  <a th:onclick="location.href='ReviewInfo?volId=[[${session.id}]]&reviewId=[[${review.reviewId}]]'" class="h4 cur" th:text="${review.title}"></a>
@@ -186,7 +186,7 @@
                                  <h4 class="mb-4">이런 모임은 어때요?</h4>
                                  <div class="row g-4" th:each="meet,st : ${choose}" th:if="${st.count}<4">
                                     <div class="col-12 rounded" style="padding:10px">
-                                       <h5><a th:text="${meet.meetName}" th:href="@{meetings(volId=${meet.volId})}" target='_blank'>동아리명</a></h5>
+                                       <h5><a class="cur" th:text="${meet.meetName}" th:onclick="newMeet([[${meet.volId}]])">동아리명</a></h5>
                                          <span th:if="${meet.region}=='z01'" style="color:gray">#서울</span>
                                          <span th:if="${meet.region}=='z02'" style="color:gray">#부산</span>
                                          <span th:if="${meet.region}=='z03'" style="color:gray">#대구</span>
@@ -248,6 +248,13 @@
             </div>
          </div>
       </div>
+      <script type="text/javascript">
+      	function newMeet(id){
+    		src_width = screen.availWidth*0.1;
+    		src_height = screen.availHeight*0.1;
+    		window.open("meetings?volId="+id, "pop", "toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=1400, height=800, top="+src_height+",left="+src_width+",location=no");
+    	}
+      </script>
       <!-- Latest News End -->
       <!-- Back to Top -->
       <a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top">
