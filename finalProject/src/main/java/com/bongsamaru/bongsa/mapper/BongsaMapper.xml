@@ -87,9 +87,10 @@ SELECT * FROM (
             VOL_DATE,
             start_Date,
             expire_Date,
+            (select count(*) from vol_act_mem a where a.vol_act_id = v.vol_act_id)as capCount,
             select_sub(vol_zip2) as volZip2,
             select_file(vol_act_id,'p14') as path
-    from vol_act
+    from vol_act v
     where fac_id is not null and expire_date > sysdate
     
     <if test="pageVO.category != null and pageVO.category != '' ">    

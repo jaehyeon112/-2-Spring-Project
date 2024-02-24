@@ -145,7 +145,7 @@
 						<br>
 	                    <span th:text="${#dates.format(fac.startDate, 'yy.MM.dd')}+' ~ '+${#dates.format(fac.expireDate, 'yy.MM.dd')}">2024-02-04 ~ 2024-09-04</span>
 	                    <br>
-	                    <span th:text="'정원 : 해야함'+${fac.cap}+'명'">정원 : 해야함</span>
+	                    <span th:text="'정원 : ' +${fac.capCount} +' / '+  ${fac.cap}">정원 : 해야함</span>
 						 <br>
 						 
 		            </div>
