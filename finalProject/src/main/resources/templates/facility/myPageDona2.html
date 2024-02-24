@@ -8,7 +8,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 <title>기부 등록</title>
  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
 <style>
-
+p{
+	font-weight:bold;
+	font-size:15px;
+}
 </style>
 </head>
 <body>
@@ -32,37 +35,37 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
 
 <div class="col-md-10 main-content container" th:if="${#authentication.principal.userVO.donApp} == 1">
-	<p onclick="openregitform()">기부등록하기</p>
+	<p onclick="openregitform()" style=" cursor: pointer; font-size:18px; color:#689f38">기부등록하기</p>
 
 		<div class="row justify-content-center hotel_booking_table" >
 					
                             <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="background-color:#689f38; text-align:center;">
                                     <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">기부제목</p>
+                                     <p style="color:black; font-size:20px">기부제목</p>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="background-color:#689f38; text-align:center;">
                                     <div class="book_tabel_item">
-                                     <p style="color:black; font-size:26px">목표금액</p>
+                                     <p style="color:black; font-size:20px">목표금액</p>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="background-color:#689f38; text-align:center;">
                                     <div class="book_tabel_item">
-                                      <p style="color:black; font-size:26px">모집기간</p>
+                                      <p style="color:black; font-size:20px">모집기간</p>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="background-color:#689f38; text-align:center;">
                                     <div class="book_tabel_item">
-                                       <p style="color:black; font-size:26px">승인상태</p>
+                                       <p style="color:black; font-size:20px">승인상태</p>
                                        
                                     </div>
                                 </div>
                            
-                        </div>
+                      
                 
                     <th:block th:each="dona:${donaList}">
-                        <div class="boking_table">
+                       
                        
               <div class="col-md-3">
                  <div class="book_tabel_item">
@@ -72,7 +75,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
              </div>
              <div class="col-md-3">
                  <div class="book_tabel_item">
-                  <p><a  th:text="${dona.goalAmt}"></a></p>
+                  <p><a  th:text="${#numbers.formatInteger(dona.goalAmt,3,'COMMA')+'원'}"></a></p>
                  
                  </div>
              </div>
@@ -84,17 +87,18 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
              </div>
              <div class="col-md-3">
                  <div class="book_tabel_item">
-                  <p><a  th:text="${dona.donRegApp}"></a></p>
+                  <p><a  th:text="${dona.donRegApp}== 'h01' ? '승인 전' : '승인완료'"></a></p>
                  
                  </div>
              </div>
-         </div>
+        
                            
                    
-                  
-               </th:block>
+               
                 </div>
-
+                   
+               </th:block>
+  </div>
                 </div>
 </div>    
 
