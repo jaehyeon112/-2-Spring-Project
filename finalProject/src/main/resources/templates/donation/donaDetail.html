@@ -613,9 +613,17 @@
     };
     
     function updateCommentSection(donId, memId) {
-        // 댓글 섹션을 비동기적으로 업데이트
-        $('#commentList').load("../donaDetail?id=" + donId + "&facId=" + memId + " #commentList");
-    }
+    	   $.ajax({
+    	      type: "GET",
+    	      url: "/donaDetail?id=" + donId + "&facId=" + memId,
+    	      success: function(response) {
+    	         $('#commentList').html($(response).find('#commentList').html());
+    	      },
+    	      error: function(error) {
+    	         console.error('댓글업데이트 실패ㅠㅠ', error);
+    	      }
+    	   });
+    	}
     
 </script>
 
