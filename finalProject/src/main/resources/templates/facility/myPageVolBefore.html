@@ -356,10 +356,10 @@ function showList(id) {
 		    	   var appCodeText = result[i].appCode == 'h01' ? '승인 전' : '승인완료';
 				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		    	   $("#showTableBody").append( 
-		                   `<tr id="${[i]}"><td>${result[i].memId}</td>
+		                   `<tr id="${result[i].memId}"><td>${result[i].memId}</td>
 		                   <td>${formattedDate}</td>
 		                   <td><button type="button" data-toggle="modal" data-target="#myModal2">신청서보기</button></td>
-						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}',${i})">수락</button></td>
+						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}')">수락</button></td>
 						   <td class="app-code-cell"> ${appCodeText}</td></tr>`
 		    		);
 		    		    
@@ -370,58 +370,60 @@ function showList(id) {
 		 }
 	});
 };
-function clickApp(volActId, memId,index){
-	// 수정
+function clickApp(volActId, memId) {
+    // 봉사 승인 AJAX 요청
     $.ajax({
-         url: '/volAppUpdate',
-         type: 'POST',
-         data: {
-             volActId: volActId,
-             memId: memId
-         },
-         success: function(result) {
-             var approvalStatus = result.approvalStatus;
-             
-             // 받아온 승인 상태로 HTML 업데이트
-             var row = document.getElementById(index); // 인덱스를 사용하여 해당 행 가져오기
-             if (row) {
-                 var statusCell = row.querySelector('.app-code-cell'); // 승인 상태 열 가져오기
-                 if (statusCell) {
-                     statusCell.innerText = approvalStatus; // 텍스트 업데이트
-                 }
-             }	
+        url: '/volAppUpdate',
+        type: 'POST',
+        data: {
+            volActId: volActId,
+            memId: memId
+        },
+        success: function(result) {
+            var approvalStatus = '승인완료'; // 승인완료로 변경
 
-         },
-         error: function(err) {
-             console.log(err);
-         }
+            // HTML 업데이트
+            var row = document.getElementById(memId);
+            if (row) {
+                var statusCell = row.querySelector('.app-code-cell');
+                if (statusCell) {
+                    statusCell.innerText = approvalStatus;
+                }
+            }
+
+            // 봉사 신청 AJAX 요청
+            var info = {
+                volActId: volActId,
+                memId: memId
+            };
+
+            $.ajax({
+                url: '/volAppInsert',
+                type: 'POST',
+                data: info,
+                success: function(result) {
+                    // 봉사 신청 성공 시 처리
+                    Swal.fire({
+                        title: "봉사승인",
+                        text: "승인되었습니다",
+                        icon: "success"
+                    });
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        },
+        error: function(err) {
+            console.log(err);
+        }
     });
-    
-    // 등록
-    let info = {
-        volActId: volActId,
-        memId: memId
-    };
-    
-    $.ajax({
-         url: '/volAppInsert',
-         type: 'POST',
-         data: info,
-         success: function(result) {
-        	 Swal.fire({
-     	 		title: "봉사승인",
-				      text: "승인되었습니다",
-				      icon: "success"
-				});
-           
-         },
-         error: function(err) {
-             console.log(err);
-         }
-    });
+}
+
+
 		
-    // location.href = 'facilityMyPage/volJoin';
-} 
+     
+
 
 
 		$(document).ready(function() {

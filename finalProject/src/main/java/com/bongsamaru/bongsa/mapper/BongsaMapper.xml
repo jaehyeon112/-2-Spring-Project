@@ -78,7 +78,8 @@
 SELECT * FROM (
     SELECT  ROWNUM rn,
             vol_act_id,
-            FAC_ID, 
+            FAC_ID,
+            (SELECT FAC_NAME FROM facility WHERE facility.fac_id = v.fac_id) AS FAC_NAME,
             select_sub(CATEGORY) as CATEGORY,
             TITLE, 
             CONTENT, 
