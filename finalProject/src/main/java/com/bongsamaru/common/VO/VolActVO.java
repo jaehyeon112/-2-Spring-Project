@@ -34,5 +34,6 @@ public class VolActVO {
 	private String path;
 	private Integer rn;
 	private String volZip2;
+	private Integer capCount;
 
 }

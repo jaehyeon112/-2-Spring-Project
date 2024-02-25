@@ -98,12 +98,11 @@
 								    	//location.href="noticeInfo?category=[[${info.category}]]&detailCate=[[${info.detailCate}]]&codeNo=[[${info.detailCate}]]"
 								 		var image1 = document.getElementById('imagePreview1');
 								 		image1.style.display='none';
-								 		alert('테이블에서 파일 삭제 완료');
 								 		
 								 		$.ajax('../deleteFiles?filePath='+encodeURI(del))
 									    .done(result => {
 									    	if(result=="ok"){
-										    	alert('실제 파일 삭제 완료');
+										    	console.log('실제 파일 삭제 완료');
 									    	}
 									    })
 									    .fail(err => console.log(err));

@@ -311,6 +311,8 @@ $('#verifyButton').on('click',function() {
 // 프로필 수정
 $(document).ready(function() {
     $("#updateProfileBtn").click(function() {
+    	let type = 0;
+    	
     	var formData = new FormData(); //FormData 객체 생성
     	var inputFile = $("input[type='file']");
     	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
@@ -321,9 +323,10 @@ $(document).ready(function() {
     		console.log(files[i]);
     		formData.append("uploadFiles", files[i]); //키,값으로 append 
     	}
-    	formData.append("code", "p01")
+    	formData.append("code", "p01");
     	formData.append("codeUser", $('#id').val());
-    	console.log($('#id').val())
+    	formData.append("type", type);
+    	console.log($('#id').val());
 
     	//jQuery.ajax
     	$.ajax({

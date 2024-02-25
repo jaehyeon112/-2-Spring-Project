@@ -145,7 +145,7 @@
 						<br>
 	                    <span th:text="${#dates.format(fac.startDate, 'yy.MM.dd')}+' ~ '+${#dates.format(fac.expireDate, 'yy.MM.dd')}">2024-02-04 ~ 2024-09-04</span>
 	                    <br>
-	                    <span th:text="'정원 : 해야함'+${fac.cap}+'명'">정원 : 해야함</span>
+	                    <span th:text="'정원 : ' +${fac.capCount} +' / '+  ${fac.cap}">정원 : 해야함</span>
 						 <br>
 						 
 		            </div>
@@ -387,9 +387,10 @@ function formatDate(date) {
             });
            
         });
-        var memId = [[${session.userId}]];
+        var memId = '[[${session.userId}]]';
         console.log(memId);
         $('#joinVolBtn').on('click', function() {
+        	 $('#myModal2').modal('hide');
 				if(memberId!=null || [[${session.Role}]]=='M02'){
        		    $.ajax({
        		        url: '/getJoinAppCheck',
@@ -452,6 +453,9 @@ $('.uploadBtn').click(function (){
 	        console.log(err);
 	    }
 	}); 
+});
+$('#myModal').on('hide.bs.modal', function () {
+    $('.modal-backdrop').remove(); // 모달 배경 제거
 });
 
 </script>
