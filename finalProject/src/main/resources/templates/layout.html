@@ -129,7 +129,7 @@
 						    </li>
 						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 |">[[${userNickname}]]님 환영합니다</a></li>
 						    <li th:if="${session.name}!=null" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
-						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/fac}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/fac/volJoin}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">

@@ -356,11 +356,11 @@ function showList(id) {
 		    	   var appCodeText = result[i].appCode == 'h01' ? '승인 전' : '승인완료';
 				    var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 		    	   $("#showTableBody").append( 
-		                   `<tr id=${[i]}><td>${result[i].memId}</td>
+		                   `<tr id="${[i]}"><td>${result[i].memId}</td>
 		                   <td>${formattedDate}</td>
 		                   <td><button type="button" data-toggle="modal" data-target="#myModal2">신청서보기</button></td>
-						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}')">수락</button></td>
-						   <td> ${appCodeText}</td></tr>`
+						   <td><button onclick="clickApp(${result[i].volActId},'${result[i].memId}',${i})">수락</button></td>
+						   <td class="app-code-cell"> ${appCodeText}</td></tr>`
 		    		);
 		    		    
 		       }
@@ -370,7 +370,7 @@ function showList(id) {
 		 }
 	});
 };
-function clickApp(volActId, memId){
+function clickApp(volActId, memId,index){
 	// 수정
     $.ajax({
          url: '/volAppUpdate',
@@ -380,7 +380,17 @@ function clickApp(volActId, memId){
              memId: memId
          },
          success: function(result) {
-        	 	
+             var approvalStatus = result.approvalStatus;
+             
+             // 받아온 승인 상태로 HTML 업데이트
+             var row = document.getElementById(index); // 인덱스를 사용하여 해당 행 가져오기
+             if (row) {
+                 var statusCell = row.querySelector('.app-code-cell'); // 승인 상태 열 가져오기
+                 if (statusCell) {
+                     statusCell.innerText = approvalStatus; // 텍스트 업데이트
+                 }
+             }	
+
          },
          error: function(err) {
              console.log(err);
