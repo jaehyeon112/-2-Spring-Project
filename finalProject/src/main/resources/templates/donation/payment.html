@@ -37,9 +37,13 @@
 	.button-group-area > a {
 	 color : black; 
 	}
+	
+		.button::hover {
+			cursor : pointer;
+			}
 
 		</style>
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	</head>
 
 	<body>
@@ -95,7 +99,7 @@
 	
 							
 					<div class="button-group-area mt-10 text-center">
-						<a href="#" class="genric-btn default-border radius">이전으로</a>
+						<a href="#" class="genric-btn default-border radius" onclick="goback()">이전으로</a>
 						<a href="javascript:history.back()" class="genric-btn info-border radius" onclick="requestPay()">결제하기</a>
 					</div>	
 											
@@ -136,20 +140,25 @@
 
 
 		<script th:inline="javascript">
-		
+			
+		function goback(){
+			 window.history.back();
+		}
 			function valbtn(){
 				let amountInput = document.getElementById('c_address').value;
 				console.log(amountInput);
 				
 				 // 유효성 검사: 숫자이면서 100원 이상인지 확인
 			    if (amountInput == '' || isNaN(amountInput) || parseInt(amountInput) < 100) {
-			        alert('100원 이상의 금액을 입력해주세요.');
+			    	Swal.fire("100원 이상의 금액을 입력해주세요.");
+			        //alert('100원 이상의 금액을 입력해주세요.');
 			        return;
 			    }
 
 			    // 입력된 금액이 100원 단위가 아니면 경고창 띄우고 수정
 			    if (amountInput % 100 !== 0) {
-			        alert('100원 단위로 기부가 가능합니다.');
+			    	Swal.fire("100원 단위로 기부가 가능합니다.");
+			        //alert('100원 단위로 기부가 가능합니다.');
 			        
 			        // 100원 단위로 내림
 			        let roundedAmount = Math.floor(amountInput / 100) * 100;
@@ -195,7 +204,7 @@
 
 			    // 선택된 결제 방식을 저장
 			    selectedPaymentMethod = paymentMethod;
-			    alert('결제수단: ' + selectedPaymentMethod + ' 선택됨!');
+			    console.log('결제수단: ' + selectedPaymentMethod + ' 선택됨!');
 			}
 		
 			function getPg(paymentMethod){
@@ -228,16 +237,19 @@
 				    let agreementCheckbox = document.getElementById('primary-checkbox');
 				    
 				    if (!amountInput) {
-				        alert('기부할 금액을 입력해주세요.');
+				    	Swal.fire("기부할 금액을 입력해주세요.");
+				       // alert('기부할 금액을 입력해주세요.');
 				        return;
 				    }
 				    if (!selectedPaymentMethod) {
-				        alert('결제 수단을 선택해주세요.');
+				    	Swal.fire("결제 수단을 선택해주세요.");
+				        //alert('결제 수단을 선택해주세요.');
 				        return;
 				    }
 
 				    if (!agreementCheckbox.checked) {
-				        alert('약관에 동의해주세요.');
+				    	Swal.fire("약관에 동의해주세요.");
+				        //alert('약관에 동의해주세요.');
 				        return;
 				    }
 

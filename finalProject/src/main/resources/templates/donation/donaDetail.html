@@ -31,7 +31,7 @@
         <link href="donation/board/css/style.css" rel="stylesheet">
        
        <style>
-       v
+       
     .vesitable-item {
         display: flex;
         flex-direction: column;
@@ -44,7 +44,7 @@
    
    
        </style> 
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
 
     <body>
@@ -199,26 +199,7 @@
                   <div>
                   	<img src="image/bongsalogo.png" style="margin:0 auto; width: 250px; height: 250px;">
                   </div>
-                  <!-- 캐러셀 
-                  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="margin-top:30px">
-                  <h6> </h6>
-					  <div class="carousel-inner">
-					    <div class="carousel-item active">
-					      <img src="../image/children.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
-					    </div>
-					    <div class="carousel-item">
-					      <img src="../image/hand.jpg" class="d-block w-100" style="width: 380px; height:250px;" alt="...">
-					    </div>
-					  </div>
-					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Previous</span>
-					  </button>
-					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Next</span>🩷
-					  </button>
-					</div> -->
+                 
                   
                   
                    </div>
@@ -245,9 +226,10 @@
                                     
         <!--  모금후기  -->
    
-        <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab" th:each="rev : ${rlist}" >
-          
-					    
+      
+    <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab" th:each="rev : ${rlist}"  >
+		
+	 
 					    
          <div style="padding: 10px 5px 10px 5px;">  
             <h5  th:text="${rev.title}">제목(intro)</h5>
@@ -347,10 +329,10 @@
                </a>
             </div>
          </div>
-         
-   
-
      </div>  <!--  end 모금후기  영역 -->
+     
+					
+					
                   </div> <!-- 하위 nav 안의 영역  -->
                   	<div class="comments-container">
                             <form>
@@ -423,7 +405,7 @@
                                 <h6 class="mb-4"> 🔹 시설소개</h6>
                                 <div class="d-flex align-items-center justify-content-start">
                                     <div class="rounded" style="width: 150px; height: 150px;">
-                                       <a href="/facilityList">
+                                     <a th:href="@{/fInfo/facilityInfo(facId=${dona.facId})}">
                                         <img src="donation/board/img/featur-1.jpg" class="img-fluid rounded" alt="Image">
                                     	</a>
                                     </div>
@@ -518,7 +500,14 @@
        let sessionRole = [[${session.Role}]]; 
        console.log(sessionRole);
        if (sessionRole == 'M03') {
-        	alert("시설회원은 기부를 할 수 없습니다.");
+    	
+    	   Swal.fire({
+    	     icon: "error",
+    	     title: "시설회원은 기부 불가"
+    	   
+    	     
+    	   });
+        	//alert("시설회원은 기부를 할 수 없습니다.");
            console.log('Invalid session role');
            return;
        }

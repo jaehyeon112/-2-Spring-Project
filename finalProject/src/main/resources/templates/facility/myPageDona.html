@@ -10,6 +10,7 @@
  .btn:focus {
     background-color: #689f38; 
     color: white;
+    	cursor : pointer;
  }
  p{
 	font-weight:bold;
@@ -501,7 +502,7 @@ function submitReceipt() {
 				
 				success: function (applyResponse) {
 					console.log("두 번째 AJAX 성공: " + applyResponse);
-					alert("두번째 등록 성공!");
+					console.log("두번째 등록 성공!");
 					// 성공 메시지 모달 열기
                     $("#successModal").modal("show");
 
