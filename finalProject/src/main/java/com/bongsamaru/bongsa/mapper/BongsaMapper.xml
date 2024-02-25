@@ -125,9 +125,13 @@ where rn between #{pageVO.start} and #{pageVO.end}
 		select count(*)
 		from vol_act
 		where vol_id is null
+		and expire_date > sysdate
 		<if test="category != null and category != '' ">    
 	    	AND CATEGORY = #{category}
 	    </if>	
+	    <if test="volZip2 != null and volZip2 != ''">
+	    	AND VOL_ZIP2 = #{volZip2}
+	    </if>
         <if test="searchKeyword!=null and searchKeyword!='' ">
     	    AND (title LIKE '%' || #{searchKeyword} || '%')		
    		</if>
