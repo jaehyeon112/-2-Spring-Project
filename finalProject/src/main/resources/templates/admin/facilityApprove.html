@@ -125,7 +125,7 @@
 						<tr>
 							 <td th:text="${st.count}"></td>
 							 <td th:text="${don.donId}">아이디</td>
-							 <td th:text="#{strings.substring(don.title, 0, 5)}" >제목</td>
+							 <td th:text="${#strings.substring(don.title, 0, 6)}+'...'" class="cur" th:onclick="moreDetail([[${don.donRevId}]])">제목</td>
 							 <td data-th-text="${#numbers.formatInteger(don.execAmt, 3, 'COMMA') + '원'}" class="cur" th:onclick="moreDetail([[${don.donRevId}]])">목표금액</td>
 							 <td th:text="${#dates.format(don.startPeriod, 'yyyy년 MMM dd일')}" >모금 시작일</td>
 							 <td th:text="${#dates.format(don.endPeriod, 'yyyy년 MMM dd일')}">모금 마감일</td>
