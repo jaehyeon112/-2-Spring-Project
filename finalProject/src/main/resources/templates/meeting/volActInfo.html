@@ -133,15 +133,17 @@
 						    $("#confimModal").modal("hide");
 						});
 						
-						$.ajax('../findMember?volId='+[[${session.id}]]+'&memId=[[${session.userId}]]&appCode=h02')
+						$.ajax('../chamMem?memId=[[${session.userId}]]&volActId='+[[${info.volActId}]])
 						.done(result => {
-							if(result==1){
+							const abd = [[${after}]]
+							if(result==1 || abd==false){
 								$('#cham').css('display','none')
 							}else{
 								$('#cham').css('display','block')
 							}
 						})
 						.fail(err => console.log(err));
+						
 						function withVolAct(){
 							$.ajax({
 				           		url: '../insertvolActMem?volActId='+[[${info.volActId}]]+'&memId=[[${session.userId}]]',

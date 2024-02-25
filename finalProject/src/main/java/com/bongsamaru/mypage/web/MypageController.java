@@ -3,6 +3,8 @@ package com.bongsamaru.mypage.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -22,6 +24,7 @@ import com.bongsamaru.common.VO.UserVO;
 import com.bongsamaru.mypage.service.MypageService;
 import com.bongsamaru.mypage.service.sendSmsService;
 import com.bongsamaru.user.service.UserDetailVO;
+import com.bongsamaru.user.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -41,6 +44,9 @@ public class MypageController {
 	 @Autowired
 	 MypageService mypageService;
 	
+	 @Autowired
+	 UserService userService;	
+	 
 	 /**
 	  *  마이페이지 마음온도,기부횟수,기부금액,프로필 리스트
 	  * @param model
@@ -167,11 +173,16 @@ public class MypageController {
 	 @PostMapping("/updateProFile")
 	 @ResponseBody
 	 public ResponseEntity<String> updateProFile(@RequestBody UserVO userVO,
-			 									 @RequestParam(value = "files", required = false) MultipartFile[] files) {
-		 log.info(files);
+			 									 @RequestParam(value = "files", required = false) MultipartFile[] files,
+			 									 HttpSession session) {
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
-	         return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	    	 
+	    	 String profile = userService.findProfile(userVO.getMemId());
+	    	 log.info(profile);
+	    	 session.setAttribute("profile", profile);
+	    	 return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+	         
 	     } else {
 	         return ResponseEntity.badRequest().body("프로필 업데이트에 실패했습니다.");
 	     }

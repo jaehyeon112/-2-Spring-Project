@@ -31,15 +31,15 @@
 					select_sub(fac_Type) category,
 					(select file_Path from files where code='p02' and code_user=fac_id) as filePath
     FROM FACILITY
-      where mem_app = 1
-	     <!-- WHERE을 대문자로 쓰니 인식이 안되더라 where소문자로 쓰기 주의하자 -->
+
+	    where mem_app = 1   
+
         <if test="facZip2 != null and facZip2 !=''">
             AND 	FAC_ZIP2=#{facZip2}
         </if>
         <if test="facType != null and facType != ''">
         	AND 	FAC_TYPE = #{facType}
         </if>
- 
 	    ) A )
 	  	WHERE RN BETWEEN #{pageVO.start} AND #{pageVO.end}
 	
@@ -490,6 +490,17 @@ INSERT INTO HEART
             ,#{memId}
             ,#{detailCate})
 </insert>
+<select id="getVolReviewList" resultType="BoardVO">
+ SELECT 
+ 		CATEGORY, 
+ 		TITLE, 
+ 		CONTENT, 
+ 		WRITE_DATE, 
+ 		MEM_ID, 
+ 		DETAIL_CATE 
+ 		FROM BOARD WHERE CATEGORY='b03'
+
+</select>
  <select id="getVolReviewInfo" resultType="BoardVO">
   select BOARD_ID,
          TITLE,

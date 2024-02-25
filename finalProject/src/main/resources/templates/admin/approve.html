@@ -588,12 +588,10 @@ table th {
 			        .fail(err => console.log(err));
 			    }
 			    function downloadButton(path,name){
-					let url = "http://localhost:8585"
-					url = url + path;
-           			url = url.replace(/\\/g, '/')
+					path = (""+path).replace(/\\/g, '/')
 					var fileName = name;
 				  	var link = document.createElement('a');
-				  	link.href = url;
+				  	link.href = path;
 				  	link.download = fileName;
 				  	link.click();
 			    }

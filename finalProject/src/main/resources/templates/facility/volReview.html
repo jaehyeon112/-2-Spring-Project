@@ -31,7 +31,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 			<br>
 		
 			<label>후기 제목</label>
-               <input class='write-1' type="text" name="title" max="30">
+               <input class='write-1' type="text" name="title" max="30" placeholder="제목을 작성해 주세요">
 			
 			<!-- 에디터를 적용할 요소 (컨테이너) -->
 			<hr>
@@ -42,7 +42,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		</div>
 		<!-- TUI 에디터 JS CDN -->
 		<!-- 모달창 -->
-<!-- 		<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+		<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
 		    <div class="modal-dialog" role="document">
 		        <div class="modal-content">
 		            <div class="modal-header">
@@ -57,7 +57,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		            </div>
 		        </div>
 		    </div>
-		 </div> -->
+		 </div> 
 		 
 
 <script th:inline="javascript">
@@ -88,7 +88,7 @@ $.ajax({
 	    		
 	    		const formData = new FormData();
 	        	formData.append('uploadFiles', blob);
-	        	formData.append("code", "p15")
+	        	formData.append("code",  "p15")
           			formData.append("codeNo", cateNo);
           			$.ajax({
 	           		url: '/uploadsAjax',

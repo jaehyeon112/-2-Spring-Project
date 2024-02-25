@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -356,7 +355,7 @@ public class facilityController {
 		
 		
 		  try { 
-			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
+			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId(),1);
 		  }catch (IOException e) {
 			  e.printStackTrace(); 
 		   }
@@ -408,6 +407,18 @@ public class facilityController {
 	      return facilityService.findBoardNo();
 	   }
 	/**
+	 * 봉사후기 리스트
+	 * @param model
+	 * @param category
+	 * @return
+	 */
+	@GetMapping("volReviewList")
+	public List<BoardVO> getNoticeOne(Model model, String category) {
+		List<BoardVO> list = facilityService.getVolReviewList("b03");
+		model.addAttribute("info",list);
+		return list;
+	}
+	/**
 	 * 봉사후기 info
 	 * @param category
 	 * @param detailCate
@@ -416,11 +427,8 @@ public class facilityController {
 	 * @return
 	 */
 	@GetMapping("volReviewInfo")
-	public String getNoticeOne(@RequestParam(name="code") Integer code,@RequestParam(name="detailCate") Integer detailCate,@RequestParam(name="codeNo") String codeNo,Model model) {
+	public String getNoticeOne(@RequestParam(name="detailCate") Integer detailCate,Model model) {
 		BoardVO vo = facilityService.getVolReviewInfo(detailCate);
-		List<FilesVO> files = challengeService.getFileList(code, codeNo);
-		model.addAttribute("files",files);
-	
 		model.addAttribute("info",vo);
 		return "facility/volReviewInfo";
 	}

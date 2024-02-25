@@ -1,5 +1,6 @@
 package com.bongsamaru.dona.service.impl;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import com.bongsamaru.dona.mapper.DonaMapper;
 import com.bongsamaru.dona.service.DonaService;
 import com.bongsamaru.dona.service.DonaVO;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class DonaServiceImpl implements DonaService {
 	
@@ -107,9 +111,15 @@ public class DonaServiceImpl implements DonaService {
 	@Transactional
 	@Override
 	public int insertDonation(DonaVO donaVO) {
-		donaMapper.insertDonation(donaVO);
-		donaMapper.insertDonDetail(donaVO);
-		return donaMapper.insertAlertDona(donaVO);
+		DonaVO a = new DonaVO();
+		int b = donaMapper.insertDonation(donaVO);
+		log.info(b);
+		b = donaMapper.insertDonDetail(donaVO);
+		log.info(b);
+		b =	donaMapper.insertAlertDona(donaVO);
+		log.info(b);
+		
+		return 1; 
 	}
 	
 	

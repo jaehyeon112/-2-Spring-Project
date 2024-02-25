@@ -1092,7 +1092,7 @@
 						success: function (data) {
 							checkNum = data;
 							console.log('번호', checkNum)
-							// 여기에 인증번호 옆에 띄우기
+							$('#phoneCheckError').addClass('hidden');
 							$('#authCheck').parent().removeClass('hidden')
 							$('#phoneSuccess').removeClass('hidden');
 						}
@@ -1270,7 +1270,7 @@
 
 						// 주민등록번호 앞자리 유효성 검사
 						let frontIdenCheckValue = $('#frontIdenCheck').val();
-						if (validateResidentNumber()) {
+						if (!validateResidentNumber()) {
 							isValid = false;
 						}
 
@@ -1289,9 +1289,7 @@
 					}
 
 					if (!isValid) {
-						$('html, body').animate({
-							scrollTop: $('.error-message:visible:first').offset().top
-						}, 'slow');
+						$('html, body').animate({ scrollTop: 0 }, 'slow');
 						return;
 					}
 
@@ -1447,7 +1445,7 @@
 			$('#emailAuthCheckBnt').on('click', function () {
 				let verificationCode = $("#emailAuthCheck").val();
 				let recipientEmail = $("#emailCheck").val();
-
+		
 
 				if (verificationCode == "") {
 					return;
@@ -1471,6 +1469,7 @@
 							valid.isEmail = true;
 							facValid.isEmail = true;
 						} else {
+							$('#authCheckError').text('인증번호가 일치하지 않습니다.').show();
 							alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
 						}
 					},

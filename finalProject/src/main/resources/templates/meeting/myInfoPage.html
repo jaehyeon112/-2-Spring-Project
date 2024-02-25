@@ -63,7 +63,7 @@
 							<h3>[[${review.title}]]</h3>
 							<span class="location">[[${#dates.format(review.writeDate, 'yyyy년 MM월 dd일')}]]</span>
 						</div>
-						<img th:src="@{${review.filePath}}" onError="this.src='../image/기본이미지.jpg'" alt="Image" class="img-fluid" style="width:430px;height:290px">
+						<img th:src="@{${review.filePath}}" onError="this.src='../image/zz.jpg'" alt="Image" class="img-fluid" style="width:430px;height:290px">
 					</a> 
 				</div>
 			</div>
@@ -97,7 +97,9 @@
 									 <td th:text="${st.count}">번호</td>
 									 <td><a th:text="${vol.title}" class="cur"></a></td>
 									 <td th:text="${#dates.format(vol.volDate, 'yyyy년 MMM dd일')}" ></td>
-									 <td><a th:href="@{../reviewBoardInsertPage(volId=${session.id},volActId=${vol.volActId})}"><i class="bi bi-brush"></i>작성하기</a></td>
+									 <td th:if="${vol.bigo}==before and ${vol.checking}=='ok'"><a th:href="@{../reviewBoardInsertPage(volId=${session.id},volActId=${vol.volActId})}"><i class="bi bi-brush"></i>작성하기</a></td>
+									 <td th:if="${vol.bigo}==after">봉사 완료 후 작성 가능</td>
+									 <td th:if="${vol.checking}=='no'">작성 완료</td>
 								</tr>
 							</th:block>
 						</tbody>
@@ -183,6 +185,14 @@
 				$(this).attr('data-id', i + 1);
 			})
 		});
+		
+		$.ajax('../reviewCnt?volId='+[[${session.id}]]+'&writer=[[${session.userId}]]&volActId=h02')
+	    .done(result => {
+	    	if(result==0){
+	    		$('.regBtnMod').css('display','none')
+	    	}
+	    })
+	    .fail(err => console.log(err));
 		
 		let countBox = document.querySelector('#count');
 		let count = 0;
