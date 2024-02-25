@@ -28,6 +28,8 @@
 					<p class="mb-4">제11조 (계약 해지)</p>
 					<p class="mb-4">회원이 서비스 이용 계약을 해지 하고자 할 때는 마이페이지의 '모임 탈퇴하기' 메뉴에서 모임탈퇴를 신청하시면 됩니다.
 					<br>탈퇴를 신청하시면 즉시 탈퇴처리가 완료되며, 탈퇴후 모임을 다시 가입하는 경우 불이익이 있을 수 있습니다.</p>
+					<input type="checkbox" id="checking">동의합니다.
+					<br>
                 	<button type="button" class="btn btn-outline-dark m-1" onclick="outMeeting()">탈퇴하기</button>
                 </div>
             </div>
@@ -55,6 +57,11 @@
     	const volId = [[${session.id}]];
     	const volMemId = "[[${session.userId}]]";
     	function outMeeting(){
+    		var checked = $('#checking').is(':checked');
+    		if(checked==false){
+    			alert('약관에 동의를 해주세요.')
+    			return;
+    		}
     		$.ajax({
            		url: "/WithdrawalProcess?volId="+volId+"&memId="+volMemId+"&appCode=h04",
            		type: 'GET',
