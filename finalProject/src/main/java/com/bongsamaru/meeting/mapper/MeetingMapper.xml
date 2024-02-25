@@ -84,7 +84,7 @@
 				,EXPIRE_DATE
 			from vol_act
 			where vol_id = #{volId}
-			order by vol_date) A)
+			order by vol_date desc) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
 	<select id="findVolActNo" resultType="int">

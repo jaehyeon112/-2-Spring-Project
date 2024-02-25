@@ -190,7 +190,7 @@ public class MeetingController {
       Date today = new Date();
       
       for(VolActVO vo : list) {
-         if(vo.getExpireDate().compareTo(today) < 0||vo.getVolDate().compareTo(today) < 0) {
+         if(vo.getExpireDate().compareTo(today) < 0&&vo.getVolDate().compareTo(today) < 0) {
             vo.setState(1);
          }else {
             vo.setState(0);
