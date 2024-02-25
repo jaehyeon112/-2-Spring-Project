@@ -87,7 +87,7 @@ p{
              </div>
              <div class="col-md-3">
                  <div class="book_tabel_item">
-                  <p><a  th:text="${dona.donRegApp}== 'h01' ? '승인 전' : '승인완료'"></a></p>
+                  <p><a  th:text="${dona.donRegApp}== 0 ? '승인 전' : '승인완료'"></a></p>
                  
                  </div>
              </div>
