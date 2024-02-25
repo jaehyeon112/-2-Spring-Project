@@ -294,7 +294,7 @@
       <if test="searchKeyword!=null and searchKeyword!=''">
          AND (title LIKE '%' || #{searchKeyword} || '%')      
       </if>
-      order by BOARD_ID) A)
+      order by WRITE_DATE desc) A)
         where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="getBoardCnt" resultType="int">
@@ -483,7 +483,7 @@
                   ,end_period
                   ,room_stat
                   ,(select count(*) from vol_mem where vol_id=volunteer.vol_id and app_code='h02') as meetingCnt
-                  ,(select file_path from files where code='p09' and code_no=volunteer.vol_id) filePath
+                  ,(select file_path from files where code='p09' and code_no=volunteer.vol_id and rownum = 1) filePath
               from volunteer
               <where>
                  <if test="roomStat!=null">
