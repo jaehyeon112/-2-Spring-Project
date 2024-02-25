@@ -294,7 +294,7 @@
       <if test="searchKeyword!=null and searchKeyword!=''">
          AND (title LIKE '%' || #{searchKeyword} || '%')      
       </if>
-      order by BOARD_ID) A)
+      order by WRITE_DATE desc) A)
         where RN BETWEEN #{start} AND #{end}
    </select>
    <select id="getBoardCnt" resultType="int">
