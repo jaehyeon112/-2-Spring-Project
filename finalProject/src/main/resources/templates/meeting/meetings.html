@@ -28,8 +28,8 @@
                      <div class="col-4">
                         <div class="rounded-circle position-relative">
                            <div class="overflow-hidden rounded-circle">
-                              <img th:if="${cnt.path}!=null" th:src="@{${cnt.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                              <img th:if="${cnt.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+                              <img th:if="${cnt.path}!=null" th:src="@{${cnt.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="" style="height:80px;">
+                              <img th:if="${cnt.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="" style="height:80px;">
                            </div>
                            <span class="rounded-circle border border-2 border-white bg-primary text-white position-absolute"
                               style="top: 10%; right: -10px;" th:text="${st.count}+'등'"></span>
@@ -220,8 +220,8 @@
                                        <div class="col-4">
                                           <div class="rounded-circle position-relative">
                                              <div class="overflow-hidden rounded-circle">
-                                                <img th:if="${mem.path}!=null" th:src="@{${mem.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="">
-                                                <img th:if="${mem.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="">
+                                                <img th:if="${mem.path}!=null" th:src="@{${mem.path}}" onError="this.src='../image/기본이미지.jpg'" class="img-zoomin img-fluid rounded-circle w-100" alt="" style="height:80px;">
+                                                <img th:if="${mem.path}==null" src="../image/기본이미지.jpg" class="img-zoomin img-fluid rounded-circle w-100" alt="" style="height:80px;">
                                              </div>
                                              <span th:if="${mem.memId}==${info.memId}" class="rounded-circle border border-2 border-white bg-primary  text-white position-absolute" style="top: 10%; right: -10px;">
                                              방장
