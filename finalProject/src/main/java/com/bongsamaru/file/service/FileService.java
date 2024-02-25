@@ -100,9 +100,6 @@ public class FileService {
     		
     		
     		FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
-    		System.out.println(code + "파일체크");
-    		System.out.println(codeUser + "이름");
-    		System.out.println(fileVO);
     		
     		if (fileVO != null) {
     			// 파일사이즈가 똑같은게 이미 존재하는 경우 업데이트 수행
@@ -111,7 +108,6 @@ public class FileService {
     			fileVO.setFileSize((int) fileSize);
     			fileVO.setExtension(contentType);
     			fileMapper.updateFile(fileVO);
-    			System.out.println("여기로 들어와서 그런듯?");
     		} else {
     			// 파일이 존재하지 않는 경우 인서트 수행
     			fileVO = new FilesVO();
@@ -132,8 +128,6 @@ public class FileService {
     		
     		
     		FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
-    		System.out.println(code + "파일체크");
-    		System.out.println(codeUser + "이름");
     		System.out.println(fileVO);
     		
     		fileVO = new FilesVO();
