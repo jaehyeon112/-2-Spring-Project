@@ -161,8 +161,8 @@ $('#today').text(dateFormat('','yyyy년 MM월 dd일'));
 //날씨 처리 시작
 navigator.geolocation.getCurrentPosition(
 	function (result) {
-	latitude = result.coords.latitude;
-	longitude = result.coords.longitude;
+	//latitude = result.coords.latitude;
+	//longitude = result.coords.longitude;
 	//잠깐 위치 정해짐
 	$.ajax('https://api.openweathermap.org/data/2.5/weather?lat=35.8678528&lon=128.6012928&appid='+API_KEY+'&units=metric')
 	.done(result=>{
