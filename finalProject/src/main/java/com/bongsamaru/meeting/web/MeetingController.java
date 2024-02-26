@@ -121,6 +121,7 @@ public class MeetingController {
 				before.add(vo);
 			}
 		}
+		System.out.println("후기"+after);
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		PageVO pageVO = new PageVO();
