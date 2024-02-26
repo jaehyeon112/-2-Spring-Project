@@ -163,8 +163,8 @@ navigator.geolocation.getCurrentPosition(
 	function (result) {
 	latitude = result.coords.latitude;
 	longitude = result.coords.longitude;
-	
-	$.ajax('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+API_KEY+'&units=metric')
+	//잠깐 위치 정해짐
+	$.ajax('https://api.openweathermap.org/data/2.5/weather?lat=35.8678528&lon=128.6012928&appid='+API_KEY+'&units=metric')
 	.done(result=>{
 		if(result.weather[0].main=='Clouds'){
 			$('#weather').attr("src", "../dpdd/img/흐림.png");
