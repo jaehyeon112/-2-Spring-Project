@@ -11,6 +11,7 @@
 	margin: auto
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -64,22 +65,6 @@
 										<button type="button" style="float: right;" id="subm" onclick="checking()" class="btn btn-success m-1">등록</button>
 									</p>
 								</div>
-							<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-							    <div class="modal-dialog" role="document">
-							        <div class="modal-content">
-							            <div class="modal-header">
-							                <h5 class="modal-title" id="deleteConfirmationModalLabel">등록 확인</h5>
-							            </div>
-							            <div class="modal-body">
-							                <p>정말 등록하시겠습니까?</p>
-							            </div>
-							            <div class="modal-footer">
-							                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">네</button>
-							                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">아니오</button>
-							            </div>
-							        </div>
-							    </div>
-							 </div>
 							</form>
 							<script>
 							
@@ -104,48 +89,64 @@
 									let content = $('[name="content"]');
 	
 									if(title.val()==''){
-										alert('제목이 입력되지 않았습니다.');
+										checkingTitle();
 										title.focus();
 										return;
 									}
 									if(content.val()==''){
-										alert('내용이 입력되지 않았습니다.');
+										deleteBoard();
 										content.focus();
 										return;
 									};
 									
-									$("#confimModal").modal("show");
-									
-									$("#yesBtn").click(function () {
-										var formDa = $("form").serialize();
-										$.ajax({
-											url: '/noticeInsert',
-											type: 'POST',
-											data: formDa,
-											success: function (result) {
-												var fileLength = $("input[type='file']");
-												var file2 = fileLength[0].files;
-												if(file2.length==0){
-													location.href="boardList?category=b01"
-													return;
-												}else{
-													console.log(result);
-													fileSub(result);
+									swalWithBootstrapButtons.fire({
+										  title: "정말 등록하시겠습니까??",
+										  text: "등록 후에는 수정이 불가능합니다.",
+										  icon: "question",
+										  showCancelButton: true,
+										  confirmButtonText: "등록",
+										  cancelButtonText: "취소",
+										  reverseButtons: true
+										}).then((result) => {
+										  if (result.isConfirmed) {
+										    swalWithBootstrapButtons.fire({
+										      title: "등록되었습니다",
+										      text: "내용을 확인해보세요",
+										      icon: "success"
+										    });
+										    var formDa = $("form").serialize();
+											$.ajax({
+												url: '/noticeInsert',
+												type: 'POST',
+												data: formDa,
+												success: function (result) {
+													var fileLength = $("input[type='file']");
+													var file2 = fileLength[0].files;
+													if(file2.length==0){
+														location.href="boardList?category=b01"
+														return;
+													}else{
+														console.log(result);
+														fileSub(result);
+													}
+												},
+												error: function (reject) {
+													alert('실풰!')
+													console.log(reject);
 												}
-												
-											},
-											error: function (reject) {
-												alert('실풰!')
-												console.log(reject);
-											}
-										})
-									})
-								};
-								
-								$("#noBtn").on('click',function () {
-								    $("#confimModal").modal("hide");
-								});
-
+											})
+										  } else if (
+										    /* Read more about handling dismissals below */
+										    result.dismiss === Swal.DismissReason.cancel
+										  ) {
+										    swalWithBootstrapButtons.fire({
+										      title: "취소되었습니다.",
+										      text: "등록을 취소하였습니다.",
+										      icon: "error"
+										    });
+										  }
+										});
+								}
 								function fileSub(cnt) {
 									var formData = new FormData(); //FormData 객체 생성
 									var inputFile = $("input[type='file']");
@@ -178,6 +179,28 @@
 										}
 									});
 								};
+								
+								const swalWithBootstrapButtons = Swal.mixin({
+								  customClass: {
+								    confirmButton: "btn btn-success",
+								    cancelButton: "btn btn-danger"
+								  },
+								  buttonsStyling: false
+								});
+								function checkingTitle(seq){
+									Swal.fire({
+									  icon: "error",
+									  title: "제목이 입력되지 않았습니다.",
+									  text: "제목을 입력해주세요!",
+									});
+								}
+								function deleteBoard(seq){
+									Swal.fire({
+									  icon: "error",
+									  title: "내용이 입력되지 않았습니다.",
+									  text: "내용을 입력해주세요!",
+									});
+								}
 							</script>
 						</section>
 					</div>

@@ -380,6 +380,8 @@ width: 20%;
 	        	formData.append('uploadFiles', blob);
 	        	formData.append("code", "p11")
        			formData.append("codeNo", cateNo);
+	        	formData.append("codeUser", '[[${session.userId}]]');
+	           	formData.append("type", 0);
        			$.ajax({
 	           		url: '/uploadsAjax',
 	           		type: 'POST',

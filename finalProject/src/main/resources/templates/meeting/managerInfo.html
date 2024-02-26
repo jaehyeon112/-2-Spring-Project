@@ -13,7 +13,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -35,7 +35,6 @@
                 <div th:if="${volAct.size}==0" class="d-flex align-items-center border-bottom py-2" style="text-align:center">현재 등록된 봉사가 없습니다.</div>
                 <th:block th:each="volAct : ${after}">
                 <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
                     <div class="w-100 ms-3">
                         <div class="d-flex w-100 align-items-center justify-content-between">
                             <span th:text="${volAct.title}"></span>
@@ -46,7 +45,6 @@
                 </th:block>
                 <th:block th:each="volAct : ${before}">
                 <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox" checked>
                     <div class="w-100 ms-3">
                         <div class="d-flex w-100 align-items-center justify-content-between" style="text-decoration-line: line-through;">
                             <span th:text="${volAct.title}"></span>
@@ -80,8 +78,8 @@
 		                             <th th:text="${st.count}">1</th>
 		                             <td th:text="${mem.memId}">John</td>
 		                             <td th:text="${#dates.format(mem.appDate, 'yyyy년 MM월 dd일')}">Doe</td>
-		                             <td><i class="fa fa-envelope me-lg-2"></i></td>
-		                             <td th:onclick=out([[${mem.memId}]]) class="cur">
+		                             <td th:if="${st.count}>1"><i class="fa fa-envelope me-lg-2"></i></td>
+		                             <td th:onclick=out([[${mem.memId}]]) class="cur" th:if="${st.count}>1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
 										<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
 										<polyline points="10 17 15 12 10 7"></polyline>
@@ -122,39 +120,6 @@
 	</div>
 	 <div class="container"><button class="btn" onclick="delMeetModal()" style="float:right;margin:10px">모임 삭제</button></div>
 	 <div class="container"><button class="btn" onclick="updateMeeting()" style="float:right;margin:10px">모임 수정</button></div>
-	<!-- 모달창 -->
-	<div class="modal fade" id="confimModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="deleteConfirmationModalLabel">탈퇴 확인</h5>
-	            </div>
-	            <div class="modal-body">
-	                <p>정말 탈퇴하시겠습니까?<br>정당하지 않은 사유로 강제 탈퇴 시 불이익을 받을 수 있습니다.</p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-danger" id="noBtn" data-dismiss="modal" aria-hidden="false">닫기</button>
-	                <button type="button" class="btn btn-danger" id="yesBtn" data-dismiss="modal" aria-hidden="false">확인</button>
-	            </div>
-	        </div>
-	    </div>
-	 </div>
-	<!-- 두번쩨 모달창 -->
-	<div class="modal fade" id="delConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="deleteConfirmationModalLabel">탈퇴 확인</h5>
-	            </div>
-	            <div class="modal-body">
-	                <p>탈퇴를 완료했습니다.</p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-danger" id="noBtn2" data-dismiss="modal" aria-hidden="false">닫기</button>
-	            </div>
-	        </div>
-	    </div>
-	 </div>
 	 <!-- 모달창 -->
 	<div class="modal fade" id="delVolAct" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
 	    <div class="modal-dialog" role="document">
@@ -189,23 +154,34 @@
 	        </div>
 	    </div>
 	 </div>
-	 <!-- 모달창 -->
-	<div class="modal fade" id="approveMeeting" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="deleteConfirmationModalLabel">승인 확인</h5>
-	            </div>
-	            <div class="modal-body">
-	                <p>승인 처리되었습니다.</p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-danger" id="approveBtn" data-dismiss="modal" aria-hidden="false">닫기</button>
-	            </div>
-	        </div>
-	    </div>
-	 </div>
 	<script>
+		const swalWithBootstrapButtons = Swal.mixin({
+		  customClass: {
+		    confirmButton: "btn btn-success",
+		    cancelButton: "btn btn-danger"
+		  },
+		  buttonsStyling: false
+		});
+		//회원 승인해주는 모달
+		function okMem(seq){
+		    const Toast = Swal.mixin({
+		      toast: true,
+		      position: 'top-top',
+		      showConfirmButton: false,
+		      timer: 1000,
+		      timerProgressBar: true,
+		      didOpen: (toast) => {
+		        toast.addEventListener('mouseenter', Swal.stopTimer)
+		        toast.addEventListener('mouseleave', Swal.resumeTimer)
+		      }
+		    })
+		    Toast.fire({
+		      icon: 'success',
+		      title: '승인이 정상적으로 완료되었습니다.'
+		    })
+		    location.href="managerPage?volId="+[[${session.id}]];
+		}
+		
 		function showing(){
 			$("#volShow").css('display','block');
 			$("#showBtn").css('display','none');
@@ -220,10 +196,45 @@
 		var volActId = '';
 		function out(id){
 			userId = id;
-			$("#confimModal").modal("show");
-			$("#yesBtn").on('click',function () {
-				delUser();
-			});
+			//회원 탈퇴 모달
+			swalWithBootstrapButtons.fire({
+				  title: "정말 탈퇴시키시겠습니까?",
+				  text: "정당하지 않은 사유로 강제 탈퇴 시 불이익을 받을 수 있습니다.",
+				  icon: "question",
+				  showCancelButton: true,
+				  confirmButtonText: "확인",
+				  cancelButtonText: "취소",
+				  reverseButtons: true
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  delUser();
+					  const Toast = Swal.mixin({
+					      toast: true,
+					      position: 'top-top',
+					      showConfirmButton: false,
+					      timer: 1000,
+					      timerProgressBar: true,
+					      didOpen: (toast) => {
+					        toast.addEventListener('mouseenter', Swal.stopTimer)
+					        toast.addEventListener('mouseleave', Swal.resumeTimer)
+					      }
+					    })
+					    Toast.fire({
+					      icon: 'success',
+					      title: '탈퇴처리가 정상적으로 완료되었습니다.'
+					    })
+					    location.href="managerPage?volId="+[[${session.id}]];
+				  } else if (
+				    /* Read more about handling dismissals below */
+				    result.dismiss === Swal.DismissReason.cancel
+				  ) {
+				    swalWithBootstrapButtons.fire({
+				      title: "취소되었습니다.",
+				      text: "탈퇴처리를 취소하였습니다.",
+				      icon: "error"
+				    });
+				  }
+				});
 		}
 		
        	const volId = [[${session.id}]];
@@ -234,8 +245,7 @@
            		processData: false,
            		contentType: false,
            		success: function(data) {
-           		 	$("#confimModal").modal("hide");
-           			$("#delConfirm").modal("show");
+           			console.log('성공');
            		},
            		error: function(e) {
            			console.log('실패');
@@ -266,14 +276,6 @@
            	});
 		}
 		
-		$("#noBtn").on('click',function () {
-		    $("#confimModal").modal("hide");
-		});
-		
-		$("#noBtn2").on('click',function () {
-		    $("#delConfirm").modal("hide");
-           	location.href = "managerPage?volId="+volId;
-		});
 		
 		$("#delMeetNo").on('click',function () {
 		    $("#delMeet").modal("hide");
@@ -313,21 +315,13 @@
            		processData: false,
            		contentType: false,
            		success: function(data) {
-           			modalOpen();
+           			okMem();
            		},
            		error: function(e) {
            			console.log('실패');
            		}
            	});
     	}
-		
-		function modalOpen(){
-			$("#approveMeeting").modal("show");
-		}
-		$("#approveBtn").on('click',function () {
-		    $("#approveMeeting").modal("hide");
-		    location.href="managerPage?volId="+[[${session.id}]];
-		});
 		
 		function updateMeeting(){
 			location.href = "updateMeeting?volId="+[[${session.id}]];

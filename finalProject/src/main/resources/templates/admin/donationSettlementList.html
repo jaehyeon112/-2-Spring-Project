@@ -14,6 +14,7 @@
 	margin-top : 50px;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -216,22 +217,35 @@
 						data : JSON.stringify(obj),
 					})
 					.done(result => {
-						alert('송금성공');
 					    $.ajax('insertRemittance', {
 							type:'POST',
 							data : insertObj,
 						})
 				    	.done(result => {
-				    		alert('모두 성공');
+				    		okSong();
 				    	})
 				    	.fail(err => console.log(err));
 			       })
 			       .fail(err => console.log(err));
 				  	
-				  	
 			       $("#mymodal").modal("hide");
 					
 			    });
+			    
+				const swalWithBootstrapButtons = Swal.mixin({
+				  customClass: {
+				    confirmButton: "btn btn-success",
+				    cancelButton: "btn btn-danger"
+				  },
+				  buttonsStyling: false
+				});
+				function okSong(seq){
+					Swal.fire({
+					  icon: "success",
+					  title: "송금이 완료되었습니다.",
+					  text: "기한 내 영수증을 제출해주세요!",
+					});
+				}
 				</script>
 			</div>
 		</div>

@@ -112,9 +112,10 @@ public class BongsaController {
 	    
 	    // 전체 개수 조회
 	    int total = bongsaService.cntFacilityList(vo);
+	   
 	    vo = new PageVO(total, start, end, category, searchKeyword, 8 ,zip);
 	    List<VolActVO> list = bongsaService.facilityList(vo,startDate,endDate);
-	    log.info(vo);
+	    log.info(total);
 	    log.info("list"+list);
 	    model.addAttribute("cate", commonService.selectSubCode("f"));
 	    model.addAttribute("fac", list);

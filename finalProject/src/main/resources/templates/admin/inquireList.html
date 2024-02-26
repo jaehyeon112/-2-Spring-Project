@@ -23,6 +23,11 @@
       <div class="container-fluid">
 		<div class="container">
 		<h2>문의사항 관리</h2>
+		<div style="float:right;padding:10px">
+			<input class="form-control-sm me-2" id="search" type="search" placeholder="Search" aria-label="Search" th:value="${vo.searchKeyword}">
+			<button class="btn btn-outline-success" id="searchBtn" type="button">검색</button>
+			<button class="btn btn-outline-primary" id="clean" type="button">초기화</button>
+		</div>
 		<div id=tableData>
 			<th:block th:if="${inquireList.size} == 0">
 				<h3 style="text-align:center">데이터가 존재하지 않습니다</h3>

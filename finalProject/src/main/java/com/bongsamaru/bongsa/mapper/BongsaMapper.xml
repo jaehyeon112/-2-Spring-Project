@@ -11,6 +11,7 @@
 	            vol_id,
 	            meet_name,
 	            cap,
+	            mem_id,
 	            select_sub(region) region,
 	            REC_PERIOD,
 	            end_period,
@@ -51,6 +52,7 @@
 	            vol_id,
 	            meet_name,
 	            cap,
+	            mem_id,
 	            select_sub(region) region,
 	            REC_PERIOD,
 	            end_period,
@@ -78,7 +80,8 @@
 SELECT * FROM (
     SELECT  ROWNUM rn,
             vol_act_id,
-            FAC_ID, 
+            FAC_ID,
+            (SELECT FAC_NAME FROM facility WHERE facility.fac_id = v.fac_id) AS FAC_NAME,
             select_sub(CATEGORY) as CATEGORY,
             TITLE, 
             CONTENT, 
@@ -87,9 +90,10 @@ SELECT * FROM (
             VOL_DATE,
             start_Date,
             expire_Date,
+            (select count(*) from vol_act_mem a where a.vol_act_id = v.vol_act_id)as capCount,
             select_sub(vol_zip2) as volZip2,
             select_file(vol_act_id,'p14') as path
-    from vol_act
+    from vol_act v
     where fac_id is not null and expire_date > sysdate
     
     <if test="pageVO.category != null and pageVO.category != '' ">    
@@ -122,9 +126,13 @@ where rn between #{pageVO.start} and #{pageVO.end}
 		select count(*)
 		from vol_act
 		where vol_id is null
+		and expire_date > sysdate
 		<if test="category != null and category != '' ">    
 	    	AND CATEGORY = #{category}
 	    </if>	
+	    <if test="volZip2 != null and volZip2 != ''">
+	    	AND VOL_ZIP2 = #{volZip2}
+	    </if>
         <if test="searchKeyword!=null and searchKeyword!='' ">
     	    AND (title LIKE '%' || #{searchKeyword} || '%')		
    		</if>

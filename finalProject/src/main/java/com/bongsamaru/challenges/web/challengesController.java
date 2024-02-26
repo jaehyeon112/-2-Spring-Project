@@ -117,7 +117,7 @@ public class challengesController {
 		log.info(challengeVO);
 		int chalId = challengeVO.getChalId();
 		try {
-			fileService.uploadFiles(uploadFiles,"p03", chalId,challengeVO.getMemId());
+			fileService.uploadFiles(uploadFiles,"p03", chalId,challengeVO.getMemId(), 1);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -154,7 +154,7 @@ public class challengesController {
 		//파일등록
 		Integer chalDetId = challengeVO.getChalDetId();
 		try {
-			fileService.uploadFiles(uploadFiles, "p04", chalDetId, challengeVO.getMemId());
+			fileService.uploadFiles(uploadFiles, "p04", chalDetId, challengeVO.getMemId(),1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

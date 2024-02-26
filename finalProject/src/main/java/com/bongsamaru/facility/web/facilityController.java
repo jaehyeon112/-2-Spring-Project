@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -189,10 +188,10 @@ public class facilityController {
 									@RequestParam(value="start", required = false,defaultValue = "1")Integer start,
 									@RequestParam(value="end", required = false,defaultValue = "10")Integer end ) {
 		
-		int total = facilityService.getVolDonCount(principal.getName(),"0","0");
+		int total = facilityService.getVolDonCount(principal.getName(),"0","1");
 		  vo = new PageVO(total,start, end, category ,5);
 	      model.addAttribute("vo",vo);
-	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","0"); // 모금완료
+	      List<DonaVO> list = facilityService.getDonaList(vo, principal.getName(), "0","1"); 
 	      model.addAttribute("donaList", list);
 		return "facility/myPageDona2";
 	}
@@ -356,7 +355,7 @@ public class facilityController {
 		
 		
 		  try { 
-			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId());
+			  fileService.uploadFiles(uploadFiles,"p14", volActVO.getVolActId(),volActVO.getFacId(),1);
 		  }catch (IOException e) {
 			  e.printStackTrace(); 
 		   }
@@ -408,6 +407,21 @@ public class facilityController {
 	      return facilityService.findBoardNo();
 	   }
 	/**
+	 * 봉사후기 리스트
+	 * @param model
+	 * @param category
+	 * @return
+	 */
+	@GetMapping("fInfo/volReviewList")
+	public String getNoticeOne(Model model, String memId) {
+		
+		List<BoardVO> list = facilityService.getVolReviewList(memId);
+		log.info("시설이름"+ memId);
+		model.addAttribute("list",list);
+		log.info("시설후기"+ list);
+		return "facility/reviewList";
+	}
+	/**
 	 * 봉사후기 info
 	 * @param category
 	 * @param detailCate
@@ -415,12 +429,9 @@ public class facilityController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("volReviewInfo")
-	public String getNoticeOne(@RequestParam(name="code") Integer code,@RequestParam(name="detailCate") Integer detailCate,@RequestParam(name="codeNo") String codeNo,Model model) {
+	@GetMapping("fInfo/volReviewInfo")
+	public String getNoticeOne(Integer detailCate,Model model) {
 		BoardVO vo = facilityService.getVolReviewInfo(detailCate);
-		List<FilesVO> files = challengeService.getFileList(code, codeNo);
-		model.addAttribute("files",files);
-	
 		model.addAttribute("info",vo);
 		return "facility/volReviewInfo";
 	}

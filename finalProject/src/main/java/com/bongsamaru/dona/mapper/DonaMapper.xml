@@ -96,7 +96,7 @@
 	 AND d.rec_stat = #{recStat}
     </if>
     </where>
-    ORDER BY end_period desc
+    ORDER BY d.end_period ASC
   ) A ) B  	WHERE RN BETWEEN #{start} AND #{end}
 </select>
 

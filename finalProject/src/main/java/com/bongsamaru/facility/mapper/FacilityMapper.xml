@@ -347,7 +347,7 @@ INSERT INTO VOL_ACT_MEM
 </insert>
 
 <update id= "volAppUpdate" parameterType="VolMemVO">
-UPDATE VOL_MEM SET APP_CODE=1 WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
+UPDATE VOL_MEM SET APP_CODE='h02' WHERE VOL_ACT_ID=#{volActId} AND MEM_ID=#{memId}
 </update>
 <!-- 회원이 시설봉사 정보조회 -->
 <select id="getFacVolInfo" resultType="VolActVO">
@@ -490,6 +490,19 @@ INSERT INTO HEART
             ,#{memId}
             ,#{detailCate})
 </insert>
+<select id="getVolReviewList" resultType="BoardVO">
+ SELECT 
+ 		CATEGORY, 
+ 		TITLE, 
+ 		CONTENT, 
+ 		WRITE_DATE, 
+ 		MEM_ID, 
+ 		DETAIL_CATE 
+ 		FROM BOARD 
+ 		WHERE CATEGORY='b03'
+ 		AND MEM_ID=#{memId}
+
+</select>
  <select id="getVolReviewInfo" resultType="BoardVO">
   select BOARD_ID,
          TITLE,

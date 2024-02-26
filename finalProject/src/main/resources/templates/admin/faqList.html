@@ -25,7 +25,7 @@
 							 <td><a th:text="${board.title}" class="cur" th:href="@{getFaqOne(faqId=${board.faqId})}"></a></td>
 							 <td th:if="${board.content.length}<20" th:text="${board.content}"></td>
 							 <td th:if="${board.content.length}>=20" th:text="${#strings.substring(board.content, 0, 20)}+'...'"></td>
-							 <td th:if="${board.category}=='a01'" >모임</td>
+							 <td th:if="${board.category}=='a01'" >챌린지</td>
 							 <td th:if="${board.category}=='a02'" >봉사활동</td>
 							 <td th:if="${board.category}=='a03'" >기부</td>
 						</tr>

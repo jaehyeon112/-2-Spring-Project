@@ -84,7 +84,7 @@
 				,EXPIRE_DATE
 			from vol_act
 			where vol_id = #{volId}
-			order by vol_date) A)
+			order by vol_date desc) A)
         where RN BETWEEN #{start} AND #{end}
 	</select>
 	<select id="findVolActNo" resultType="int">
@@ -357,6 +357,14 @@
 		select count(mem_id) cnt 
 		from vol_act_mem 
 		where vol_act_id=#{volActId}
+	</select>
+	<select id="volReviewCnt" resultType="VolActReviewVO">
+		select count(*) cnt,review_id
+		from vol_review 
+		where vol_id=#{volId}
+		and vol_act_id=#{volActId}
+		and writer=#{writer}
+		 group by review_id
 	</select>
 	
 	<!-- 회원 상태변경 -->

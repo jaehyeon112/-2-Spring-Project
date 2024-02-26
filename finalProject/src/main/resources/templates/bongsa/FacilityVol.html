@@ -76,6 +76,7 @@
     margin-right: 10px; /* 날짜 입력 필드 간 간격 */
 }
 </style>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 
 <body>
@@ -141,11 +142,11 @@
 						   <span th:text="|#${fac.volZip2}|">지역할거임</span>
 						</a>
 						<br>
-						<Strong><span>모집기간</span></Strong>
+						 <span th:text="'주최시설 : ' +${fac.facName}">주최시설</span>
 						<br>
 	                    <span th:text="${#dates.format(fac.startDate, 'yy.MM.dd')}+' ~ '+${#dates.format(fac.expireDate, 'yy.MM.dd')}">2024-02-04 ~ 2024-09-04</span>
 	                    <br>
-	                    <span th:text="'정원 : 해야함'+${fac.cap}+'명'">정원 : 해야함</span>
+	                    <span th:text="'정원 : ' +${fac.capCount} +' / '+  ${fac.cap}">정원 : 해야함</span>
 						 <br>
 						 
 		            </div>
@@ -193,7 +194,7 @@
       
       <!-- 봉사신청 모달 -->
           <div class="modal" tabindex="-1" id="myModal">
-			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
 			<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">봉사신청하기</h5>
@@ -387,10 +388,11 @@ function formatDate(date) {
             });
            
         });
-        var memId = [[${session.userId}]];
+        var memId = '[[${session.userId}]]';
         console.log(memId);
         $('#joinVolBtn').on('click', function() {
-				if(memberId!=null || [[${session.Role}]]=='M02'){
+        	 $('#myModal2').modal('hide');
+				if(memId!=null || '[[${session.Role}]]'=='m02'){
        		    $.ajax({
        		        url: '/getJoinAppCheck',
        		        type: 'GET',
@@ -419,6 +421,7 @@ function formatDate(date) {
        	       
             // 모달 닫기
             $('#myModal2').modal('hide');
+            
         });
     });
    
@@ -441,11 +444,20 @@ $('.uploadBtn').click(function (){
 	    data:formData,
 	    processData: false, //기본값은 true, ajax 통신을 통해 데이터를 전송할 때, 기본적으로 key와 value값을 Query String으로 변환해서 보냅니다.
 		contentType: false,
-	    success: function(result) {
-	       alert('봉사신청되었습니다. 승인을 기다려 주세요~')
-
-	            // 모달 닫기
-	            $('#myModal').modal('hide');
+	    success: function(response) {
+        	swalWithBootstrapButtons.fire({
+				  title: "봉사",
+				  text: "봉사신청이 완료되었습니다. 승인을 기다려주세요",
+				  icon: "success",
+				  showCancelButton: false,
+				  confirmButtonText: "확인",
+				  //cancelButtonText: "취소",
+				  reverseButtons: true
+				})
+				
+				 $('#myModal').modal('hide');
+       		location.href = `/FacilityVol`;
+				
 	        
 	    },
 	    error: function(err) {
@@ -454,6 +466,13 @@ $('.uploadBtn').click(function (){
 	}); 
 });
 
+const swalWithBootstrapButtons = Swal.mixin({
+	  customClass: {
+	    confirmButton: "btn btn-success",
+	    cancelButton: "btn btn-danger"
+	  },
+	  buttonsStyling: false
+	});
 </script>
   </section>
 </body>

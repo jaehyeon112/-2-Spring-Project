@@ -195,6 +195,11 @@ public class FacilityServiceImpl implements FacilityService {
 		public int getVolDonCount(String facId, String donRegApp, String recStat) {
 			return mapper.getVolDonCount(facId, donRegApp, recStat);
 		}
+
+		@Override
+		public List<BoardVO> getVolReviewList(String memId) {
+			return mapper.getVolReviewList(memId);
+		}
 		
 
 
