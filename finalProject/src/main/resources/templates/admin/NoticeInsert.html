@@ -181,26 +181,26 @@
 								};
 								
 								const swalWithBootstrapButtons = Swal.mixin({
-									  customClass: {
-									    confirmButton: "btn btn-success",
-									    cancelButton: "btn btn-danger"
-									  },
-									  buttonsStyling: false
+								  customClass: {
+								    confirmButton: "btn btn-success",
+								    cancelButton: "btn btn-danger"
+								  },
+								  buttonsStyling: false
+								});
+								function checkingTitle(seq){
+									Swal.fire({
+									  icon: "error",
+									  title: "제목이 입력되지 않았습니다.",
+									  text: "제목을 입력해주세요!",
 									});
-									function checkingTitle(seq){
-										Swal.fire({
-										  icon: "error",
-										  title: "제목이 입력되지 않았습니다.",
-										  text: "제목을 입력해주세요!",
-										});
-									}
-									function deleteBoard(seq){
-										Swal.fire({
-										  icon: "error",
-										  title: "내용이 입력되지 않았습니다.",
-										  text: "내용을 입력해주세요!",
-										});
-									}
+								}
+								function deleteBoard(seq){
+									Swal.fire({
+									  icon: "error",
+									  title: "내용이 입력되지 않았습니다.",
+									  text: "내용을 입력해주세요!",
+									});
+								}
 							</script>
 						</section>
 					</div>

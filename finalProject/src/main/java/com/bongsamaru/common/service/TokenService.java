@@ -18,16 +18,15 @@ public class TokenService {
     public TokenService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }
+    
+    
     @Transactional
     public Token createToken(String userId, String tokenValue) {
-        LocalDateTime expiryDate = LocalDateTime.now().plusMinutes(30); // 현재 시간으로부터 30분 후
-
+        LocalDateTime expiryDate = LocalDateTime.now().plusMinutes(30); // 유효기간을 30분으로 제한.
         Token token = new Token();
         token.setToken(tokenValue);
         token.setUserId(userId);
         token.setExpiryDate(expiryDate);
-        // 여기서 userId를 토큰과 연결하는 로직도 추가할 수 있습니다.
-        
         tokenRepository.save(token);
         return token;
     }

@@ -7,10 +7,14 @@
 <title>시설마이페이지 - 봉사완료리스트</title>
  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
  <style>
- button:hover,
- button:focus {
+ button{
     background-color: #689f38; 
     color: white;
+ }
+ button:hover,
+ button:focus {
+ background-color:white ; 
+    color: #689f38 ;
  }
  p{
 	font-weight:bold;
@@ -191,10 +195,10 @@ function good(memId,volActId) {
         	swalWithBootstrapButtons.fire({
 				  title: "마음온도",
 				  text: "회원의 마음온도가 2도 상승하였습니다",
-				  icon: "question",
-				  showCancelButton: true,
+				  icon: "success",
+				  showCancelButton: false,
 				  confirmButtonText: "확인",
-				  cancelButtonText: "취소",
+				  //cancelButtonText: "취소",
 				  reverseButtons: true
 				})
         },
@@ -222,13 +226,13 @@ function bad(memId,volActId) {
         contentType: 'application/json', // 컨텐츠 타입을 JSON으로 지정
 		data: JSON.stringify(info), // JavaScript 객체를 JSON 문자열로 변환
         success: function(response) {
-         	swalWithBootstrapButtons.fire({
+        	swalWithBootstrapButtons.fire({
 				  title: "마음온도",
 				  text: "회원의 마음온도가 1도 하락하였습니다",
-				  icon: "question",
-				  showCancelButton: true,
+				  icon: "success",
+				  showCancelButton: false,
 				  confirmButtonText: "확인",
-				  cancelButtonText: "취소",
+				  //cancelButtonText: "취소",
 				  reverseButtons: true
 				})
         },
@@ -279,6 +283,13 @@ $(document).ready(function() {
     })
     
 });
+const swalWithBootstrapButtons = Swal.mixin({
+	  customClass: {
+	    confirmButton: "btn btn-success",
+	    cancelButton: "btn btn-danger"
+	  },
+	  buttonsStyling: false
+	});
 </script>
 </section>
 </body>
