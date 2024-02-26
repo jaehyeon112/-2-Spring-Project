@@ -11,6 +11,7 @@ public class VolActVO {
 	private Integer volActId;
 	private Integer volId;
 	private String facId;
+	private String facName;
 	private String category;
 	private String cate;
 	private String title;
@@ -33,6 +34,9 @@ public class VolActVO {
 	private Integer volZip;
 	private String path;
 	private Integer rn;
-	private String volZip2; 
+	
+	private String volZip2;
+	private Integer capCount;
+	
 
 }

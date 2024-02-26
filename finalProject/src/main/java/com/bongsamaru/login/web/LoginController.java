@@ -193,7 +193,7 @@ public class LoginController {
 		if(userService.insertFac(vo)) {
 			if(files != null && files.length > 0 ) {
 				try {
-					fileService.uploadFiles(files,"p02",1,vo.getFacId());
+					fileService.uploadFiles(files,"p02",1,vo.getFacId(),1);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -244,7 +244,7 @@ public class LoginController {
 		if( userService.userInsert(vo, categories ) ) {
 			if(files != null && files.length > 0 ) {
 				try {
-					fileService.uploadFiles(files,"p01",0,vo.getMemId());
+					fileService.uploadFiles(files,"p01",0,vo.getMemId(),1);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

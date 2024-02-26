@@ -64,8 +64,8 @@ public class MeetingServiceImpl implements MeetingService{
 	}
 
 	@Override
-	public int findMember(Integer volId, String memId,String appCode) {
-		return mapper.findMember(volId, memId,appCode);
+	public int findMember(VolMemVO vo) {
+		return mapper.findMember(vo);
 	}
 
 	@Override
@@ -195,5 +195,20 @@ public class MeetingServiceImpl implements MeetingService{
 	@Override
 	public int insertTag(TagVO vo) {
 		return mapper.insertTag(vo);
+	}
+
+	@Override
+	public int insertVolActMem(VolMemVO vo) {
+		return mapper.insertVolActMem(vo);
+	}
+
+	@Override
+	public int chamMem(VolMemVO vo) {
+		return mapper.chamMem(vo);
+	}
+
+	@Override
+	public VolActReviewVO volReviewCnt(VolActReviewVO vo) {
+		return mapper.volReviewCnt(vo);
 	}
 }

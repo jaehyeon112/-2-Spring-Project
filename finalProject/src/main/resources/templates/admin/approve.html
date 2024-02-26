@@ -287,8 +287,8 @@ table th {
 							</table>
 			            </div>
 			            <div class="modal-footer">
-							<button type="button" class="btn btn-danger" onclick="approveCk4()">승인</button>
-			                <button type="button" class="btn btn-secondary" id="closing" data-dismiss="modal" aria-hidden="false">닫기</button>
+			                <button type="button" class="btn btn-outline-secondary" id="closing" data-dismiss="modal" aria-hidden="false">닫기</button>
+							<button type="button" class="btn btn-outline-success" onclick="approveCk4()">승인</button>
 			            </div>
 			        </div>
 			    </div>
@@ -588,12 +588,10 @@ table th {
 			        .fail(err => console.log(err));
 			    }
 			    function downloadButton(path,name){
-					let url = "http://localhost:8585"
-					url = url + path;
-           			url = url.replace(/\\/g, '/')
+					path = (""+path).replace(/\\/g, '/')
 					var fileName = name;
 				  	var link = document.createElement('a');
-				  	link.href = url;
+				  	link.href = path;
 				  	link.download = fileName;
 				  	link.click();
 			    }

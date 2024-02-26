@@ -11,6 +11,7 @@
 	margin: auto
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -75,6 +76,13 @@
 							    </div>
 							 </div>
 							 <script>
+							 	const swalWithBootstrapButtons = Swal.mixin({
+								  customClass: {
+								    confirmButton: "btn btn-success",
+								    cancelButton: "btn btn-danger"
+								  },
+								  buttonsStyling: false
+								});
 								$('form[name="inquireComments"]').on('submit',commentInsert);
 	
 								function commentInsert(event){
@@ -87,16 +95,33 @@
 										content.focus();
 										return;
 									};
-									
-									$("#confimModal").modal("show");
-									
-									$("#noBtn").on('click',function () {
-									    $("#confimModal").modal("hide");
-									    return;
-									});
-									$('#yesBtn').on('click',function(){
-										inquireComments.submit();
-									});
+									swalWithBootstrapButtons.fire({
+										  title: "정말 등록하시겠습니까??",
+										  text: "등록 후에는 수정 및 삭제가 불가능합니다.",
+										  icon: "question",
+										  showCancelButton: true,
+										  confirmButtonText: "등록",
+										  cancelButtonText: "취소",
+										  reverseButtons: true
+										}).then((result) => {
+										  if (result.isConfirmed) {
+										    swalWithBootstrapButtons.fire({
+										      title: "답변이 등록되었습니다.",
+										      text: "등록한 답변을 확인해보세요",
+										      icon: "success"
+										    });
+										    inquireComments.submit();
+										  } else if (
+										    /* Read more about handling dismissals below */
+										    result.dismiss === Swal.DismissReason.cancel
+										  ) {
+										    swalWithBootstrapButtons.fire({
+										      title: "취소되었습니다.",
+										      text: "등록을 취소하였습니다.",
+										      icon: "error"
+										    });
+										  }
+										});
 								};
 								
 							</script>

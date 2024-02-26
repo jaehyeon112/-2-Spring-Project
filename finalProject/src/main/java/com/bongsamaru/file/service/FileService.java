@@ -30,7 +30,7 @@ public class FileService {
     
     private final long MAX_SIZE = 50 * 1024 * 1024; // 50MB in bytes
     
-    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user) throws IOException {
+    public List<String> uploadFiles(MultipartFile[] uploadFiles, String code, int codeNo, String user, int type) throws IOException {
         List<String> imageList = new ArrayList<>();
         
         for(MultipartFile uploadFile : uploadFiles) {
@@ -44,7 +44,7 @@ public class FileService {
                 continue; // Skip this file
             }
 
-            String uploadFileName = handleFileUpload(uploadFile, code, codeNo, user);
+            String uploadFileName = handleFileUpload(uploadFile, code, codeNo, user, type);
             imageList.add("/upload/" + uploadFileName); // 이미지 URL 형식으로 변환하여 추가
         }
 
@@ -55,10 +55,10 @@ public class FileService {
         return file.getContentType() != null && file.getContentType().startsWith("image") && file.getContentType().startsWith("zip");
     }
 
-    private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user) throws IOException {
+    private String handleFileUpload(MultipartFile uploadFile, String code, int codeNo, String user, int type) throws IOException {
         printFileInfo(uploadFile);
         String uploadFileName = prepareFilePath(uploadFile);
-        saveFileMetadata(uploadFile, uploadFileName, code, codeNo, user);
+        saveFileMetadata(uploadFile, uploadFileName, code, codeNo, user , type);
         return uploadFileName;
     }
 
@@ -90,38 +90,57 @@ public class FileService {
     }
 
 
-    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String codeUser) {
-        String originalName = uploadFile.getOriginalFilename();
-        long fileSize = uploadFile.getSize();
-        String contentType = uploadFile.getContentType();
-        
-        
-        
-        FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
-        System.out.println(code + "파일체크");
-        System.out.println(codeUser + "이름");
-        System.out.println(fileVO);
-        
-        if (fileVO != null) {
-            // 파일사이즈가 똑같은게 이미 존재하는 경우 업데이트 수행
-            fileVO.setFilePath("/upload/" + filePath);
-            fileVO.setFileName(originalName);
-            fileVO.setFileSize((int) fileSize);
-            fileVO.setExtension(contentType);
-            fileMapper.updateFile(fileVO);
-            System.out.println("여기로 들어와서 그런듯?");
-        } else {
-            // 파일이 존재하지 않는 경우 인서트 수행
-            fileVO = new FilesVO();
-            fileVO.setFilePath("/upload/" + filePath);
-            fileVO.setFileName(originalName);
-            fileVO.setFileSize((int) fileSize);
-            fileVO.setExtension(contentType);
-            fileVO.setCode(code);
-            fileVO.setCodeNo(codeNo);
-            fileVO.setCodeUser(codeUser);
-            fileMapper.insertFile(fileVO);
-        }
+    private void saveFileMetadata(MultipartFile uploadFile, String filePath, String code, int codeNo, String codeUser, int type) {
+    	if(type == 0) {
+    		
+    		String originalName = uploadFile.getOriginalFilename();
+    		long fileSize = uploadFile.getSize();
+    		String contentType = uploadFile.getContentType();
+    		
+    		
+    		
+    		FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
+    		
+    		if (fileVO != null) {
+    			// 파일사이즈가 똑같은게 이미 존재하는 경우 업데이트 수행
+    			fileVO.setFilePath("/upload/" + filePath);
+    			fileVO.setFileName(originalName);
+    			fileVO.setFileSize((int) fileSize);
+    			fileVO.setExtension(contentType);
+    			fileMapper.updateFile(fileVO);
+    		} else {
+    			// 파일이 존재하지 않는 경우 인서트 수행
+    			fileVO = new FilesVO();
+    			fileVO.setFilePath("/upload/" + filePath);
+    			fileVO.setFileName(originalName);
+    			fileVO.setFileSize((int) fileSize);
+    			fileVO.setExtension(contentType);
+    			fileVO.setCode(code);
+    			fileVO.setCodeNo(codeNo);
+    			fileVO.setCodeUser(codeUser);
+    			fileMapper.insertFile(fileVO);
+    		}
+    	}else if(type==1) {
+    		String originalName = uploadFile.getOriginalFilename();
+    		long fileSize = uploadFile.getSize();
+    		String contentType = uploadFile.getContentType();
+    		
+    		
+    		
+    		FilesVO fileVO = fileMapper.getFileCheck(code,codeUser);
+    		System.out.println(fileVO);
+    		
+    		fileVO = new FilesVO();
+			fileVO.setFilePath("/upload/" + filePath);
+			fileVO.setFileName(originalName);
+			fileVO.setFileSize((int) fileSize);
+			fileVO.setExtension(contentType);
+			fileVO.setCode(code);
+			fileVO.setCodeNo(codeNo);
+			fileVO.setCodeUser(codeUser);
+			fileMapper.insertFile(fileVO);
+    	}
+    	
     }
         
         

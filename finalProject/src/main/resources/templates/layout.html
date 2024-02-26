@@ -117,19 +117,19 @@
                    		    <li sec:authorize="isAuthenticated()" class="nav-item" style="padding-top:15px;">
 						        <!-- M02 역할 사용자를 위한 링크 -->
 						        <a sec:authorize="hasRole('M02')" th:href="@{/my}">
-						             <img th:src="${session.profile != null ? session.profile : '/image/기본이미지.jpg'}" 
-     style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
+						           <img th:src="${session.profile}" 
+						              style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
 						        </a>
 						        <!-- M03 역할 사용자를 위한 링크 -->
 						        <a sec:authorize="hasRole('M03')" th:href="@{/fac}">
-						           <img th:src="${session.profile != null ? session.profile : '/image/기본이미지.jpg'}" 
-     style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
+						           <img th:src="${session.profile}" 
+						              style="width: 50px; height: 50px; border-radius: 50%;" alt="프로필 이미지">
 						        </a>
 						        <!-- 기타 역할 사용자를 위한 링크, 필요에 따라 추가 -->
 						    </li>
 						    <li sec:authorize="hasRole('M02')" class="nav-item" ><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/my}" th:text="|${#authentication.principal.userVO.nick} 님 |">[[${userNickname}]]님 환영합니다</a></li>
 						    <li th:if="${session.name}!=null" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:text="|${session.name} 님 환영합니다~|" th:href="@{/my}"></a></li>
-						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/fac}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
+						    <li sec:authorize="hasRole('M03')" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/fac/volJoin}" th:text="|${#authentication.principal.userNickname}님 |">[[${userNickname}]]님 환영합니다</a></li>
 						    <li sec:authorize="!isAuthenticated()" class="nav-item"><a style="font-size: 16px; font-weight: 700;" class="nav-link" th:href="@{/signup}">회원가입</a></li>
 							<li sec:authorize="isAuthenticated()" class="nav-item">
 						    <form th:action="@{/logout}" method="post">
@@ -194,7 +194,25 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	scrollIntoView();
+	  $('.alert-filter').click(function() {
+	        var filter = $(this).data('filter'); // 클릭된 필터의 data-filter 값 가져오기
+
+	        // 모든 알림 행 숨기기
+	        $('#exampleModal .modal-body tbody tr').hide();
+
+	        if(filter === 'all') {
+	            // '전체' 필터 클릭 시 모든 알림 보여주기
+	            $('#exampleModal .modal-body tbody tr').show();
+	        } else if(filter === 'read') {
+	            // '읽음' 필터 클릭 시 읽은 알림만 보여주기
+	            $('#exampleModal .modal-body tbody tr.read').show();
+	        } else if(filter === 'unread') {
+	            // '안읽음' 필터 클릭 시 안 읽은 알림만 보여주기
+	            $('#exampleModal .modal-body tbody tr.unread').show();
+	        }
+	    });
+	
+	checkAlarmCount();
     // 알람 개수를 확인하고 빨간 점을 업데이트하는 함수
     function checkAlarmCount() {
         $.ajax({

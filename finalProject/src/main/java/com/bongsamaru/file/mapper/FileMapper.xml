@@ -36,7 +36,8 @@
 	  	 		extension = #{extension},
 	  	 		file_size = #{fileSize},
 	  	 		code = #{code}
-	  	WHERE 	code_user = #{codeUser}  	
+	  	WHERE 	code_user = #{codeUser} 
+	  	AND code = #{code} 	
   	</update>
   	<select id="getFileCheck" resultType="FilesVO">
   	        SELECT
@@ -52,5 +53,6 @@
         	FROM files
         	WHERE code = #{code}
         	AND code_user = #{codeUser}
+        	and rownum = 1
   	</select>
   </mapper>

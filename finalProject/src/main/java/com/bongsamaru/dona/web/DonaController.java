@@ -95,7 +95,12 @@ public class DonaController {
 	public String openDonaMainPage(DonaVO donaVO , Model model) {
 		
 		List<DonaVO> donaList = donaService.getDonaListByCategory(donaVO);
+		log.info(donaVO);
 		model.addAttribute("list", donaList);
+		for(DonaVO a : donaList) {
+			log.info(a);
+		}
+		
 //		model.addAttribute("recruitList", recruitList);
 //		model.addAttribute("completedList", completedList);
 
@@ -155,8 +160,7 @@ public class DonaController {
 		
 		//후기글
 		DonaVO rev = donaService.getDonaReview(donId);
-		System.out.println("======================");
-		System.out.println(rev);
+	
 		model.addAttribute("rlist", rev);
 		
 		// 랜덤
@@ -224,8 +228,13 @@ public class DonaController {
 	// 모금종료 업데이트
 	@Scheduled(cron = "0 0 0 * * *") // 매일 0시 0분에 실행
 	public void updateRecStat() {
-		DonaVO donaVO = new DonaVO();
-		donaService.updateRecStat(donaVO);
+	    try {
+	        DonaVO donaVO = new DonaVO();
+	        donaService.updateRecStat(donaVO);
+	    } catch (Exception e) {
+	        
+	        e.printStackTrace();
+	    }
 	}
 
 	/**
@@ -343,31 +352,26 @@ public class DonaController {
 			                   @RequestPart("uploadfiles") MultipartFile[] uploadfiles, 
 			                   Model model) throws IOException {
 		//기부등록
+		log.info(donaVO);
 		donaService.insertDonation(donaVO);
-
+		
+		
 		//첨부파일등록
 		int codeNo = donaVO.getDonId();
+		
 		String code = "p08";
-		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId(),1);
 
-		return "redirect:facility/myPageDona";
+		return "ok";
 	}
 
+
+	
 	/**
 	 * 
 	 * @param model
 	 * @return 후기작성 폼으로 이동
 	 */
-	// 후기폼으로 GO 이걸로 해야됨! 
-//	@GetMapping("/reviewform")
-//	public String openRevform(@RequestParam Integer donId, @RequestParam String facId, Model model) {
-//
-//		model.addAttribute("donId", donId);
-//		model.addAttribute("facId", facId);
-//		return "donation/reviewform";
-//	}
-	
-	////임시
 	@GetMapping("/reviewform")
 	public String openRevform( Model model) {
 
@@ -392,7 +396,7 @@ public class DonaController {
 
 		int codeNo = donaVO.getDonId();
 		String code = "p07";
-		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+		fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId(),1);
 
 		return "후기등록성공!";
 	}
@@ -403,12 +407,7 @@ public class DonaController {
 	public int registerReview(DonaVO donaVO,
 			 Model model) {
 		donaService.insertReview(donaVO);	
-//		Integer revId = donaVO.getDonRevId();
-//		model.addAttribute(revId);
-		
-		//int codeNo = donaVO.getDonId();
-		//String code = "p07";
-		//fileService.uploadFiles(uploadfiles, code, codeNo, donaVO.getFacId());
+
 
 		return donaVO.getDonRevId();
 	}
@@ -422,16 +421,5 @@ public class DonaController {
 		return "영수증등록완료";
 	}
 	
-					// 템플릿 놔둔곳... 입니다.. (삭제)
-					// 기부신청폼22
-					@GetMapping("/applyform2")
-					public String openapplyform2(Model model) {
-						return "donation/applyDona";
-					}
 					
-					// 일단-모달창
-					@GetMapping("/extmodal")
-					public String openModal(Model model) {
-						return "donation/extension";
-					}
 }

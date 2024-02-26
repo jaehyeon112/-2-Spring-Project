@@ -13,6 +13,7 @@
 	margin-top : 50px;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -47,26 +48,11 @@
 							 <td th:if="${don.checking}==null">미제출</td>
 							 <td th:if="${don.checking}!=null">제출완료</td>
 							 <td th:if="${don.checking}==null"><button class="btn btn-outline-secondary btn-sm" th:onclick="emailCheckBtn([[${don.email}]])">요청하기</button></td>
-							 <td th:if="${don.checking}!=null"><button class="btn btn-outline-secondary btn-sm" onclick="song()">확인하기</button></td>
+							 <td th:if="${don.checking}!=null"><button class="btn btn-outline-secondary btn-sm">확인하기</button></td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
-			<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h5 class="modal-title" id="deleteConfirmationModalLabel">이메일 전송</h5>
-			            </div>
-			            <div class="modal-body">
-			                <p>이메일 전송이 완료 되었습니다!</p>
-			            </div>
-			            <div class="modal-footer">
-			                <button type="button" class="btn btn-secondary" id="yesBtn" data-dismiss="modal" aria-hidden="false">닫기</button>
-			            </div>
-			        </div>
-			    </div>
-			 </div>
 		</div>
 		</div>
 		<script th:inline="javascript">
@@ -89,11 +75,8 @@
 			    return number.toLocaleString();
 			};
 			
-		    function song() {
-				alert('이메일 인증하기');
-		    }
-		    
 		    function emailCheckBtn(email){
+		    	okSong();
 				$.ajax({
 					type: "POST",
 					url: "/email/sendAdminMail",
@@ -101,17 +84,28 @@
 						"recipientEmail": email
 					},
 					success: function (response) {
-						$("#confirmModal").modal("show");
+						console.log("전송완료")
 					},
 					error: function (xhr, status, error) {
-						alert("인증번호 전송 중 오류가 발생했습니다.");
+						console.log("인증번호 전송 중 오류가 발생했습니다.");
 					},
 				})
 		    }
 		    
-		    $(".btn-secondary").click(function () {
-			    $("#confirmModal").modal("hide");
-			});
+		    const swalWithBootstrapButtons = Swal.mixin({
+				  customClass: {
+				    confirmButton: "btn btn-success",
+				    cancelButton: "btn btn-danger"
+				  },
+				  buttonsStyling: false
+				});
+				function okSong(seq){
+					Swal.fire({
+					  icon: "success",
+					  title: "이메일이 전송되었습니다!",
+					  text: "제출이 완료되지 않으면 자정에 다시 이메일이 전송됩니다.",
+					});
+				}
 		</script>
       </div>
     </div>

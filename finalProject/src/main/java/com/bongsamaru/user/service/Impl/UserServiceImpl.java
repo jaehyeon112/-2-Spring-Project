@@ -184,4 +184,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	public String findInfo(String id) {
 		return userMapper.findInfo(id);
 	}
+	
+	@Override
+	public String findProfile(String id) {
+		return userMapper.findProfile(id);
+	}
 }

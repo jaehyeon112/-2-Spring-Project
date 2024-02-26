@@ -54,11 +54,9 @@
 				  <span th:text="${interest.interestCode}" class="circle"></span>
 				  <span style="display: inline-block; width: 10px;"></span>
 				</th:block>
-				<input type="button" value="피드 작성하기">
 			</div>
 			</th:block>
 			<div class="feedList">
-				<h4>피드</h4>
 				<hr>
 				<div class="image-container" style="display: flex; flex-wrap: wrap;">
 					<th:block th:each="list, iter : ${feedList}">
@@ -73,7 +71,7 @@
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				  <div style="flex-basis: 33.33%; flex-grow: 1;"></div>
 				</div>
-				<h5 th:if="${feedList == null || feedList.size() == 0}" style="margin-top: 250px; height: 500px; color: gray;">아직 작성된 피드가 없어요. 🌱</h5>
+				<h5 th:if="${feedList == null || feedList.size() == 0}" style="margin-top: 250px; height: 500px; color: gray;">아직 작성된 후기가 없어요. 🌱</h5>
 			</div>
 		</div>
 	<script>

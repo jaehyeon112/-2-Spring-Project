@@ -7,16 +7,21 @@
 <title>시설마이페이지 - 봉사완료리스트</title>
  <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
  <style>
- button:hover,
- button:focus {
+ button{
     background-color: #689f38; 
     color: white;
+ }
+ button:hover,
+ button:focus {
+ background-color:white ; 
+    color: #689f38 ;
  }
  p{
 	font-weight:bold;
 	font-size:15px;
 }
  </style>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
  <section layout:fragment="content">
@@ -187,7 +192,15 @@ function good(memId,volActId) {
 		data: JSON.stringify(info), // JavaScript 객체를 JSON 문자열로 변환
         success: function(response) {
             
-            console.log(response);
+        	swalWithBootstrapButtons.fire({
+				  title: "마음온도",
+				  text: "회원의 마음온도가 2도 상승하였습니다",
+				  icon: "success",
+				  showCancelButton: false,
+				  confirmButtonText: "확인",
+				  //cancelButtonText: "취소",
+				  reverseButtons: true
+				})
         },
         error: function(err) {
             
@@ -213,7 +226,15 @@ function bad(memId,volActId) {
         contentType: 'application/json', // 컨텐츠 타입을 JSON으로 지정
 		data: JSON.stringify(info), // JavaScript 객체를 JSON 문자열로 변환
         success: function(response) {
-            console.log(response);
+        	swalWithBootstrapButtons.fire({
+				  title: "마음온도",
+				  text: "회원의 마음온도가 1도 하락하였습니다",
+				  icon: "success",
+				  showCancelButton: false,
+				  confirmButtonText: "확인",
+				  //cancelButtonText: "취소",
+				  reverseButtons: true
+				})
         },
         error: function(err) {
             console.error(err);
@@ -225,16 +246,16 @@ $(document).ready(function() {
   
 	$('#myModal').on('show.bs.modal', function(e) {
       // 클릭된 요소에서 vol-act-id 가져오기
-      console.log("fff",volActId);
+ 
         // 참여자 목록 초기화
-        //$("#showTableBody").empty();
+        $("#showTableBody").empty();
 
         // Ajax를 통해 데이터 가져오기
         $.ajax({
             url: '/VolAppList?volActId='+volActId,
             type: 'GET',
             success: function(result) {
-                alert('성공');
+              
                 console.log(result);
                 for (var i = 0; i < result.length; i++) {
                 	
@@ -262,6 +283,13 @@ $(document).ready(function() {
     })
     
 });
+const swalWithBootstrapButtons = Swal.mixin({
+	  customClass: {
+	    confirmButton: "btn btn-success",
+	    cancelButton: "btn btn-danger"
+	  },
+	  buttonsStyling: false
+	});
 </script>
 </section>
 </body>

@@ -10,6 +10,7 @@
  .btn:focus {
     background-color: #689f38; 
     color: white;
+    	cursor : pointer;
  }
  p{
 	font-weight:bold;
@@ -108,10 +109,10 @@
 <nav class="blog-pagination justify-content-center d-flex">
 	<ul class="pagination">
 		<li class="page-item">
-			<a th:href="@{/facilityList(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
+			<a th:href="@{/fac/donaInfo(start=${vo.start - vo.cntPerPage}, end=${vo.start - 1})}" class="page-link" aria-label="Previous"> <span aria-hidden="true"> <span class="lnr lnr-chevron-left"></span></span></a></li>
 		<li class="page-item" th:each="pageNum : ${#numbers.sequence(vo.startPage, vo.endPage)}" th:class="${pageNum == vo.currentPage ? 'page-item active' : 'page-item'}">
-			 <a class="page-link" th:href="@{/facilityList(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a></li>
-		<li class="page-item"><a th:href="@{/facilityList(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
+			 <a class="page-link" th:href="@{/fac/donaInfo(start=${(pageNum - 1) * vo.cntPerPage + 1}, end=${pageNum * vo.cntPerPage})}" th:text="${pageNum}"></a></li>
+		<li class="page-item"><a th:href="@{/fac/donaInfo(start=${vo.end + 1}, end=${vo.end + vo.cntPerPage})}" class="page-link" aria-label="Next"> <span aria-hidden="true"> <span class="lnr lnr-chevron-right"></span></span></a></li>
 	</ul>
 </nav>
 </th:block>           
@@ -221,7 +222,7 @@
                     <h5 class="modal-title" id="extendDeadlineModalLabel"> 모금 기한 연장하기 </h5> 
                 </div>
                 <div class="modal-body">
-                    <p> 모금액이 목표모금액보다 적기 때문에 2주 이내로 기한을 연장할 수 있습니다. (1회 한정)</p>
+                    <p> 2주 이내로 기한을 연장할 수 있습니다. (1회 한정)</p>
                     
                     <!-- date 입력란 추가 -->
                     <div class="form-group">
@@ -392,11 +393,11 @@ function extendDeadline() {
 }
 
 
-// Function to open the alert modal
+// open the alert modal
 function openAlertModal(msg) {
-    // Set the alert message dynamically
+    
     document.getElementById("alertMessage").innerText = msg;
-    // Open the alert modal
+    
     $("#alertModal").modal("show");
 }
 
@@ -430,9 +431,10 @@ function openReviewForm(button) {
 	
 	// 후기글이 존재하면 이미 후기글이 존재한다고 경고창 띄우기
 	var revStat = button.getAttribute("data-hasrev");
+	console.log(typeof(revStat));
 	console.log("revStat:", revStat); // 콘솔에 revStat 출력
 
-	if(revStat === 1 ){
+	if(revStat === '1' ){
 		openAlertModal("이미 후기글을 작성하였습니다.");
 		return;
 	} else {
@@ -499,7 +501,7 @@ function submitReceipt() {
 				
 				success: function (applyResponse) {
 					console.log("두 번째 AJAX 성공: " + applyResponse);
-					alert("두번째 등록 성공!");
+					console.log("두번째 등록 성공!");
 					// 성공 메시지 모달 열기
                     $("#successModal").modal("show");
 

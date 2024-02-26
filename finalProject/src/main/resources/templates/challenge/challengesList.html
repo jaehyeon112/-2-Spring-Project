@@ -7,7 +7,8 @@
 <title>챌린지 참여 리스트</title>
 
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
-  integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
+  integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous">
+  </script>
 <script>
   Kakao.init('67b63dfc4457584184ee614818f5a9c7'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
@@ -106,11 +107,11 @@ p{
 								</div>
 								<div class="col">
 								<small class="text-muted">챌린지 마감일</small>
-								<h4 th:text="${#dates.format(session.challengeInfo.endDate,'yyyy-MM-dd' )}"></h4>
+								<h4 id="endChall" th:text="${#dates.format(session.challengeInfo.endDate,'yyyy-MM-dd' )}"></h4>
 								</div>
 							</div>
 						</div>
-						<button type="button" class="btn btn-warning" data-toggle="modal"
+						<button type="button" id="challengeButton" class="btn btn-warning" data-toggle="modal"
 								data-target="#myModal">챌린지 참여하기</button><br>
 								<a id="kakaotalk-sharing-btn" href="javascript:;">
   								<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유 보내기 버튼" /></a>
@@ -189,6 +190,49 @@ p{
   </div>
 </div>		
 <script>
+
+window.onload = function() {
+	// 현재 날짜를 가져오는 함수
+	function getCurrentDate() {
+	    let now = new Date();
+	    // 월과 일이 한 자리 수인 경우 앞에 0을 붙여줌
+	    let month = (now.getMonth() + 1).toString().padStart(2, '0');
+	    let day = now.getDate().toString().padStart(2, '0');
+	    let currentDate = `${now.getFullYear()}-${month}-${day}`;
+	    console.log(currentDate);
+	    return currentDate;
+	}
+
+	// 버튼을 비활성화하는 함수
+	function disableButton() {
+	    let challengeButton = document.getElementById('challengeButton');
+	    challengeButton.disabled = true;
+	    challengeButton.innerHTML = '챌린지 마감';
+	    challengeButton.classList.add('btn-secondary');
+	}
+
+	// 챌린지 마감일을 가져오는 함수
+	function getChallengeEndDate() {
+	    let endDateElement = document.getElementById('endChall');
+	    let endDateString = endDateElement.textContent.trim(); // 텍스트에서 앞뒤 공백 제거
+	    console.log(endDateString);
+	    return endDateString;
+	}
+
+	// 챌린지 마감일을 가져옵니다
+	let challengeEndDate = getChallengeEndDate();
+
+	// 현재 날짜를 가져옵니다
+	let currentDate = getCurrentDate();
+
+	// 챌린지 마감일과 현재 날짜를 비교하여 버튼을 비활성화합니다
+	if (challengeEndDate < currentDate) {
+	    disableButton();
+	}
+
+	}
+
+
 var memId = '[[${session.userId}]]';
 var chalDet = $('#chalDet').data('boardId');	
 var partDate = $('#partDate').data('part-date');	

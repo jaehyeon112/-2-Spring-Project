@@ -41,8 +41,13 @@
 					<!-- TUI 에디터 JS CDN -->
 					<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 					<script>
-					
-						const cont = `[[${vo.content}]]`;
+					function decodeHtml(html) {
+					    var txt = document.createElement('textarea');
+					    txt.innerHTML = html;
+					    return txt.value;
+					}
+				
+					const cont = decodeHtml(`[[${info.content}]]`);
 						const viewer = new toastui.Editor.factory({
 							  el: document.querySelector('#viewer'),
 							  viewer: true,
