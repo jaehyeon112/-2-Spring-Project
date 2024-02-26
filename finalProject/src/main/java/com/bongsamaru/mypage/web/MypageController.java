@@ -177,9 +177,6 @@ public class MypageController {
 			 									 HttpSession session) {
 	     int result = mypageService.updateProFile(userVO);
 	     if (result > 0) {
-	    	 
-	    	 String profile = userService.findProfile(userVO.getMemId());
-	    	 session.setAttribute("profile", profile);
 	    	 return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
 	         
 	     } else {
