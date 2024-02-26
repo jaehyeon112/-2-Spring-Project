@@ -32,24 +32,16 @@ public class TokenService {
     }
     
     public boolean validateToken(String token) {
-    	log.info(token);
-        // 토큰으로 데이터베이스에서 토큰 정보를 조회
+        // DB에서 토큰 조회
         Token tokenEntity = tokenRepository.findByToken(token);
-        if (tokenEntity != null) {
-            log.info("TokenEntity: {}" + tokenEntity);
-        } else {
-            log.info("Token not found or is null");
-        }
         // 토큰이 존재하지 않는 경우
         if (tokenEntity == null) {
             return false;
         }
-        
-        // 토큰의 만료 시간이 현재 시간보다 이전인 경우 (즉, 토큰이 만료된 경우)
+        // 토큰의 만료 시간이 현재 시간보다 이전인 경우
         if (tokenEntity.getExpiryDate().isBefore(LocalDateTime.now())) {
             return false;
         }
-        
         // 여기까지 문제가 없다면 토큰이 유효한 것으로 간주
         return true;
     }

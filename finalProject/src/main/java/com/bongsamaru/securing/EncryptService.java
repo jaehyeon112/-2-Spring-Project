@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class EncryptService {
 
     private final AesBytesEncryptor encryptor;
+    
 
     public String encryptSsn(String ssn) {
         byte[] encrypt = encryptor.encrypt(ssn.getBytes(StandardCharsets.UTF_8));

@@ -276,20 +276,15 @@
 
 				    // 결제 일자 , 결제 번호 
 				    let payDate = currentDate 
-				    	console.log("페이데이트")
-				    	console.log(payDate);
 				    let payId = currentDate.replace(/-/g, '') + currentTime.replace(/:/g, '');
 
 				    // **세션에서 회원 아이디를 가져오는 부분
 				  
 				    let memId =  [[${#authentication.name}]];
-				    console.log(memId);
 
 				    // 익명 체크 여부
 				    let anonCheck = document.getElementById('default-checkbox').checked; 
 				    let anonCheckVal = anonCheck ? '1' : '0';
-				    console.log(anonCheck);
-				    console.log(anonCheckVal);
 
 				   
 
@@ -329,7 +324,7 @@
 			        	 window.location.href = "/paymentComplete";
 			          });
 				    	}else{
-				    		alert("실패실패실패!")
+				    		Swal.fire("결제가 취소되었습니다.")
 				    		
 				    	}
 			       });
