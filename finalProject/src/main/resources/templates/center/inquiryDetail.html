@@ -4,7 +4,6 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
 .navigation-bar {
   display: flex;
@@ -15,9 +14,6 @@
   cursor: pointer;
 }
 
-div[th:if] {
-  display: none;
-}
 .container {
 	justify-content: center;
 }
@@ -73,9 +69,8 @@ div[th:if] {
 <div th:insert="~{banner/empty::banner}"></div>
 <div class="container" style="color: black;">
     <div class="side" th:insert="~{center/sidebar::side}"></div>
-    <div class="container">
-        <th:block th:each="item : ${list}">
-            <div class="content" th:if="${list.size} != 0">
+    <div class="container"  th:each="item : ${list}">
+            <div class="content">
                 <h1 th:text="${item.title}"></h1>
                 <span style="font-size:18px;">[[${#dates.format(item.writeDate, 'yyyy.MM.dd')}]]</span>
                 <hr>
@@ -92,9 +87,7 @@ div[th:if] {
                 <div th:if="${item.commContent} == null">
 	                <p>아직 답변이 작성되지 않았습니다.</p>
 				</div>
-				
-            </div>
-        </th:block>
+			</div>
     </div>
 </div>
 <script>

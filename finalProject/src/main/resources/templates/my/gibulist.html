@@ -23,7 +23,7 @@ th {
 thead {
   font-weight: bold;
   color: #fff;
-  background: #007bff;
+  background: #689f38 ;
 }
   
  td, th {
@@ -115,11 +115,8 @@ a {
 		   <tbody>
 		       <tr th:each="item : ${list}">
 		           <td class="yearCheck" th:text="${#dates.format(item.payDate, 'yyyy.MM.dd')}" style="width:100px;"></td>
-		           <td class="yearCheck" th:onclick="redirectToDonationDetail(`[[${item.donId}]`, `[[${item.facId}]`)" th:text="${item.title}">[[${item.title}]]</td>
+		           <td class="yearCheck" th:text="${item.title}">[[${item.title}]]</td>
 		           <td class="yearCheck" style="width:150px;">[[${#numbers.formatInteger(item.donAmt, 3, 'COMMA')}]]원<br>
-				   </td>
-				   <td style="width:30px; text-align:center;">
-		             <input type="button" id="cancelBtn" class="btn btn-danger btn-sm btn-sm" data-toggle="modal" data-target="#staticBackdrop" value="취소" style="text-align: right;" />		            					
 				   </td>
 		       </tr>
 			   <tr>

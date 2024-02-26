@@ -24,7 +24,7 @@ th {
 thead {
   font-weight: bold;
   color: #fff;
-  background: #007bff;
+  background: #689f38 ;
 }
   
  td, th {
@@ -101,7 +101,7 @@ a {
   		<div class="container">
 				<div>
 				    <h4>참여중</h4>
-				    <table style="height : 150px;">
+				    <table style="height : 150px;" class="text">
 				        <thead>
 				            <tr>
 				                <th style="width: 70%;">제목</th>
@@ -110,7 +110,7 @@ a {
 				        </thead>
 				        <tbody>
 				            <tr th:each="item,index : ${list}" th:if="${item.appCode == 'h02'}">
-				                <td th:text="${item.meetName}" th:onclick="meeting('[[${item.volId}]]')"></td>
+				                <td><a th:onclick="meeting('[[${item.volId}]]')"> [[${item.meetName}]]</a></td>
 				                <td th:text="${#dates.format(item.appDate, 'yyyy.MM.dd')}"></td>
 				            </tr>
 				            <tr th:if="${#lists.isEmpty(list.?[appCode=='h02'])}">

@@ -4,7 +4,6 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
 .navigation-bar {
   display: flex;
@@ -141,11 +140,11 @@ thead {
 					   <td class="yearCheck">
 					       <a style="color:black;" th:text="${item.title}" th:href="@{/inquiry/{boardId}(boardId=${item.boardId})}"></a>
 					   </td>
-			           <td class="yearCheck" style="color:green; font-welight" th:if="${item.commContent == null}">
-		           	   	   <input type="button" class="btn btn-lg btn-success" disabled value="답변대기">
+			           <td class="yearCheck" style="color:green;" th:if="${item.commContent == null}">
+		           	   	   <input type="button" class="btn btn-lg btn-danger" disabled value="답변대기">
 			           </td>
 			           <td class="yearCheck" th:if="${item.commContent != null}">
-			           	   <input type="button" class="btn btn-lg btn-danger" disabled value="답변완료">
+			           	   <input type="button" class="btn btn-lg btn-success" disabled value="답변완료">
 			           </td>
 			           <td class="yearCheck"  th:text="${#dates.format(item.writeDate, 'yyyy.MM.dd')}"></td>
 			       </tr>
