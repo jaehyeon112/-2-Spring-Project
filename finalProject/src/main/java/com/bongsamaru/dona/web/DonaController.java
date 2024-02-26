@@ -228,8 +228,13 @@ public class DonaController {
 	// 모금종료 업데이트
 	@Scheduled(cron = "0 0 0 * * *") // 매일 0시 0분에 실행
 	public void updateRecStat() {
-		DonaVO donaVO = new DonaVO();
-		donaService.updateRecStat(donaVO);
+	    try {
+	        DonaVO donaVO = new DonaVO();
+	        donaService.updateRecStat(donaVO);
+	    } catch (Exception e) {
+	        
+	        e.printStackTrace();
+	    }
 	}
 
 	/**

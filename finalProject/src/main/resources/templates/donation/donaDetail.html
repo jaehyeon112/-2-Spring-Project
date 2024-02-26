@@ -286,32 +286,32 @@
                         
                      </tr>
                      <!-- 두번째열 -->
-					<tr th:each="row : ${dona}" th:if="${row.usePlan2 != null and row.usePlan2 != ''}" >    
+					<tr th:each="row : ${rev}" th:if="${row.bizContent2 != null and row.bizContent2  != ''}" >    
 					    <td>
 					        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
 					    </td>
 					    
 					    <td>
-					        <p class="mb-0 mt-4" th:text="${row.usePlan2}" style="text-align: center;"></p>
+					        <p class="mb-0 mt-4" th:text="${row.bizContent2}" style="text-align: center;"></p>
 					    </td>
 					
 					    <td>
-					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt2,3, 'COMMA')} + '원' "></p>
+					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt2,3, 'COMMA')} + '원' "></p>
 					    </td>
 					</tr>
 					
 					<!-- 세번째열 -->
-					<tr th:each="row : ${dona}" th:if="${row.usePlan3 != null and row.usePlan3 != ''}">    
+					<tr th:each="row : ${rev}" th:if="${row.bizContent3 != null and row.bizContent3 != ''}">    
 					    <td>
 					        <p class="mb-0 mt-4" style="text-align: center;">사업비</p>
 					    </td>
 					    
 					    <td>
-					        <p class="mb-0 mt-4" th:text="${row.usePlan3}" style="text-align: center;"></p>
+					        <p class="mb-0 mt-4" th:text="${row.bizContent3}" style="text-align: center;"></p>
 					    </td>
 					
 					    <td>
-					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.usePlanAmt3,3, 'COMMA')} + '원' "></p>
+					        <p class="mb-0 mt-4" style="text-align: center;" th:text="${#numbers.formatInteger(row.bizAmt3,3, 'COMMA')} + '원' "></p>
 					    </td>
 					</tr>
 
@@ -613,9 +613,17 @@
     };
     
     function updateCommentSection(donId, memId) {
-        // 댓글 섹션을 비동기적으로 업데이트
-        $('#commentList').load("../donaDetail?id=" + donId + "&facId=" + memId + " #commentList");
-    }
+    	   $.ajax({
+    	      type: "GET",
+    	      url: "/donaDetail?id=" + donId + "&facId=" + memId,
+    	      success: function(response) {
+    	         $('#commentList').html($(response).find('#commentList').html());
+    	      },
+    	      error: function(error) {
+    	         console.error('댓글업데이트 실패ㅠㅠ', error);
+    	      }
+    	   });
+    	}
     
 </script>
 
