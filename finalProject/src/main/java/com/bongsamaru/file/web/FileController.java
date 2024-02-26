@@ -31,8 +31,7 @@ public class FileController {
     @PostMapping("/uploadsAjax")
     @ResponseBody
     public List<String> uploadFile(HttpSession session ,Principal prin ,@RequestPart MultipartFile[] uploadFiles, String code, @RequestParam(required = false, defaultValue = "0") int codeNo, String codeUser, int type) {
-    	String profile = userService.findProfile(prin.getName());
-    	session.setAttribute("profile", profile);
+
         try {
             return fileService.uploadFiles(uploadFiles, code, codeNo, codeUser, type);
         } catch (IOException e) {
@@ -42,7 +41,11 @@ public class FileController {
         
     }
     
-    
+    @GetMapping("/changeProfile")
+    public void changeProfile(HttpSession session ,Principal prin) {
+    	String profile = userService.findProfile(prin.getName());
+    	session.setAttribute("profile", profile);
+    }
     @GetMapping("/deleteFiles")
     @ResponseBody
     public String deleteFile(@RequestParam(name="filePath") String filePath) {

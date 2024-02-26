@@ -54,15 +54,15 @@ public class MypageController {
 	  */
 	 
 	 @GetMapping("/my")
-	 public String myPage(Model model) {
+	 public String myPage(HttpSession session,Model model) {
 		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	        
+		 String memId = "";
 	     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
 	    	 Object principal = auth.getPrincipal();
 	            
 	         if (principal instanceof UserDetails) {
 	                UserDetailVO userDetailVO = (UserDetailVO) principal;
-	                String memId = userDetailVO.getUsername();
+	                memId = userDetailVO.getUsername();
 	                
 	                List<UserVO> list = mypageService.getProfile(memId);
 
@@ -83,7 +83,8 @@ public class MypageController {
 	        		model.addAttribute("sumAmt",sumamt);
 	         }
 	      }
-
+	    	String profile = userService.findProfile(memId);
+	    	session.setAttribute("profile", profile);
 	      return "my/mypage"; 
 	}
 	 /**
