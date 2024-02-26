@@ -321,6 +321,7 @@
 		on m.VOL_ACT_ID=a.VOL_ACT_ID
 		where a.vol_id = #{volId}
 		and mem_id = #{memId}
+		order by m.vol_act_id
 	</select>
 	<!-- 봉사활동 정보 -->
 	<select id="volActInfo" resultType="VolActVO">
