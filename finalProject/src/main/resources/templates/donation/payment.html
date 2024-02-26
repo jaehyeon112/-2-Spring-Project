@@ -325,6 +325,11 @@
 			          });
 				    	}else{
 				    		Swal.fire("결제가 취소되었습니다.")
+				    		$('#c_address').val('');
+				    		   $('.genric-btn').css({
+							        'background-color': '', // 기본 배경색으로 설정
+							        'color': 'black', // 글씨색을 검정색으로 설정
+							    });
 				    		
 				    	}
 			       });
