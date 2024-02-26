@@ -313,6 +313,17 @@ $(document).ready(function() {
     $("#updateProfileBtn").click(function() {
     	let type = 0;
     	
+        var userVO = {
+            memId: $("#id").val(),
+            memNick: $("#nick").val(),
+            memEmail: $("#recipientEmail").val(),
+            memPhone: $("#to").val(),
+            emailAgree: $("input[name='emailAgree']:checked").val(),
+            smsAgree: $("input[name='smsAgree']:checked").val(),
+            memZip: $("#zipCheck").val(),
+            memAddr: $("#addrCheck").val()
+        };
+    	
     	var formData = new FormData(); //FormData 객체 생성
     	var inputFile = $("input[type='file']");
     	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
@@ -337,7 +348,6 @@ $(document).ready(function() {
                 window.location.href = "/my";
             },
             error: function(xhr, status, error) {
-                // 업데이트 중에 오류가 발생했을 때의 동작
             }
         });
         
@@ -352,20 +362,8 @@ $(document).ready(function() {
 				window.location.href = "/my";
     		},
     		error: function (reject) {
-				alert("정보수정에 실패하였습니다");
     		}
     	});
-    	
-        var userVO = {
-            memId: $("#id").val(),
-            memNick: $("#nick").val(),
-            memEmail: $("#recipientEmail").val(),
-            memPhone: $("#to").val(),
-            emailAgree: $("input[name='emailAgree']:checked").val(),
-            smsAgree: $("input[name='smsAgree']:checked").val(),
-            memZip: $("#zipCheck").val(),
-            memAddr: $("#addrCheck").val()
-        };
 
     });
 });
