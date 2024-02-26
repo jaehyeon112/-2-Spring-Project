@@ -328,6 +328,19 @@ $(document).ready(function() {
     	formData.append("type", type);
     	console.log($('#id').val());
 
+        $.ajax({
+            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
+            success: function(response) {
+                window.location.href = "/my";
+            },
+            error: function(xhr, status, error) {
+                // 업데이트 중에 오류가 발생했을 때의 동작
+            }
+        });
+        
     	//jQuery.ajax
     	$.ajax({
     		url: '/uploadsAjax',
@@ -336,9 +349,10 @@ $(document).ready(function() {
     		contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
     		data: formData,
     		success: function (result) {
-
+				window.location.href = "/my";
     		},
     		error: function (reject) {
+				alert("정보수정에 실패하였습니다");
     		}
     	});
     	
@@ -353,21 +367,6 @@ $(document).ready(function() {
             memAddr: $("#addrCheck").val()
         };
 
-        $.ajax({
-            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
-            success: function(response) {
-                // 성공적으로 업데이트되었을 때의 동작
-                alert("정보가 성공적으로 수정되었습니다.");
-                window.location.href = "/my";
-            },
-            error: function(xhr, status, error) {
-                // 업데이트 중에 오류가 발생했을 때의 동작
-                alert("정보수정에 실패하였습니다");
-            }
-        });
     });
 });
 

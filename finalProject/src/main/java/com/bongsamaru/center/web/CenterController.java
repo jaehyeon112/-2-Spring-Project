@@ -53,7 +53,7 @@ public class CenterController {
 	 @GetMapping("/faq")
 	 public String faqList(PageVO vo, Model model
 			 	, @RequestParam(value="searchKeyword", required = false)String searchKeyword
-			 	, @RequestParam(value="category", required = false, defaultValue = "a01")String category
+			 	, @RequestParam(value="category", required = false, defaultValue = "a03")String category
 				, @RequestParam(value="start", required = false)String start
 				, @RequestParam(value="end", required = false)String end) {
 
@@ -177,6 +177,7 @@ public class CenterController {
 	 public String inquiryDetail(@PathVariable Integer boardId, Model model) {
 		 
 		 List<BoardVO> list = centerService.getInquiryDetail(boardId);
+		 System.out.println(list + "확인");
 		 model.addAttribute("list", list);
 		 return "center/inquiryDetail";
 	 }

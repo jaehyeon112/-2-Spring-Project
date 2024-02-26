@@ -35,6 +35,7 @@ public class FileController {
         
     }
     
+    
     @GetMapping("/deleteFiles")
     @ResponseBody
     public String deleteFile(@RequestParam(name="filePath") String filePath) {
