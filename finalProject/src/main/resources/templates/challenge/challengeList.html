@@ -27,6 +27,23 @@ border: double 2px solid #689f38;
     font-size: 14px;
     font-weight: bold;
   }
+  .more-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.btn-custom{
+ border-radius:50px;
+ padding: 20px 40px;
+ font-size: 25px;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>챌린지리스트</title>
@@ -40,10 +57,9 @@ border: double 2px solid #689f38;
 	<br>
 	<br>
 		<h1 style="color:#689f38 ">나의 사소한 노력이 모여 <br>우리의 긍정적인 영향을 더해줍니다!</h1>
-		<p th:text="'봉사마루 챌린지 총 ' +${challengeList[0].allParticipants}+'명 참여중'" style="color:black; font-size:15px;"></p>
-		<h3><a th:if="${session.userId} != null" th:href="@{/challengeInsert}" style="color:#689f38 ">함께하고싶은 챌린지가 있으신가요? 모두 참여해보아요</a></h3>
-		<h3><a th:if="${session.userId} == null" th:href="@{/login}" style="color:#689f38 ">함께하고싶은 챌린지가 있으신가요? 모두 참여해보아요</a></h3>
-		<br>
+		<p th:text="'봉사마루 챌린지 총 ' +${challengeList[0].allParticipants}+'명 참여중'" style="color:black; font-size:20px;"></p>
+		<a class="btn btn-outline-warning btn-custom float-center" th:if="${session.userId} != null" th:href="@{/challengeInsert}" >함께하고싶은 챌린지가 있으신가요? 등록해보세요</a>
+		<a class="btn btn-outline-warning btn-custom float-center" th:if="${session.userId} == null" th:href="@{/login}" >함께하고싶은 챌린지가 있으신가요? 등록해보세요</a>
 		<br>
 		<br>
 		</div>
@@ -56,10 +72,10 @@ border: double 2px solid #689f38;
 <div class="hover">
 <a class="light"
 			th:href="@{/challenge/challengeInfo(chalId=${challenge.chalId})}">
-<div class="card mb-3" style="max-width: 700px; border:5px solid #689f38;">
+<div class="card mb-3 " style= "border:5px solid #689f38;">
   <div class="row">
     <div class="col-md-7" style="position: relative;">
-      <img th:if="${challenge.file.filePath}!=null" th:src="${challenge.file.filePath}" alt="" onError="this.src='../image/기본이미지.jpg'" class=" img-fluid rounded-start" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+      <img th:if="${challenge.file.filePath}!=null" th:src="${challenge.file.filePath}" alt="" onError="this.src='../image/기본이미지.jpg'" class=" img-fluid rounded-start object-fit: cover" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
     </div>
     <div class="col-md-5">
       <div class="card-body">

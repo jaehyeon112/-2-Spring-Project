@@ -138,10 +138,8 @@ public class LoginController {
 	public ResponseEntity<?> generateToken(@RequestBody Map<String, String> payload) {
 		 String userId = payload.get("id");
 	    String token = TokenGenerator.generateToken(); // 앞서 설명한 토큰 생성기를 사용
-	    log.info(token);
 	    // 토큰 저장 및 관리 로직 (DB에 토큰 저장 등)
 	   tokenService.createToken(userId,token);
-	    // 세션 ID 또는 토큰 반환
 	    return ResponseEntity.ok().body(Map.of("sessionId", token));
 	}
 	

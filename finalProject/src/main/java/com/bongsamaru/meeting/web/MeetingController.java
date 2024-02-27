@@ -121,6 +121,7 @@ public class MeetingController {
 				before.add(vo);
 			}
 		}
+		System.out.println("후기"+after);
 		model.addAttribute("after",after);
 		model.addAttribute("before",before);
 		PageVO pageVO = new PageVO();
@@ -538,14 +539,9 @@ public class MeetingController {
 	public int updateMeeting(VolunteerVO vo,HttpSession session,
 						@RequestPart(value = "uploadfiles" ,required = false) MultipartFile[] uploadfiles,@RequestParam Integer volId) throws IOException {
 		if(uploadfiles!=null) {
-			System.out.println("여기 오낭");
 			service.deleteFile(volId);
-			int codeNo = volId;
-			String code = "p09";
-			fileService.uploadFiles(uploadfiles, "p09", codeNo,(String)session.getAttribute("userId"),0);
-			System.out.println("이건 어딨는가"+uploadfiles+code+codeNo+(String)session.getAttribute("userId"));
+			fileService.uploadFiles(uploadfiles, "p09", volId,(String)session.getAttribute("userId"),0);
 		}
-		System.out.println("durl!!"+uploadfiles);
 		return service.updateMeeting(vo);
 	};
 	

@@ -158,13 +158,8 @@ function dateFormat(value, format) {
 };
 
 $('#today').text(dateFormat('','yyyy년 MM월 dd일'));
-//날씨 처리 시작
-navigator.geolocation.getCurrentPosition(
-	function (result) {
-	latitude = result.coords.latitude;
-	longitude = result.coords.longitude;
-	
-	$.ajax('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+API_KEY+'&units=metric')
+function weather(){
+	$.ajax('https://api.openweathermap.org/data/2.5/weather?lat=35.8678528&lon=128.6012928&appid='+API_KEY+'&units=metric')
 	.done(result=>{
 		if(result.weather[0].main=='Clouds'){
 			$('#weather').attr("src", "../dpdd/img/흐림.png");
@@ -177,9 +172,30 @@ navigator.geolocation.getCurrentPosition(
 		$('#city').text(result.name);
 	})
 	.fail(err=>console.log(err))
+}
+weather();
+//날씨 처리 시작
+//navigator.geolocation.getCurrentPosition(
+	//function (result) {
+	//latitude = result.coords.latitude;
+	//longitude = result.coords.longitude;
+	//잠깐 위치 정해짐
+	//$.ajax('https://api.openweathermap.org/data/2.5/weather?lat=35.8678528&lon=128.6012928&appid='+API_KEY+'&units=metric')
+	//.done(result=>{
+		//if(result.weather[0].main=='Clouds'){
+			//$('#weather').attr("src", "../dpdd/img/흐림.png");
+		//}else if(result.weather[0].main=='Clear'){
+			//$('#weather').attr("src", "../dpdd/img/맑음.png");
+		//}else{
+			//$('#weather').attr("src", "../dpdd/img/weather-icon.png");
+		//}
+		//$('#degree').text(result.main.temp+'°C');
+		//$('#city').text(result.name);
+	//})
+	//.fail(err=>console.log(err))
 	
-},
-function (result){console.log('위치 정보를 불러오는데 실패했습니다.')});
+//},
+//function (result){console.log('위치 정보를 불러오는데 실패했습니다.')});
 
 //모임 정보 불러오기
 $.ajax('../meetingInfo?volId='+[[${session.id}]])

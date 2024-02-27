@@ -313,6 +313,17 @@ $(document).ready(function() {
     $("#updateProfileBtn").click(function() {
     	let type = 0;
     	
+        var userVO = {
+            memId: $("#id").val(),
+            memNick: $("#nick").val(),
+            memEmail: $("#recipientEmail").val(),
+            memPhone: $("#to").val(),
+            emailAgree: $("input[name='emailAgree']:checked").val(),
+            smsAgree: $("input[name='smsAgree']:checked").val(),
+            memZip: $("#zipCheck").val(),
+            memAddr: $("#addrCheck").val()
+        };
+    	
     	var formData = new FormData(); //FormData 객체 생성
     	var inputFile = $("input[type='file']");
     	//input 태그의 type이 file인것을 찾아서 inputFile이라는 변수로 지정
@@ -328,6 +339,18 @@ $(document).ready(function() {
     	formData.append("type", type);
     	console.log($('#id').val());
 
+        $.ajax({
+            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
+            success: function(response) {
+                window.location.href = "/my";
+            },
+            error: function(xhr, status, error) {
+            }
+        });
+        
     	//jQuery.ajax
     	$.ajax({
     		url: '/uploadsAjax',
@@ -336,38 +359,12 @@ $(document).ready(function() {
     		contentType: false, // multipart/form-data타입을 사용하기위해 false 로 지정합니다.
     		data: formData,
     		success: function (result) {
-
+				window.location.href = "/my";
     		},
     		error: function (reject) {
     		}
     	});
-    	
-        var userVO = {
-            memId: $("#id").val(),
-            memNick: $("#nick").val(),
-            memEmail: $("#recipientEmail").val(),
-            memPhone: $("#to").val(),
-            emailAgree: $("input[name='emailAgree']:checked").val(),
-            smsAgree: $("input[name='smsAgree']:checked").val(),
-            memZip: $("#zipCheck").val(),
-            memAddr: $("#addrCheck").val()
-        };
 
-        $.ajax({
-            url: "/updateProFile", // 서버 사이드 스크립트 파일의 경로
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(userVO), // 객체를 폼 데이터로 직렬화
-            success: function(response) {
-                // 성공적으로 업데이트되었을 때의 동작
-                alert("정보가 성공적으로 수정되었습니다.");
-                window.location.href = "/my";
-            },
-            error: function(xhr, status, error) {
-                // 업데이트 중에 오류가 발생했을 때의 동작
-                alert("정보수정에 실패하였습니다");
-            }
-        });
     });
 });
 
