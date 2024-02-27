@@ -88,7 +88,9 @@ $.ajax({
 	    		
 	    		const formData = new FormData();
 	        	formData.append('uploadFiles', blob);
-	        	formData.append("code",  "p15")
+	        	formData.append("code",  "p15");
+	        	formData.append("type",  0);
+	        	
           			formData.append("codeNo", cateNo);
           			$.ajax({
 	           		url: '/uploadsAjax',
