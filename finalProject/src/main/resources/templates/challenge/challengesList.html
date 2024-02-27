@@ -65,15 +65,12 @@ p{
     <video controls th:each="video : ${list.file}" th:src="${video.filePath}" width="200" height="200"></video>
 </div>
 									
-		    							
-							<div class="hover">
-								<a class="light"><i class="fa fa-expand"></i></a>
 								<div class="text-center">
   
 </div>
 
 								<svg  th:onclick="openModal([[${list.chalDetId}]])" data-toggle="modal" data-target="#myModal3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/></svg>	
-							</div>
+							
 							    <p id="chalDet" class="getChalId" th:data-boardId="${list.chalDetId}">
 								<p th:text="${list.memId}"></p>
 								<p id="partDate" th:text="${#dates.format(list.partDate,'yyyy-MM-dd')}" th:data-part-date="${list.partDate}"></p>
@@ -135,18 +132,24 @@ p{
         	</button>
       </div>
       <div class="modal-body">
-		 <div class="form-group">
-		    <label class="form-check-label" for="s01">스팸홍보/도배글
-		    <input class="form-check-input" id="s01" type="radio" name="reason" value="s01" ></label>
-		    <label class="form-check-label" for="s02">음란물
-		    <input class="form-check-input" id="s02" type="radio" name="reason" value="s02"  ></label>
-		    <label class="form-check-label" for="s03">불법정보 포함
-		    <input class="form-check-input" id="s03" type="radio" name="reason" value="s03"  ></label>
-		    <label class="form-check-label" for="s04">혐오/차별적 표현
-		    <input class="form-check-input" id="s04" type="radio" name="reason" value="s04"  ></label>
-		    <label class="form-check-label" for="s05">주제와 상관이 없음
-		    <input class="form-check-input" id="s05" type="radio" name="reason" value="s05" checked ></label>
-		</div>
+	<div class="form-group">
+    <label class="form-check-label d-block" for="s01">
+        <input class="form-check-input" id="s01" type="radio" name="reason" value="s01">스팸홍보/도배글
+    </label>
+    <label class="form-check-label d-block" for="s02">
+        <input class="form-check-input" id="s02" type="radio" name="reason" value="s02">음란물       
+    </label>
+    <label class="form-check-label d-block" for="s03">
+        <input class="form-check-input" id="s03" type="radio" name="reason" value="s03">불법정보 포함
+    </label>
+    <label class="form-check-label d-block" for="s04">
+        <input class="form-check-input" id="s04" type="radio" name="reason" value="s04">혐오/차별적 표현
+    </label>
+    <label class="form-check-label d-block" for="s05">
+        <input class="form-check-input" id="s05" type="radio" name="reason" value="s05" checked>주제와 상관이 없음
+    </label>
+</div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary reportBtn">신고</button>
@@ -170,7 +173,7 @@ p{
      
       
 							<div class="form-group">
-								<img id="imagePreview" src="/userresources/image/심사방법.png" style="border-radius: 100%; width: 100px; height: 100px;">
+								<img id="imagePreview" src="/image/no이미지.png" style="border-radius: 100%; width: 100px; height: 100px;">
 					               
 								<label for="file-image" class="input-file-button" >이미지첨부 
 								<input type="file" name="uploadFiles" id="file-image" style="display: none">
