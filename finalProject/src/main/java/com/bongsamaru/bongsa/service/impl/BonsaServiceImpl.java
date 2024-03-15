@@ -81,13 +81,14 @@ public class BonsaServiceImpl implements BongsaService {
 	@Override
 	public List<BongsaDTO> getVolTagDTO(PageVO vo, Date startDate, Date endDate , String cate) {
 		List<VolunteerVO> volunteers = bongsaMapper.volList(vo, startDate, endDate, cate);			
-	    System.out.println(volunteers);
 	    List<TagVO> allTags = adminMapper.tagList(null);
 	    Map<Integer, List<TagVO>> tagsByVolunteer = allTags.stream()
 	            .collect(Collectors.groupingBy(TagVO::getVolId));
 
 	    List<BongsaDTO> result = volunteers.stream()
-	            .map(volunteer -> new BongsaDTO(volunteer, tagsByVolunteer.getOrDefault(volunteer.getVolId(), Collections.emptyList())))
+	            .map(volunteer -> 
+	            new BongsaDTO(volunteer, tagsByVolunteer.getOrDefault(volunteer.getVolId(),
+	            		Collections.emptyList())))
 	            .collect(Collectors.toList());
 	    return result;
 	}
